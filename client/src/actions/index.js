@@ -1,10 +1,3 @@
-/**
- * @name index.js
- * @author Kwadwo Sakyi
- * @description This file defines all functions used by components.  Each function will dispatch an event with a
- * type defined in ./types.js
- */
-
 import axios from 'axios';
 import { 
   AUTH_USER, 
