@@ -1,0 +1,21 @@
+FROM node:11-alpine
+
+RUN apk update \
+    && apk upgrade \
+    && apk add git
+
+RUN npm install -g react-app-rewired
+
+WORKDIR '/app'
+
+COPY ./package.json ./
+
+#RUN npm install --unsafe-perm
+
+RUN npm install
+
+COPY ./ ./
+
+EXPOSE 3000
+
+CMD ["npm", "run", "start"]

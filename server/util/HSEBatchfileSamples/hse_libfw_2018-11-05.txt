@@ -1,0 +1,69 @@
+﻿Reference Type:  Book
+Record Number: 19875
+Year: 1973
+Title: Health Economics
+Place Published: Baltimore
+Publisher: Penguin Books
+Editor: Cooper, M.H.  Culyer, A.J.
+Date: 1973
+Short Title: Health Economics
+Reprint Edition: In File
+Label: 9504
+
+
+Reference Type:  Book
+Record Number: 17873
+Year: 1996
+Title: How Many Roads...? CMA Conference on Regionalization and Decentralization in Health Care
+Place Published: Kingston
+Publisher: Queen's University School of Policy Studies
+Editor: Dorland, J.L.  Davis, S.M.
+Date: 1996
+Short Title: How Many Roads...? CMA Conference on Regionalization and Decentralization in Health Care
+Reprint Edition: Not in File
+Label: 7270
+
+
+Reference Type:  Book
+Record Number: 19879
+Year: 2003
+Title: L'Elargissement de l'union Europeenne: Enjeux et implications socio-demographiques
+Series Title: Chaire Quetelet
+Place Published: Louvain-la-Neuve, Belgique
+Publisher: UCL Presses Universitaires de Louvain
+Editor: Masuy-Stroobant, G.
+Date: 2003
+Short Title: L'Elargissement de l'union Europeenne: Enjeux et implications socio-demographiques
+Reprint Edition: Not in File
+Label: 15925
+Keywords: Population
+Abstract: À bien des égards, l'élargissement de l'UE à dix nouveaux membres le 1er mai 2004 est un défi : il ne s'agissait pas simplement de passer de l'UE15 à l'UE25, mais bien d'accueillir – pour la première fois – des pays d'Europe centrale et orientale ayant fait partie de ce qu'on appelait auparavant le « Bloc de l'Est ». Huit des 10 nouveaux membres, soit l'Estonie, la Hongrie, la Lettonie, la Lituanie, la Pologne, la République tchèque, la Slovaquie et la Slovénie renforcent le processus de réunification de l'Europe amorcé en 1991 par l'ajout de la partie Est de l'Allemagne. Cette extension vers l'Est a encore été complétée par l'adhésion de la Bulgarie et de la Roumanie 3 ans plus tard, en 2007. En novembre 2003, soit quelques mois avant l'élargissement de 2004 qui amène la population de l'UE à dépasser le chiffre de 450 millions d'habitants, les démographes de Louvain décident d'entamer une réflexion sur les conséquences possibles de cet élargissement sur le comportement démographique des Européens. Il ne s'agissait pas seulement de faire le point sur les divergences et convergences des comportements de fécondité, de mortalité ou de migration, mais aussi d'envisager les conséquences sociales de ces mouvements, telles la faible croissance démographique et le vieillissement accéléré des populations européennes ou encore l'intégration des migrants.
+
+
+Reference Type:  Book
+Record Number: 17880
+Year: 2006
+Title: Primary Care in Ontario: ICES Atlas
+Place Published: Toronto, Canada
+Publisher: The Institute for Clinical Evaluative Sciences
+Pages: i-xviii
+Editor: Jaakimanian, L.  Upshur, R.E.G.
+Date: 2006
+Short Title: Primary Care in Ontario: ICES Atlas
+Reprint Edition: In File
+Label: 8556
+Abstract: No abstract
+Notes: RefMgr field[34]: http://www.ices.on.ca/file/PC_atlas_prelims_complete.pdf
+
+
+Reference Type:  Book
+Record Number: 17882
+Year: 2007
+Title: Declaration on "Health In All Policies". Rome, 18 December 2007
+Pages: 1-7
+Date: 2007
+Short Title: Declaration on "Health In All Policies". Rome, 18 December 2007
+Reprint Edition: In File
+Label: 8090
+
+
