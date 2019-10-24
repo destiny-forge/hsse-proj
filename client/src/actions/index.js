@@ -292,7 +292,7 @@ import {
 */
 } from './types';
 
-const backendServer = `${process.env.REACT_APP_BACKEND_SERVER}/api`;
+const backendServer = `${process.env.REACT_APP_BACKEND_SERVER}`;
 
 let headers = {
   'Content-Type': 'application/json',
