@@ -1,5 +1,4 @@
 // baseConfig.js - figure out what set of credentials to return
-
 if (process.env.NODE_ENV === 'development') {
     // we are in development - return dev set of keys
     // file purposefully excluded to avoid code copy
