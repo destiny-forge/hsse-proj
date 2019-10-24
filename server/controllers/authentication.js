@@ -24,50 +24,12 @@ const SENIOR_FILTERER = ['user', 'uploader', 'detailer', 'linker', 'juniorapprai
 const PRIORITIZER = ['user', 'uploader', 'detailer', 'linker', 'juniorappraiser', 'seniorappraiser', 'juniorfilterer', 'seniorfilterer', 'prioritizer'];
 const ADMINISTRATOR= ['user', 'uploader', 'detailer', 'linker', 'juniorappraiser', 'seniorappraiser', 'juniorfilterer', 'seniorfilterer', 'prioritizer', 'administrator'];
 
-
-/*
-aws.config.update({
-    accessKeyId: process.env.AWS_ACCESS_KEY,
-    secretAccessKey: process.env.AWS_SECRET_KEY,
-    region: 'us-east-1',
-});
-*/
 const UserModelClass = mongoose.model('Users');
 
 const userToken = (user) => {
     const timestamp = new Date().getTime();
     return jwt.encode({ sub: user.id, iat: timestamp }, process.env.JWT_SECRET);
 }
-
-
-/*
-const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-        user: 'pj55xncdxkaztz7o@ethereal.email', // generated ethereal user
-        pass: 'x3FfF2hgRDhQEpKJ16' // generated ethereal password
-    }
-});
-
-
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: config.gmailUser,
-        pass: config.gmailPassword
-    }
-});
-
-
-// create Nodemailer SES transporter
-const transporter = nodemailer.createTransport({
-    SES: new aws.SES({
-        apiVersion: '2010-12-01'
-    })
-});
-*/
 
 const transporter = nodemailer.createTransport(ses({
     accessKeyId: process.env.HSSE_SES_ACCESS_KEY,
