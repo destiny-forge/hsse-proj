@@ -8,9 +8,9 @@ const StageController = require('../controllers/stageController');
 
 module.exports = (app) => {
     
-    app.get('/api/stage/:documentId', StageController.read);
-    app.get('/api/stages', StageController.list);
-    app.post('/api/stages', StageController.create);
-    app.delete('/api/stages/:stageId', StageController.delete);
+    app.get('/stage/:documentId', StageController.read);
+    app.get('/stages', StageController.list);
+    app.post('/stages', StageController.create);
+    app.delete('/stages/:stageId', StageController.delete);
 
 };
