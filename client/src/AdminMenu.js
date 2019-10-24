@@ -102,7 +102,7 @@ const AdminMenu = [
         translate: 'sidebar.nav.element.QueuedHealth',
         submenu: [{
                 name: 'Add Article',
-                path: '/hse/addarticle',
+                path: '/hse/add-article',
                 translate: 'sidebar.nav.element.ADDHSEARTICLE'
             },{
                 name: 'Batch Upload',
