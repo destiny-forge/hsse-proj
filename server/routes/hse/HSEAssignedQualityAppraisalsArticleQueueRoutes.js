@@ -7,10 +7,22 @@
 
 const HSEAssignedQualityAppraisalsArticleQueueController = require('../../controllers/hse/HSEAssignedQualityAppraisalsArticleQueueController');
 
-module.exports = app => {
-    app.get('/hse/assignedqualityappraisalsarticlequeue', HSEAssignedQualityAppraisalsArticleQueueController.listArticles);
-    app.get('/hse/assignedqualityappraisalsarticlequeue/fetcharticle/:articleId', HSEAssignedQualityAppraisalsArticleQueueController.fetchArticle);
+module.exports = (app) => {
+  app.get(
+    '/hse/assignedqualityappraisalsarticlequeue',
+    HSEAssignedQualityAppraisalsArticleQueueController.listArticles,
+  );
+  app.get(
+    '/hse/assignedqualityappraisalsarticlequeue/fetcharticle/:articleId',
+    HSEAssignedQualityAppraisalsArticleQueueController.fetchArticle,
+  );
 
-    app.post('/hse/assignedqualityappraisalsarticlequeue/savevalues/:articleId', HSEAssignedQualityAppraisalsArticleQueueController.setQualityAppraisalsValues);
-    app.post('/hse/assignedqualityappraisalsarticlequeue/setcompleted/:articleId', HSEAssignedQualityAppraisalsArticleQueueController.setFullQualityAppraisalCompleteOrResolve);
-}
+  app.post(
+    '/hse/assignedqualityappraisalsarticlequeue/savevalues/:articleId',
+    HSEAssignedQualityAppraisalsArticleQueueController.setQualityAppraisalsValues,
+  );
+  app.post(
+    '/hse/assignedqualityappraisalsarticlequeue/setcompleted/:articleId',
+    HSEAssignedQualityAppraisalsArticleQueueController.setFullQualityAppraisalCompleteOrResolve,
+  );
+};

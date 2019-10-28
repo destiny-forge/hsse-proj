@@ -3,7 +3,7 @@ BackEnd:
 NodeJS
 Express
 
-Database: 
+Database:
 MongoDB (MLab)
 Mongoose ORM
 
@@ -20,8 +20,8 @@ Production on AWS
 
 health2018science
 
-
 # installing ElasticSearch on OSX
+
 brew update
 brew tap elastic/tap
 brew install elastic/tap/elasticsearch-full
@@ -34,7 +34,8 @@ nano /usr/local/etc/elasticsearch/elasticsearch.yml
 xpack.ml.enabled: false
 
 Testing
-```curl -X GET http://localhost:9200/                
+
+```curl -X GET http://localhost:9200/
 {
   "name" : "Erics-MBP",
   "cluster_name" : "elasticsearch_erobit",
@@ -55,8 +56,29 @@ Testing
 ```
 
 # installing Kibana on OSX (after ES install above)
+
 brew install elastic/tap/kibana-full
 brew services start elastic/tap/kibana-full
 
 Kibana will be available at the following url:
 http://localhost:5601/
+
+# Developer <3
+
+The server project is configured with airbnb eslint as well as husky git commit hooks which will run linting before every commit to ensure source code meets the standards.
+
+You can install the extensions in vs code for eslint and prettier
+
+ext install dbaeumer.vscode-eslint
+ext install esbenp.prettier-vscode
+
+And configure the settings.json file (Command,)
+
+```
+{
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "eslint.autoFixOnSave": true
+}
+```

@@ -13,91 +13,86 @@ const SSEArticleModelClass = mongoose.model('SSEArticles');
 
 /**
  * Returns a list of articles which are in the linking studies queue and not assigned to any user
- * 
+ *
  * @param ReadableStream req The function's request body
  * @param WritableStream res The function's response body
- */   
-exports.listArticles = async (req, res) => { // REFACTOR: Rename to list
-    SSEArticleModelClass.find()
-       .or([ { _presentationDetailsJunior: null }/*, { eligibilityFiltersFullCompletion: true }*/ ])
-       .exec(function(err, articles) {
-           if(err) {
-               return res.send(err);
-           } else if(!articles) {
-               return res.status(404).send({
-                   message: 'No article in the Presentation Details Article Pending Queue'
-               });
-           }
-           return res.status(200).send(articles);
-       });
+ */
+
+exports.listArticles = async (req, res) => {
+  // REFACTOR: Rename to list
+  SSEArticleModelClass.find()
+    .or([{ _presentationDetailsJunior: null }])
+    .exec((err, articles) => {
+      if (err) {
+        return res.send(err);
+      } if (!articles) {
+        return res.status(404).send({
+          message: 'No article in the Presentation Details Article Pending Queue',
+        });
+      }
+      return res.status(200).send(articles);
+    });
 };
 
 /**
  * Returns the details of an article not assigned to any user
- * 
+ *
  * @param ReadableStream req The function's request body
- * @param string req.param.id The ID of the 
+ * @param string req.param.id The ID of the
  * @param WritableStream res The function's response body
  */
-exports.listArticle = async (req, res) => { // REFACTOR: Rename to fetch
+exports.listArticle = async (req, res) => {
+  // REFACTOR: Rename to fetch
 
-    const id = req.param.id;
+  const { id } = req.param;
 
-    return await SSEArticleModelClass.findById(id);
-
+  return await SSEArticleModelClass.findById(id);
 };
 
-exports.create = (req, res) => { // DEFUNCT
-    
-}
+exports.create = (req, res) => {
+  // DEFUNCT
+};
 
 /**
  * Assign the article to a user
- * 
+ *
  * @param ReadableStream req The function's request body
  * @param WritableStream res The function's response body
  */
-exports.addArticleToJuniorPresenter = async (req, res) => { // REFACTOR: rename to assignToLinker
+exports.addArticleToJuniorPresenter = async (req, res) => {
+  // REFACTOR: rename to assignToLinker
 
-    const { articleId } = req.params;
-    
-     const user = await Authentication.getUserFromToken(req.headers.authorization);
+  const { articleId } = req.params;
 
-    if(!mongoose.Types.ObjectId.isValid(articleId)) {
-        return res.status(400).send({
-            message: 'Article is invalid'
-        });
-    }
+  const user = await Authentication.getUserFromToken(req.headers.authorization);
 
-    SSEArticleModelClass.findById(articleId, async (err, article) => {
-        if(err) {
-            return res.send(err);
-        } else if(!article) {
-            return res.status(404).send({
-                message: 'No article with that identifier has been found'
-            });
-        } else {
-
-            if(hasRole('juniorpresenter', user) ) {
-
-                article._presentationDetailsJunior = user._id;
-                article._presentationDetailsJuniorEmail = user.email;
-
-                await article.save();
-                return res.status(200).send({
-                    message: 'Junior presenter added'
-                });
-            } else {
-                return res.status(400).send({
-                    message: 'User does not have persmission'
-                })
-            }
-            
-        }
+  if (!mongoose.Types.ObjectId.isValid(articleId)) {
+    return res.status(400).send({
+      message: 'Article is invalid',
     });
+  }
 
+  SSEArticleModelClass.findById(articleId, async (err, article) => {
+    if (err) {
+      return res.send(err);
+    } if (!article) {
+      return res.status(404).send({
+        message: 'No article with that identifier has been found',
+      });
+    }
+    if (hasRole('juniorpresenter', user)) {
+      article._presentationDetailsJunior = user._id;
+      article._presentationDetailsJuniorEmail = user.email;
+
+      await article.save();
+      return res.status(200).send({
+        message: 'Junior presenter added',
+      });
+    }
+    return res.status(400).send({
+      message: 'User does not have persmission',
+    });
+  });
 };
 
-const hasRole = (role, user) => {
-    return user.roles.includes(role);
-}
+const hasRole = (role, user) => user.roles.includes(role);

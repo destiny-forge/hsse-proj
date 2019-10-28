@@ -15,14 +15,14 @@ const SSEArticleBatchfileController = require('../controllers/sse/SSEArticleBatc
 const requireSignin = passport.authenticate('local', { session: false });
 
 const s3 = new AWS.S3({
-    accessKeyId: process.env.HSSE_S3_ACCESS_KEY,
-    secretAccessKey: process.env.HSSE_S3_SECRET_KEY
+  accessKeyId: process.env.HSSE_S3_ACCESS_KEY,
+  secretAccessKey: process.env.HSSE_S3_SECRET_KEY,
 });
 
-module.exports = app => {
-    app.get('/hse/getfileurl', HSEArticleBatchfileController.getFileUrl);
-    app.post('/hse/batchfile', HSEArticleBatchfileController.create);
+module.exports = (app) => {
+  app.get('/hse/getfileurl', HSEArticleBatchfileController.getFileUrl);
+  app.post('/hse/batchfile', HSEArticleBatchfileController.create);
 
-    app.get('/sse/getfileurl', SSEArticleBatchfileController.getFileUrl);
-    app.post('/sse/batchfile', SSEArticleBatchfileController.create);
+  app.get('/sse/getfileurl', SSEArticleBatchfileController.getFileUrl);
+  app.post('/sse/batchfile', SSEArticleBatchfileController.create);
 };
