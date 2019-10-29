@@ -79,10 +79,6 @@ import SocialBoard from './components/Extras/SocialBoard';
 import TeamViewer from './components/Extras/TeamViewer';
 import VoteLinks from './components/Extras/VoteLinks';
 
-import ForumCategories from './components/Forum/ForumCategories';
-import ForumTopic from './components/Forum/ForumTopics';
-import ForumDiscussion from './components/Forum/ForumDiscussion';
-
 import FilterArticleInput from './components/HSE/Article/AssignedEligibility/FilterArticleInput';
 //import FilterResolution from './components/HSE/Article/AssignedEligibility/FilterResolution';
 import ArticleResolution from './components/HSE/Article/AssignedEligibility/ArticleResolution';
@@ -279,9 +275,6 @@ const Routes = ({ location }) => {
                             <Route path="/search" component={Search}/>
                             <Route path="/todo" component={Todo}/>
                             <Route path="/profile" component={Profile}/>
-                            <Route path="/forum-categories" component={ForumCategories}/>
-                            <Route path="/forum-topics" component={ForumTopic}/>
-                            <Route path="/forum-discussion" component={ForumDiscussion}/>
                             <Route path="/bug-tracker" component={BugTracker}/>
                             <Route path="/contact-details" component={ContactDetails}/>
                             <Route path="/contacts" component={Contacts}/>
