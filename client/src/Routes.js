@@ -25,14 +25,6 @@ import BasePage from './components/Layout/BasePage';
 
 import DashboardMain from './components/Dashboard/DashboardMain';
 
-import MapsGoogle from './components/Maps/MapsGoogle';
-import MapsVector from './components/Maps/MapsVector';
-
-import TableStandard from './components/Tables/TableStandard';
-import TableExtended from './components/Tables/TableExtended';
-import Datatable from './components/Tables/DatatableView';
-import DataGrid from './components/Tables/DataGrid';
-
 import Login from './components/Pages/Login';
 import Signout from './components/Pages/Signout';
 import Register from './components/Pages/Register';
@@ -241,15 +233,6 @@ const Routes = ({ location }) => {
 
                             <Route path="/dashboard" component={DashboardMain}/>
                             
-                            {/*Table*/}
-                            <Route path="/table-standard" component={TableStandard}/>
-                            <Route path="/table-extended" component={TableExtended}/>
-                            <Route path="/table-datatable" component={Datatable}/>
-                            <Route path="/table-datagrid" component={DataGrid}/>
-
-                            {/*Maps*/}
-                            <Route path="/map-google" component={MapsGoogle}/>
-                            <Route path="/map-vector" component={MapsVector}/>
 
                             {/*Extras*/}
                             <Route path="/mailbox" component={Mailbox}/>
