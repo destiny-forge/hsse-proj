@@ -48,11 +48,6 @@ import FontIcons from './components/Elements/FontIcons';
 import WeatherIcons from './components/Elements/WeatherIcons';
 import Colors from './components/Elements/Colors';
 
-import ChartFlot from './components/Charts/ChartFlot';
-import ChartRadial from './components/Charts/ChartRadial';
-import ChartChartJS from './components/Charts/ChartChartJS';
-import ChartMorris from './components/Charts/ChartMorris';
-import ChartChartist from './components/Charts/ChartChartist';
 
 import MapsGoogle from './components/Maps/MapsGoogle';
 import MapsVector from './components/Maps/MapsVector';
@@ -312,13 +307,6 @@ const Routes = ({ location }) => {
                             <Route path="/form-wizard" component={FormWizard}/>
                             <Route path="/form-upload" component={FormUpload}/>
                             <Route path="/form-cropper" component={FormCropper}/>
-                            
-                            {/*Charts*/}
-                            <Route path="/chart-flot" component={ChartFlot}/>
-                            <Route path="/chart-radial" component={ChartRadial}/>
-                            <Route path="/chart-chartjs" component={ChartChartJS}/>
-                            <Route path="/chart-morris" component={ChartMorris}/>
-                            <Route path="/chart-chartist" component={ChartChartist}/>
                             
                             {/*Table*/}
                             <Route path="/table-standard" component={TableStandard}/>

@@ -7,7 +7,6 @@ import { Row, Col, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Tooltip
 import EasyPieChart from 'easy-pie-chart';
 
 import Sparkline from '../Common/Sparklines';
-import FlotChart from '../Charts/Flot';
 
 /**
  * Wrap an element and assign automatically an ID,
@@ -394,7 +393,6 @@ class DashboardV2 extends Component {
                                 <div className="card-title">Projects Hours</div>
                             </div>
                             <div className="card-body">
-                                <FlotChart data={this.state.barStackedData} options={this.state.barStackedOptions} height="250px" />
                             </div>
                         </div>
                         { /* END bar chart */ }
@@ -417,7 +415,6 @@ class DashboardV2 extends Component {
                             <div className="card-title">Overall progress</div>
                         </div>
                         <div className="card-body">
-                            <FlotChart data={this.state.splineData} options={this.state.splineOptions} height="250px" />
                         </div>
                         <div className="card-body">
                             <div className="row">

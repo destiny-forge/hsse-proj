@@ -7,7 +7,6 @@ import EasyPieChart from 'easy-pie-chart';
 import CardTool from '../Common/CardTool'
 import Sparkline from '../Common/Sparklines';
 import Scrollable from '../Common/Scrollable'
-import FlotChart from '../Charts/Flot';
 import Now from '../Common/Now';
 
 class DashboardV1 extends Component {
@@ -196,7 +195,6 @@ class DashboardV1 extends Component {
                                         <div className="card-title">Inbound visitor statistics</div>
                                     </div>
                                     <div className="card-body">
-                                        <FlotChart data={this.state.flotData} options={this.state.flotOptions} height="250px" />
                                     </div>
                                 </div>
                                 { /* END widget */ }

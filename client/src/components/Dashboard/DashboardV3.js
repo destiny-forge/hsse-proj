@@ -7,7 +7,6 @@ import EasyPieChart from 'easy-pie-chart';
 
 import Sparkline from '../Common/Sparklines';
 import Scrollable from '../Common/Scrollable'
-import FlotChart from '../Charts/Flot';
 import VectorMap from '../Maps/VectorMap';
 
 const defaultColors = {
@@ -361,7 +360,6 @@ class DashboardV3 extends Component {
                                 <div className="card-title">Website Performance</div>
                             </div>
                             <div className="card-body">
-                                <FlotChart data={this.state.splineData} options={this.state.splineOptions} height="250px" />
                             </div>
                         </div>
                     </div>
