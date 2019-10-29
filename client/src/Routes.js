@@ -25,25 +25,6 @@ import BasePage from './components/Layout/BasePage';
 
 import DashboardMain from './components/Dashboard/DashboardMain';
 
-import Widgets from './components/Widgets/Widgets';
-
-import Buttons from './components/Elements/Buttons';
-import Notifications from './components/Elements/Notifications';
-import SweetAlert from './components/Elements/SweetAlert';
-import BsCarousel from './components/Elements/Carousel';
-import Spinner from './components/Elements/Spinner';
-import Animation from './components/Elements/Animation';
-import DropdownAnimation from './components/Elements/DropdownAnimation';
-import Nestable from './components/Elements/Nestable';
-import Sortable from './components/Elements/Sortable';
-import Cards from './components/Elements/Cards';
-import Grid from './components/Elements/Grid';
-import GridMasonry from './components/Elements/GridMasonry';
-import Typography from './components/Elements/Typography';
-import FontIcons from './components/Elements/FontIcons';
-import WeatherIcons from './components/Elements/WeatherIcons';
-import Colors from './components/Elements/Colors';
-
 import MapsGoogle from './components/Maps/MapsGoogle';
 import MapsVector from './components/Maps/MapsVector';
 
@@ -271,26 +252,6 @@ const Routes = ({ location }) => {
 
                             <Route path="/dashboard" component={DashboardMain}/>
 
-                            {/*Widgets*/}
-                            <Route path="/widgets" component={Widgets}/>
-
-                            {/*Elements*/}
-                            <Route path="/buttons" component={Buttons}/>
-                            <Route path="/notifications" component={Notifications}/>
-                            <Route path="/sweetalert" component={SweetAlert}/>
-                            <Route path="/carousel" component={BsCarousel}/>
-                            <Route path="/spinners" component={Spinner}/>
-                            <Route path="/animations" component={Animation}/>
-                            <Route path="/dropdown" component={DropdownAnimation}/>
-                            <Route path="/nestable" component={Nestable}/>
-                            <Route path="/sortable" component={Sortable}/>
-                            <Route path="/cards" component={Cards}/>
-                            <Route path="/grid" component={Grid}/>
-                            <Route path="/grid-masonry" component={GridMasonry}/>
-                            <Route path="/typography" component={Typography}/>
-                            <Route path="/icons-font" component={FontIcons}/>
-                            <Route path="/icons-weather" component={WeatherIcons}/>
-                            <Route path="/colors" component={Colors}/>
 
                             {/*Forms*/}
                             <Route path="/form-standard" component={FormStandard}/>
