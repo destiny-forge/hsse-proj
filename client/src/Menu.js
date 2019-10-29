@@ -10,7 +10,7 @@ const Menu = [
         /*label: { value: 3, color: 'success' },*/
         submenu: [{
                 name: 'Main Dashboard',
-                path: '/dashboardmain'
+                path: '/dashboard'
             }
         ]
     },

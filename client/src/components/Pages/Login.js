@@ -64,7 +64,7 @@ class Login extends Component {
     }
 
     successResult = () => {
-        this.props.history.push('/dashboardmain');
+        this.props.history.push('/dashboard');
     }
     
     failureResult = () => {

@@ -134,15 +134,6 @@ class HeaderHorizontal extends Component {
                                 { /* END Dropdown menu */ }
                             </UncontrolledDropdown>
                             { /* END Alert menu */ }
-                            { /* START Offsidebar button */ }
-                            <NavItem>
-                                <ToggleState state="offsidebar-open" nopersist={true}>
-                                    <NavLink href="">
-                                        <em className="icon-notebook"></em>
-                                    </NavLink>
-                                </ToggleState>
-                            </NavItem>
-                            { /* END Offsidebar menu */ }
                         </Nav>
                     </Collapse>
                     { /* END Nav wrapper */ }
