@@ -203,12 +203,7 @@ class HSEAssignedQualityAppraisalsResolution extends Component {
                     </CardHeader>
                     <hr className="my-4"/>
                     <CardBody>
-                        <form className="form-horizontal" method="get" action="/" onSubmit={this.onSubmit}>
-
-                           
-
-
-                            
+                        <form className="form-horizontal" method="get" action="/" onSubmit={this.onSubmit}> 
                         </form>
                     </CardBody>
                     <CardFooter>
