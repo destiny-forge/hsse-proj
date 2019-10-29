@@ -18,8 +18,6 @@ const HSEArticleLinkingStudiesSchema = new Schema({
   countriesNotReportedInDetails: { type: Boolean, default: false },
   noSpecificCountryFocus: { type: Boolean, defualt: false },
 
-  links: { type: [String] },
-
   links: [
     {
       country: String,

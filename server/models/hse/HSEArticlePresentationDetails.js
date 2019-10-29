@@ -13,9 +13,3 @@ const HSEArticlePresentationDetailsSchema = new Schema({
 });
 
 mongoose.model('HSEArticlePresentationDetails', HSEArticlePresentationDetailsSchema);
-
-HSEArticlePresentationDetailsSchema.eachPath((path) => {
-  // console.log(path);
-});
-
-const props = Object.keys(HSEArticlePresentationDetailsSchema.paths);

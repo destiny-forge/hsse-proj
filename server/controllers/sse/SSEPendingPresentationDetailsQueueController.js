@@ -6,8 +6,8 @@
  */
 
 const mongoose = require('mongoose');
-
 const Authentication = require('../authentication');
+const { hasRole } = require('../../util/auth');
 
 const SSEArticleModelClass = mongoose.model('SSEArticles');
 
@@ -25,7 +25,8 @@ exports.listArticles = async (req, res) => {
     .exec((err, articles) => {
       if (err) {
         return res.send(err);
-      } if (!articles) {
+      }
+      if (!articles) {
         return res.status(404).send({
           message: 'No article in the Presentation Details Article Pending Queue',
         });
@@ -43,10 +44,8 @@ exports.listArticles = async (req, res) => {
  */
 exports.listArticle = async (req, res) => {
   // REFACTOR: Rename to fetch
-
   const { id } = req.param;
-
-  return await SSEArticleModelClass.findById(id);
+  return SSEArticleModelClass.findById(id);
 };
 
 exports.create = (req, res) => {
@@ -61,9 +60,7 @@ exports.create = (req, res) => {
  */
 exports.addArticleToJuniorPresenter = async (req, res) => {
   // REFACTOR: rename to assignToLinker
-
   const { articleId } = req.params;
-
   const user = await Authentication.getUserFromToken(req.headers.authorization);
 
   if (!mongoose.Types.ObjectId.isValid(articleId)) {
@@ -72,27 +69,29 @@ exports.addArticleToJuniorPresenter = async (req, res) => {
     });
   }
 
-  SSEArticleModelClass.findById(articleId, async (err, article) => {
+  if (!hasRole('juniorpresenter', user)) {
+    return res.status(400).send({
+      message: 'User does not have permission',
+    });
+  }
+
+  /* eslint no-param-reassign: ["error", { "props": false }] */
+  return SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
     }
-    if (hasRole('juniorpresenter', user)) {
-      article._presentationDetailsJunior = user._id;
-      article._presentationDetailsJuniorEmail = user.email;
 
-      await article.save();
-      return res.status(200).send({
-        message: 'Junior presenter added',
-      });
-    }
-    return res.status(400).send({
-      message: 'User does not have persmission',
+    article._presentationDetailsJunior = user._id;
+    article._presentationDetailsJuniorEmail = user.email;
+
+    await article.save();
+    return res.status(200).send({
+      message: 'Junior presenter added',
     });
   });
 };
-
-const hasRole = (role, user) => user.roles.includes(role);

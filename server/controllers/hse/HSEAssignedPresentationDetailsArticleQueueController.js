@@ -27,7 +27,8 @@ exports.listArticles = async (req, res) => {
   HSEArticleModelClass.find({ _presentationDetailsJunior: user._id }).exec((err, articles) => {
     if (err) {
       return res.send(err);
-    } if (!articles) {
+    }
+    if (!articles) {
       return res.status(404).send({
         message: 'No article in your Assigned Presentation Details Queue',
       });
@@ -60,7 +61,8 @@ exports.fetchArticle = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -88,7 +90,8 @@ exports.setPresentationDetailsValues = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -98,7 +101,8 @@ exports.setPresentationDetailsValues = async (req, res) => {
       return res.status(404).send({
         message: 'Not authorized to add inputs for Presentation Details for article',
       });
-    } if (article._presentationDetailsJunior.equals(user._id)) {
+    }
+    if (article._presentationDetailsJunior.equals(user._id)) {
       const newPresentationDetails = new HSEArticlePresentationDetailsModelClass(inputValues);
       newPresentationDetails._article = articleId;
       newPresentationDetails.save((err) => {
@@ -116,7 +120,8 @@ exports.setPresentationDetailsValues = async (req, res) => {
       return res.status(201).send({
         message: 'Inputs for Junior Presentation Details added for article',
       });
-    } if (article._presentationDetailsJunior.equals(user._id)) {
+    }
+    if (article._presentationDetailsJunior.equals(user._id)) {
       const newPresentationDetails = new HSEArticlePresentationDetailsModelClass(inputValues);
       newPresentationDetails.save((err) => {
         if (err) {
@@ -155,7 +160,8 @@ exports.setPresentationDetailsComplete = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -165,7 +171,8 @@ exports.setPresentationDetailsComplete = async (req, res) => {
       return res.status(404).send({
         message: 'Not authorized to add inputs for presentation details for article',
       });
-    } if (article._presentationDetailsJunior.equals(user._id)) {
+    }
+    if (article._presentationDetailsJunior.equals(user._id)) {
       const newPresentationDetails = new HSEArticlePresentationDetailsModelClass(inputValues);
       newPresentationDetails.save((err) => {
         if (err) {
@@ -265,7 +272,8 @@ exports.setJuniorPresentationDetailsComplete = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -307,7 +315,8 @@ exports.setSeniorPresentationDetailsComplete = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -419,7 +428,8 @@ exports.setFullCompletion = async (req, res) => {
     .exec((err, article) => {
       if (err) {
         return res.send(err);
-      } if (!article) {
+      }
+      if (!article) {
         return res.status(404).send({
           message: 'Could not set Full Completion for Article Eligibility Filters',
         });
@@ -438,7 +448,8 @@ const isEligibilityFilterJuniorSeniorInputEqual = (articleId) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -465,7 +476,8 @@ exports.setQualityAppraisalInputs = async (req, res) => {
     .exec((err, article) => {
       if (err) {
         return res.send(err);
-      } if (!article) {
+      }
+      if (!article) {
         return res.status(404).send({
           message: 'Could not set Full Completion for Article Quality Appraisal',
         });

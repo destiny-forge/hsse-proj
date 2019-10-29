@@ -82,6 +82,7 @@ exports.create = async (req, res) => {
 
   articlesArray = parseBatchfile.parseHSEJournalFile(data1.data);
 
+  /* eslint no-param-reassign: ["error", { "props": false }] */
   articlesArray.map(async (article) => {
     await HSEArticleBatchfileModelClass.find({ batchfileUrl: url }, (err, batchfile) => {
       console.log(batchfile);
@@ -187,7 +188,8 @@ exports.list = (req, res) => {
   HSEArticleBatchfileModelClass.find((err, batchfiles) => {
     if (err) {
       return res.send(err);
-    } if (!batchfiles) {
+    }
+    if (!batchfiles) {
       return res.status(404).send({
         message: 'No batchfile has been found',
       });
@@ -205,7 +207,6 @@ exports.list = (req, res) => {
  */
 exports.read = (req, res) => {
   // REFACTOR: rename to fetch
-
   const { batchfileId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(batchfileId)) {
@@ -214,10 +215,11 @@ exports.read = (req, res) => {
     });
   }
 
-  HSEArticleModelClass.findById(batchfileId, (err, batchfile) => {
+  return HSEArticleModelClass.findById(batchfileId, (err, batchfile) => {
     if (err) {
       return res.send(err);
-    } if (!batchfile) {
+    }
+    if (!batchfile) {
       return res.status(404).send({
         message: 'No batchfile with that identifier has been found',
       });

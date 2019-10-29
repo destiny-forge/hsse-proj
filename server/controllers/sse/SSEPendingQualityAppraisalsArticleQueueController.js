@@ -6,8 +6,8 @@
  */
 
 const mongoose = require('mongoose');
-
 const Authentication = require('../authentication');
+const { hasRole } = require('../../util/auth');
 
 const SSEArticleModelClass = mongoose.model('SSEArticles');
 
@@ -20,12 +20,15 @@ const SSEArticleModelClass = mongoose.model('SSEArticles');
 
 exports.listArticles = async (req, res) => {
   // REFACTOR: rename to list
-  SSEArticleModelClass.find({ complicated: false /* eligibilityFiltersFullCompletion: true */ })
+  SSEArticleModelClass.find({
+    complicated: false /* eligibilityFiltersFullCompletion: true */,
+  })
     .or([{ _qualityAppraisalsJunior: null }, { _qualityAppraisalsSenior: null }])
     .exec((err, articles) => {
       if (err) {
         return res.send(err);
-      } if (!articles) {
+      }
+      if (!articles) {
         return res.status(404).send({
           message: 'No article in the Quality Appraisal Article Pending Queue',
         });
@@ -42,14 +45,18 @@ exports.listArticles = async (req, res) => {
  */
 exports.listArticle = async (req, res) => {
   // REFACTOR: rename to fetch
-
   const { id } = req.param;
-
-  return await SSEArticleModelClass.findById(id);
-};
-
-exports.create = (req, res) => {
-  // DEFUNCT
+  return SSEArticleModelClass.findById(id, async (err, article) => {
+    if (err) {
+      return res.send(err);
+    }
+    if (!article) {
+      return res.status(404).send({
+        message: 'No article with that identifier has been found',
+      });
+    }
+    return res.status(200).send(article);
+  });
 };
 
 /**
@@ -60,8 +67,13 @@ exports.create = (req, res) => {
  */
 exports.addArticleToJuniorQualityAppraiser = async (req, res) => {
   const { articleId } = req.params;
-
   const user = await Authentication.getUserFromToken(req.headers.authorization);
+
+  if (!hasRole('juniorappraiser', user) && !hasRole('seniorappraiser', user)) {
+    return res.status(400).send({
+      message: 'User does not have permission',
+    });
+  }
 
   if (!mongoose.Types.ObjectId.isValid(articleId)) {
     return res.status(400).send({
@@ -69,28 +81,30 @@ exports.addArticleToJuniorQualityAppraiser = async (req, res) => {
     });
   }
 
-  SSEArticleModelClass.findById(articleId, async (err, article) => {
+  /* eslint no-param-reassign: ["error", { "props": false }] */
+  return SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
-    } if (article._qualityAppraisalsJunior !== null) {
-    } else {
-      if (hasRole('juniorappraiser', user) || hasRole('seniorappraiser', user)) {
-        article._qualityAppraisalsJunior = user._id;
-        article._qualityAppraisalsJuniorEmail = user.email;
+    }
 
-        await article.save();
-        return res.status(200).send({
-          message: 'Junior quality appraiser added',
-        });
-      }
-      return res.status(400).send({
-        message: 'User does not have persmission',
+    if (article._qualityAppraisalsJunior !== undefined) {
+      return res.status(404).send({
+        message: 'A junior appraiser has already been added for this article',
       });
     }
+
+    article._qualityAppraisalsJunior = user._id;
+    article._qualityAppraisalsJuniorEmail = user.email;
+
+    await article.save();
+    return res.status(200).send({
+      message: 'Junior quality appraiser added',
+    });
   });
 };
 
@@ -105,37 +119,41 @@ exports.addArticleToSeniorQualityAppraiser = async (req, res) => {
 
   const user = await Authentication.getUserFromToken(req.headers.authorization);
 
+  if (!hasRole('seniorappraiser', user)) {
+    return res.status(400).send({
+      message: 'User does not have permission',
+    });
+  }
+
   if (!mongoose.Types.ObjectId.isValid(articleId)) {
     return res.status(400).send({
       message: 'Article is invalid',
     });
   }
 
-  SSEArticleModelClass.findById(articleId, async (err, article) => {
+  return SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
-    } if (article._qualityAppraisalsSenior !== undefined) {
-      return res.status(404).send({
-        message: 'A senior filter has already been added for this article',
-      });
     }
-    if (hasRole('seniorappraiser', user)) {
-      article._qualityAppraisalsSenior = user._id;
-      article._qualityAppraisalsSeniorEmail = user.email;
 
-      await article.save();
-      return res.status(200).send({
-        message: 'Senior quality appraiser user added',
+    if (article._qualityAppraisalsSenior !== undefined) {
+      return res.status(404).send({
+        message: 'A senior appraiser has already been added for this article',
       });
     }
-    return res.status(400).send({
-      message: 'User does not have persmission',
+
+    article._qualityAppraisalsSenior = user._id;
+    article._qualityAppraisalsSeniorEmail = user.email;
+
+    await article.save();
+    return res.status(200).send({
+      message: 'Senior quality appraiser user added',
     });
   });
 };
-
-const hasRole = (role, user) => user.roles.includes(role);

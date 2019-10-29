@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+// const fs = require('fs');
+// const path = require('path');
 
 const journalFields = [
   'referenceType',
@@ -47,7 +47,7 @@ const journalFields = [
 ];
 
 exports.parseHSEJournalFile = (data) => {
-  const emptyObj = [];
+  let fields = [];
 
   // Split batchfile into lines (each line contain an article)
   const articles = data.split('\n');
@@ -64,7 +64,7 @@ exports.parseHSEJournalFile = (data) => {
 };
 
 exports.parseSSEJournalFile = (data) => {
-  const emptyObj = [];
+  let fields = [];
 
   // Split batchfile into lines (each line contain an article)
   const articles = data.split('\n');
@@ -80,10 +80,10 @@ exports.parseSSEJournalFile = (data) => {
   return finalResult;
 };
 
-parseJournalArray = (articleArray) => {
-  const fieldsArray = articleArray.split('\t');
-};
+// parseJournalArray = (articleArray) => {
+//   const fieldsArray = articleArray.split('\t');
+// };
 
-exports.parseHSEBook = (data) => {};
+// exports.parseHSEBook = (data) => {};
 
-exports.parseHSEBookSection = (data) => {};
+// exports.parseHSEBookSection = (data) => {};

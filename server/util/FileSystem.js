@@ -1,5 +1,5 @@
 const fs = require('fs');
-const path = require('path');
+// const path = require('path');
 
 /*
 module.exports = filename =>
@@ -29,7 +29,7 @@ fs.readFile('hse_cochrane_reviews_2018-10_2018-11.txt', 'utf8', (err, data) => {
 
 fs.readFile('HSEBatchfileSamples\\hse_reviews_plus_2017-09-05.txt', 'utf8', (err, data) => {
   if (err) {
-    console.log(err);
+    console.log(err, data);
   }
   /*
 
@@ -238,7 +238,7 @@ language
   // console.log(`Amount of fields are: ${fields.length}`);
   // console.log(lines);
   // console.log(lines[2].split('\t'));
-
+  let fields = [];
   const articles = data.split('\n');
   const trimmedArticles = articles.slice(0, articles.length - 1);
 
@@ -250,14 +250,12 @@ language
   console.log(finalResult);
   const jsonFinalResult = JSON.stringify(finalResult);
 
-  fs.writeFile('articlesArray.txt', jsonFinalResult, (err, data) => {
-    if (err) console.log(err);
+  fs.writeFile('articlesArray.txt', jsonFinalResult, (err2, data2) => {
+    if (err2) console.log(err2, data2);
     console.log('Successfully Written to File.');
   });
 
   // var result =  Object.assign.apply({}, journalFields.map( (v, i) => ( {[v]: fields[i]} ) ) );
-
   // const final = Object.assign([...objectArray, result]);
-
   // console.log(final);
 });

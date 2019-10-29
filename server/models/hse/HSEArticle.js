@@ -74,10 +74,18 @@ const HSEArticleSchema = new Schema({
   // Stage completions
 
   // Eligibility and Filter Input
-  _eligibilityFiltersJunior: { type: Schema.Types.ObjectId, ref: 'Users', default: null },
+  _eligibilityFiltersJunior: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users',
+    default: null,
+  },
   _eligibilityFiltersJuniorEmail: { type: String, default: null },
 
-  _eligibilityFiltersSenior: { type: Schema.Types.ObjectId, ref: 'Users', default: null },
+  _eligibilityFiltersSenior: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users',
+    default: null,
+  },
   _eligibilityFiltersSeniorEmail: { type: String, default: null },
 
   eligibilityFiltersJuniorInput: {
@@ -92,10 +100,18 @@ const HSEArticleSchema = new Schema({
   },
 
   // Quality Appraisals Input
-  _qualityAppraisalsJunior: { type: Schema.Types.ObjectId, ref: 'Users', default: null },
+  _qualityAppraisalsJunior: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users',
+    default: null,
+  },
   _qualityAppraisalsJuniorEmail: { type: String, default: null },
 
-  _qualityAppraisalsSenior: { type: Schema.Types.ObjectId, ref: 'Users', default: null },
+  _qualityAppraisalsSenior: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users',
+    default: null,
+  },
   _qualityAppraisalsSeniorEmail: { type: String, default: null },
 
   qualityAppraisalsJuniorInput: {
@@ -110,7 +126,11 @@ const HSEArticleSchema = new Schema({
   },
 
   // Linking Studies Input
-  _linkingStudiesJunior: { type: Schema.Types.ObjectId, ref: 'Users', default: null },
+  _linkingStudiesJunior: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users',
+    default: null,
+  },
   _linkingStudiesJuniorEmail: { type: String, default: null },
 
   linkingStudiesJuniorInput: {
@@ -120,7 +140,11 @@ const HSEArticleSchema = new Schema({
   },
 
   // Linking Studies Input
-  _presentationDetailsJunior: { type: Schema.Types.ObjectId, ref: 'Users', default: null },
+  _presentationDetailsJunior: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users',
+    default: null,
+  },
   _presentationDetailsJuniorEmail: { type: String, default: null },
 
   presentationDetailsJuniorInput: {

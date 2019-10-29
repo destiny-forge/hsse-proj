@@ -13,6 +13,7 @@ async function checkConection() {
   while (!isConnected) {
     console.log('Connecting to ES');
     try {
+      /* eslint-disable no-await-in-loop */
       const health = await client.cluster.health({});
       console.log(health);
       isConnected = true;
@@ -20,15 +21,6 @@ async function checkConection() {
       console.log('Connection Failed, Retrying...', err);
     }
   }
-}
-
-async function resetIndex() {
-  if (await client.indices.exists({ index })) {
-    await client.indices.delete({ index });
-  }
-
-  await client.indices.create({ index });
-  await putHSEArticleMapping();
 }
 
 async function putHSEArticleMapping() {
@@ -39,7 +31,20 @@ async function putHSEArticleMapping() {
     abstract: { type: 'text' },
   };
 
-  return client.indices.putMapping({ index, type, body: { properties: schema } });
+  return client.indices.putMapping({
+    index,
+    type,
+    body: { properties: schema },
+  });
+}
+
+async function resetIndex() {
+  if (await client.indices.exists({ index })) {
+    await client.indices.delete({ index });
+  }
+
+  await client.indices.create({ index });
+  await putHSEArticleMapping();
 }
 
 module.exports = {

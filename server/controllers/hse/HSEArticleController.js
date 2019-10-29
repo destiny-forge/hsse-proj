@@ -53,14 +53,14 @@ exports.create = (req, res) => {
 
   newHSEArticle.presentationDetailsJuniorInput = newPresentationDetailsJunior._id;
 
-  newHSEArticle.save((err) => {
+  return newHSEArticle.save((err) => {
     if (err) {
       console.log(err);
       return res.status(422).send({
         message: 'Unable to save new article',
       });
     }
-    res.status(201).send(newHSEArticle);
+    return res.status(201).send(newHSEArticle);
   });
 };
 
@@ -73,7 +73,6 @@ exports.create = (req, res) => {
  */
 exports.read = (req, res) => {
   // REFACTOR: rename to fetch
-
   const { articleId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(articleId)) {
@@ -82,10 +81,11 @@ exports.read = (req, res) => {
     });
   }
 
-  HSEArticleModelClass.findById(articleId, (err, article) => {
+  return HSEArticleModelClass.findById(articleId, (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -102,9 +102,7 @@ exports.read = (req, res) => {
  * @param object req.body An object of properties to update the article with
  * @param WritableStream res The function's response body
  */
-exports.update = (req, res) => {
-  HSEArticleModelClass.findByIdAndUpdate(req.params.articleId, req.body, (err) => {});
-};
+exports.update = (req, res) => HSEArticleModelClass.findByIdAndUpdate(req.params.articleId, req.body, (err) => {});
 
 /**
  * Removes an article from the database
@@ -113,15 +111,13 @@ exports.update = (req, res) => {
  * @param string req.params.articleId The ID of the article to remove
  * @param WritableStream res The function's response body
  */
-exports.delete = (req, res) => {
-  HSEArticleModelClass.findByIdAndRemove(req.params.articleId, (err) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.json({ message: 'Article has been removed!' });
-    }
-  });
-};
+exports.delete = (req, res) => HSEArticleModelClass.findByIdAndRemove(req.params.articleId, (err) => {
+  if (err) {
+    res.send(err);
+  } else {
+    res.json({ message: 'Article has been removed!' });
+  }
+});
 
 /**
  * Returns a list of articles from the database
@@ -129,18 +125,17 @@ exports.delete = (req, res) => {
  * @param ReadableStream req The function's request body
  * @param WritableStream res The function's response body
  */
-exports.list = (req, res) => {
-  HSEArticleModelClass.find((err, articles) => {
-    if (err) {
-      return res.send(err);
-    } if (!articles) {
-      return res.status(404).send({
-        message: 'No article has been found',
-      });
-    }
-    return res.status(200).send(articles);
-  });
-};
+exports.list = (req, res) => HSEArticleModelClass.find((err, articles) => {
+  if (err) {
+    return res.send(err);
+  }
+  if (!articles) {
+    return res.status(404).send({
+      message: 'No article has been found',
+    });
+  }
+  return res.status(200).send(articles);
+});
 
 /**
  * Adds an article to the complicated queue

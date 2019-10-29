@@ -14,6 +14,7 @@ const HSEPendingQualityAppraisalsArticleQueueController = require('../../control
 module.exports = (app) => {
   app.get(
     '/hse/pendingqualityappraisalsarticlequeue',
+    requireAuth,
     HSEPendingQualityAppraisalsArticleQueueController.listArticles,
   );
   app.get(

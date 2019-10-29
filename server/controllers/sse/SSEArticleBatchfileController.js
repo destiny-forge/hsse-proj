@@ -31,7 +31,7 @@ const s3 = new AWS.S3({
 exports.getFileUrl = (req, res) => {
   const key = `${Date.now()}-${uuid()}.txt`;
 
-  s3.getSignedUrl(
+  return s3.getSignedUrl(
     'putObject',
     {
       Bucket: 'hsse-staging/sse',
@@ -79,6 +79,7 @@ exports.create = async (req, res) => {
 
   articlesArray = parseBatchfile.parseSSEJournalFile(data1.data);
 
+  /* eslint no-param-reassign: ["error", { "props": false }] */
   articlesArray.map(async (article) => {
     await SSEArticleBatchfileModelClass.find({ batchfileUrl: url }, (err, batchfile) => {
       article._batchFile = batchfile[0]._id;
@@ -131,18 +132,17 @@ exports.create = async (req, res) => {
  * @param ReadableStream req The function's request body
  * @param WritableStream res The function's response body
  */
-exports.list = (req, res) => {
-  SSEArticleBatchfileModelClass.find((err, batchfiles) => {
-    if (err) {
-      return res.send(err);
-    } if (!batchfiles) {
-      return res.status(404).send({
-        message: 'No batchfile has been found',
-      });
-    }
-    return res.status(200).send(batchfiles);
-  });
-};
+exports.list = (req, res) => SSEArticleBatchfileModelClass.find((err, batchfiles) => {
+  if (err) {
+    return res.send(err);
+  }
+  if (!batchfiles) {
+    return res.status(404).send({
+      message: 'No batchfile has been found',
+    });
+  }
+  return res.status(200).send(batchfiles);
+});
 
 /**
  * Read's a batch file's details from the database
@@ -153,7 +153,6 @@ exports.list = (req, res) => {
  */
 exports.read = (req, res) => {
   // REFACTOR: rename to fetch
-
   const { batchfileId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(batchfileId)) {
@@ -162,10 +161,11 @@ exports.read = (req, res) => {
     });
   }
 
-  SSEArticleModelClass.findById(batchfileId, (err, batchfile) => {
+  return SSEArticleModelClass.findById(batchfileId, (err, batchfile) => {
     if (err) {
       return res.send(err);
-    } if (!batchfile) {
+    }
+    if (!batchfile) {
       return res.status(404).send({
         message: 'No batchfile with that identifier has been found',
       });

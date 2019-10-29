@@ -12,19 +12,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
     "lint": "eslint '**/*.js' --fix",
-    "format": "prettier-eslint '**/*.{js,json}' --write"
+    "format": "prettier-eslint '**/*.{js,json}' --write --single-quote"
   },
   "lint-staged": {
     "**/*.js": [
       "eslint --fix",
-      "prettier-eslint --write",
+      "prettier-eslint --write --single-quote",
       "git add"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "author": "",
   "license": "ISC",

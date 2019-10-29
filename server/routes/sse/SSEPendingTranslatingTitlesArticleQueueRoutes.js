@@ -14,14 +14,17 @@ const SSEPendingTranslatingTitlesArticleQueueController = require('../../control
 module.exports = (app) => {
   app.get(
     '/sse/pendingtranslatingtitlesarticlequeue',
+    requireAuth,
     SSEPendingTranslatingTitlesArticleQueueController.listArticles,
   );
   app.get(
     '/sse/pendingtranslatingtitlesarticlequeue/fetcharticle/:id',
+    requireAuth,
     SSEPendingTranslatingTitlesArticleQueueController.listArticle,
   );
   app.post(
     '/sse/pendingtranslatingtitlesarticlequeue/addjuniordetailer/:articleId',
+    requireAuth,
     SSEPendingTranslatingTitlesArticleQueueController.addArticleToJuniorTranslatingTitlesTranslator,
   );
 };

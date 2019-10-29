@@ -14,26 +14,32 @@ const SSEEligibilityFilterArticleQueueController = require('../../controllers/ss
 module.exports = (app) => {
   app.get(
     '/sse/pendingeligibilityfiltersarticlequeue',
+    requireAuth,
     SSEEligibilityFilterArticleQueueController.listArticles,
   );
   app.get(
     '/sse/pendingeligibilityfiltersarticlequeue/fetcharticle/:id',
+    requireAuth,
     SSEEligibilityFilterArticleQueueController.listArticle,
   );
   app.post(
     '/sse/pendingeligibilityfiltersarticlequeue/addjuniorfilterer/:articleId',
+    requireAuth,
     SSEEligibilityFilterArticleQueueController.addArticleToJuniorEligibilityFilterer,
   );
   app.post(
     '/sse/pendingeligibilityfiltersarticlequeue/addalljuniorfilterer',
+    requireAuth,
     SSEEligibilityFilterArticleQueueController.addAllArticlesToJuniorEligibilityFilterer,
   );
   app.post(
     '/sse/pendingeligibilityfiltersarticlequeue/addseniorfilterer/:articleId',
+    requireAuth,
     SSEEligibilityFilterArticleQueueController.addArticleToSeniorEligibilityFilterer,
   );
   app.post(
     '/sse/pendingeligibilityfiltersarticlequeue/addallseniorfilterer',
+    requireAuth,
     SSEEligibilityFilterArticleQueueController.addAllArticlesToSeniorEligibilityFilterer,
   );
 };

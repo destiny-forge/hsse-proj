@@ -21,7 +21,8 @@ exports.listBatchfiles = async (req, res) => {
     .exec((err, batchfiles) => {
       if (err) {
         return res.send(err);
-      } if (!batchfiles) {
+      }
+      if (!batchfiles) {
         return res.status(404).send({
           message: 'No article in the Eligibility Filters Batchfile Pending Queue',
         });
@@ -38,12 +39,10 @@ exports.listBatchfiles = async (req, res) => {
  */
 exports.listBatchfile = async (req, res) => {
   // REFACTOR: rename to fetch
-
   const { id } = req.param;
-
-  return await HSEArticleBatchfileModelClass.findById(id); // TODO: referencing HSE in SSE code
+  return HSEArticleBatchfileModelClass.findById(id); // TODO: referencing HSE in SSE code
 };
 
-exports.create = (req, res) => {
-  // DEFUNCT
-};
+// exports.create = (req, res) => {
+//  // DEFUNCT
+// };

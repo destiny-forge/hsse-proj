@@ -5,7 +5,8 @@
   "extends": "airbnb-base",
   "plugins": ["promise"],
   "rules": {
-    "no-console": "error",
+    "no-unused-vars": ["warn"],
+    "no-underscore-dangle": "off",
     "promise/always-return": "error",
     "promise/no-return-wrap": "error",
     "promise/param-names": "error",

@@ -6,8 +6,8 @@
  */
 
 const mongoose = require('mongoose');
-
 const Authentication = require('../authentication');
+const { hasRole } = require('../../util/auth');
 
 const HSEArticleModelClass = mongoose.model('HSEArticles');
 
@@ -19,12 +19,15 @@ const HSEArticleModelClass = mongoose.model('HSEArticles');
  */
 exports.listArticles = async (req, res) => {
   // REFACTOR: Rename to list
-  HSEArticleModelClass.find({ complicated: false /* , eligibilityFiltersFullCompletion: true */ })
+  HSEArticleModelClass.find({
+    complicated: false /* , eligibilityFiltersFullCompletion: true */,
+  })
     .and([{ _linkingStudiesJunior: null }])
     .exec((err, articles) => {
       if (err) {
         return res.send(err);
-      } if (!articles) {
+      }
+      if (!articles) {
         return res.status(404).send({
           message: 'No article in the Linking Studies Article Pending Queue',
         });
@@ -42,10 +45,8 @@ exports.listArticles = async (req, res) => {
  */
 exports.listArticle = async (req, res) => {
   // REFACTOR: Rename to fetch
-
   const { id } = req.param;
-
-  return await HSEArticleModelClass.findById(id);
+  return HSEArticleModelClass.findById(id);
 };
 
 exports.create = (req, res) => {
@@ -71,31 +72,34 @@ exports.addArticleToJuniorLinker = async (req, res) => {
     });
   }
 
-  HSEArticleModelClass.findById(articleId, async (err, article) => {
+  if (!hasRole('linker', user)) {
+    return res.status(400).send({
+      message: 'User does not have permission',
+    });
+  }
+
+  /* eslint no-param-reassign: ["error", { "props": false }] */
+  return HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
-    } if (article._linkingStudiesJunior !== null) {
+    }
+    if (article._linkingStudiesJunior !== null) {
       return res.status(404).send({
         message: 'Junior linker has already been added for this article',
       });
     }
-    if (hasRole('linker', user)) {
-      article._linkingStudiesJunior = user._id;
-      article._linkingStudiesJuniorEmail = user.email;
 
-      await article.save();
-      return res.status(200).send({
-        message: 'Junior studies linker added',
-      });
-    }
-    return res.status(400).send({
-      message: 'User does not have persmission',
+    article._linkingStudiesJunior = user._id;
+    article._linkingStudiesJuniorEmail = user.email;
+
+    await article.save();
+    return res.status(200).send({
+      message: 'Junior studies linker added',
     });
   });
 };
-
-const hasRole = (role, user) => user.roles.includes(role);

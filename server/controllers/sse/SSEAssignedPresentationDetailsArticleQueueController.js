@@ -27,7 +27,8 @@ exports.listArticles = async (req, res) => {
   SSEArticleModelClass.find({ _presentationDetailsJunior: user._id }).exec((err, articles) => {
     if (err) {
       return res.send(err);
-    } if (!articles) {
+    }
+    if (!articles) {
       return res.status(404).send({
         message: 'No article in your Assigned Presentation Details Queue',
       });
@@ -46,10 +47,8 @@ exports.listArticles = async (req, res) => {
  */
 exports.fetchArticle = async (req, res) => {
   // REFACTOR: rename to fetch
-
   const { articleId } = req.params;
-
-  const user = await Authentication.getUserFromToken(req.headers.authorization);
+  // const user = await Authentication.getUserFromToken(req.headers.authorization);
 
   if (!mongoose.Types.ObjectId.isValid(articleId)) {
     return res.status(400).send({
@@ -57,10 +56,11 @@ exports.fetchArticle = async (req, res) => {
     });
   }
 
-  SSEArticleModelClass.findById(articleId, async (err, article) => {
+  return SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -80,15 +80,15 @@ exports.fetchArticle = async (req, res) => {
  */
 exports.setPresentationDetailsValues = async (req, res) => {
   const { articleId } = req.params;
-
   const inputValues = req.body;
 
   const user = await Authentication.getUserFromToken(req.headers.authorization);
 
-  SSEArticleModelClass.findById(articleId, async (err, article) => {
+  return SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -98,7 +98,8 @@ exports.setPresentationDetailsValues = async (req, res) => {
       return res.status(404).send({
         message: 'Not authorized to add inputs for Presentation Details for article',
       });
-    } if (article._linkingStudiesJunior.equals(user._id)) {
+    }
+    if (article._linkingStudiesJunior.equals(user._id)) {
       const newPresentationDetails = new SSEArticlePresentationDetailsModelClass(inputValues);
       newPresentationDetails._article = articleId;
       newPresentationDetails.save((err) => {
@@ -116,7 +117,8 @@ exports.setPresentationDetailsValues = async (req, res) => {
       return res.status(201).send({
         message: 'Inputs for Junior Presentation Details added for article',
       });
-    } if (article._presentationDetailsJunior.equals(user._id)) {
+    }
+    if (article._presentationDetailsJunior.equals(user._id)) {
       const newPresentationDetails = new SSEArticlePresentationDetailsModelClass(inputValues);
       newPresentationDetails.save((err) => {
         if (err) {
@@ -147,15 +149,16 @@ exports.setPresentationDetailsValues = async (req, res) => {
  */
 exports.setPresentationDetailsComplete = async (req, res) => {
   const { articleId } = req.params;
-
   const inputValues = req.body;
 
   const user = await Authentication.getUserFromToken(req.headers.authorization);
 
-  SSEArticleModelClass.findById(articleId, async (err, article) => {
+  /* eslint no-param-reassign: ["error", { "props": false }] */
+  return SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -165,7 +168,8 @@ exports.setPresentationDetailsComplete = async (req, res) => {
       return res.status(404).send({
         message: 'Not authorized to add inputs for Presentation Details for article',
       });
-    } if (article._presentationDetailsJunior.equals(user._id)) {
+    }
+    if (article._presentationDetailsJunior.equals(user._id)) {
       const newPresentationDetails = new SSEArticlePresentationDetailsModelClass(inputValues);
       newPresentationDetails.save((err) => {
         if (err) {
@@ -249,10 +253,12 @@ exports.setJuniorPresentationDetailsComplete = async (req, res) => {
 
   const user = await Authentication.getUserFromToken(req.headers.authorization);
 
-  SSEArticleModelClass.findById(articleId, async (err, article) => {
+  /* eslint no-param-reassign: ["error", { "props": false }] */
+  return SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -270,7 +276,8 @@ exports.setJuniorPresentationDetailsComplete = async (req, res) => {
   });
 };
 
-const setFullEligibilityFilterComplete = async (articleId) => {
+const setFullEligibilityFilterComplete = async (articleId) =>
+  /* eslint no-param-reassign: ["error", { "props": false }] */
   SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       // return res.send(err);
@@ -330,8 +337,6 @@ const setFullEligibilityFilterComplete = async (articleId) => {
       console.log('Junior Quality Appraisal are not completed for article');
     }
   });
-};
-
 /**
  * TODO: document (code is not finished)
  *
@@ -341,15 +346,15 @@ const setFullEligibilityFilterComplete = async (articleId) => {
  */
 exports.setFullCompletion = async (req, res) => {
   const { articleId } = req.params;
-
   // const user = await Authentication.getUserFromToken(req.headers.authorization);
 
-  SSEArticleModelClass.findById(articleId)
+  return SSEArticleModelClass.findById(articleId)
     .and([{ eligibilityFilterJuniorCompleted: true }])
     .exec((err, article) => {
       if (err) {
         return res.send(err);
-      } if (!article) {
+      }
+      if (!article) {
         return res.status(404).send({
           message: 'Could not set Full Completion for Article Eligibility Filters',
         });
@@ -366,15 +371,16 @@ exports.setFullCompletion = async (req, res) => {
  */
 exports.setQualityAppraisalInputs = async (req, res) => {
   const { articleId } = req.params;
-
   // const user = await Authentication.getUserFromToken(req.headers.authorization);
 
-  SSEArticleModelClass.findById(articleId)
+  /* eslint no-param-reassign: ["error", { "props": false }] */
+  return SSEArticleModelClass.findById(articleId)
     .and([{ qualityAppraisalJuniorCompleted: true }, { qualityAppraisalSeniorCompleted: true }])
     .exec((err, article) => {
       if (err) {
         return res.send(err);
-      } if (!article) {
+      }
+      if (!article) {
         return res.status(404).send({
           message: 'Could not set Full Completion for Article Quality Appraisal',
         });

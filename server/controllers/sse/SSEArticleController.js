@@ -53,14 +53,14 @@ exports.create = (req, res) => {
 
   newSSEArticle.presentationDetailsJuniorInput = newPresentationDetailsJunior._id;
 
-  newSSEArticle.save((err) => {
+  return newSSEArticle.save((err) => {
     if (err) {
       console.log(err);
       return res.status(422).send({
         message: 'Unable to save new article',
       });
     }
-    res.status(201).send(newSSEArticle);
+    return res.status(201).send(newSSEArticle);
   });
 };
 
@@ -82,10 +82,11 @@ exports.read = (req, res) => {
     });
   }
 
-  SSEArticleModelClass.findById(articleId, (err, article) => {
+  return SSEArticleModelClass.findById(articleId, (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -113,15 +114,12 @@ exports.update = (req, res) => {
  * @param string req.params.articleId The ID of the article to remove
  * @param WritableStream res The function's response body
  */
-exports.delete = (req, res) => {
-  SSEArticleModelClass.findByIdAndRemove(req.params.articleId, (err) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.json({ message: 'Article has been removed!' });
-    }
-  });
-};
+exports.delete = (req, res) => SSEArticleModelClass.findByIdAndRemove(req.params.articleId, (err) => {
+  if (err) {
+    return res.send(err);
+  }
+  return res.json({ message: 'Article has been removed!' });
+});
 
 /**
  * Returns a list of articles from the database
@@ -133,7 +131,8 @@ exports.list = (req, res) => {
   SSEArticleModelClass.find((err, articles) => {
     if (err) {
       return res.send(err);
-    } if (!articles) {
+    }
+    if (!articles) {
       return res.status(404).send({
         message: 'No article has been found',
       });
@@ -158,7 +157,7 @@ exports.addToComplicatedQueue = async (req, res) => {
     });
   }
 
-  await SSEArticleModelClass.findByIdAndUpdate(
+  return SSEArticleModelClass.findByIdAndUpdate(
     articleId,
 
     { complicated: true },

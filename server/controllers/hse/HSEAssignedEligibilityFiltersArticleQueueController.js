@@ -7,6 +7,7 @@
 
 const _ = require('lodash');
 const mongoose = require('mongoose');
+const { hasRole } = require('../../util/auth');
 // const UserModelClass = mongoose.model('Users');
 
 const HSEArticleModelClass = mongoose.model('HSEArticles');
@@ -34,7 +35,8 @@ exports.listArticles = async (req, res) => {
     .exec((err, articles) => {
       if (err) {
         return res.send(err);
-      } if (!articles) {
+      }
+      if (!articles) {
         return res.status(404).send({
           message: 'No article in your Eligibility Filters Queue',
         });
@@ -67,7 +69,8 @@ exports.fetchArticle = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -99,7 +102,8 @@ exports.setEligibilityFiltersValues = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -114,7 +118,8 @@ exports.setEligibilityFiltersValues = async (req, res) => {
       return res.status(404).send({
         message: 'Not authorized to add inputs for eligibility and filter for article',
       });
-    } if (user._id.equals(article._eligibilityFiltersJunior)) {
+    }
+    if (user._id.equals(article._eligibilityFiltersJunior)) {
       await HSEArticleEligibilityFilterModelClass.findOneAndUpdate(
         { _id: article.eligibilityFiltersJuniorInput },
 
@@ -280,7 +285,8 @@ exports.setEligibilityFiltersComplete = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -295,7 +301,8 @@ exports.setEligibilityFiltersComplete = async (req, res) => {
       return res.status(404).send({
         message: 'Not authorized to add inputs for eligibility and filter for article',
       });
-    } if (user._id.equals(article._eligibilityFiltersJunior)) {
+    }
+    if (user._id.equals(article._eligibilityFiltersJunior)) {
       await HSEArticleEligibilityFilterModelClass.findOneAndUpdate(
         { _id: article.eligibilityFiltersJuniorInput },
 
@@ -348,7 +355,8 @@ exports.setJuniorEligibilityFilterComplete = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -387,7 +395,8 @@ exports.setSeniorEligibilityFiltersComplete = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -431,7 +440,8 @@ exports.setFullEligibilityFiltersCompleteOrResolve = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -447,7 +457,8 @@ exports.setFullEligibilityFiltersCompleteOrResolve = async (req, res) => {
       return res.status(404).send({
         message: 'Not authorized to add inputs for eligibility and filter for article',
       });
-    } if (user._id.equals(article._eligibilityFiltersJunior)) {
+    }
+    if (user._id.equals(article._eligibilityFiltersJunior)) {
       console.log('*** INSIDE FINISHING FOR JUNIOR ELIGIBILITY FILTERS ***');
       console.log(`*** article._eligibilityFiltersJunior: ${article._eligibilityFiltersJunior}`);
       await HSEArticleEligibilityFilterModelClass.findOneAndUpdate(
@@ -504,7 +515,8 @@ exports.setFullEligibilityFiltersCompleteOrResolve = async (req, res) => {
         async (err, eligibilityFilterJunior) => {
           if (err) {
             return res.send(err);
-          } if (!eligibilityFilterJunior) {
+          }
+          if (!eligibilityFilterJunior) {
             return res.status(404).send({
               message: 'No Eligibility Filter with that identifier has been found',
             });
@@ -514,7 +526,8 @@ exports.setFullEligibilityFiltersCompleteOrResolve = async (req, res) => {
             async (err, eligibilityFilterSenior) => {
               if (err) {
                 return res.send(err);
-              } if (!eligibilityFilterSenior) {
+              }
+              if (!eligibilityFilterSenior) {
                 return res.status(404).send({
                   message: 'No Eligibility Filter with that identifier has been found',
                 });
@@ -595,7 +608,8 @@ exports.setFullCompletion = async (req, res) => {
     .exec((err, article) => {
       if (err) {
         return res.send(err);
-      } if (!article) {
+      }
+      if (!article) {
         return res.status(404).send({
           message: 'Could not set Full Completion for Article Eligibility Filters',
         });
@@ -614,7 +628,8 @@ const isEligibilityFilterJuniorSeniorInputEqual = (articleId) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -639,7 +654,8 @@ exports.setEligibilityFilterInputs = async (req, res) => {
     .exec((err, article) => {
       if (err) {
         return res.send(err);
-      } if (!article) {
+      }
+      if (!article) {
         return res.status(404).send({
           message: 'Could not set Full Completion for Article Eligibility Filters',
         });
@@ -676,11 +692,13 @@ exports.removeArticleFromJuniorEligibilityFilterer = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
-    } if (article._eligibilityFiltersJunior === null) {
+    }
+    if (article._eligibilityFiltersJunior === null) {
       return res.status(404).send({
         message: 'A junior filterer has not been added for this article',
       });
@@ -695,7 +713,7 @@ exports.removeArticleFromJuniorEligibilityFilterer = async (req, res) => {
       });
     }
     return res.status(400).send({
-      message: 'User does not have persmission',
+      message: 'User does not have permission',
     });
   });
 };
@@ -727,11 +745,13 @@ exports.removeAllArticlesFromJuniorEligibilityFilterer = async (req, res) => {
     HSEArticleModelClass.findById(articleId, async (err, article) => {
       if (err) {
         return res.send(err);
-      } if (!article) {
+      }
+      if (!article) {
         return res.status(404).send({
           message: 'No article with that identifier has been found',
         });
-      } if (article._eligibilityFiltersJunior === null) {
+      }
+      if (article._eligibilityFiltersJunior === null) {
         return res.status(404).send({
           message: 'A junior filterer has not been added for this article',
         });
@@ -743,7 +763,7 @@ exports.removeAllArticlesFromJuniorEligibilityFilterer = async (req, res) => {
         await article.save();
       } else {
         return res.status(400).send({
-          message: 'User does not have persmission',
+          message: 'User does not have permission',
         });
       }
     });
@@ -778,11 +798,13 @@ exports.removeArticleFromSeniorEligibilityFilterer = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
-    } if (article._eligibilityFiltersSenior !== null) {
+    }
+    if (article._eligibilityFiltersSenior !== null) {
       return res.status(404).send({
         message: 'A senior filterer has already been added for this article',
       });
@@ -800,7 +822,7 @@ exports.removeArticleFromSeniorEligibilityFilterer = async (req, res) => {
       });
     }
     return res.status(400).send({
-      message: 'User does not have persmission',
+      message: 'User does not have permission',
     });
   });
 };
@@ -832,11 +854,13 @@ exports.removeAllArticlesFromSeniorEligibilityFilterer = async (req, res) => {
     HSEArticleModelClass.findById(articleId, async (err, article) => {
       if (err) {
         return res.send(err);
-      } if (!article) {
+      }
+      if (!article) {
         return res.status(404).send({
           message: 'No article with that identifier has been found',
         });
-      } if (article._eligibilityFiltersSenior === null) {
+      }
+      if (article._eligibilityFiltersSenior === null) {
         return res.status(404).send({
           message: 'A senior filterer has not been added for this article',
         });
@@ -850,7 +874,7 @@ exports.removeAllArticlesFromSeniorEligibilityFilterer = async (req, res) => {
         });
       } else {
         return res.status(400).send({
-          message: 'User does not have persmission',
+          message: 'User does not have permission',
         });
       }
     });

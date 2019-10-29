@@ -14,14 +14,17 @@ const SSEPendingPresentationDetailsArticleQueueController = require('../../contr
 module.exports = (app) => {
   app.get(
     '/sse/pendingpresentationdetailsarticlequeue',
+    requireAuth,
     SSEPendingPresentationDetailsArticleQueueController.listArticles,
   );
   app.get(
     '/sse/pendingpresentationdetailsarticlequeue/fetcharticle/:id',
+    requireAuth,
     SSEPendingPresentationDetailsArticleQueueController.listArticle,
   );
   app.post(
     '/sse/pendingpresentationdetailsarticlequeue/addjuniordetailer/:articleId',
+    requireAuth,
     SSEPendingPresentationDetailsArticleQueueController.addArticleToJuniorPresentationDetailer,
   );
 };

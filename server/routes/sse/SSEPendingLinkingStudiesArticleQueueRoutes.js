@@ -14,14 +14,17 @@ const SSEPendingLinkingStudiesArticleQueueController = require('../../controller
 module.exports = (app) => {
   app.get(
     '/sse/pendinglinkingstudiesarticlequeue',
+    requireAuth,
     SSEPendingLinkingStudiesArticleQueueController.listArticles,
   );
   app.get(
     '/sse/pendinglinkingstudiesarticlequeue/fetcharticle/:id',
+    requireAuth,
     SSEPendingLinkingStudiesArticleQueueController.listArticle,
   );
   app.post(
     '/sse/pendinglinkingstudiesarticlequeue/addjuniorlinker/:articleId',
+    requireAuth,
     SSEPendingLinkingStudiesArticleQueueController.addArticleToJuniorLinker,
   );
 };

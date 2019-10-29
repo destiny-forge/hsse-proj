@@ -7,22 +7,20 @@ const StageModelClass = mongoose.model('stages');
 
 exports.create = (req, res) => {
   // DEFUNCT
-
   const newStage = new StageModelClass(req.body);
 
-  newStage.save((err) => {
+  return newStage.save((err) => {
     if (err) {
       return res.status(422).send({
         message: 'Unable to save new stage',
       });
     }
-    res.status(201).send(newStage);
+    return res.status(201).send(newStage);
   });
 };
 
 exports.read = (req, res) => {
   // DEFUNCT
-
   const { stageId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(stageId)) {
@@ -31,10 +29,11 @@ exports.read = (req, res) => {
     });
   }
 
-  StageModelClass.findById(stageId, (err, stage) => {
+  return StageModelClass.findById(stageId, (err, stage) => {
     if (err) {
       return res.send(err);
-    } if (!stage) {
+    }
+    if (!stage) {
       return res.status(404).send({
         message: 'No state with that identifier has been found',
       });
@@ -45,21 +44,25 @@ exports.read = (req, res) => {
 
 exports.update = (req, res) => {
   // DEFUNCT
-  StageModelClass.findByIdAndUpdate(req.params.stageId, req.body, (err) => {});
+  StageModelClass.findByIdAndUpdate(req.params.stageId, req.body, (err) => {
+    if (err) {
+      return res.send(err);
+    }
+    return res.json({ message: 'Stage has been updated' });
+  });
 };
 
 exports.delete = (req, res) => {
   // DEFUNCT
   StageModelClass.findByIdAndRemove(req.params.stageId, (err) => {
     if (err) {
-      res.send(err);
-    } else {
-      res.json({ message: 'Stage has been removed!' });
+      return res.send(err);
     }
+    return res.json({ message: 'Stage has been removed!' });
   });
 };
 
-exports.list = function (req, res) {
+exports.list = (req, res) => {
   // DEFUNCT
   StageModelClass.find().exec((err, stages) => {
     if (err) {
@@ -67,6 +70,6 @@ exports.list = function (req, res) {
         message: 'Unable to find stages',
       });
     }
-    res.json(stages);
+    return res.json(stages);
   });
 };

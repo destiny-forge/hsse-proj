@@ -11,7 +11,8 @@ const nodemailer = require('nodemailer');
 // const aws = require('aws-sdk');
 const ses = require('nodemailer-ses-transport');
 
-const config = require('../config/baseConfig');
+/* lets do this a better way */
+require('../config/baseConfig');
 
 const USER = ['user'];
 const UPLOADER = ['user', 'uploader'];
@@ -195,9 +196,7 @@ exports.confirmUser = (req, res, next) => {
  */
 exports.currentUser = async (req, res, next) => {
   const userId = getUserIdFromToken(req.headers.authorization);
-
   const user = await UserModelClass.findOne({ _id: userId }).exec();
-
   return res.status(200).send({ user });
 };
 
@@ -245,7 +244,8 @@ exports.resetPassword = (req, res, next) => {
     return res.status(422).send({
       error: 'You must provide password and confirmPassword',
     });
-  } if (password !== confirmPassword) {
+  }
+  if (password !== confirmPassword) {
     console.log('Your password and confirmPassword must match');
     return res.status(422).send({
       error: 'Your password and confirmPassword must match',
@@ -334,7 +334,8 @@ exports.fetchAllUsers = (req, res) => {
   UserModelClass.find((err, users) => {
     if (err) {
       return res.send(err);
-    } if (!users) {
+    }
+    if (!users) {
       return res.status(404).send({
         message: 'No user has been found',
       });
@@ -352,7 +353,8 @@ exports.addRole = async (req, res) => {
   UserModelClass.findOneAndUpdate((err, user) => {
     if (err) {
       return res.send(err);
-    } if (!user) {
+    }
+    if (!user) {
       return res.status(404).send({
         message: 'No user has been found',
       });
@@ -377,7 +379,8 @@ exports.addRole = async (req, res) => {
       if (err) {
         console.log(err);
         return res.status(500).send(err);
-      } if (!user) {
+      }
+      if (!user) {
         console.log('No user found!');
         return res.status(404).send({
           message: 'No user has been found',
@@ -410,7 +413,8 @@ exports.removeRole = async (req, res) => {
       if (err) {
         console.log(err);
         return res.status(500).send(err);
-      } if (!user) {
+      }
+      if (!user) {
         console.log('No user found!');
         return res.status(404).send({
           message: 'No user has been found',
@@ -486,7 +490,8 @@ exports.updateRole = async (req, res) => {
       if (err) {
         console.log(err);
         return res.status(500).send(err);
-      } if (!user) {
+      }
+      if (!user) {
         console.log('No user found!');
         return res.status(404).send({
           message: 'Unable to update role!',

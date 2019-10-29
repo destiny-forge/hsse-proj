@@ -16,9 +16,8 @@ const SSEArticleQualityAppraisalSchema = new Schema({
   questionTwo: { type: String, default: '' },
 });
 
-SSEArticleQualityAppraisalSchema.methods.isEqualTo = function (otherInput) {
-  currentModel = this;
-
+SSEArticleQualityAppraisalSchema.methods.isEqualTo = function isEqualTo(otherInput) {
+  const currentModel = this;
   let unEqualFields = 0;
 
   const props = Object.keys(SSEArticleQualityAppraisalSchema.paths);
@@ -26,9 +25,9 @@ SSEArticleQualityAppraisalSchema.methods.isEqualTo = function (otherInput) {
   console.log(props.length);
 
   SSEArticleQualityAppraisalSchema.eachPath((path) => {
-    if (currentModel[path] !== otherInput[path] && path != '_article' && path != '_id') {
+    if (currentModel[path] !== otherInput[path] && path !== '_article' && path !== '_id') {
       console.log(`${path}: ${currentModel[path]}, ${path}: ${otherInput[path]}`);
-      unEqualFields++;
+      unEqualFields += 1;
       console.log(path);
     }
   });
@@ -37,10 +36,3 @@ SSEArticleQualityAppraisalSchema.methods.isEqualTo = function (otherInput) {
 };
 
 mongoose.model('SSEArticleQualityAppraisals', SSEArticleQualityAppraisalSchema);
-
-SSEArticleQualityAppraisalSchema.eachPath((path) => {
-  // console.log(path);
-});
-
-const props = Object.keys(SSEArticleQualityAppraisalSchema.paths);
-// console.log(props.length);

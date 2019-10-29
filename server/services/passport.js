@@ -8,7 +8,7 @@ const UserModelClass = mongoose.model('Users');
 
 const localOptions = { usernameField: 'email' };
 
-const localLogin = new LocalStrategy(localOptions, ((email, password, done) => {
+const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
   UserModelClass.findOne({ email }, (err, user) => {
     if (err) {
       return done(err);
@@ -22,9 +22,9 @@ const localLogin = new LocalStrategy(localOptions, ((email, password, done) => {
       return done(null, false);
     }
 
-    user.comparePassword(password, (err, isMatch) => {
-      if (err) {
-        return done(err);
+    return user.comparePassword(password, (err2, isMatch) => {
+      if (err2) {
+        return done(err2);
       }
       if (!isMatch) {
         return done(null, false);
@@ -33,25 +33,22 @@ const localLogin = new LocalStrategy(localOptions, ((email, password, done) => {
       return done(null, user);
     });
   });
-}));
+});
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('Authorization'),
   secretOrKey: process.env.JWT_SECRET,
 };
 
-const jwtLogin = new JwtStrategy(jwtOptions, ((payload, done) => {
-  UserModelClass.findById(payload.sub, (err, user) => {
-    if (err) {
-      return done(err, false);
-    }
+const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => UserModelClass.findById(payload.sub, (err, user) => {
+  if (err) {
+    return done(err, false);
+  }
 
-    if (user) {
-      done(null, user);
-    } else {
-      done(null, false);
-    }
-  });
+  if (user) {
+    return done(null, user);
+  }
+  return done(null, false);
 }));
 
 passport.use(jwtLogin);

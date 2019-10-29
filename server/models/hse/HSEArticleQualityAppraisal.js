@@ -12,19 +12,56 @@ const HSEArticleQualityAppraisalSchema = new Schema({
   _article: { type: Schema.Types.ObjectId, ref: 'HSEArticles' },
 
   // Quality
-  questionOne: { type: String, enum: ['Yes', 'No', "Can't answer", 'Not applicable'] },
-  questionTwo: { type: String, enum: ['Yes', 'No', "Can't answer", 'Not applicable'] },
-  questionThree: { type: String, enum: ['Yes', 'No', "Can't answer", 'Not applicable'] },
-  questionFour: { type: String, enum: ['Yes', 'No', "Can't answer", 'Not applicable'] },
-  questionFive: { type: String, enum: ['Yes', 'No', "Can't answer", 'Not applicable'] },
-  questionSix: { type: String, enum: ['Yes', 'No', "Can't answer", 'Not applicable'] },
-  questionSeven: { type: String, enum: ['Yes', 'No', "Can't answer", 'Not applicable'] },
-  questionEight: { type: String, enum: ['Yes', 'No', "Can't answer", 'Not applicable'] },
-  questionNine: { type: String, enum: ['Yes', 'No', "Can't answer", 'Not applicable'] },
-  questionTen: { type: String, enum: ['Yes', 'No', "Can't answer", 'Not applicable'] },
-  questionEleven: { type: String, enum: ['Yes', 'No', "Can't answer", 'Not applicable'] },
+  questionOne: {
+    type: String,
+    enum: ['Yes', 'No', "Can't answer", 'Not applicable'],
+  },
+  questionTwo: {
+    type: String,
+    enum: ['Yes', 'No', "Can't answer", 'Not applicable'],
+  },
+  questionThree: {
+    type: String,
+    enum: ['Yes', 'No', "Can't answer", 'Not applicable'],
+  },
+  questionFour: {
+    type: String,
+    enum: ['Yes', 'No', "Can't answer", 'Not applicable'],
+  },
+  questionFive: {
+    type: String,
+    enum: ['Yes', 'No', "Can't answer", 'Not applicable'],
+  },
+  questionSix: {
+    type: String,
+    enum: ['Yes', 'No', "Can't answer", 'Not applicable'],
+  },
+  questionSeven: {
+    type: String,
+    enum: ['Yes', 'No', "Can't answer", 'Not applicable'],
+  },
+  questionEight: {
+    type: String,
+    enum: ['Yes', 'No', "Can't answer", 'Not applicable'],
+  },
+  questionNine: {
+    type: String,
+    enum: ['Yes', 'No', "Can't answer", 'Not applicable'],
+  },
+  questionTen: {
+    type: String,
+    enum: ['Yes', 'No', "Can't answer", 'Not applicable'],
+  },
+  questionEleven: {
+    type: String,
+    enum: ['Yes', 'No', "Can't answer", 'Not applicable'],
+  },
 
-  amstarStatus: { type: String, enum: ['In progress', 'Completed'], default: 'In progress' },
+  amstarStatus: {
+    type: String,
+    enum: ['In progress', 'Completed'],
+    default: 'In progress',
+  },
   amstarNumerator: { type: Number },
   amstarDenominator: { type: Number },
 
@@ -36,12 +73,10 @@ const HSEArticleQualityAppraisalSchema = new Schema({
  *
  * @param HSEArticleQualityAppraisalSchema otherInput The object to test.
  */
-HSEArticleQualityAppraisalSchema.methods.isEqualTo = function (otherInput) {
+HSEArticleQualityAppraisalSchema.methods.isEqualTo = function isEqualTo(otherInput) {
   // console.log(otherInput);
-  currentModel = this;
-
+  const currentModel = this;
   let unEqualFields = 0;
-
   const props = Object.keys(HSEArticleQualityAppraisalSchema.paths);
 
   console.log(props.length);
@@ -50,12 +85,12 @@ HSEArticleQualityAppraisalSchema.methods.isEqualTo = function (otherInput) {
     console.log(`-------------------The path: ${path}`);
     if (
       currentModel[path] !== otherInput[path]
-      && path != '_article'
-      && path != '_id'
+      && path !== '_article'
+      && path !== '_id'
       && path !== 'hseState' /* path != '__v' */
     ) {
       console.log(`${path}: ${currentModel[path]}, ${path}: ${otherInput[path]}`);
-      unEqualFields++;
+      unEqualFields += 1;
       console.log(path);
     }
   });
@@ -64,10 +99,3 @@ HSEArticleQualityAppraisalSchema.methods.isEqualTo = function (otherInput) {
 };
 
 mongoose.model('HSEArticleQualityAppraisals', HSEArticleQualityAppraisalSchema);
-
-HSEArticleQualityAppraisalSchema.eachPath((path) => {
-  // console.log(path);
-});
-
-const props = Object.keys(HSEArticleQualityAppraisalSchema.paths);
-// console.log(props.length);

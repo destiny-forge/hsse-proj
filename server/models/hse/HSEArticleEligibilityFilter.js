@@ -43,9 +43,18 @@ const HSEArticleEligibilityFilterSchema = new Schema({
   governanceArrangement: { type: Boolean, default: false },
 
   policyAuthority: { type: Boolean, default: false },
-  centralizationDecentralizationOfPolicyAuthority: { type: Boolean, default: false },
-  accountabilityOfTheStateSectorsRoleInFinancingAndDelivery: { type: Boolean, default: false },
-  stewardshipOfTheNonStateSectorsRoleInFinancingAndDelivery: { type: Boolean, default: false },
+  centralizationDecentralizationOfPolicyAuthority: {
+    type: Boolean,
+    default: false,
+  },
+  accountabilityOfTheStateSectorsRoleInFinancingAndDelivery: {
+    type: Boolean,
+    default: false,
+  },
+  stewardshipOfTheNonStateSectorsRoleInFinancingAndDelivery: {
+    type: Boolean,
+    default: false,
+  },
   decisionMakingAuthorityAboutWhoIsCoveredAndWhatCanOrMustBeProvidedToThem: {
     type: Boolean,
     default: false,
@@ -68,7 +77,6 @@ const HSEArticleEligibilityFilterSchema = new Schema({
 
   professionalAuthority: { type: Boolean, default: false },
   trainingAndLicensureRequirements: { type: Boolean, default: false },
-  scopeOfPractice: { type: Boolean, default: false },
   settingOfPractice: { type: Boolean, default: false },
   continuingCompetence: { type: Boolean, default: false },
   qualityAndSafety: { type: Boolean, default: false },
@@ -76,7 +84,10 @@ const HSEArticleEligibilityFilterSchema = new Schema({
   strikeJobAction: { type: Boolean, default: false },
 
   consumerStakeholderInvolvement: { type: Boolean, default: false },
-  consumerParticipationInPolicyOrganizationalDecisions: { type: Boolean, default: false },
+  consumerParticipationInPolicyOrganizationalDecisions: {
+    type: Boolean,
+    default: false,
+  },
   consumerParticipationInSystemMonitoring: { type: Boolean, default: false },
   consumerParticipationInServiceDelivery: { type: Boolean, default: false },
   consumerComplaintsManagement: { type: Boolean, default: false },
@@ -117,7 +128,10 @@ const HSEArticleEligibilityFilterSchema = new Schema({
 
   purchasingProductsServices: { type: Boolean, default: false },
   scopeNatureOfInsurancePlans: { type: Boolean, default: false },
-  listsOfCoveredReimbursedOrganizationsProvidersServicesProducts: { type: Boolean, default: false },
+  listsOfCoveredReimbursedOrganizationsProvidersServicesProducts: {
+    type: Boolean,
+    default: false,
+  },
   restrictionsInCoverageReimbursementRatesForOrganizationsProvidersServicesProducts: {
     type: Boolean,
     default: false,
@@ -135,8 +149,14 @@ const HSEArticleEligibilityFilterSchema = new Schema({
   incentivizingConsumers: { type: Boolean, default: false },
   premiumLevelAndFeatures: { type: Boolean, default: false },
   costSharing: { type: Boolean, default: false },
-  healthSavingsAccountsThirdPartyContributions: { type: Boolean, default: false },
-  targetedPaymentsPenaltiesIncentivizingConsumers: { type: Boolean, default: false },
+  healthSavingsAccountsThirdPartyContributions: {
+    type: Boolean,
+    default: false,
+  },
+  targetedPaymentsPenaltiesIncentivizingConsumers: {
+    type: Boolean,
+    default: false,
+  },
 
   deliveryArrangements: { type: Boolean, default: false },
   howCareIsDesignedToMeetConsumersNeeds: { type: Boolean, default: false },
@@ -157,7 +177,10 @@ const HSEArticleEligibilityFilterSchema = new Schema({
   skillMixRoleExpansionOrExtension: { type: Boolean, default: false },
   skillMixTaskShiftingSubstitution: { type: Boolean, default: false },
   skillMixMultidisciplinaryTeams: { type: Boolean, default: false },
-  skillMixVolunteersOrInformalFamilyCaregivers: { type: Boolean, default: false },
+  skillMixVolunteersOrInformalFamilyCaregivers: {
+    type: Boolean,
+    default: false,
+  },
   skillMixCommunicationCaseDiscussionBetweenDistantHealthProfessionals: {
     type: Boolean,
     default: false,
@@ -180,7 +203,10 @@ const HSEArticleEligibilityFilterSchema = new Schema({
   withwhatSupportsIsCareProvided: { type: Boolean, default: false },
   healthRecordSystems: { type: Boolean, default: false },
   electronicHealthRecord: { type: Boolean, default: false },
-  otherICTThatSupportIndividualsWhoProvideCare: { type: Boolean, default: false },
+  otherICTThatSupportIndividualsWhoProvideCare: {
+    type: Boolean,
+    default: false,
+  },
   iCTThatSupportIndividualsWhoReceiveCare: { type: Boolean, default: false },
   qualityMonitoringAndImprovementSystems: { type: Boolean, default: false },
   safetyMonitoringAndImprovementSystems: { type: Boolean, default: false },
@@ -287,7 +313,6 @@ const HSEArticleEligibilityFilterSchema = new Schema({
   domainsOther: { type: Boolean, default: false },
   maternalAndChildHealth: { type: Boolean, default: false },
   accidents: { type: Boolean, default: false },
-  mentalHealthAndAddictions: { type: Boolean, default: false },
 
   technologies: { type: Boolean, default: false },
   drugs: { type: Boolean, default: false },
@@ -305,7 +330,6 @@ const HSEArticleEligibilityFilterSchema = new Schema({
 */
   // New Sectors
   sectors: { type: Boolean, default: false },
-  homeAndCommunityCare: { type: Boolean, default: false },
   primaryCare: { type: Boolean, default: false },
   specialHospitalCare: { type: Boolean, default: false },
   rehabilitationCare: { type: Boolean, default: false },
@@ -432,9 +456,8 @@ const HSEArticleEligibilityFilterSchema = new Schema({
  *
  * @param HSEArticleEligibilityFilterSchema otherInput The object to test.
  */
-HSEArticleEligibilityFilterSchema.methods.isEqualTo = function (otherInput) {
-  currentModel = this;
-
+HSEArticleEligibilityFilterSchema.methods.isEqualTo = function isEqualTo(otherInput) {
+  const currentModel = this;
   let unEqualFields = 0;
 
   const props = Object.keys(HSEArticleEligibilityFilterSchema.paths);
@@ -442,9 +465,9 @@ HSEArticleEligibilityFilterSchema.methods.isEqualTo = function (otherInput) {
   console.log(props.length);
 
   HSEArticleEligibilityFilterSchema.eachPath((path) => {
-    if (currentModel[path] !== otherInput[path] && path != '_article' && path != '_id') {
+    if (currentModel[path] !== otherInput[path] && path !== '_article' && path !== '_id') {
       console.log(`${path}: ${currentModel[path]}, ${path}: ${otherInput[path]}`);
-      unEqualFields++;
+      unEqualFields += 1;
       console.log(path);
     }
     // console.log(unEqualFields);
@@ -455,10 +478,3 @@ HSEArticleEligibilityFilterSchema.methods.isEqualTo = function (otherInput) {
 };
 
 mongoose.model('HSEArticleEligibilityFilters', HSEArticleEligibilityFilterSchema);
-
-HSEArticleEligibilityFilterSchema.eachPath((path) => {
-  // console.log(path);
-});
-
-const props = Object.keys(HSEArticleEligibilityFilterSchema.paths);
-// console.log(props.length);

@@ -43,21 +43,21 @@ const userSchema = new Schema({
 /**
  * A pre-middleware function which hashes the user's password before saving
  */
-userSchema.pre('save', function (next) {
+userSchema.pre('save', function preSave(next) {
   const user = this;
 
-  bcrypt.genSalt(10, (err, salt) => {
+  return bcrypt.genSalt(10, (err, salt) => {
     if (err) {
       return next(err);
     }
 
-    bcrypt.hash(user.password, salt, null, (err, hash) => {
-      if (err) {
-        return next(err);
+    return bcrypt.hash(user.password, salt, null, (err2, hash) => {
+      if (err2) {
+        return next(err2);
       }
 
       user.password = hash;
-      next();
+      return next();
     });
   });
 });
@@ -67,13 +67,13 @@ userSchema.pre('save', function (next) {
  *
  * @param string candidatePassword The password to test
  */
-userSchema.methods.comparePassword = function (candidatePassword, callback) {
-  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+userSchema.methods.comparePassword = function comparePassword(candidatePassword, callback) {
+  return bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     if (err) {
       return callback(err);
     }
 
-    callback(null, isMatch);
+    return callback(null, isMatch);
   });
 };
 

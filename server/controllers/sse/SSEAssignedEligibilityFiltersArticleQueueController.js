@@ -33,7 +33,8 @@ exports.listArticles = async (req, res) => {
     .exec((err, articles) => {
       if (err) {
         return res.send(err);
-      } if (!articles) {
+      }
+      if (!articles) {
         return res.status(404).send({
           message: 'No article in your Eligibility Filters Queue',
         });
@@ -67,7 +68,8 @@ exports.fetchArticle = async (req, res) => {
   SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -99,7 +101,8 @@ exports.setEligibilityFilterValues = async (req, res) => {
   SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -114,7 +117,8 @@ exports.setEligibilityFilterValues = async (req, res) => {
       return res.status(404).send({
         message: 'Not authorized to add inputs for eligibility and filter for article',
       });
-    } if (
+    }
+    if (
       article._eligibilityFilterJunior.equals(user._id)
       && article._eligibilityFilterSenior.equals(user._id)
     ) {
@@ -136,7 +140,8 @@ exports.setEligibilityFilterValues = async (req, res) => {
       return res.status(201).send({
         message: 'Inputs for Junior and Senior filter added for article',
       });
-    } if (article._eligibilityFilterJunior.equals(user._id)) {
+    }
+    if (article._eligibilityFilterJunior.equals(user._id)) {
       const newEligibilityFilter = new SSEArticleEligibilityFilterModelClass(inputValues);
       newEligibilityFilter.save((err) => {
         if (err) {
@@ -152,7 +157,8 @@ exports.setEligibilityFilterValues = async (req, res) => {
       return res.status(201).send({
         message: 'Inputs for Junior filter added for article',
       });
-    } if (article._eligibilityFilterSenior.equals(user._id)) {
+    }
+    if (article._eligibilityFilterSenior.equals(user._id)) {
       const newEligibilityFilter = new SSEArticleEligibilityFilterModelClass(inputValues);
       newEligibilityFilter.save((err) => {
         if (err) {
@@ -187,7 +193,8 @@ exports.setEligibilityFilterComplete = async (req, res) => {
   SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -202,7 +209,8 @@ exports.setEligibilityFilterComplete = async (req, res) => {
       return res.status(404).send({
         message: 'Not authorized to add inputs for eligibility and filter for article',
       });
-    } if (
+    }
+    if (
       article._eligibilityFilterJunior.equals(user._id)
       && article._eligibilityFilterSenior.equals(user._id)
     ) {
@@ -229,7 +237,8 @@ exports.setEligibilityFilterComplete = async (req, res) => {
       return res.status(201).send({
         message: 'Inputs for Junior and Senior filter added for article',
       });
-    } if (article._eligibilityFilterJunior.equals(user._id)) {
+    }
+    if (article._eligibilityFilterJunior.equals(user._id)) {
       const newEligibilityFilter = new SSEArticleEligibilityFilterModelClass(inputValues);
       newEligibilityFilter.save((err) => {
         if (err) {
@@ -248,7 +257,8 @@ exports.setEligibilityFilterComplete = async (req, res) => {
       return res.status(201).send({
         message: 'Inputs for Junior filter added for article',
       });
-    } if (article._eligibilityFilterSenior.equals(user._id)) {
+    }
+    if (article._eligibilityFilterSenior.equals(user._id)) {
       const newEligibilityFilter = new SSEArticleEligibilityFilterModelClass(inputValues);
       newEligibilityFilter.save((err) => {
         if (err) {
@@ -345,7 +355,8 @@ exports.setJuniorEligibilityFilterComplete = async (req, res) => {
   SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -384,7 +395,8 @@ exports.setSeniorEligibilityFilterComplete = async (req, res) => {
   SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -495,7 +507,8 @@ exports.setFullCompletion = async (req, res) => {
     .exec((err, article) => {
       if (err) {
         return res.send(err);
-      } if (!article) {
+      }
+      if (!article) {
         return res.status(404).send({
           message: 'Could not set Full Completion for Article Eligibility Filters',
         });
@@ -514,7 +527,8 @@ const isEligibilityFilterJuniorSeniorInputEqual = (articleId) => {
   SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });

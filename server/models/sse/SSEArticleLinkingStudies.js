@@ -11,9 +11,12 @@ const { Schema } = mongoose;
 const SSEArticleLinkingStudiesSchema = new Schema({
   _article: { type: Schema.Types.ObjectId, ref: 'SSEArticles' },
 
-  questionOne: { type: String, enum: ['Yes', 'No', "Can't answer", 'Not applicable'] },
+  questionOne: {
+    type: String,
+    enum: ['Yes', 'No', "Can't answer", 'Not applicable'],
+  },
 });
 
 mongoose.model('SSEArticleLinkingStudies', SSEArticleLinkingStudiesSchema);
 
-const props = Object.keys(SSEArticleLinkingStudiesSchema.paths);
+// const props = Object.keys(SSEArticleLinkingStudiesSchema.paths);

@@ -41,9 +41,18 @@ const SSEArticleEligibilityFilterSchema = new Schema({
   governanceArrangements: { type: Boolean, default: false },
 
   policyAuthority: { type: Boolean, default: false },
-  centralizationDecentralizationOfPolicyAuthority: { type: Boolean, default: false },
-  accountabilityOfTheStateSectorsRoleInFinancingAndDelivery: { type: Boolean, default: false },
-  stewardshipOfTheNonStateSectorsRoleInFinancingAndDelivery: { type: Boolean, default: false },
+  centralizationDecentralizationOfPolicyAuthority: {
+    type: Boolean,
+    default: false,
+  },
+  accountabilityOfTheStateSectorsRoleInFinancingAndDelivery: {
+    type: Boolean,
+    default: false,
+  },
+  stewardshipOfTheNonStateSectorsRoleInFinancingAndDelivery: {
+    type: Boolean,
+    default: false,
+  },
   decisionMakingAuthorityAboutWhoIsCoveredAndWhatCanOrMustBeProvidedToThem: {
     type: Boolean,
     default: false,
@@ -74,7 +83,10 @@ const SSEArticleEligibilityFilterSchema = new Schema({
   strikeJobAction: { type: Boolean, default: false },
 
   consumerStakeholderInvolvement: { type: Boolean, default: false },
-  consumerParticipationInPolicyOrganizationalDecisions: { type: Boolean, default: false },
+  consumerParticipationInPolicyOrganizationalDecisions: {
+    type: Boolean,
+    default: false,
+  },
   consumerParticipationInSystemMonitoring: { type: Boolean, default: false },
   consumerParticipationInServiceDelivery: { type: Boolean, default: false },
   consumerComplaintsManagement: { type: Boolean, default: false },
@@ -115,7 +127,10 @@ const SSEArticleEligibilityFilterSchema = new Schema({
 
   purchasingProductsServices: { type: Boolean, default: false },
   scopeNatureOfInsurancePlans: { type: Boolean, default: false },
-  listsOfCoveredReimbursedOrganizationsProvidersServicesProducts: { type: Boolean, default: false },
+  listsOfCoveredReimbursedOrganizationsProvidersServicesProducts: {
+    type: Boolean,
+    default: false,
+  },
   restrictionsInCoverageReimbursementRatesForOrganizationsProvidersServicesProducts: {
     type: Boolean,
     default: false,
@@ -133,8 +148,14 @@ const SSEArticleEligibilityFilterSchema = new Schema({
   incentivizingConsumers: { type: Boolean, default: false },
   premiumLevelAndFeatures: { type: Boolean, default: false },
   costSharing: { type: Boolean, default: false },
-  healthSavingsAccountsThirdPartyContributions: { type: Boolean, default: false },
-  targetedPaymentsPenaltiesIncentivizingConsumers: { type: Boolean, default: false },
+  healthSavingsAccountsThirdPartyContributions: {
+    type: Boolean,
+    default: false,
+  },
+  targetedPaymentsPenaltiesIncentivizingConsumers: {
+    type: Boolean,
+    default: false,
+  },
 
   deliveryArrangements: { type: Boolean, default: false },
   howCareIsDesignedToMeetConsumersNeeds: { type: Boolean, default: false },
@@ -155,7 +176,10 @@ const SSEArticleEligibilityFilterSchema = new Schema({
   skillMixRoleExpansionOrExtension: { type: Boolean, default: false },
   skillMixTaskShiftingSubstitution: { type: Boolean, default: false },
   skillMixMultidisciplinaryTeams: { type: Boolean, default: false },
-  skillMixVolunteersOrInformalFamilyCaregivers: { type: Boolean, default: false },
+  skillMixVolunteersOrInformalFamilyCaregivers: {
+    type: Boolean,
+    default: false,
+  },
   skillMixCommunicationCaseDiscussionBetweenDistantHealthProfessionals: {
     type: Boolean,
     default: false,
@@ -178,7 +202,10 @@ const SSEArticleEligibilityFilterSchema = new Schema({
   withwhatSupportsIsCareProvided: { type: Boolean, default: false },
   healthRecordSystems: { type: Boolean, default: false },
   electronicHealthRecord: { type: Boolean, default: false },
-  otherICTThatSupportIndividualsWhoProvideCare: { type: Boolean, default: false },
+  otherICTThatSupportIndividualsWhoProvideCare: {
+    type: Boolean,
+    default: false,
+  },
   iCTThatSupportIndividualsWhoReceiveCare: { type: Boolean, default: false },
   qualityMonitoringAndImprovementSystems: { type: Boolean, default: false },
   safetyMonitoringAndImprovementSystems: { type: Boolean, default: false },
@@ -210,7 +237,6 @@ const SSEArticleEligibilityFilterSchema = new Schema({
   // Province focus
   federalNational: { type: Boolean, default: false },
   alberta: { type: Boolean, default: false },
-  scopeOfPractice: { type: Boolean, default: false },
   britishColumbia: { type: Boolean, default: false },
   manitoba: { type: Boolean, default: false },
   newBrunswick: { type: Boolean, default: false },
@@ -285,7 +311,6 @@ const SSEArticleEligibilityFilterSchema = new Schema({
   domainsOther: { type: Boolean, default: false },
   maternalAndChildHealth: { type: Boolean, default: false },
   accidents: { type: Boolean, default: false },
-  mentalHealthAndAddictions: { type: Boolean, default: false },
 
   technologies: { type: Boolean, default: false },
   drugs: { type: Boolean, default: false },
@@ -303,7 +328,6 @@ const SSEArticleEligibilityFilterSchema = new Schema({
 */
   // New Sectors
   sectors: { type: Boolean, default: false },
-  homeAndCommunityCare: { type: Boolean, default: false },
   primaryCare: { type: Boolean, default: false },
   specialHospitalCare: { type: Boolean, default: false },
   rehabilitationCare: { type: Boolean, default: false },
@@ -373,11 +397,8 @@ const SSEArticleEligibilityFilterSchema = new Schema({
   womensHealth: { type: Boolean, default: false },
 });
 
-// mongoose.model('SSEArticleEligibilityFilters', SSEArticleEligibilityFilterSchema);
-
-SSEArticleEligibilityFilterSchema.methods.isEqualTo = function (otherInput) {
-  currentModel = this;
-
+SSEArticleEligibilityFilterSchema.methods.isEqualTo = function isEqualTo(otherInput) {
+  const currentModel = this;
   let unEqualFields = 0;
 
   const props = Object.keys(SSEArticleEligibilityFilterSchema.paths);
@@ -385,23 +406,15 @@ SSEArticleEligibilityFilterSchema.methods.isEqualTo = function (otherInput) {
   console.log(props.length);
 
   SSEArticleEligibilityFilterSchema.eachPath((path) => {
-    if (currentModel[path] !== otherInput[path] && path != '_article' && path != '_id') {
+    if (currentModel[path] !== otherInput[path] && path !== '_article' && path !== '_id') {
       console.log(`${path}: ${currentModel[path]}, ${path}: ${otherInput[path]}`);
-      unEqualFields++;
+      unEqualFields += 1;
       console.log(path);
+      // console.log(unEqualFields);
     }
-    // console.log(unEqualFields);
-    // console.log(`${path}: ${currentModel[path]}, ${path}: ${otherInput[path]}`);
   });
 
   return unEqualFields === 0;
 };
 
 mongoose.model('SSEArticleEligibilityFilters', SSEArticleEligibilityFilterSchema);
-
-SSEArticleEligibilityFilterSchema.eachPath((path) => {
-  // console.log(path);
-});
-
-const props = Object.keys(SSEArticleEligibilityFilterSchema.paths);
-// console.log(props.length);

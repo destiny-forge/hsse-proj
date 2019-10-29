@@ -14,18 +14,22 @@ const SSEPendingQualityAppraisalsArticleQueueController = require('../../control
 module.exports = (app) => {
   app.get(
     '/sse/pendingqualityappraisalsarticlequeue',
+    requireAuth,
     SSEPendingQualityAppraisalsArticleQueueController.listArticles,
   );
   app.get(
     '/sse/pendingqualityappraisalsarticlequeue/fetcharticle/:id',
+    requireAuth,
     SSEPendingQualityAppraisalsArticleQueueController.listArticle,
   );
   app.post(
     '/sse/pendingqualityappraisalsarticlequeue/addjuniorappraiser/:articleId',
+    requireAuth,
     SSEPendingQualityAppraisalsArticleQueueController.addArticleToJuniorQualityAppraiser,
   );
   app.post(
     '/sse/pendingqualityappraisalsarticlequeue/addseniorappraiser/:articleId',
+    requireAuth,
     SSEPendingQualityAppraisalsArticleQueueController.addArticleToSeniorQualityAppraiser,
   );
 };

@@ -131,11 +131,17 @@ const SSEArticleSchema = new Schema({
   _eligibilityFiltersSeniorEmail: { type: String, default: null },
 
   // / Eligibility and Filter Input
-  _eligibilityFiltersJunior: { type: Schema.Types.ObjectId, ref: 'Users', default: null },
-  _eligibilityFiltersJuniorEmail: { type: String, default: null },
+  _eligibilityFiltersJunior: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users',
+    default: null,
+  },
 
-  _eligibilityFiltersSenior: { type: Schema.Types.ObjectId, ref: 'Users', default: null },
-  _eligibilityFiltersSeniorEmail: { type: String, default: null },
+  _eligibilityFiltersSenior: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users',
+    default: null,
+  },
 
   eligibilityFiltersJuniorInput: {
     type: Schema.Types.ObjectId,
@@ -149,10 +155,18 @@ const SSEArticleSchema = new Schema({
   },
 
   // Quality Appraisals Input
-  _qualityAppraisalsJunior: { type: Schema.Types.ObjectId, ref: 'Users', default: null },
+  _qualityAppraisalsJunior: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users',
+    default: null,
+  },
   _qualityAppraisalsJuniorEmail: { type: String, default: null },
 
-  _qualityAppraisalsSenior: { type: Schema.Types.ObjectId, ref: 'Users', default: null },
+  _qualityAppraisalsSenior: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users',
+    default: null,
+  },
   _qualityAppraisalsSeniorEmail: { type: String, default: null },
 
   qualityAppraisalsJuniorInput: {
@@ -167,7 +181,11 @@ const SSEArticleSchema = new Schema({
   },
 
   // Linking Studies Input
-  _linkingStudiesJunior: { type: Schema.Types.ObjectId, ref: 'Users', default: null },
+  _linkingStudiesJunior: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users',
+    default: null,
+  },
   _linkingStudiesJuniorEmail: { type: String, default: null },
 
   linkingStudiesJuniorInput: {
@@ -177,7 +195,11 @@ const SSEArticleSchema = new Schema({
   },
 
   // Presentation Details Input
-  _presentationDetailsJunior: { type: Schema.Types.ObjectId, ref: 'Users', default: null },
+  _presentationDetailsJunior: {
+    type: Schema.Types.ObjectId,
+    ref: 'Users',
+    default: null,
+  },
   _presentationDetailsJuniorEmail: { type: String, default: null },
 
   presentationDetailsJuniorInput: {
@@ -216,8 +238,6 @@ const SSEArticleSchema = new Schema({
   qualityAppraisalsSeniorCompleted: { type: Boolean, default: false },
 
   linkingStudiesJuniorCompleted: { type: Boolean, default: false },
-
-  qualityAppraisalsJuniorCompleted: { type: Boolean, default: false },
 
   // Set to true if an article needs to be resolved
   eligibilityFiltersResolve: { type: Boolean, default: false },

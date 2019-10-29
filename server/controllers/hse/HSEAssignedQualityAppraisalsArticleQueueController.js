@@ -24,12 +24,16 @@ exports.listArticles = async (req, res) => {
 
   const user = await Authentication.getUserFromToken(req.headers.authorization);
 
-  HSEArticleModelClass.find({ complicated: false, qualityAppraisalsFullCompletion: false })
+  HSEArticleModelClass.find({
+    complicated: false,
+    qualityAppraisalsFullCompletion: false,
+  })
     .or([{ _qualityAppraisalsJunior: user._id }, { _qualityAppraisalsSenior: user._id }])
     .exec((err, articles) => {
       if (err) {
         return res.send(err);
-      } if (!articles) {
+      }
+      if (!articles) {
         return res.status(404).send({
           message: 'No article in your Quality Appraisal Queue',
         });
@@ -60,7 +64,8 @@ exports.fetchArticle = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -87,7 +92,8 @@ exports.setQualityAppraisalsValues = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -102,7 +108,8 @@ exports.setQualityAppraisalsValues = async (req, res) => {
       return res.status(404).send({
         message: 'Not authorized to add inputs for quality appraisals for article',
       });
-    } if (user._id.equals(article._qualityAppraisalsJunior)) {
+    }
+    if (user._id.equals(article._qualityAppraisalsJunior)) {
       await HSEArticleQualityAppraisalModelClass.findOneAndUpdate(
         { _id: article.qualityAppraisalsJuniorInput },
 
@@ -158,7 +165,8 @@ exports.setQualityAppraisalsComplete = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -173,7 +181,8 @@ exports.setQualityAppraisalsComplete = async (req, res) => {
       return res.status(404).send({
         message: 'Not authorized to add inputs for quality apraisals for article',
       });
-    } if (
+    }
+    if (
       article._eligibilityFilterJunior.equals(user._id)
       && article._eligibilityFilterSenior.equals(user._id)
     ) {
@@ -200,7 +209,8 @@ exports.setQualityAppraisalsComplete = async (req, res) => {
       return res.status(201).send({
         message: 'Inputs for Junior and Senior filter added for article',
       });
-    } if (article._eligibilityFilterJunior.equals(user._id)) {
+    }
+    if (article._eligibilityFilterJunior.equals(user._id)) {
       const newEligibilityFilter = new HSEArticleEligibilityFilterModelClass(inputValues);
       newEligibilityFilter.save((err) => {
         if (err) {
@@ -219,7 +229,8 @@ exports.setQualityAppraisalsComplete = async (req, res) => {
       return res.status(201).send({
         message: 'Inputs for Junior appraisal added for article',
       });
-    } if (article._eligibilityFilterSenior.equals(user._id)) {
+    }
+    if (article._eligibilityFilterSenior.equals(user._id)) {
       const newEligibilityFilter = new HSEArticleEligibilityFilterModelClass(inputValues);
       newEligibilityFilter.save((err) => {
         if (err) {
@@ -317,7 +328,8 @@ exports.setJuniorEligibilityFilterComplete = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -357,7 +369,8 @@ exports.setSeniorEligibilityFilterComplete = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -395,7 +408,8 @@ exports.setFullQualityAppraisalCompleteOrResolve = async (req, res) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -411,7 +425,8 @@ exports.setFullQualityAppraisalCompleteOrResolve = async (req, res) => {
       return res.status(404).send({
         message: 'Not authorized to add inputs for quality appraisals for article',
       });
-    } if (user._id.equals(article._qualityAppraisalsJunior)) {
+    }
+    if (user._id.equals(article._qualityAppraisalsJunior)) {
       console.log('*** INSIDE FINISHING FOR JUNIOR QUALITY APPRAISALS ***');
       console.log(`*** article._qualityAppraisalsJunior: ${article._qualityAppraisalsJunior}`);
       await HSEArticleQualityAppraisalModelClass.findOneAndUpdate(
@@ -470,7 +485,8 @@ exports.setFullQualityAppraisalCompleteOrResolve = async (req, res) => {
           // console.log(qualityAppraisalJunior);
           if (err) {
             return res.send(err);
-          } if (!qualityAppraisalJunior) {
+          }
+          if (!qualityAppraisalJunior) {
             return res.status(404).send({
               message: 'No Eligibility Filter with that identifier has been found',
             });
@@ -480,7 +496,8 @@ exports.setFullQualityAppraisalCompleteOrResolve = async (req, res) => {
             async (err, qualityAppraisalSenior) => {
               if (err) {
                 return res.send(err);
-              } if (!qualityAppraisalJunior) {
+              }
+              if (!qualityAppraisalJunior) {
                 return res.status(404).send({
                   message: 'No Eligibility Filter with that identifier has been found',
                 });
@@ -488,8 +505,8 @@ exports.setFullQualityAppraisalCompleteOrResolve = async (req, res) => {
               // if( (qualityAppraisalJunior !== null) && (qualityAppraisalJunior !== null) && qualityAppraisalJunior.isEqualTo(qualityAppraisalSenior)  ) {
               if (
                 qualityAppraisalJunior !== null
-                    && qualityAppraisalJunior !== null
-                    && _.isEqual(qualityAppraisalJunior.hseState, qualityAppraisalSenior.hseState)
+                && qualityAppraisalJunior !== null
+                && _.isEqual(qualityAppraisalJunior.hseState, qualityAppraisalSenior.hseState)
               ) {
                 console.log(qualityAppraisalJunior.hseState.inputValues);
                 console.log(qualityAppraisalSenior.hseState.inputValues);
@@ -540,7 +557,8 @@ exports.setFullCompletion = async (req, res) => {
     .exec((err, article) => {
       if (err) {
         return res.send(err);
-      } if (!article) {
+      }
+      if (!article) {
         return res.status(404).send({
           message: 'Could not set Full Completion for Article Eligibility Filters',
         });
@@ -559,7 +577,8 @@ const isEligibilityFilterJuniorSeniorInputEqual = (articleId) => {
   HSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -585,7 +604,8 @@ exports.setQualityAppraisalInputs = async (req, res) => {
     .exec((err, article) => {
       if (err) {
         return res.send(err);
-      } if (!article) {
+      }
+      if (!article) {
         return res.status(404).send({
           message: 'Could not set Full Completion for Article Quality Appraisal',
         });

@@ -27,7 +27,8 @@ exports.listArticles = async (req, res) => {
   SSEArticleModelClass.find({ _linkingStudiesJunior: user._id }).exec((err, articles) => {
     if (err) {
       return res.send(err);
-    } if (!articles) {
+    }
+    if (!articles) {
       return res.status(404).send({
         message: 'No article in your Assigned Linking Studies Queue',
       });
@@ -60,7 +61,8 @@ exports.fetchArticle = async (req, res) => {
   SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -91,7 +93,8 @@ exports.setLinkingStudiesValues = async (req, res) => {
   SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -101,7 +104,8 @@ exports.setLinkingStudiesValues = async (req, res) => {
       return res.status(404).send({
         message: 'Not authorized to add inputs for Linking Studies for article',
       });
-    } if (article._linkingStudiesJunior.equals(user._id)) {
+    }
+    if (article._linkingStudiesJunior.equals(user._id)) {
       const newlinkingStudies = new SSEArticleLinkingStudiesModelClass(inputValues);
       newlinkingStudies._article = articleId;
       newlinkingStudies.save((err) => {
@@ -119,7 +123,8 @@ exports.setLinkingStudiesValues = async (req, res) => {
       return res.status(201).send({
         message: 'Inputs for Junior Linking Studies added for article',
       });
-    } if (article._linkingStudiesJunior.equals(user._id)) {
+    }
+    if (article._linkingStudiesJunior.equals(user._id)) {
       const newLinkingStudies = new SSEArticleLinkingStudiesModelClass(inputValues);
       newLinkingStudies.save((err) => {
         if (err) {
@@ -135,7 +140,8 @@ exports.setLinkingStudiesValues = async (req, res) => {
       return res.status(201).send({
         message: 'Inputs for Junior linker added for article',
       });
-    } if (article._eligibilityFilterSenior.equals(user._id)) {
+    }
+    if (article._eligibilityFilterSenior.equals(user._id)) {
       const newLinkingStudies = new SSEArticleLinkingStudiesModelClass(inputValues);
       newLinkingStudies.save((err) => {
         if (err) {
@@ -177,7 +183,8 @@ exports.setQualityAppraisalsComplete = async (req, res) => {
   SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -187,7 +194,8 @@ exports.setQualityAppraisalsComplete = async (req, res) => {
       return res.status(404).send({
         message: 'Not authorized to add inputs for linking studies for article',
       });
-    } if (
+    }
+    if (
       article._linkingStudiesJunior.equals(user._id)
       && article._eligibilityFilterSenior.equals(user._id)
     ) {
@@ -212,7 +220,8 @@ exports.setQualityAppraisalsComplete = async (req, res) => {
       return res.status(201).send({
         message: 'Inputs for Junior linker added for article',
       });
-    } if (article._eligibilityFilterJunior.equals(user._id)) {
+    }
+    if (article._eligibilityFilterJunior.equals(user._id)) {
       const newLinkingStudies = new SSEArticleLinkingStudiesModelClass(inputValues);
       newLinkingStudies.save((err) => {
         if (err) {
@@ -298,7 +307,8 @@ exports.setJuniorLinkingStudiesComplete = async (req, res) => {
   SSEArticleModelClass.findById(articleId, async (err, article) => {
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -391,7 +401,8 @@ exports.setFullCompletion = async (req, res) => {
     .exec((err, article) => {
       if (err) {
         return res.send(err);
-      } if (!article) {
+      }
+      if (!article) {
         return res.status(404).send({
           message: 'Could not set Full Completion for Article Linking Studies',
         });
@@ -411,7 +422,8 @@ const isEligibilityFilterJuniorSeniorInputEqual = (articleId) => {
     // TODO: referencing HSE in SSE code
     if (err) {
       return res.send(err);
-    } if (!article) {
+    }
+    if (!article) {
       return res.status(404).send({
         message: 'No article with that identifier has been found',
       });
@@ -432,7 +444,8 @@ exports.setQualityAppraisalInputs = async (req, res) => {
     .exec((err, article) => {
       if (err) {
         return res.send(err);
-      } if (!article) {
+      }
+      if (!article) {
         return res.status(404).send({
           message: 'Could not set Full Completion for Article Quality Appraisal',
         });
