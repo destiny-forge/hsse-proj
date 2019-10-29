@@ -7,12 +7,7 @@ const AdminMenu = [
         name: 'Dashboards',
         icon: 'icon-speedometer',
         translate: 'sidebar.nav.DASHBOARD',
-        /*label: { value: 3, color: 'success' },*/
-        submenu: [{
-                name: 'Main Dashboard',
-                path: '/dashboard'
-            }
-        ]
+        path: '/dashboard'
     },
     {
         heading: 'Assigned Queue',
