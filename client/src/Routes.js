@@ -23,10 +23,6 @@ import Base from './components/Layout/Base';
 import BasePage from './components/Layout/BasePage';
 // import BaseHorizontal from './components/Layout/BaseHorizontal';
 
-// import DashboardV1 from './components/Dashboard/DashboardV1';
-import DashboardV2 from './components/Dashboard/DashboardV2';
-import DashboardV3 from './components/Dashboard/DashboardV3';
-
 import DashboardMain from './components/Dashboard/DashboardMain';
 
 import Widgets from './components/Widgets/Widgets';
@@ -273,11 +269,8 @@ const Routes = ({ location }) => {
                     <div>
                         <Switch location={location}>
                             {/*Dashboard*/}
-                            
-                            <Route path="/dashboardv2" component={DashboardV2}/>
-                            <Route path="/dashboardv3" component={DashboardV3}/>
 
-                            <Route path="/dashboardmain" component={DashboardMain}/>
+                            <Route path="/dashboard" component={DashboardMain}/>
 
                             {/*Widgets*/}
                             <Route path="/widgets" component={Widgets}/>
