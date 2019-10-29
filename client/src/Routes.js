@@ -58,8 +58,6 @@ import HSEAssignedPresentationDetailsArticleQueue from './components/HSE/HSEAssi
 import HSEAssignedTranslatingTitlesArticleQueue from './components/HSE/HSEAssignedTranslatingTitlesArticleQueue';
 import HSEAssignedTrackingPrioritizingArticleQueue from './components/HSE/HSEAssignedTrackingPrioritizingArticleQueue';
 
-
-
 import AddArticle from './components/HSE/Article/AddArticle';
 import EditArticle from './components/HSE/Article/EditArticle';
 import HSEBatchUpload from './components/HSE/HSEBatchUpload';
