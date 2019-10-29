@@ -21,7 +21,6 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import Base from './components/Layout/Base';
 import BasePage from './components/Layout/BasePage';
-// import BaseHorizontal from './components/Layout/BaseHorizontal';
 
 import DashboardMain from './components/Dashboard/DashboardMain';
 
@@ -123,191 +122,160 @@ import AdministratorSSETrackingPrioritizingQueue from './components/Administrato
 // listed here to Switch between layouts
 // depending on the current pathname
 const listofPages = [
-    '/',
-    '/login',
-    '/signout',
-    '/register',
-    '/recover',
-    '/confirmregistration',
-    '/registrationconfirmed',
-    '/confirmpasswordreset',
-    '/resetpassword/:token',
-    '/successfulpasswordreset',
-    '/lock',
-    '/notfound',
-    '/error500',
-    '/maintenance'
+'/',
+'/login',
+'/signout',
+'/register',
+'/recover',
+'/confirmregistration',
+'/registrationconfirmed',
+'/confirmpasswordreset',
+'/resetpassword/:token',
+'/successfulpasswordreset',
+'/lock',
+'/notfound',
+'/error500',
+'/maintenance'
 ];
-/*
-stringArrayContainers  = (array, str) => {
-    contains = (el) => {
-        return (el.indexOf(str) !== -1) ? true : false;
+
+const Routes = ({ location }) => {
+  const currentKey = location.pathname.split('/')[1] || '/';
+  const timeout = { enter: 500, exit: 500 };
+
+  const stringArrayContainers  = (array, str) => {
+    const contains = (el) => {
+      return (el.indexOf(str) !== -1) ? true : false;
     }
     return array.some(contains);
-}
-*/
-const Routes = ({ location }) => {
-    const currentKey = location.pathname.split('/')[1] || '/';
-    const timeout = { enter: 500, exit: 500 };
-    
-    //console.log( listofPages.indexOf(location.pathname) );
+  }
 
-    const stringArrayContainers  = (array, str) => {
-        const contains = (el) => {
-            return (el.indexOf(str) !== -1) ? true : false;
-        }
-        return array.some(contains);
-    }
+  const animationName = 'rag-fadeIn'
 
-    // Animations supported
-    //      'rag-fadeIn'
-    //      'rag-fadeInUp'
-    //      'rag-fadeInDown'
-    //      'rag-fadeInRight'
-    //      'rag-fadeInLeft'
-    //      'rag-fadeInUpBig'
-    //      'rag-fadeInDownBig'
-    //      'rag-fadeInRightBig'
-    //      'rag-fadeInLeftBig'
-    //      'rag-zoomBackDown'
-    const animationName = 'rag-fadeIn'
+  if (stringArrayContainers(listofPages, currentKey)) {
+    return (
+      <BasePage>
+        <Switch location={location}>
+          <Route path="/" exact component={Landing} />
+          <Route path="/login" component={Login}/>
+          <Route path="/registrationconfirmed" component={RegistrationConfirmed} />
+          <Route path="/register" component={Register}/>
+          <Route path="/signout" component={Signout}/>
+          <Route path="/recover" component={Recover}/>
+          <Route path="/confirmregistration" component={ConfirmRegistration}/>
+          <Route path="/confirmpasswordreset" component={ConfirmPasswordReset}/>
+          <Route path="/resetpassword/:token" component={ResetPassword}/>
+          <Route path="/successfulpasswordreset" component={SuccessfulPasswordReset}/>
+          <Route path="/lock" component={Lock}/>
+          <Route path="/notfound" component={NotFound}/>
+          <Route path="/error500" component={Error500}/>
+          <Route path="/maintenance" component={Maintenance}/>
+        </Switch>
+      </BasePage>
+    )
+  } else {
+    return (
+      <Base>
+        <TransitionGroup>
+          <CSSTransition key={currentKey} timeout={timeout} classNames={animationName} exit={false}>
+            <div>
+              <Switch location={location}>
+                <Route path="/dashboard" component={DashboardMain}/>
+                
+                <Route path="/settings/usereditor" component={UserEditor} />
+                
+                <Route path="/administrator/hsegolivequeue" component={AdministratorHSEGoLiveQueue} />
+                <Route path="/administrator/hsetrackingprioritizing" component={AdministratorHSETrackingPrioritizingQueue} />
+                <Route path="/administrator/hseeligibilityfilters" component={AdministratorHSEEligibilityFiltersQueue} />
+                <Route path="/administrator/hsequalityappraisals" component={AdministratorHSEQualityAppraisalsQueue} />
+                <Route path="/administrator/hselinkingstudies" component={AdministratorHSELinkingStudiesQueue} />
+                <Route path="/administrator/hsepresentationdetails" component={AdministratorHSEPresentationDetailsQueue} />
+                <Route path="/administrator/ssegolivequeue" component={AdministratorSSEGoLiveQueue} />
+                <Route path="/administrator/ssetrackingprioritizingqueue" component={AdministratorSSETrackingPrioritizingQueue} />
+                <Route path="/administrator/sseeligibilityfiltersqueue" component={AdministratorSSEEligibilityFiltersQueue} />
+                <Route path="/administrator/ssequalityappraisalsqueue" component={AdministratorSSEQualityAppraisalsQueue} />
+                <Route path="/administrator/sselinkingstudiesqueue" component={AdministratorSSELinkingStudiesQueue} />
+                <Route path="/administrator/ssepresentationdetailsqueue" component={AdministratorSSEPresentationDetailsQueue} />
 
-    //if(listofPages.indexOf(location.pathname) > -1) {
-    if(stringArrayContainers(listofPages, currentKey)) {
-        return (
-            // Page Layout component wrapper
-            <BasePage>
-                <Switch location={location}>
-                    <Route path="/" exact component={Landing} />
-                    <Route path="/login" component={Login}/>
-                    <Route path="/registrationconfirmed" component={RegistrationConfirmed} />
-                    <Route path="/register" component={Register}/>
-                    <Route path="/signout" component={Signout}/>
-                    <Route path="/recover" component={Recover}/>
-                    <Route path="/confirmregistration" component={ConfirmRegistration}/>
-                    <Route path="/confirmpasswordreset" component={ConfirmPasswordReset}/>
-                    <Route path="/resetpassword/:token" component={ResetPassword}/>
-                    <Route path="/successfulpasswordreset" component={SuccessfulPasswordReset}/>
-                    <Route path="/lock" component={Lock}/>
-                    <Route path="/notfound" component={NotFound}/>
-                    <Route path="/error500" component={Error500}/>
-                    <Route path="/maintenance" component={Maintenance}/>
-                </Switch>
-            </BasePage>
-        )
-    }
-    else {
-        return (
-            // Layout component wrapper
-            // Use <BaseHorizontal> to change layout
-            <Base>
-              <TransitionGroup>
-                <CSSTransition key={currentKey} timeout={timeout} classNames={animationName} exit={false}>
-                    <div>
-                        <Switch location={location}>
-                            {/*Dashboard*/}
+                <Route path="/hse/edit-article/:articleId" component={EditArticle} />
 
-                            <Route path="/dashboard" component={DashboardMain}/>
+                <Route path="/hse/assigned-eligibility-filters-article-input/:articleId" component={FilterArticleInput} />
+                <Route path="/hse/assigned-eligibility-filters-article-resolution/:articleId" component={ArticleResolution} />
+                <Route path="/hse/assigned-eligibility-filters-articlequeue" component={ArticleQueue} />
 
-                            <Route path="/settings/usereditor" component={UserEditor} />
+                <Route path="/hse/assignedqualityappraisalsarticlequeue" component={HSEAssignedQualityAppraisalsArticleQueue} />
+                <Route exact path="/hse/assignedqualityappraisalsarticleinput/:articleId" component={HSEAssignedQualityAppraisalsArticleInput} />
+                <Route path="/hse/assignedqualityappraisalsarticleresolution/:articleId" component={HSEAssignedQualityAppraisalsArticleResolution} />
 
-                            <Route path="/administrator/hsegolivequeue" component={AdministratorHSEGoLiveQueue} />
-                            <Route path="/administrator/hsetrackingprioritizing" component={AdministratorHSETrackingPrioritizingQueue} />
-                            <Route path="/administrator/hseeligibilityfilters" component={AdministratorHSEEligibilityFiltersQueue} />
-                            <Route path="/administrator/hsequalityappraisals" component={AdministratorHSEQualityAppraisalsQueue} />
-                            <Route path="/administrator/hselinkingstudies" component={AdministratorHSELinkingStudiesQueue} />
-                            <Route path="/administrator/hsepresentationdetails" component={AdministratorHSEPresentationDetailsQueue} />
+                <Route path="/hse/assignedlinkingstudiesarticlequeue" component={HSEAssignedLinkingStudiesArticleQueue} />
+                <Route path="/hse/assignedlinkingstudiesarticleinput/:articleId" component={HSEAssignedLinkingStudiesArticleInput} />
+
+                <Route path="/hse/assignedpresentationdetailsarticlequeue" component={HSEAssignedPresentationDetailsArticleQueue} />
+                <Route path="/hse/assignedpresentationdetailsarticleinput/:articleId" component={HSEAssignedPresentationDetailsArticleInput} />
+
+                <Route path="/hse/assignedtranslatingtitlesarticlequeue" component={HSEAssignedTranslatingTitlesArticleQueue} />
+                <Route path="/hse/assignedtrackingprioritizingarticlequeue" component={HSEAssignedTrackingPrioritizingArticleQueue} />
 
 
-                            <Route path="/administrator/ssegolivequeue" component={AdministratorSSEGoLiveQueue} />
-                            <Route path="/administrator/ssetrackingprioritizingqueue" component={AdministratorSSETrackingPrioritizingQueue} />
-                            <Route path="/administrator/sseeligibilityfiltersqueue" component={AdministratorSSEEligibilityFiltersQueue} />
-                            <Route path="/administrator/ssequalityappraisalsqueue" component={AdministratorSSEQualityAppraisalsQueue} />
-                            <Route path="/administrator/sselinkingstudiesqueue" component={AdministratorSSELinkingStudiesQueue} />
-                            <Route path="/administrator/ssepresentationdetailsqueue" component={AdministratorSSEPresentationDetailsQueue} />
+                {/* Pending HSE Queue */}
+                <Route path="/hse/add-article" component={AddArticle} />
+                <Route path="/hse/batchfileupload" component={HSEBatchUpload} />
+                <Route path="/hse/pendingeligibilityfiltersarticlequeue" component={HSEPendingEligibilityFiltersArticleQueue} />
+                <Route path="/hse/pendingeligibilityfiltersbatchfilequeue" component={HSEPendingEligibilityFiltersBatchfileQueue} />
+                <Route path="/hse/pendingqualityappraisalsarticlequeue" component={HSEPendingQualityAppraisalsArticleQueue} />
+                <Route path="/hse/pendinglinkingstudiesarticlequeue" component={HSEPendingLinkingStudiesArticleQueue} />
+                <Route path="/hse/pendingpresentationdetailsarticlequeue" component={HSEPendingPresentationDetailsArticleQueue} />
 
-                            {/* */}
-                            <Route path="/hse/edit-article/:articleId" component={EditArticle} />
+                <Route path="/hse/pendingtranslatingtitlesqueue" component={HSEPendingTranslatingTitlesQueue} />
+                <Route path="/hse/pendingtrackingprioritizingqueue" component={HSEPendingTrackingPrioritizingQueue} />
 
-                            {/* Assigned HSE Queue */}
-                            <Route path="/hse/assigned-eligibility-filters-article-input/:articleId" component={FilterArticleInput} />
-                            <Route path="/hse/assigned-eligibility-filters-article-resolution/:articleId" component={ArticleResolution} />
-                            <Route path="/hse/assigned-eligibility-filters-articlequeue" component={ArticleQueue} />
+                {/* HSE Forms */}
 
-                            <Route path="/hse/assignedqualityappraisalsarticlequeue" component={HSEAssignedQualityAppraisalsArticleQueue} />
-                            <Route exact path="/hse/assignedqualityappraisalsarticleinput/:articleId" component={HSEAssignedQualityAppraisalsArticleInput} />
-                            <Route path="/hse/assignedqualityappraisalsarticleresolution/:articleId" component={HSEAssignedQualityAppraisalsArticleResolution} />
+                <Route path="/sse/editarticle/:articleId" component={SSEArticleEdit} />
 
-                            <Route path="/hse/assignedlinkingstudiesarticlequeue" component={HSEAssignedLinkingStudiesArticleQueue} />
-                            <Route path="/hse/assignedlinkingstudiesarticleinput/:articleId" component={HSEAssignedLinkingStudiesArticleInput} />
+                {/* Assigned SSE Queue */}
+                <Route path="/sse/assignedeligibilityfiltersarticleinput/:articleId" component={SSEAssignedEligibilityFilterArticleInput} />
+                <Route path="/sse/assignedeligibilityfiltersarticleresolution/:articleId" component={SSEAssignedEligibilityFilterResolution} />
+                <Route path="/sse/assignedeligibilityfiltersarticlequeue" component={SSEAssignedEligibilityFiltersArticleQueue} />
 
-                            <Route path="/hse/assignedpresentationdetailsarticlequeue" component={HSEAssignedPresentationDetailsArticleQueue} />
-                            <Route path="/hse/assignedpresentationdetailsarticleinput/:articleId" component={HSEAssignedPresentationDetailsArticleInput} />
-                            
-                            <Route path="/hse/assignedtranslatingtitlesarticlequeue" component={HSEAssignedTranslatingTitlesArticleQueue} />
-                            <Route path="/hse/assignedtrackingprioritizingarticlequeue" component={HSEAssignedTrackingPrioritizingArticleQueue} />
-                            
+                <Route path="/sse/assignedqualityappraisalsarticlequeue" component={SSEAssignedQualityAppraisalsArticleQueue} />
+                <Route path="/sse/assignedqualityappraisalsarticleinput/:articleId" component={SSEAssignedQualityAppraisalsArticleInput} />
+                <Route path="/sse/assignedqualityappraisalsarticleresolution/:articleId" component={SSEAssignedQualityAppraisalsResolution} />
 
-                            {/* Pending HSE Queue */}
-                            <Route path="/hse/add-article" component={AddArticle} />
-                            <Route path="/hse/batchfileupload" component={HSEBatchUpload} />
-                            <Route path="/hse/pendingeligibilityfiltersarticlequeue" component={HSEPendingEligibilityFiltersArticleQueue} />
-                            <Route path="/hse/pendingeligibilityfiltersbatchfilequeue" component={HSEPendingEligibilityFiltersBatchfileQueue} />
-                            <Route path="/hse/pendingqualityappraisalsarticlequeue" component={HSEPendingQualityAppraisalsArticleQueue} />
-                            <Route path="/hse/pendinglinkingstudiesarticlequeue" component={HSEPendingLinkingStudiesArticleQueue} />
-                            <Route path="/hse/pendingpresentationdetailsarticlequeue" component={HSEPendingPresentationDetailsArticleQueue} />
-                            
-                            <Route path="/hse/pendingtranslatingtitlesqueue" component={HSEPendingTranslatingTitlesQueue} />
-                            <Route path="/hse/pendingtrackingprioritizingqueue" component={HSEPendingTrackingPrioritizingQueue} />
-                            
-                            {/* HSE Forms */}
+                <Route path="/sse/assignedlinkingstudiesarticleinput/:articleId" component={SSEAssignedLinkingStudiesArticleInput} />
+                <Route path="/sse/assignedlinkingstudiesarticlequeue" component={SSEAssignedLinkingStudiesArticleQueue} />
 
-                            <Route path="/sse/editarticle/:articleId" component={SSEArticleEdit} />
+                <Route path="/sse/assignedpresentationdetailsarticleinput/:articleId" component={SSEAssignedPresentationDetailsArticleInput} />
+                <Route path="/sse/assignedpresentationdetailsarticlearticlequeue" component={SSEAssignedPresentationDetailsArticleQueue} />
 
-                            {/* Assigned SSE Queue */}
-                            <Route path="/sse/assignedeligibilityfiltersarticleinput/:articleId" component={SSEAssignedEligibilityFilterArticleInput} />
-                            <Route path="/sse/assignedeligibilityfiltersarticleresolution/:articleId" component={SSEAssignedEligibilityFilterResolution} />
-                            <Route path="/sse/assignedeligibilityfiltersarticlequeue" component={SSEAssignedEligibilityFiltersArticleQueue} />
-                            
-                            <Route path="/sse/assignedqualityappraisalsarticlequeue" component={SSEAssignedQualityAppraisalsArticleQueue} />
-                            <Route path="/sse/assignedqualityappraisalsarticleinput/:articleId" component={SSEAssignedQualityAppraisalsArticleInput} />
-                            <Route path="/sse/assignedqualityappraisalsarticleresolution/:articleId" component={SSEAssignedQualityAppraisalsResolution} />
-                            
-                            <Route path="/sse/assignedlinkingstudiesarticleinput/:articleId" component={SSEAssignedLinkingStudiesArticleInput} />
-                            <Route path="/sse/assignedlinkingstudiesarticlequeue" component={SSEAssignedLinkingStudiesArticleQueue} />
+                <Route path="/sse/assignedtranslatingtitlesarticleinput/:articleId" component={SSEAssignedTranslatingTitlesArticleInput} />
+                <Route path="/sse/assignedtranslatingtitlesarticlearticlequeue" component={SSEAssignedTranslatingTitlesArticleQueue} />
 
-                            <Route path="/sse/assignedpresentationdetailsarticleinput/:articleId" component={SSEAssignedPresentationDetailsArticleInput} />
-                            <Route path="/sse/assignedpresentationdetailsarticlearticlequeue" component={SSEAssignedPresentationDetailsArticleQueue} />
+                <Route path="/sse/assignedtrackingprioritizingarticleinput/:articleId" component={SSEAssignedTrackingPrioritizingArticleInput} />
+                <Route path="/sse/assignedtrackingprioritizingarticlearticlequeue" component={SSEAssignedTrackingPrioritizingArticleQueue} />                            
 
-                            <Route path="/sse/assignedtranslatingtitlesarticleinput/:articleId" component={SSEAssignedTranslatingTitlesArticleInput} />
-                            <Route path="/sse/assignedtranslatingtitlesarticlearticlequeue" component={SSEAssignedTranslatingTitlesArticleQueue} />
-                            
-                            <Route path="/sse/assignedtrackingprioritizingarticleinput/:articleId" component={SSEAssignedTrackingPrioritizingArticleInput} />
-                            <Route path="/sse/assignedtrackingprioritizingarticlearticlequeue" component={SSEAssignedTrackingPrioritizingArticleQueue} />                            
-                            
 
-                            {/* Pending SSE Queue */}
-                            <Route path="/sse/add-article" component={AddSSEArticle} />
-                            <Route path="/sse/batchfileupload" component={SSEBatchUpload} />
-                            <Route path="/sse/pendingeligibilityfiltersarticlequeue" component={SSEPendingEligibilityFiltersArticleQueue} />
-                            <Route path="/sse/pendingeligibilityfiltersbatchfilequeue" component={SSEPendingEligibilityFiltersBatchfileQueue} />
-                            <Route path="/sse/pendingqualityappraisalsarticlequeue" component={SSEPendingQualityAppraisalsArticleQueue} />
-                            <Route path="/sse/pendinglinkingstudiesarticlequeue" component={SSEPendingLinkingStudiesArticleQueue} />
-                            <Route path="/sse/pendingpresentationdetailsarticlequeue" component={SSEPendingPresentationDetailsArticleQueue} />
+                {/* Pending SSE Queue */}
+                <Route path="/sse/add-article" component={AddSSEArticle} />
+                <Route path="/sse/batchfileupload" component={SSEBatchUpload} />
+                <Route path="/sse/pendingeligibilityfiltersarticlequeue" component={SSEPendingEligibilityFiltersArticleQueue} />
+                <Route path="/sse/pendingeligibilityfiltersbatchfilequeue" component={SSEPendingEligibilityFiltersBatchfileQueue} />
+                <Route path="/sse/pendingqualityappraisalsarticlequeue" component={SSEPendingQualityAppraisalsArticleQueue} />
+                <Route path="/sse/pendinglinkingstudiesarticlequeue" component={SSEPendingLinkingStudiesArticleQueue} />
+                <Route path="/sse/pendingpresentationdetailsarticlequeue" component={SSEPendingPresentationDetailsArticleQueue} />
 
-                            <Route path="/sse/pendingtranslatingtitlesarticlequeue" component={SSEPendingTranslatingTitlesArticleQueue} />
-                            <Route path="/sse/pendingtrackingprioritizingarticlequeue" component={SSEPendingTrackingPrioritizingArticleQueue} />
-                            
+                <Route path="/sse/pendingtranslatingtitlesarticlequeue" component={SSEPendingTranslatingTitlesArticleQueue} />
+                <Route path="/sse/pendingtrackingprioritizingarticlequeue" component={SSEPendingTrackingPrioritizingArticleQueue} />
 
-                            <Redirect to="/notfound" />
 
-                        </Switch>
-                    </div>
-                </CSSTransition>
-              </TransitionGroup>
-            </Base>
-        )
-    }
+                <Redirect to="/notfound" />
+
+              </Switch>
+            </div>
+          </CSSTransition>
+        </TransitionGroup>
+      </Base>
+    )
+  }
 }
 
 export default withRouter(Routes);
