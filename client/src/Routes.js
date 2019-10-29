@@ -33,13 +33,6 @@ import TableExtended from './components/Tables/TableExtended';
 import Datatable from './components/Tables/DatatableView';
 import DataGrid from './components/Tables/DataGrid';
 
-import FormStandard from './components/Forms/FormStandard';
-import FormExtended from './components/Forms/FormExtended';
-import FormValidation from './components/Forms/FormValidation';
-import FormWizard from './components/Forms/FormWizard';
-import FormUpload from './components/Forms/FormUpload';
-import FormCropper from './components/Forms/FormCropper';
-
 import Login from './components/Pages/Login';
 import Signout from './components/Pages/Signout';
 import Register from './components/Pages/Register';
@@ -247,15 +240,6 @@ const Routes = ({ location }) => {
                             {/*Dashboard*/}
 
                             <Route path="/dashboard" component={DashboardMain}/>
-
-
-                            {/*Forms*/}
-                            <Route path="/form-standard" component={FormStandard}/>
-                            <Route path="/form-extended" component={FormExtended}/>
-                            <Route path="/form-validation" component={FormValidation}/>
-                            <Route path="/form-wizard" component={FormWizard}/>
-                            <Route path="/form-upload" component={FormUpload}/>
-                            <Route path="/form-cropper" component={FormCropper}/>
                             
                             {/*Table*/}
                             <Route path="/table-standard" component={TableStandard}/>
