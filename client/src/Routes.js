@@ -42,28 +42,6 @@ import Maintenance from './components/Pages/Maintenance';
 
 import UserEditor from './components/Settings/UserEditor';
 
-import Mailbox from './components/Extras/Mailbox';
-import Timeline from './components/Extras/Timeline';
-import Calendar from './components/Extras/Calendar';
-import Invoice from './components/Extras/Invoice';
-import Search from './components/Extras/Search';
-import Todo from './components/Extras/Todo';
-import Profile from './components/Extras/Profile';
-import BugTracker from './components/Extras/BugTracker';
-import ContactDetails from './components/Extras/ContactDetails';
-import Contacts from './components/Extras/Contacts';
-import Faq from './components/Extras/Faq';
-import FileManager from './components/Extras/FileManager';
-import Followers from './components/Extras/Followers';
-import HelpCenter from './components/Extras/HelpCenter';
-import Plans from './components/Extras/Plans';
-import ProjectDetails from './components/Extras/ProjectDetails';
-import Projects from './components/Extras/Projects';
-import Settings from './components/Extras/Settings';
-import SocialBoard from './components/Extras/SocialBoard';
-import TeamViewer from './components/Extras/TeamViewer';
-import VoteLinks from './components/Extras/VoteLinks';
-
 import FilterArticleInput from './components/HSE/Article/AssignedEligibility/FilterArticleInput';
 //import FilterResolution from './components/HSE/Article/AssignedEligibility/FilterResolution';
 import ArticleResolution from './components/HSE/Article/AssignedEligibility/ArticleResolution';
@@ -232,30 +210,6 @@ const Routes = ({ location }) => {
                             {/*Dashboard*/}
 
                             <Route path="/dashboard" component={DashboardMain}/>
-                            
-
-                            {/*Extras*/}
-                            <Route path="/mailbox" component={Mailbox}/>
-                            <Route path="/timeline" component={Timeline}/>
-                            <Route path="/calendar" component={Calendar}/>
-                            <Route path="/invoice" component={Invoice}/>
-                            <Route path="/search" component={Search}/>
-                            <Route path="/todo" component={Todo}/>
-                            <Route path="/profile" component={Profile}/>
-                            <Route path="/bug-tracker" component={BugTracker}/>
-                            <Route path="/contact-details" component={ContactDetails}/>
-                            <Route path="/contacts" component={Contacts}/>
-                            <Route path="/faq" component={Faq}/>
-                            <Route path="/file-manager" component={FileManager}/>
-                            <Route path="/followers" component={Followers}/>
-                            <Route path="/help-center" component={HelpCenter}/>
-                            <Route path="/plans" component={Plans}/>
-                            <Route path="/project-details" component={ProjectDetails}/>
-                            <Route path="/projects" component={Projects}/>
-                            <Route path="/settings" exact component={Settings}/>
-                            <Route path="/social-board" component={SocialBoard}/>
-                            <Route path="/team-viewer" component={TeamViewer}/>
-                            <Route path="/vote-links" component={VoteLinks}/>
 
                             <Route path="/settings/usereditor" component={UserEditor} />
 

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 
 import HeaderHorizontal from './HeaderHorizontal'
-import Offsidebar from './Offsidebar'
 import Footer from './Footer'
 
 class Base extends Component {
@@ -21,8 +20,6 @@ class Base extends Component {
         return (
             <div className="wrapper">
                 <HeaderHorizontal />
-
-                <Offsidebar />
 
                 <section className="section-container">
                     { this.props.children }

@@ -148,15 +148,6 @@ class Header extends Component {
                             { /* END Dropdown menu */ }
                         </UncontrolledDropdown>
                         { /* END Alert menu */ }
-                        { /* START Offsidebar button */ }
-                        <li className="nav-item">
-                            <ToggleState state="offsidebar-open" nopersist={true}>
-                                <a className="nav-link" href="">
-                                    <em className="icon-notebook"></em>
-                                </a>
-                            </ToggleState>
-                        </li>
-                        { /* END Offsidebar menu */ }
                     </ul>
                     { /* END Right Navbar */ }
 
