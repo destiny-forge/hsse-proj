@@ -44,7 +44,6 @@ import FontIcons from './components/Elements/FontIcons';
 import WeatherIcons from './components/Elements/WeatherIcons';
 import Colors from './components/Elements/Colors';
 
-
 import MapsGoogle from './components/Maps/MapsGoogle';
 import MapsVector from './components/Maps/MapsVector';
 
