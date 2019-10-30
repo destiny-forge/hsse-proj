@@ -397,32 +397,32 @@ const AdminMenu = [
         translate: 'sidebar.nav.table.ADMINISTRATORHEALTHSYSTEMS',
         submenu: [{
                 name: 'Eligibility Filter',
-                path: '/administrator/eligibility-filters',
+                path: '/administrator/hse/eligibility-filters',
                 translate: 'sidebar.nav.table.ADMINISTRATORHSEELIGIBILITYFILTERQUEUE'
             },
             {
                 name: 'Quality Appraisals',
-                path: '/administrator/quality-appraisals',
+                path: '/administrator/hse/quality-appraisals',
                 translate: 'sidebar.nav.table.ADMINISTRATORHSEQUALITYAPPRAISALSQUEUE'
             },
             {
                 name: 'Linking Studies',
-                path: '/administrator/linking-studies',
+                path: '/administrator/hse/linking-studies',
                 translate: 'sidebar.nav.table.ADMINISTRATORHSETLINKINGSTUDIESQUEUE'
             },
             {
                 name: 'Presentation Details',
-                path: '/administrator/presentation-details',
+                path: '/administrator/hse/presentation-details',
                 translate: 'sidebar.nav.table.ADMINISTRATORHSEPRESENTATIONDETAILSQUEUE'
             },
             {
                 name: 'Go Live Queue',
-                path: '/administrator/golive-queue',
+                path: '/administrator/hse/golive-queue',
                 translate: 'sidebar.nav.table.ADMININISTRATORHSEGOLIVEQUEUE'
             },
             {
                 name: 'Tracking & Prioritizing',
-                path: '/administrator/tracking-prioritizing',
+                path: '/administrator/hse/tracking-prioritizing',
                 translate: 'sidebar.nav.table.ADMINISTRATORHSETRACKINGPRIORITIZINGQUEUE'
             }
         ]
@@ -434,32 +434,32 @@ const AdminMenu = [
         submenu: [
             {
                 name: 'Eligibility Filter',
-                path: '/sse/administrator/eligibilityfilters',
+                path: '/administrator/sse/eligibility-filters',
                 translate: 'sidebar.nav.table.ADMINISTRATORSSEELIGIBILITYFILTERQUEUE'
             },
             {
                 name: 'Quality Appraisals',
-                path: '/sse/administrator/qualityappraisals',
+                path: '/administrator/sse/quality-appraisals',
                 translate: 'sidebar.nav.table.ADMINISTRATORSSEQUALITYAPPRAISALSQUEUE'
             },
             {
                 name: 'Linking Studies',
-                path: '/hse/administrator/linkingstudies',
+                path: '/administrator/sse/linking-studies',
                 translate: 'sidebar.nav.table.ADMINISTRATORSSETLINKINGSTUDIESQUEUE'
             },
             {
                 name: 'Presentation Details',
-                path: '/hse/administrator/presentationdetails',
+                path: '/administrator/sse/presentation-details',
                 translate: 'sidebar.nav.table.ADMINISTRATORSSEPRESENTATIONDETAILSQUEUE'
             },
             {
                 name: 'Go Live Queue',
-                path: '/sse/administrator/ssegolivequeue',
+                path: '/administrator/sse/golive-queue',
                 translate: 'sidebar.nav.table.ADMINISTRATORSSEGOLIVEQUEUE'
             },
             {
                 name: 'Tracking & Prioritizing',
-                path: '/sse/administrator/trackingprioritizing',
+                path: '/administrator/sse/tracking-prioritizing',
                 translate: 'sidebar.nav.table.ADMINISTRATORSSETRACKINGPRIORITIZING'
             }
         ]
