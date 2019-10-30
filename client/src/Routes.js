@@ -180,7 +180,7 @@ const Routes = ({ location }) => {
               <Switch location={location}>
                 <Route path="/dashboard" component={DashboardMain}/>
                 
-                <Route path="/settings/usereditor" component={UserEditor} />
+                <Route path="/settings/edit-user" component={UserEditor} />
                 
                 <Route path="/administrator/hsegolivequeue" component={AdministratorHSEGoLiveQueue} />
                 <Route path="/administrator/hsetrackingprioritizing" component={AdministratorHSETrackingPrioritizingQueue} />

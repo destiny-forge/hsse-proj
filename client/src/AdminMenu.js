@@ -489,7 +489,7 @@ const AdminMenu = [
         translate: 'sidebar.nav.table.USER',
         submenu: [{
                 name: 'User Editor',
-                path: '/settings/usereditor',
+                path: '/settings/edit-user',
                 translate: 'sidebar.nav.table.SETTINGSUSEREDITOR'
             }
         ]
