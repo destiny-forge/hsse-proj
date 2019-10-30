@@ -6,149 +6,154 @@
  */
 
 const mongoose = require('mongoose');
-
 const Authentication = require('../authentication');
+const { hasRole } = require('../../util/auth');
 
 const SSEArticleModelClass = mongoose.model('SSEArticles');
 
 /**
  * TODO: document (code is not finished)
- * 
- * @param ReadableStream req The function's request body
- * @param WritableStream res The function's response body
- */   
-exports.listArticles = async (req, res) => { // REFACTOR: rename to list
-    SSEArticleModelClass.find({ complicated: false /* eligibilityFiltersFullCompletion: true */})
-       .or([ { _qualityAppraisalsJunior: null }, { _qualityAppraisalsSenior: null } ])
-       .exec(function(err, articles) {
-           if(err) {
-               return res.send(err);
-           } else if(!articles) {
-               return res.status(404).send({
-                   message: 'No article in the Quality Appraisal Article Pending Queue'
-               });
-           }
-           return res.status(200).send(articles);
-       });
-};
-
-/**
- * TODO: document (code is not finished)
- * 
+ *
  * @param ReadableStream req The function's request body
  * @param WritableStream res The function's response body
  */
-exports.listArticle = async (req, res) => { // REFACTOR: rename to fetch
 
-    const id = req.param.id;
-
-    return await SSEArticleModelClass.findById(id);
-
+exports.listArticles = async (req, res) => {
+  // REFACTOR: rename to list
+  SSEArticleModelClass.find({
+    complicated: false /* eligibilityFiltersFullCompletion: true */,
+  })
+    .or([{ _qualityAppraisalsJunior: null }, { _qualityAppraisalsSenior: null }])
+    .exec((err, articles) => {
+      if (err) {
+        return res.send(err);
+      }
+      if (!articles) {
+        return res.status(404).send({
+          message: 'No article in the Quality Appraisal Article Pending Queue',
+        });
+      }
+      return res.status(200).send(articles);
+    });
 };
-
-exports.create = (req, res) => { // DEFUNCT
-    
-}
 
 /**
  * TODO: document (code is not finished)
- * 
+ *
+ * @param ReadableStream req The function's request body
+ * @param WritableStream res The function's response body
+ */
+exports.listArticle = async (req, res) => {
+  // REFACTOR: rename to fetch
+  const { id } = req.param;
+  return SSEArticleModelClass.findById(id, async (err, article) => {
+    if (err) {
+      return res.send(err);
+    }
+    if (!article) {
+      return res.status(404).send({
+        message: 'No article with that identifier has been found',
+      });
+    }
+    return res.status(200).send(article);
+  });
+};
+
+/**
+ * TODO: document (code is not finished)
+ *
  * @param ReadableStream req The function's request body
  * @param WritableStream res The function's response body
  */
 exports.addArticleToJuniorQualityAppraiser = async (req, res) => {
+  const { articleId } = req.params;
+  const user = await Authentication.getUserFromToken(req.headers.authorization);
 
-    const { articleId } = req.params;
-    
-     const user = await Authentication.getUserFromToken(req.headers.authorization);
+  if (!hasRole('juniorappraiser', user) && !hasRole('seniorappraiser', user)) {
+    return res.status(400).send({
+      message: 'User does not have permission',
+    });
+  }
 
-    if(!mongoose.Types.ObjectId.isValid(articleId)) {
-        return res.status(400).send({
-            message: 'Article is invalid'
-        });
+  if (!mongoose.Types.ObjectId.isValid(articleId)) {
+    return res.status(400).send({
+      message: 'Article is invalid',
+    });
+  }
+
+  /* eslint no-param-reassign: ["error", { "props": false }] */
+  return SSEArticleModelClass.findById(articleId, async (err, article) => {
+    if (err) {
+      return res.send(err);
+    }
+    if (!article) {
+      return res.status(404).send({
+        message: 'No article with that identifier has been found',
+      });
     }
 
-    SSEArticleModelClass.findById(articleId, async (err, article) => {
-        if(err) {
-            return res.send(err);
-        } else if(!article) {
-            return res.status(404).send({
-                message: 'No article with that identifier has been found'
-            });
-        } else if(article._qualityAppraisalsJunior !== null) {
+    if (article._qualityAppraisalsJunior !== undefined) {
+      return res.status(404).send({
+        message: 'A junior appraiser has already been added for this article',
+      });
+    }
 
-        } else {  
-            
-            if(hasRole('juniorappraiser', user) || hasRole('seniorappraiser', user)) {
+    article._qualityAppraisalsJunior = user._id;
+    article._qualityAppraisalsJuniorEmail = user.email;
 
-                article._qualityAppraisalsJunior = user._id;
-                article._qualityAppraisalsJuniorEmail = user.email;
-
-                await article.save();
-                return res.status(200).send({
-                    message: 'Junior quality appraiser added'
-                });
-            } else {
-                return res.status(400).send({
-                    message: 'User does not have persmission'
-                })
-            }
-            
-        }
+    await article.save();
+    return res.status(200).send({
+      message: 'Junior quality appraiser added',
     });
-
+  });
 };
 
 /**
  * TODO: document (code is not finished)
- * 
+ *
  * @param ReadableStream req The function's request body
  * @param WritableStream res The function's response body
  */
 exports.addArticleToSeniorQualityAppraiser = async (req, res) => {
+  const { articleId } = req.params;
 
-    const { articleId } = req.params;
-    
-    const user = await Authentication.getUserFromToken(req.headers.authorization);
+  const user = await Authentication.getUserFromToken(req.headers.authorization);
 
-    if(!mongoose.Types.ObjectId.isValid(articleId)) {
-        return res.status(400).send({
-            message: 'Article is invalid'
-        });
+  if (!hasRole('seniorappraiser', user)) {
+    return res.status(400).send({
+      message: 'User does not have permission',
+    });
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(articleId)) {
+    return res.status(400).send({
+      message: 'Article is invalid',
+    });
+  }
+
+  return SSEArticleModelClass.findById(articleId, async (err, article) => {
+    if (err) {
+      return res.send(err);
     }
 
-    SSEArticleModelClass.findById(articleId, async (err, article) => {
-        if(err) {
-            return res.send(err);
-        } else if(!article) {
-            return res.status(404).send({
-                message: 'No article with that identifier has been found'
-            });
-        } else if(article._qualityAppraisalsSenior !== undefined) {
-            return res.status(404).send({
-                message: 'A senior filter has already been added for this article'
-            });
-        } else {
+    if (!article) {
+      return res.status(404).send({
+        message: 'No article with that identifier has been found',
+      });
+    }
 
-            if(hasRole('seniorappraiser', user)) {
+    if (article._qualityAppraisalsSenior !== undefined) {
+      return res.status(404).send({
+        message: 'A senior appraiser has already been added for this article',
+      });
+    }
 
-                article._qualityAppraisalsSenior = user._id;
-                article._qualityAppraisalsSeniorEmail = user.email;
+    article._qualityAppraisalsSenior = user._id;
+    article._qualityAppraisalsSeniorEmail = user.email;
 
-                await article.save();
-                return res.status(200).send({
-                    message: 'Senior quality appraiser user added'
-                });
-            } else {
-                return res.status(400).send({
-                    message: 'User does not have persmission'
-                })
-            }
-        }
+    await article.save();
+    return res.status(200).send({
+      message: 'Senior quality appraiser user added',
     });
-
-}
-
-const hasRole = (role, user) => {
-    return user.roles.includes(role);
-}
+  });
+};

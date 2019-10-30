@@ -292,7 +292,7 @@ import {
 */
 } from './types';
 
-const backendServer = `${process.env.REACT_APP_BACKEND_SERVER}`;
+const api = process.env.REACT_APP_BACKEND_SERVER || '/api';
 
 let headers = {
   'Content-Type': 'application/json',
@@ -303,7 +303,7 @@ export const signup = (formProps, callback) => async dispatch => {
   
   try {
     await axios.post(
-      `${backendServer}/signup`,
+      `${api}/signup`,
       formProps
     );
 
@@ -322,7 +322,7 @@ export const signin = (formProps, successCallback, failureCallback) => async dis
   
   try {
     const response = await axios.post(
-      `${backendServer}/signin`,
+      `${api}/signin`,
       formProps
     );
 
@@ -345,7 +345,7 @@ export const signin = (formProps, successCallback, failureCallback) => async dis
 export const resetPassword = (formProps, token, history) => async dispatch => {
   try {
     await axios.post(
-      `${backendServer}/resetpassword/${token}`,
+      `${api}/resetpassword/${token}`,
       formProps
     );
 
@@ -360,7 +360,7 @@ export const resetPassword = (formProps, token, history) => async dispatch => {
 export const forgotpassword = (formProps, callback) => async dispatch => {
   try {
     await axios.post(
-      `${backendServer}/forgotpassword`,
+      `${api}/forgotpassword`,
       formProps
     );
 
@@ -375,7 +375,7 @@ export const forgotpassword = (formProps, callback) => async dispatch => {
 export const getCurrentUser = ( ) => async dispatch => {
   
   try {
-      const response = await axios.get(`${backendServer}/currentuser`, {
+      const response = await axios.get(`${api}/currentuser`, {
       headers: { authorization: localStorage.getItem('token') }
     });
     
@@ -391,7 +391,7 @@ export const getCurrentUser = ( ) => async dispatch => {
 export const fetchUserByEmail = (email) => async dispatch => {
   
   try {
-      const response = await axios.get(`${backendServer}/fetchuserbyemail/${email}`, {
+      const response = await axios.get(`${api}/fetchuserbyemail/${email}`, {
       headers: { authorization: localStorage.getItem('token') },
     });
     
@@ -407,7 +407,7 @@ export const fetchUserByEmail = (email) => async dispatch => {
 export const fetchAllUsers = ( ) => async dispatch => {
   
   try {
-      const response = await axios.get(`${backendServer}/fetchallusers`, {
+      const response = await axios.get(`${api}/fetchallusers`, {
       headers: { authorization: localStorage.getItem('token') }
     });
     
@@ -434,7 +434,7 @@ export const signout = () => {
 
 export const addRole = (value) => async dispatch => {
   try { 
-    const response = await axios.post(`${backendServer}/addrole`, 
+    const response = await axios.post(`${api}/addrole`, 
     { value },
     {
       headers: { authorization: localStorage.getItem('token') }
@@ -452,7 +452,7 @@ export const addRole = (value) => async dispatch => {
 export const updateRole = (value) => async dispatch => {
   
   try { 
-    const response = await axios.post(`${backendServer}/updaterole`, 
+    const response = await axios.post(`${api}/updaterole`, 
     { value },
     {
       headers: { authorization: localStorage.getItem('token') }
@@ -471,7 +471,7 @@ export const updateRole = (value) => async dispatch => {
 
 export const removeRole = (value) => async dispatch => {
   try { 
-    const response = await axios.post(`${backendServer}/removerole`, 
+    const response = await axios.post(`${api}/removerole`, 
     { value },
     {
       headers: { authorization: localStorage.getItem('token') }
@@ -488,7 +488,7 @@ export const removeRole = (value) => async dispatch => {
 
 export const activateUser = (value) => async dispatch => {
   try { 
-    const response = await axios.post(`${backendServer}/activateuser`, 
+    const response = await axios.post(`${api}/activateuser`, 
     { value },
     {
       headers: { authorization: localStorage.getItem('token') }
@@ -505,7 +505,7 @@ export const activateUser = (value) => async dispatch => {
 
 export const deactivateUser = (value) => async dispatch => {
   try { 
-    const response = await axios.post(`${backendServer}/deactivateuser`, 
+    const response = await axios.post(`${api}/deactivateuser`, 
     { value },
     {
       headers: { authorization: localStorage.getItem('token') }
@@ -525,7 +525,7 @@ export const onHSEArticleSubmit = (values, history) => async dispatch => {
   console.log(values);
   try {
     const response = await axios.post(
-      `${backendServer}/hse/articles`,
+      `${api}/hse/articles`,
       values
     );
 
@@ -542,7 +542,7 @@ export const onHSEArticleSubmit = (values, history) => async dispatch => {
 
 export const submitHSEBatchFile = (state, history) => async dispatch => {
 
-  const uploadConfig = await axios.get('/api/hse/getfileurl');
+  const uploadConfig = await axios.get(`${api}/hse/getfileurl`);
 
   await axios.put(uploadConfig.data.url, state.file, {
     headers: {
@@ -550,7 +550,7 @@ export const submitHSEBatchFile = (state, history) => async dispatch => {
     }
   });
 
-  const articleBatch = await axios.post('/api/hse/batchfile', { 
+  const articleBatch = await axios.post(`${api}/hse/batchfile`, { 
     url: uploadConfig.data.key, 
     language: state.selectedLanguageOption.label, 
     articleSource: state.selectedSourceOption.label, 
@@ -575,7 +575,7 @@ export const submitHSEBatchFile = (state, history) => async dispatch => {
 
 export const listHSEPendingEligibilityFiltersArticlesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/hse/pendingeligibilityfiltersarticlequeue`, {
+    const response = await axios.get(`${api}/hse/pendingeligibilityfiltersarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
 
@@ -590,7 +590,7 @@ export const listHSEPendingEligibilityFiltersArticlesQueue = (history) => async 
 
 export const listHSEPendingQualityAppraisalsArticlesQueue = () => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/hse/pendingqualityappraisalsarticlequeue`, {
+    const response = await axios.get(`${api}/hse/pendingqualityappraisalsarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
 
@@ -604,7 +604,7 @@ export const listHSEPendingQualityAppraisalsArticlesQueue = () => async dispatch
 
 export const listHSEPendingLinkingStudiesArticlesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/hse/pendinglinkingstudiesarticlequeue`, {
+    const response = await axios.get(`${api}/hse/pendinglinkingstudiesarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
 
@@ -618,7 +618,7 @@ export const listHSEPendingLinkingStudiesArticlesQueue = (history) => async disp
 
 export const listHSEPendingPresentationDetailsArticlesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/hse/pendingpresentationdetailsarticlequeue`, {
+    const response = await axios.get(`${api}/hse/pendingpresentationdetailsarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
 
@@ -631,7 +631,7 @@ export const listHSEPendingPresentationDetailsArticlesQueue = (history) => async
 
 export const listHSEPendingEligibilityFiltersBatchfilesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/hse/articlebatchfiles`);
+    const response = await axios.get(`${api}/hse/articlebatchfiles`);
 
     // history.push('/dashboard');
     dispatch({ type: HSE_PENDING_ELIGIBILITY_FILTERS_BATCHFILE_QUEUE, payload: response.data })
@@ -642,7 +642,7 @@ export const listHSEPendingEligibilityFiltersBatchfilesQueue = (history) => asyn
 
 export const listHSEPendingQualityAppraisalsBatchfilesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/hse/articlebatchfiles`);
+    const response = await axios.get(`${api}/hse/articlebatchfiles`);
 
     // history.push('/dashboard');
     dispatch({ type: HSE_PENDING_QUALITY_APPRAISALS_BATCHFILE_QUEUE, payload: response.data })
@@ -653,7 +653,7 @@ export const listHSEPendingQualityAppraisalsBatchfilesQueue = (history) => async
 
 export const listHSEPendingLinkingStudiesBatchfilesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/hse/articlebatchfiles`);
+    const response = await axios.get(`${api}/hse/articlebatchfiles`);
 
     // history.push('/dashboard');
     dispatch({ type: HSE_PENDING_LINKING_STUDIES_BATCHFILE_QUEUE, payload: response.data })
@@ -664,7 +664,7 @@ export const listHSEPendingLinkingStudiesBatchfilesQueue = (history) => async di
 
 export const listHSEPendingPresentationDetailsBatchfilesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/hse/articlebatchfiles`);
+    const response = await axios.get(`${api}/hse/articlebatchfiles`);
 
     // history.push('/dashboard');
     dispatch({ type: HSE_PENDING_PRESENTATION_DETAILS_BATCHFILE_QUEUE, payload: response.data })
@@ -675,7 +675,7 @@ export const listHSEPendingPresentationDetailsBatchfilesQueue = (history) => asy
 
 export const listHSEAssignedEligibilityFiltersArticlesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/hse/assignedeligibilityfiltersarticlequeue`, {
+    const response = await axios.get(`${api}/hse/assignedeligibilityfiltersarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
 
@@ -689,7 +689,7 @@ export const listHSEAssignedEligibilityFiltersArticlesQueue = (history) => async
 
 export const listHSEAssignedQualityAppraisalsArticlesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/hse/assignedqualityappraisalsarticlequeue`, {
+    const response = await axios.get(`${api}/hse/assignedqualityappraisalsarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
 
@@ -703,7 +703,7 @@ export const listHSEAssignedQualityAppraisalsArticlesQueue = (history) => async 
 
 export const listHSEAssignedLinkingStudiesArticlesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/hse/assignedlinkingstudiesarticlequeue`, {
+    const response = await axios.get(`${api}/hse/assignedlinkingstudiesarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
 
@@ -717,7 +717,7 @@ export const listHSEAssignedLinkingStudiesArticlesQueue = (history) => async dis
 
 export const listHSEAssignedPresentationDetailsArticlesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/hse/assignedpresentationdetailsarticlequeue`, {
+    const response = await axios.get(`${api}/hse/assignedpresentationdetailsarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
 
@@ -730,7 +730,7 @@ export const listHSEAssignedPresentationDetailsArticlesQueue = (history) => asyn
 
 export const addArticleToComplicatedQueue = (articleId, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/hse/articles/addtocomplicatedqueue/${articleId}`, {}, { headers });
+    const response = await axios.post(`${api}/hse/articles/addtocomplicatedqueue/${articleId}`, {}, { headers });
   
     // history.push('/dashboard');
     dispatch({ type: HSE_ADD_ARTICLE_TO_COMPLICATED_QUEUE, payload: response.data })
@@ -741,7 +741,7 @@ export const addArticleToComplicatedQueue = (articleId, history) => async dispat
 
 export const addArticleToLostQueue = (articleId, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/hse/articles/addtolostqueue/${articleId}`, {}, { headers });
+    const response = await axios.post(`${api}/hse/articles/addtolostqueue/${articleId}`, {}, { headers });
   
     dispatch({ type: HSE_ADD_ARTICLE_TO_LOST_QUEUE, payload: response.data })
   } catch(e) {
@@ -755,7 +755,7 @@ export const fetchHSEAssignedEligibilityFiltersArticle = (articleId, history) =>
     'Authorization': localStorage.getItem('token') 
   };
   try {
-    const response = await axios.get(`${backendServer}/hse/assignedeligibilityfiltersarticlequeue/fetcharticle/${articleId}`, { headers });
+    const response = await axios.get(`${api}/hse/assignedeligibilityfiltersarticlequeue/fetcharticle/${articleId}`, { headers });
   
     // history.push('/dashboard');
     // console.log(response.data);
@@ -774,7 +774,7 @@ export const fetchHSEAssignedQualityAppraisalsArticle = (articleId, history) => 
     'Authorization': localStorage.getItem('token') 
   };
   try {
-    const response = await axios.get(`${backendServer}/hse/assignedqualityappraisalsarticlequeue/fetcharticle/${articleId}`, { headers });
+    const response = await axios.get(`${api}/hse/assignedqualityappraisalsarticlequeue/fetcharticle/${articleId}`, { headers });
   
     // history.push('/dashboard');
     // console.log(response.data);
@@ -795,7 +795,7 @@ export const fetchHSEAssignedLinkingStudiesArticle = (articleId, history) => asy
     'Authorization': localStorage.getItem('token') 
   };
   try {
-    const response = await axios.get(`${backendServer}/hse/assignedlinkingstudiesarticlequeue/fetcharticle/${articleId}`, { headers });
+    const response = await axios.get(`${api}/hse/assignedlinkingstudiesarticlequeue/fetcharticle/${articleId}`, { headers });
   
     // history.push('/dashboard');
     // console.log(response.data);
@@ -811,7 +811,7 @@ export const fetchHSEAssignedPresentationDetailsArticle = (articleId, history) =
     'Authorization': localStorage.getItem('token') 
   };
   try {
-    const response = await axios.get(`${backendServer}/hse/assignedpresentationdetailsarticlequeue/fetcharticle/${articleId}`, { headers });
+    const response = await axios.get(`${api}/hse/assignedpresentationdetailsarticlequeue/fetcharticle/${articleId}`, { headers });
   
     // history.push('/dashboard');
     dispatch({ type: HSE_ASSIGNED_PRESENTATION_DETAILS_ARTICLE_FETCH, payload: response.data })
@@ -827,7 +827,7 @@ export const assignHSEPendingEligibilityFiltersArticlesJuniorFilter = (articleId
   };
   console.log(headers);
   try {
-    const response = await axios.post(`${backendServer}/hse/pendingeligibilityfiltersarticlequeue/addjuniorfilterer/${articleId}`, 
+    const response = await axios.post(`${api}/hse/pendingeligibilityfiltersarticlequeue/addjuniorfilterer/${articleId}`, 
     {
       articleId
     },
@@ -853,7 +853,7 @@ export const assignAllHSEPendingEligibilityFiltersArticlesJuniorFilter = (articl
   };
   console.log(headers);
   try {
-    const response = await axios.post(`${backendServer}/hse/pendingeligibilityfiltersarticlequeue/addalljuniorfilterer`, 
+    const response = await axios.post(`${api}/hse/pendingeligibilityfiltersarticlequeue/addalljuniorfilterer`, 
     {
       articleIds
     },
@@ -877,7 +877,7 @@ export const assignHSEPendingQualityAppraisalsArticlesJuniorAppraiser = (article
     'Authorization': localStorage.getItem('token') 
   };
   try {
-    const response = await axios.post(`${backendServer}/hse/pendingqualityappraisalsarticlequeue/addjuniorappraiser/${articleId}`, 
+    const response = await axios.post(`${api}/hse/pendingqualityappraisalsarticlequeue/addjuniorappraiser/${articleId}`, 
     {
       articleId
     },
@@ -896,7 +896,7 @@ export const assignHSEPendingQualityAppraisalsArticlesJuniorAppraiser = (article
 export const assignHSEPendingLinkingStudiesArticlesJuniorLinker = (articleId , history) => async dispatch => {
 
   try {
-    const response = await axios.post(`${backendServer}/hse/pendinglinkingstudiesarticlequeue/addjuniorlinker/${articleId}`, 
+    const response = await axios.post(`${api}/hse/pendinglinkingstudiesarticlequeue/addjuniorlinker/${articleId}`, 
     {
       articleId
     },
@@ -914,7 +914,7 @@ export const assignHSEPendingLinkingStudiesArticlesJuniorLinker = (articleId , h
 export const assignHSEPendingPresentationDetailsArticlesJuniorPresenter = (articleId , history) => async dispatch => {
 
   try {
-    const response = await axios.post(`${backendServer}/hse/pendingpresentationdetailsarticlequeue/addjuniordetailer/${articleId}`, 
+    const response = await axios.post(`${api}/hse/pendingpresentationdetailsarticlequeue/addjuniordetailer/${articleId}`, 
     {
       articleId
     },
@@ -936,7 +936,7 @@ export const assignHSEPendingEligibilityFiltersArticlesSeniorFilter = (articleId
     'Authorization': localStorage.getItem('token') 
   };
   try {
-    const response = await axios.post(`${backendServer}/hse/pendingeligibilityfiltersarticlequeue/addseniorfilterer/${articleId}`,
+    const response = await axios.post(`${api}/hse/pendingeligibilityfiltersarticlequeue/addseniorfilterer/${articleId}`,
     {
       articleId
     },
@@ -960,7 +960,7 @@ export const assignAllHSEPendingEligibilityFiltersArticlesSeniorFilter = (articl
     'Authorization': localStorage.getItem('token') 
   };
   try {
-    const response = await axios.post(`${backendServer}/hse/pendingeligibilityfiltersarticlequeue/addallseniorfilterer`,
+    const response = await axios.post(`${api}/hse/pendingeligibilityfiltersarticlequeue/addallseniorfilterer`,
     {
       articleIds
     },
@@ -984,7 +984,7 @@ export const assignHSEPendingQualityAppraisalsArticlesSeniorAppraiser = (article
     'Authorization': localStorage.getItem('token') 
   };
   try {
-    const response = await axios.post(`${backendServer}/hse/pendingqualityappraisalsarticlequeue/addseniorappraiser/${articleId}`,
+    const response = await axios.post(`${api}/hse/pendingqualityappraisalsarticlequeue/addseniorappraiser/${articleId}`,
     {
       articleId
     },
@@ -1007,7 +1007,7 @@ export const assignHSEAssignedEligibilityFiltersArticleEdit = (articleId, inputV
   };
   try {
     
-    const response = await axios.post(`${backendServer}/hse/assignedeligibilityfiltersarticlequeue/savevalues/${articleId}`,
+    const response = await axios.post(`${api}/hse/assignedeligibilityfiltersarticlequeue/savevalues/${articleId}`,
     {
       inputValues
     },
@@ -1029,7 +1029,7 @@ export const assignHSEAssignedQualityAppraisalsArticleEdit = (articleId, inputVa
     'Authorization': localStorage.getItem('token') 
   };
   try {
-    const response = await axios.post(`${backendServer}/hse/assignedqualityappraisalsarticlequeue/savevalues/${articleId}`,
+    const response = await axios.post(`${api}/hse/assignedqualityappraisalsarticlequeue/savevalues/${articleId}`,
     {
       inputValues
     },
@@ -1047,7 +1047,7 @@ export const assignHSEAssignedQualityAppraisalsArticleEdit = (articleId, inputVa
 
 export const assignHSEAssignedLinkingStudiesArticleEdit = (articleId, inputValues, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/hse/assignedlinkingstudiesarticlequeue/savevalues/${articleId}`,
+    const response = await axios.post(`${api}/hse/assignedlinkingstudiesarticlequeue/savevalues/${articleId}`,
     {
       inputValues
     },
@@ -1065,7 +1065,7 @@ export const assignHSEAssignedLinkingStudiesArticleEdit = (articleId, inputValue
 
 export const assignHSEAssignedPresentationDetailsArticleEdit = (articleId, inputValues, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/hse/assignedpresentationdetailsarticlequeue/savevalues/${articleId}`,
+    const response = await axios.post(`${api}/hse/assignedpresentationdetailsarticlequeue/savevalues/${articleId}`,
     {
       inputValues
     },
@@ -1087,7 +1087,7 @@ export const assignHSEAssignedEligibilityFiltersArticleEditComplete = (articleId
     'Authorization': localStorage.getItem('token') 
   };
   try {
-    const response = await axios.post(`${backendServer}/hse/assignedeligibilityfiltersarticlequeue/setcompleted/${articleId}`,
+    const response = await axios.post(`${api}/hse/assignedeligibilityfiltersarticlequeue/setcompleted/${articleId}`,
     {
       inputValues
     },
@@ -1109,7 +1109,7 @@ export const assignHSEAssignedQualityAppraisalsArticleEditComplete = (articleId,
     'Authorization': localStorage.getItem('token') 
   };
   try {
-    const response = await axios.post(`${backendServer}/hse/assignedqualityappraisalsarticlequeue/setcompleted/${articleId}`,
+    const response = await axios.post(`${api}/hse/assignedqualityappraisalsarticlequeue/setcompleted/${articleId}`,
     {
       inputValues
     },
@@ -1127,7 +1127,7 @@ export const assignHSEAssignedQualityAppraisalsArticleEditComplete = (articleId,
 
 export const assignHSEAssignedLinkingStudiesArticleEditComplete = (articleId, inputValues, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/hse/assignedlinkingstudiesarticlequeue/setcompleted/${articleId}`,
+    const response = await axios.post(`${api}/hse/assignedlinkingstudiesarticlequeue/setcompleted/${articleId}`,
     {
       inputValues
     },
@@ -1145,7 +1145,7 @@ export const assignHSEAssignedLinkingStudiesArticleEditComplete = (articleId, in
 
 export const assignHSEAssignedPresentationDetailsArticleEditComplete = (articleId, inputValues, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/hse/assignedpresentationdetailsarticlequeue/setcompleted/${articleId}`,
+    const response = await axios.post(`${api}/hse/assignedpresentationdetailsarticlequeue/setcompleted/${articleId}`,
     {
       inputValues
     },
@@ -1165,7 +1165,7 @@ export const onSSEArticleSubmit = (values, history) => async dispatch => {
   
   try {
     const response = await axios.post(
-      `${backendServer}/sse/articles`,
+      `${api}/sse/articles`,
       values
     );
 
@@ -1182,7 +1182,7 @@ export const onSSEArticleSubmit = (values, history) => async dispatch => {
 
 export const submitSSEBatchFile = (state, history) => async dispatch => {
 
-  const uploadConfig = await axios.get('/api/sse/getfileurl');
+  const uploadConfig = await axios.get(`${api}/sse/getfileurl`);
 
   await axios.put(uploadConfig.data.url, state.file, {
     headers: {
@@ -1190,7 +1190,7 @@ export const submitSSEBatchFile = (state, history) => async dispatch => {
     }
   });
 
-  const articleBatch = await axios.post('/api/sse/batchfile', { 
+  const articleBatch = await axios.post(`${api}/sse/batchfile`, { 
     url: uploadConfig.data.key, 
     language: state.selectedLanguageOption.label, 
     articleSource: state.selectedSourceOption.label, 
@@ -1216,7 +1216,7 @@ export const submitSSEBatchFile = (state, history) => async dispatch => {
 
 export const listSSEPendingEligibilityFiltersArticlesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/pendingeligibilityfiltersarticlequeue`, {
+    const response = await axios.get(`${api}/sse/pendingeligibilityfiltersarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
 
@@ -1231,7 +1231,7 @@ export const listSSEPendingEligibilityFiltersArticlesQueue = (history) => async 
 
 export const listSSEPendingQualityAppraisalsArticlesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/pendingqualityappraisalsarticlequeue`, {
+    const response = await axios.get(`${api}/sse/pendingqualityappraisalsarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
 
@@ -1245,7 +1245,7 @@ export const listSSEPendingQualityAppraisalsArticlesQueue = (history) => async d
 
 export const listSSEPendingLinkingStudiesArticlesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/pendinglinkingstudiesarticlequeue`, {
+    const response = await axios.get(`${api}/sse/pendinglinkingstudiesarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
 
@@ -1259,7 +1259,7 @@ export const listSSEPendingLinkingStudiesArticlesQueue = (history) => async disp
 
 export const listSSEPendingPresentationDetailsArticlesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/pendingpresentationdetailsarticlequeue`, {
+    const response = await axios.get(`${api}/sse/pendingpresentationdetailsarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
 
@@ -1272,7 +1272,7 @@ export const listSSEPendingPresentationDetailsArticlesQueue = (history) => async
 
 export const listSSEPendingEligibilityFiltersBatchfilesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/articlebatchfiles`);
+    const response = await axios.get(`${api}/sse/articlebatchfiles`);
 
     // history.push('/dashboard');
     // console.log(response.data);
@@ -1284,7 +1284,7 @@ export const listSSEPendingEligibilityFiltersBatchfilesQueue = (history) => asyn
 
 export const listSSEPendingQualityAppraisalsBatchfilesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/articlebatchfiles`);
+    const response = await axios.get(`${api}/sse/articlebatchfiles`);
 
     // history.push('/dashboard');
     // console.log(response.data);
@@ -1296,7 +1296,7 @@ export const listSSEPendingQualityAppraisalsBatchfilesQueue = (history) => async
 
 export const listSSEPendingLinkingStudiesBatchfilesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/articlebatchfilesqueue`);
+    const response = await axios.get(`${api}/sse/articlebatchfilesqueue`);
 
     // history.push('/dashboard');
     // console.log(response.data);
@@ -1308,7 +1308,7 @@ export const listSSEPendingLinkingStudiesBatchfilesQueue = (history) => async di
 
 export const listSSEPendingPresentationDetailsBatchfilesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/articlebatchfilesqueue`);
+    const response = await axios.get(`${api}/sse/articlebatchfilesqueue`);
 
     // history.push('/dashboard');
     dispatch({ type: SSE_PENDING_PRESENTATION_DETAILS_BATCHFILE_QUEUE, payload: response.data })
@@ -1319,7 +1319,7 @@ export const listSSEPendingPresentationDetailsBatchfilesQueue = (history) => asy
 
 export const listSSEAssignedEligibilityFiltersArticlesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/assignedeligibilityfiltersarticlequeue`, {
+    const response = await axios.get(`${api}/sse/assignedeligibilityfiltersarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
 
@@ -1333,7 +1333,7 @@ export const listSSEAssignedEligibilityFiltersArticlesQueue = (history) => async
 
 export const listSSEAssignedQualityAppraisalsArticlesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/assignedqualityappraisalsarticlequeue`, {
+    const response = await axios.get(`${api}/sse/assignedqualityappraisalsarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
     // history.push('/dashboard');
@@ -1346,7 +1346,7 @@ export const listSSEAssignedQualityAppraisalsArticlesQueue = (history) => async 
 
 export const listSSEAssignedLinkingStudiesArticlesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/assignedlinkingstudiesarticlequeue`, {
+    const response = await axios.get(`${api}/sse/assignedlinkingstudiesarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
     dispatch({ type: SSE_ASSIGNED_LINKING_STUDIES_ARTICLE_QUEUE, payload: response.data })
@@ -1357,7 +1357,7 @@ export const listSSEAssignedLinkingStudiesArticlesQueue = (history) => async dis
 
 export const listSSEAssignedPresentationDetailsArticlesQueue = (history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/assignedpresentationdetailsarticlequeue`, {
+    const response = await axios.get(`${api}/sse/assignedpresentationdetailsarticlequeue`, {
       headers: { authorization: localStorage.getItem('token') }
     });
     dispatch({ type: SSE_ASSIGNED_PRESENTATION_DETAILS_ARTICLE_QUEUE, payload: response.data })
@@ -1368,7 +1368,7 @@ export const listSSEAssignedPresentationDetailsArticlesQueue = (history) => asyn
 
 export const fetchSSEAssignedEligibilityFiltersArticle = (articleId, history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/assignedeligibilityfiltersarticlequeue/fetcharticle/${articleId}`, { headers });
+    const response = await axios.get(`${api}/sse/assignedeligibilityfiltersarticlequeue/fetcharticle/${articleId}`, { headers });
   
     // history.push('/dashboard');
     dispatch({ type: SSE_ASSIGNED_ELIGIBILITY_FILTERS_ARTICLE_FETCH, payload: response.data })
@@ -1379,7 +1379,7 @@ export const fetchSSEAssignedEligibilityFiltersArticle = (articleId, history) =>
 
 export const fetchSSEAssignedQualityAppraisalsArticle = (articleId, history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/assignedqualityappraisalsarticlequeue/fetcharticle/${articleId}`, { headers });
+    const response = await axios.get(`${api}/sse/assignedqualityappraisalsarticlequeue/fetcharticle/${articleId}`, { headers });
   
     // history.push('/dashboard');
     // console.log(response.data);
@@ -1391,7 +1391,7 @@ export const fetchSSEAssignedQualityAppraisalsArticle = (articleId, history) => 
 
 export const fetchSSEAssignedLinkingStudiesArticle = (articleId, history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/assignedlinkingstudiesarticlequeue/fetcharticle/${articleId}`, { headers });
+    const response = await axios.get(`${api}/sse/assignedlinkingstudiesarticlequeue/fetcharticle/${articleId}`, { headers });
 
     dispatch({ type: SSE_ASSIGNED_LINKING_STUDIES_ARTICLE_FETCH, payload: response.data })
   } catch(e) {
@@ -1401,7 +1401,7 @@ export const fetchSSEAssignedLinkingStudiesArticle = (articleId, history) => asy
 
 export const fetchSSEAssignedPresentationDetailsArticle = (articleId, history) => async dispatch => {
   try {
-    const response = await axios.get(`${backendServer}/sse/assignedpresentationdetailsarticlequeue/fetcharticle/${articleId}`, { headers });
+    const response = await axios.get(`${api}/sse/assignedpresentationdetailsarticlequeue/fetcharticle/${articleId}`, { headers });
 
     dispatch({ type: SSE_ASSIGNED_PRESENTATION_DETAILS_ARTICLE_FETCH, payload: response.data })
   } catch(e) {
@@ -1412,7 +1412,7 @@ export const fetchSSEAssignedPresentationDetailsArticle = (articleId, history) =
 export const assignSSEPendingEligibilityFiltersArticlesJuniorFilter = (articleId , history) => async dispatch => {
 
   try {
-    const response = await axios.post(`${backendServer}/sse/pendingeligibilityfiltersarticlequeue/addjuniorfilterer/${articleId}`, 
+    const response = await axios.post(`${api}/sse/pendingeligibilityfiltersarticlequeue/addjuniorfilterer/${articleId}`, 
     {
       articleId
     },
@@ -1430,7 +1430,7 @@ export const assignSSEPendingEligibilityFiltersArticlesJuniorFilter = (articleId
 export const assignSSEPendingQualityAppraisalsArticlesJuniorAppraiser = (articleId , history) => async dispatch => {
 
   try {
-    const response = await axios.post(`${backendServer}/sse/pendingqualityappraisalsarticlequeue/addjuniorappraiser/${articleId}`, 
+    const response = await axios.post(`${api}/sse/pendingqualityappraisalsarticlequeue/addjuniorappraiser/${articleId}`, 
     {
       articleId
     },
@@ -1448,7 +1448,7 @@ export const assignSSEPendingQualityAppraisalsArticlesJuniorAppraiser = (article
 export const assignSSEPendingLinkingStudiesArticlesJuniorLinker = (articleId , history) => async dispatch => {
 
   try {
-    const response = await axios.post(`${backendServer}/sse/pendinglinkingstudiesarticlequeue/addjuniorlinker/${articleId}`, 
+    const response = await axios.post(`${api}/sse/pendinglinkingstudiesarticlequeue/addjuniorlinker/${articleId}`, 
     {
       articleId
     },
@@ -1466,7 +1466,7 @@ export const assignSSEPendingLinkingStudiesArticlesJuniorLinker = (articleId , h
 export const assignSSEPendingPresentationDetailsArticlesJuniorDetailer = (articleId , history) => async dispatch => {
 
   try {
-    const response = await axios.post(`${backendServer}/sse/pendingpresentationdetailsarticlequeue/addjuniordetailer/${articleId}`, 
+    const response = await axios.post(`${api}/sse/pendingpresentationdetailsarticlequeue/addjuniordetailer/${articleId}`, 
     {
       articleId
     },
@@ -1483,7 +1483,7 @@ export const assignSSEPendingPresentationDetailsArticlesJuniorDetailer = (articl
 
 export const assignSSEPendingEligibilityFiltersArticlesSeniorFilter = (articleId, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/sse/pendingeligibilityfiltersarticlequeue/addseniorfilterer/${articleId}`,
+    const response = await axios.post(`${api}/sse/pendingeligibilityfiltersarticlequeue/addseniorfilterer/${articleId}`,
     {
       articleId
     },
@@ -1502,7 +1502,7 @@ export const assignSSEPendingEligibilityFiltersArticlesSeniorFilter = (articleId
 
 export const assignSSEPendingQualityAppraisalsArticlesSeniorAppraiser = (articleId, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/sse/pendingqualityappraisalsarticlequeue/addseniorappraiser/${articleId}`,
+    const response = await axios.post(`${api}/sse/pendingqualityappraisalsarticlequeue/addseniorappraiser/${articleId}`,
     {
       articleId
     },
@@ -1520,7 +1520,7 @@ export const assignSSEPendingQualityAppraisalsArticlesSeniorAppraiser = (article
 
 export const assignSSEPendingEligibilityFiltersArticleEdit = (articleId, inputValues, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/sse/assignedeligibilityfiltersarticlequeue/savevalues/${articleId}`,
+    const response = await axios.post(`${api}/sse/assignedeligibilityfiltersarticlequeue/savevalues/${articleId}`,
     {
       inputValues
     },
@@ -1538,7 +1538,7 @@ export const assignSSEPendingEligibilityFiltersArticleEdit = (articleId, inputVa
 
 export const assignSSEPendingQualityAppraisalsArticleEdit = (articleId, inputValues, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/sse/assignedqualityappraisalsarticlequeue/savevalues/${articleId}`,
+    const response = await axios.post(`${api}/sse/assignedqualityappraisalsarticlequeue/savevalues/${articleId}`,
     {
       inputValues
     },
@@ -1556,7 +1556,7 @@ export const assignSSEPendingQualityAppraisalsArticleEdit = (articleId, inputVal
 
 export const assignSSEPendingLinkingStudiesArticleEdit = (articleId, inputValues, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/sse/assignedlinkingstudiesarticlequeue/savevalues/${articleId}`,
+    const response = await axios.post(`${api}/sse/assignedlinkingstudiesarticlequeue/savevalues/${articleId}`,
     {
       inputValues
     },
@@ -1574,7 +1574,7 @@ export const assignSSEPendingLinkingStudiesArticleEdit = (articleId, inputValues
 
 export const assignSSEPendingPresentationDetailsArticleEdit = (articleId, inputValues, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/sse/assignedpresentationdetailsarticlequeue/savevalues/${articleId}`,
+    const response = await axios.post(`${api}/sse/assignedpresentationdetailsarticlequeue/savevalues/${articleId}`,
     {
       inputValues
     },
@@ -1592,7 +1592,7 @@ export const assignSSEPendingPresentationDetailsArticleEdit = (articleId, inputV
 
 export const assignSSEPendingEligibilityFiltersArticleEditComplete = (articleId, inputValues, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/sse/assignedeligibilityfiltersarticlequeue/setcompleted/${articleId}`,
+    const response = await axios.post(`${api}/sse/assignedeligibilityfiltersarticlequeue/setcompleted/${articleId}`,
     {
       inputValues
     },
@@ -1610,7 +1610,7 @@ export const assignSSEPendingEligibilityFiltersArticleEditComplete = (articleId,
 
 export const assignSSEPendingQualityAppraisalsArticleEditComplete = (articleId, inputValues, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/sse/assignedqualityappraisalsarticlequeue/setcompleted/${articleId}`,
+    const response = await axios.post(`${api}/sse/assignedqualityappraisalsarticlequeue/setcompleted/${articleId}`,
     {
       inputValues
     },
@@ -1628,7 +1628,7 @@ export const assignSSEPendingQualityAppraisalsArticleEditComplete = (articleId, 
 
 export const assignSSEPendingLinkingStudiesArticleEditComplete = (articleId, inputValues, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/sse/assignedlinkingstudiesarticlequeue/setcompleted/${articleId}`,
+    const response = await axios.post(`${api}/sse/assignedlinkingstudiesarticlequeue/setcompleted/${articleId}`,
     {
       inputValues
     },
@@ -1646,7 +1646,7 @@ export const assignSSEPendingLinkingStudiesArticleEditComplete = (articleId, inp
 
 export const assignSSEPendingPresentationDetailsArticleEditComplete = (articleId, inputValues, history) => async dispatch => {
   try {
-    const response = await axios.post(`${backendServer}/sse/assignedpresentationdetailsarticlequeue/setcompleted/${articleId}`,
+    const response = await axios.post(`${api}/sse/assignedpresentationdetailsarticlequeue/setcompleted/${articleId}`,
     {
       inputValues
     },

@@ -6,9 +6,10 @@
 
 const passport = require('passport');
 
-const HSECochrane = require('../../controllers/cochrane/HSECochraneController');
-const requiresSignin = passport.authenticate('local', { session: false });
+const requiresAuth = passport.authenticate('jwt', { session: false });
+
+// const HSECochrane = require('../../controllers/cochrane/HSECochraneController');
 
 module.exports = (app) => {
-    //app.get('/hse/cochrane')
-}
+  app.get('/hse/cochrane', requiresAuth, () => {});
+};

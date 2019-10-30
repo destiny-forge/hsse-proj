@@ -10,7 +10,16 @@
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "lint": "eslint '**/*.js' --fix",
+    "format": "prettier-eslint '**/*.{js,json}' --write --single-quote"
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "prettier-eslint --write --single-quote",
+      "git add"
+    ]
   },
   "author": "",
   "license": "ISC",
@@ -37,5 +46,14 @@
     "uuid": "^3.3.2",
     "shortid": "^2.2.14",
     "mongoose-auto-increment": "^5.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
+    "prettier-eslint-cli": "^5.0.0"
   }
 }

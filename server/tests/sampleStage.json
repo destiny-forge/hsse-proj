@@ -1,21 +1,20 @@
 [
-    {
-        "stageName": "Harvest and Uploading"
-    },
-    {
-        "stageName": "Assessing Eligibility and Assigning Filters"
-    },
-    {
-        "stageName": "Appraising Quality"
-    },
-    {
-        "stageName": "Linking To Included Studies"
-    },
-    {
-        "stageName": "Setting Up Presentation Details"
-    },
-    {
-        "stageName": "Translating Titles"
-    }
-
+  {
+    "stageName": "Harvest and Uploading"
+  },
+  {
+    "stageName": "Assessing Eligibility and Assigning Filters"
+  },
+  {
+    "stageName": "Appraising Quality"
+  },
+  {
+    "stageName": "Linking To Included Studies"
+  },
+  {
+    "stageName": "Setting Up Presentation Details"
+  },
+  {
+    "stageName": "Translating Titles"
+  }
 ]

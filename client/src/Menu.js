@@ -152,7 +152,7 @@ const Menu = [
         translate: 'sidebar.nav.element.Social',
         submenu: [{
             name: 'Add Article',
-            path: '/sse/addarticle',
+            path: '/sse/add-article',
             translate: 'sidebar.nav.element.ADDHSEARTICLE'
         },{
             name: 'Batch Upload',
