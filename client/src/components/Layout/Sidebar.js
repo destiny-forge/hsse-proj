@@ -125,7 +125,6 @@ class Sidebar extends Component {
   }
 
   render() {
-    console.log("are we jhere?");
     return (
       <aside className='aside-container'>
         { /* START Sidebar (left) */ }

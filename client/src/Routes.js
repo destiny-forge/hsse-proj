@@ -182,12 +182,13 @@ const Routes = ({ location }) => {
                 
                 <Route path="/settings/edit-user" component={UserEditor} />
                 
-                <Route path="/administrator/hsegolivequeue" component={AdministratorHSEGoLiveQueue} />
-                <Route path="/administrator/hsetrackingprioritizing" component={AdministratorHSETrackingPrioritizingQueue} />
-                <Route path="/administrator/hseeligibilityfilters" component={AdministratorHSEEligibilityFiltersQueue} />
-                <Route path="/administrator/hsequalityappraisals" component={AdministratorHSEQualityAppraisalsQueue} />
-                <Route path="/administrator/hselinkingstudies" component={AdministratorHSELinkingStudiesQueue} />
-                <Route path="/administrator/hsepresentationdetails" component={AdministratorHSEPresentationDetailsQueue} />
+                <Route path="/administrator/golive-queue" component={AdministratorHSEGoLiveQueue} />
+                <Route path="/administrator/tracking-prioritizing" component={AdministratorHSETrackingPrioritizingQueue} />
+                <Route path="/administrator/eligibility-filters" component={AdministratorHSEEligibilityFiltersQueue} />
+                <Route path="/administrator/quality-appraisals" component={AdministratorHSEQualityAppraisalsQueue} />
+                <Route path="/administrator/linking-studies" component={AdministratorHSELinkingStudiesQueue} />
+                <Route path="/administrator/presentation-details" component={AdministratorHSEPresentationDetailsQueue} />
+                
                 <Route path="/administrator/ssegolivequeue" component={AdministratorSSEGoLiveQueue} />
                 <Route path="/administrator/ssetrackingprioritizingqueue" component={AdministratorSSETrackingPrioritizingQueue} />
                 <Route path="/administrator/sseeligibilityfiltersqueue" component={AdministratorSSEEligibilityFiltersQueue} />

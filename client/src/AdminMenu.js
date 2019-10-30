@@ -397,32 +397,32 @@ const AdminMenu = [
         translate: 'sidebar.nav.table.ADMINISTRATORHEALTHSYSTEMS',
         submenu: [{
                 name: 'Eligibility Filter',
-                path: '/administrator/hseeligibilityfilters',
+                path: '/administrator/eligibility-filters',
                 translate: 'sidebar.nav.table.ADMINISTRATORHSEELIGIBILITYFILTERQUEUE'
             },
             {
                 name: 'Quality Appraisals',
-                path: '/administrator/hsequalityappraisals',
+                path: '/administrator/quality-appraisals',
                 translate: 'sidebar.nav.table.ADMINISTRATORHSEQUALITYAPPRAISALSQUEUE'
             },
             {
                 name: 'Linking Studies',
-                path: '/administrator/hselinkingstudies',
+                path: '/administrator/linking-studies',
                 translate: 'sidebar.nav.table.ADMINISTRATORHSETLINKINGSTUDIESQUEUE'
             },
             {
                 name: 'Presentation Details',
-                path: '/administrator/hsepresentationdetails',
+                path: '/administrator/presentation-details',
                 translate: 'sidebar.nav.table.ADMINISTRATORHSEPRESENTATIONDETAILSQUEUE'
             },
             {
                 name: 'Go Live Queue',
-                path: '/administrator/hsegolivequeue',
+                path: '/administrator/golive-queue',
                 translate: 'sidebar.nav.table.ADMININISTRATORHSEGOLIVEQUEUE'
             },
             {
                 name: 'Tracking & Prioritizing',
-                path: '/administrator/hsetrackingprioritizing',
+                path: '/administrator/tracking-prioritizing',
                 translate: 'sidebar.nav.table.ADMINISTRATORHSETRACKINGPRIORITIZINGQUEUE'
             }
         ]
