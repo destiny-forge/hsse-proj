@@ -11,26 +11,25 @@ import 'jquery-slimscroll';
  */
 const Scrollable = props => {
 
-    const init = node =>
-        $(node).slimScroll({
-            height: props.height
-        });
+  const init = node =>
+  $(node).slimScroll({
+    height: props.height
+  });
 
-    return (
-        <div ref={init} {...props}>
-            {props.children}
-        </div>
-    )
+  return (
+    <div ref={init} {...props}>
+      {props.children}
+    </div>
+  )
 
 }
 
 Scrollable.propTypes = {
-    /** height of the element */
-    height: PropTypes.string
+  height: PropTypes.string
 }
 
 Scrollable.defaultProps = {
   height: 250
 };
 
-export default Scrollable
+export default Scrollable;
