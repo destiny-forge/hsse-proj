@@ -6,7 +6,6 @@ import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, ListG
 
 import ToggleState from '../Common/ToggleState';
 import TriggerResize from '../Common/TriggerResize';
-import ToggleFullscreen from '../Common/ToggleFullscreen';
 import HeaderRun from './Header.run'
 
 import * as actions from '../../actions';
@@ -86,10 +85,6 @@ class Header extends Component {
                             <a className="nav-link" href="" data-search-open="">
                                 <em className="icon-magnifier"></em>
                             </a>
-                        </li>
-                        { /* Fullscreen (only desktops) */ }
-                        <li className="nav-item d-none d-md-block">
-                            <ToggleFullscreen className="nav-link"/>
                         </li>
                         { /* START Alert menu */ }
                         <UncontrolledDropdown nav inNavbar className="dropdown-list">
