@@ -4,16 +4,25 @@
  * @description Declaration of all administrator-based routes for SSE article batch files
  */
 
-const passport = require('passport');
-
-const requireAuth = passport.authenticate('jwt', { session: false });
-
+const auth = require('../../services/auth');
 const SSEArticleBatchfileController = require('../../controllers/sse/SSEArticleBatchfileController');
 
-module.exports = (app) => {
-  // app.get('/api/hse/batchfile', requireAuth, HSEBatchfileController.list);
-  app.get('/sse/articlebatchfiles', requireAuth, SSEArticleBatchfileController.list);
-  app.get('/sse/articlebatchfiles/:batchfileId', requireAuth, SSEArticleBatchfileController.read);
-  app.post('/sse/articlebatchfiles', requireAuth, SSEArticleBatchfileController.create);
-  // app.delete('/sse/articlebatchfile/:batchfileId', requireAuth, SSEArticleBatchfileController.delete);
+module.exports = app => {
+  // app.get('/api/hse/batchfile', auth.jwt, HSEBatchfileController.list);
+  app.get(
+    '/sse/articlebatchfiles',
+    auth.jwt,
+    SSEArticleBatchfileController.list
+  );
+  app.get(
+    '/sse/articlebatchfiles/:batchfileId',
+    auth.jwt,
+    SSEArticleBatchfileController.read
+  );
+  app.post(
+    '/sse/articlebatchfiles',
+    auth.jwt,
+    SSEArticleBatchfileController.create
+  );
+  // app.delete('/sse/articlebatchfile/:batchfileId', auth.jwt, SSEArticleBatchfileController.delete);
 };

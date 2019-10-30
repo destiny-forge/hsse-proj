@@ -4,12 +4,10 @@
  * @description TODO: unknown
  */
 
-const passport = require('passport');
-
-const requiresAuth = passport.authenticate('jwt', { session: false });
+const auth = require('../../services/auth');
 
 // const HSECochrane = require('../../controllers/cochrane/HSECochraneController');
 
-module.exports = (app) => {
-  app.get('/hse/cochrane', requiresAuth, () => {});
+module.exports = app => {
+  app.get('/hse/cochrane', auth.jwt, () => {});
 };

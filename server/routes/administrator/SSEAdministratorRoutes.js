@@ -4,63 +4,60 @@
  * @description Defines the routing paths for SSE Administrator section of application
  */
 
-const passport = require('passport');
-
-const requireAuth = passport.authenticate('jwt', { session: false });
-
+const auth = require('../../services/auth');
 const SSEAdministratorController = require('../../controllers/administrator/HSEAdministratorController');
 
-module.exports = (app) => {
+module.exports = app => {
   app.get(
     '/administrator/sseadministratoreligibilityfilters',
-    requireAuth,
-    SSEAdministratorController.listArticles,
+    auth.jwt,
+    SSEAdministratorController.listArticles
   );
   app.get(
     '/administrator/sseadministratorqualityappraisals',
-    requireAuth,
-    SSEAdministratorController.listArticles,
+    auth.jwt,
+    SSEAdministratorController.listArticles
   );
   app.get(
     '/administrator/sseadministratorlinkingstudies',
-    requireAuth,
-    SSEAdministratorController.listArticles,
+    auth.jwt,
+    SSEAdministratorController.listArticles
   );
   app.get(
     '/administrator/sseadministratorpresentationdetails',
-    requireAuth,
-    SSEAdministratorController.listArticles,
+    auth.jwt,
+    SSEAdministratorController.listArticles
   );
 
   app.get(
     '/administrator/sseadministratorgolive',
-    requireAuth,
-    SSEAdministratorController.listArticles,
+    auth.jwt,
+    SSEAdministratorController.listArticles
   );
   app.get(
     '/administrator/sseadministratortrackingprioritizing',
-    requireAuth,
-    SSEAdministratorController.listArticles,
+    auth.jwt,
+    SSEAdministratorController.listArticles
   );
 
   app.post(
     '/administrator/sseeligibilityfilters/addjuniorfilterer',
-    requireAuth,
-    SSEAdministratorController.addJuniorEligibilityFilterer,
+    auth.jwt,
+    SSEAdministratorController.addJuniorEligibilityFilterer
   );
   app.post(
     '/administrator/seeeligibilityfiltersarticlequeue/addalljuniorfilterer',
-    requireAuth,
-    SSEAdministratorController.addAllJuniorEligitibilityFilterer,
+    auth.jwt,
+    SSEAdministratorController.addAllJuniorEligitibilityFilterer
   );
   app.post(
     '/administrator/sse/pendingeligibilityfiltersarticlequeue/addseniorfilterer/:articleId',
-    requireAuth,
-    SSEAdministratorController.addArticleToSeniorEligibilityFilterer,
+    auth.jwt,
+    SSEAdministratorController.addArticleToSeniorEligibilityFilterer
   );
   app.post(
     '/administrator/sse/pendingeligibilityfiltersarticlequeue/addallseniorfilterer',
-    requireAuth,
-    SSEAdministratorController.addAllArticlesToSeniorEligibilityFilterer,
+    auth.jwt,
+    SSEAdministratorController.addAllArticlesToSeniorEligibilityFilterer
   );
 };

@@ -7,10 +7,7 @@
 // const AWS = require('aws-sdk');
 // const uuid = require('uuid/v1');
 // const jwt = require('jwt-simple');
-const passport = require('passport');
-
-const requireAuth = passport.authenticate('jwt', { session: false });
-
+const auth = require('../services/auth');
 const HSEArticleBatchfileController = require('../controllers/hse/HSEArticleBatchfileController');
 const SSEArticleBatchfileController = require('../controllers/sse/SSEArticleBatchfileController');
 
@@ -19,11 +16,19 @@ const SSEArticleBatchfileController = require('../controllers/sse/SSEArticleBatc
 //   secretAccessKey: process.env.HSSE_S3_SECRET_KEY,
 // });
 
-module.exports = (app) => {
-  app.get('/hse/getfileurl', requireAuth, HSEArticleBatchfileController.getFileUrl);
+module.exports = app => {
+  app.get(
+    '/hse/getfileurl',
+    auth.jwt,
+    HSEArticleBatchfileController.getFileUrl
+  );
 
-  app.get('/sse/getfileurl', requireAuth, SSEArticleBatchfileController.getFileUrl);
+  app.get(
+    '/sse/getfileurl',
+    auth.jwt,
+    SSEArticleBatchfileController.getFileUrl
+  );
 
-  app.post('/hse/batchfile', requireAuth, HSEArticleBatchfileController.create);
-  app.post('/sse/batchfile', requireAuth, SSEArticleBatchfileController.create);
+  app.post('/hse/batchfile', auth.jwt, HSEArticleBatchfileController.create);
+  app.post('/sse/batchfile', auth.jwt, SSEArticleBatchfileController.create);
 };

@@ -1,9 +1,5 @@
 const mongoose = require('mongoose');
-const passport = require('passport');
-const JwtStrategy = require('passport-jwt').Strategy;
-const { ExtractJwt } = require('passport-jwt');
 const LocalStrategy = require('passport-local');
-
 const UserModelClass = mongoose.model('Users');
 
 const localOptions = { usernameField: 'email' };
@@ -35,21 +31,4 @@ const localLogin = new LocalStrategy(localOptions, (email, password, done) => {
   });
 });
 
-const jwtOptions = {
-  jwtFromRequest: ExtractJwt.fromHeader('Authorization'),
-  secretOrKey: process.env.JWT_SECRET,
-};
-
-const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => UserModelClass.findById(payload.sub, (err, user) => {
-  if (err) {
-    return done(err, false);
-  }
-
-  if (user) {
-    return done(null, user);
-  }
-  return done(null, false);
-}));
-
-passport.use(jwtLogin);
-passport.use(localLogin);
+module.exports = localLogin;

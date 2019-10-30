@@ -5,31 +5,28 @@
  * and are not assigned to any user.
  */
 
-const passport = require('passport');
-
-const requireAuth = passport.authenticate('jwt', { session: false });
-
+const auth = require('../../services/auth');
 const SSEPendingQualityAppraisalsArticleQueueController = require('../../controllers/sse/SSEPendingQualityAppraisalsArticleQueueController');
 
-module.exports = (app) => {
+module.exports = app => {
   app.get(
     '/sse/pendingqualityappraisalsarticlequeue',
-    requireAuth,
-    SSEPendingQualityAppraisalsArticleQueueController.listArticles,
+    auth.jwt,
+    SSEPendingQualityAppraisalsArticleQueueController.listArticles
   );
   app.get(
     '/sse/pendingqualityappraisalsarticlequeue/fetcharticle/:id',
-    requireAuth,
-    SSEPendingQualityAppraisalsArticleQueueController.listArticle,
+    auth.jwt,
+    SSEPendingQualityAppraisalsArticleQueueController.listArticle
   );
   app.post(
     '/sse/pendingqualityappraisalsarticlequeue/addjuniorappraiser/:articleId',
-    requireAuth,
-    SSEPendingQualityAppraisalsArticleQueueController.addArticleToJuniorQualityAppraiser,
+    auth.jwt,
+    SSEPendingQualityAppraisalsArticleQueueController.addArticleToJuniorQualityAppraiser
   );
   app.post(
     '/sse/pendingqualityappraisalsarticlequeue/addseniorappraiser/:articleId',
-    requireAuth,
-    SSEPendingQualityAppraisalsArticleQueueController.addArticleToSeniorQualityAppraiser,
+    auth.jwt,
+    SSEPendingQualityAppraisalsArticleQueueController.addArticleToSeniorQualityAppraiser
   );
 };
