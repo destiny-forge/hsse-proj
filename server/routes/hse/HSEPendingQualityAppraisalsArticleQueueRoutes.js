@@ -5,28 +5,25 @@
  * and are not assigned to any user.
  */
 
-const passport = require('passport');
-
-const requireAuth = passport.authenticate('jwt', { session: false });
-
+const auth = require('../../services/auth');
 const HSEPendingQualityAppraisalsArticleQueueController = require('../../controllers/hse/HSEPendingQualityAppraisalsArticleQueueController');
 
-module.exports = (app) => {
+module.exports = app => {
   app.get(
     '/hse/pendingqualityappraisalsarticlequeue',
-    requireAuth,
-    HSEPendingQualityAppraisalsArticleQueueController.listArticles,
+    auth.jwt,
+    HSEPendingQualityAppraisalsArticleQueueController.listArticles
   );
   app.get(
     '/hse/pendingqualityappraisalsarticlequeue/fetcharticle/:id',
-    HSEPendingQualityAppraisalsArticleQueueController.listArticle,
+    HSEPendingQualityAppraisalsArticleQueueController.listArticle
   );
   app.post(
     '/hse/pendingqualityappraisalsarticlequeue/addjuniorappraiser/:articleId',
-    HSEPendingQualityAppraisalsArticleQueueController.addArticleToJuniorQualityAppraiser,
+    HSEPendingQualityAppraisalsArticleQueueController.addArticleToJuniorQualityAppraiser
   );
   app.post(
     '/hse/pendingqualityappraisalsarticlequeue/addseniorappraiser/:articleId',
-    HSEPendingQualityAppraisalsArticleQueueController.addArticleToSeniorQualityAppraiser,
+    HSEPendingQualityAppraisalsArticleQueueController.addArticleToSeniorQualityAppraiser
   );
 };

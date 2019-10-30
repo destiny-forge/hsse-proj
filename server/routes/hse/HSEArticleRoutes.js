@@ -4,21 +4,18 @@
  * @description Declaration of all administrator-based routes for HSE articles
  */
 
-const passport = require('passport');
-
-const requireAuth = passport.authenticate('jwt', { session: false });
-
+const auth = require('../../services/auth');
 const HSEArticleController = require('../../controllers/hse/HSEArticleController');
 
-module.exports = (app) => {
-  // app.get('/api/hsearticles', requireAuth, HSEArticleController.list);
-  app.get('/hse/articles', requireAuth, HSEArticleController.list);
-  app.get('/hse/article/:articleId', requireAuth, HSEArticleController.read);
-  app.post('/hse/articles', requireAuth, HSEArticleController.create);
+module.exports = app => {
+  // app.get('/api/hsearticles', auth.jwt, HSEArticleController.list);
+  app.get('/hse/articles', auth.jwt, HSEArticleController.list);
+  app.get('/hse/article/:articleId', auth.jwt, HSEArticleController.read);
+  app.post('/hse/articles', auth.jwt, HSEArticleController.create);
   app.post(
     '/hse/articles/addtocomplicatedqueue/:articleId',
-    requireAuth,
-    HSEArticleController.addToComplicatedQueue,
+    auth.jwt,
+    HSEArticleController.addToComplicatedQueue
   );
-  app.delete('/hse/articles/:articleId', requireAuth, HSEArticleController.delete);
+  app.delete('/hse/articles/:articleId', auth.jwt, HSEArticleController.delete);
 };

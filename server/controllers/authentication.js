@@ -18,14 +18,20 @@ const USER = ['user'];
 const UPLOADER = ['user', 'uploader'];
 const DETAILER = ['user', 'uploader', 'detailer'];
 const LINKER = ['user', 'uploader', 'detailer', 'linker'];
-const JUNIOR_APPRAISER = ['user', 'uploader', 'detailer', 'linker', 'juniorappraiser'];
+const JUNIOR_APPRAISER = [
+  'user',
+  'uploader',
+  'detailer',
+  'linker',
+  'juniorappraiser'
+];
 const SENIOR_APPRAISER = [
   'user',
   'uploader',
   'detailer',
   'linker',
   'juniorappraiser',
-  'seniorappraiser',
+  'seniorappraiser'
 ];
 const JUNIOR_FILTERER = [
   'user',
@@ -34,7 +40,7 @@ const JUNIOR_FILTERER = [
   'linker',
   'juniorappraiser',
   'seniorappraiser',
-  'juniorfilterer',
+  'juniorfilterer'
 ];
 const SENIOR_FILTERER = [
   'user',
@@ -44,7 +50,7 @@ const SENIOR_FILTERER = [
   'juniorappraiser',
   'seniorappraiser',
   'juniorfilterer',
-  'seniorfilterer',
+  'seniorfilterer'
 ];
 const PRIORITIZER = [
   'user',
@@ -55,7 +61,7 @@ const PRIORITIZER = [
   'seniorappraiser',
   'juniorfilterer',
   'seniorfilterer',
-  'prioritizer',
+  'prioritizer'
 ];
 const ADMINISTRATOR = [
   'user',
@@ -67,12 +73,12 @@ const ADMINISTRATOR = [
   'juniorfilterer',
   'seniorfilterer',
   'prioritizer',
-  'administrator',
+  'administrator'
 ];
 
 const UserModelClass = mongoose.model('Users');
 
-const userToken = (user) => {
+const userToken = user => {
   const timestamp = new Date().getTime();
   return jwt.encode({ sub: user.id, iat: timestamp }, process.env.JWT_SECRET);
 };
@@ -81,8 +87,8 @@ const transporter = nodemailer.createTransport(
   ses({
     accessKeyId: process.env.HSSE_SES_ACCESS_KEY,
     secretAccessKey: process.env.HSSE_SES_SECRET_KEY,
-    region: process.env.REGION,
-  }),
+    region: process.env.REGION
+  })
 );
 
 const sendConfirmation = (args, emailToken) => {
@@ -91,7 +97,7 @@ const sendConfirmation = (args, emailToken) => {
     from: 'forum@mcmaster.ca',
     to: args.email,
     subject: 'Confirm Registration Email',
-    html: `Please click this email to confirm your email: <a href="${confirmationUrl}">${confirmationUrl}</a>`,
+    html: `Please click this email to confirm your email: <a href="${confirmationUrl}">${confirmationUrl}</a>`
   });
 };
 
@@ -103,7 +109,7 @@ const sendResetEmail = (args, emailToken) => {
     from: 'forum@mcmaster.ca',
     to: args.email,
     subject: 'Reset Password Email',
-    html: `Please click this to reset your password: <a href="${resetUrl}">${resetUrl}</a>`,
+    html: `Please click this to reset your password: <a href="${resetUrl}">${resetUrl}</a>`
   });
 };
 
@@ -133,7 +139,9 @@ exports.signup = (req, res, next) => {
   const { password } = req.body;
 
   if (!email || !password) {
-    return res.status(422).send({ error: 'You must provide email and password' });
+    return res
+      .status(422)
+      .send({ error: 'You must provide email and password' });
   }
 
   UserModelClass.findOne({ email }, (err, existingUser) => {
@@ -147,7 +155,7 @@ exports.signup = (req, res, next) => {
 
     const newUser = new UserModelClass({
       email,
-      password,
+      password
     });
     /*
         newUser.save( (err) => {
@@ -155,7 +163,7 @@ exports.signup = (req, res, next) => {
         });
 */
 
-    newUser.save((err) => {
+    newUser.save(err => {
       res.json({ message: 'Email confirmation sent!' });
     });
 
@@ -164,6 +172,8 @@ exports.signup = (req, res, next) => {
     sendConfirmation(newUser, userToken(newUser));
   });
 };
+
+const parseToken = bearer_token => bearer_token.split(' ')[1];
 
 /**
  * Sends an account confirmation email to a user
@@ -174,14 +184,18 @@ exports.signup = (req, res, next) => {
  * @param ? next TODO: document
  */
 exports.confirmUser = (req, res, next) => {
-  const { sub } = jwt.decode(req.params.token, process.env.JWT_SECRET);
+  const { sub } = jwt.decode(token, process.env.JWT_SECRET);
 
-  UserModelClass.update({ _id: sub }, { $set: { confirmed: true } }, (err, user) => {
-    if (err) {
-      console.log('****** There was an error *******');
-      return next(err);
+  UserModelClass.update(
+    { _id: sub },
+    { $set: { confirmed: true } },
+    (err, user) => {
+      if (err) {
+        console.log('****** There was an error *******');
+        return next(err);
+      }
     }
-  });
+  );
 
   return res.redirect(`${config.frontendServer}/registrationconfirmed`);
 };
@@ -195,7 +209,9 @@ exports.confirmUser = (req, res, next) => {
  * @param ? next TODO: document
  */
 exports.currentUser = async (req, res, next) => {
-  const userId = getUserIdFromToken(req.headers.authorization);
+  console.log(req.headers.authorization);
+  const token = parseToken(req.headers.authorization);
+  const userId = getUserIdFromToken(token);
   const user = await UserModelClass.findOne({ _id: userId }).exec();
   return res.status(200).send({ user });
 };
@@ -229,26 +245,27 @@ exports.fetchUserByEmail = async (req, res, next) => {
  */
 exports.resetPassword = (req, res, next) => {
   console.log('**************** INSIDE RESET PASSWORD *******************');
-
   const { sub } = jwt.decode(req.params.token, process.env.JWT_SECRET);
 
   const { password } = req.body;
   const { confirmPassword } = req.body;
 
-  console.log(`****************${password} - ${confirmPassword}*******************`);
+  console.log(
+    `****************${password} - ${confirmPassword}*******************`
+  );
 
   const hashedPassword = '';
 
   if (!password || !confirmPassword) {
     console.log('You must provide password and confirmPassword');
     return res.status(422).send({
-      error: 'You must provide password and confirmPassword',
+      error: 'You must provide password and confirmPassword'
     });
   }
   if (password !== confirmPassword) {
     console.log('Your password and confirmPassword must match');
     return res.status(422).send({
-      error: 'Your password and confirmPassword must match',
+      error: 'Your password and confirmPassword must match'
     });
   }
 
@@ -264,14 +281,20 @@ exports.resetPassword = (req, res, next) => {
         return next(err);
       }
 
-      UserModelClass.update({ _id: sub }, { $set: { password: hash } }, (err, user) => {
-        if (err) {
-          console.log('*************** ERROR SAVING NEW PASSWORD *******************');
-          return next(err);
-        }
+      UserModelClass.update(
+        { _id: sub },
+        { $set: { password: hash } },
+        (err, user) => {
+          if (err) {
+            console.log(
+              '*************** ERROR SAVING NEW PASSWORD *******************'
+            );
+            return next(err);
+          }
 
-        console.log('**************** PASSWORD SAVED! *******************');
-      });
+          console.log('**************** PASSWORD SAVED! *******************');
+        }
+      );
 
       next();
     });
@@ -279,7 +302,9 @@ exports.resetPassword = (req, res, next) => {
     // return res.redirect(config.frontendServer + "/successfulpasswordreset" );
     // return res.redirect( "/successfulpasswordreset" );
   });
-  return res.status(200).send({ message: 'Password has been successfully reset' });
+  return res
+    .status(200)
+    .send({ message: 'Password has been successfully reset' });
 };
 
 /**
@@ -304,7 +329,9 @@ exports.sendPasswordResetEmail = (req, res, next) => {
 
     if (existingUser) {
       sendResetEmail(existingUser, userToken(existingUser));
-      console.log('**************** SENDING RESSET EMAIL ***********************');
+      console.log(
+        '**************** SENDING RESSET EMAIL ***********************'
+      );
       return res.status(200).send({ message: 'Password reset email sent' });
     }
     console.log(`************${email}************ FOUND ONE ***************`);
@@ -312,14 +339,15 @@ exports.sendPasswordResetEmail = (req, res, next) => {
   });
 };
 
-const getUserIdFromToken = (token) => jwt.decode(token, process.env.JWT_SECRET).sub;
+const getUserIdFromToken = token =>
+  jwt.decode(token, process.env.JWT_SECRET).sub;
 
 /**
  * Returns a user's database document based on the JWT authentication token
  *
  * @param JWTToken token
  */
-exports.getUserFromToken = async (token) => {
+exports.getUserFromToken = async token => {
   const userId = getUserIdFromToken(token);
   return await UserModelClass.findOne({ _id: userId }).exec();
 };
@@ -337,7 +365,7 @@ exports.fetchAllUsers = (req, res) => {
     }
     if (!users) {
       return res.status(404).send({
-        message: 'No user has been found',
+        message: 'No user has been found'
       });
     }
     return res.status(200).send(users);
@@ -356,13 +384,14 @@ exports.addRole = async (req, res) => {
     }
     if (!user) {
       return res.status(404).send({
-        message: 'No user has been found',
+        message: 'No user has been found'
       });
     }
     return res.status(200).send(user);
   });
 
-  const user = await getUserFromToken(req.headers.authorization);
+  const token = parseToken(req.headers.authorization);
+  const user = await getUserFromToken(token);
 
   await UserModelClass.findOneAndUpdate(
     { _id: user._id },
@@ -383,14 +412,14 @@ exports.addRole = async (req, res) => {
       if (!user) {
         console.log('No user found!');
         return res.status(404).send({
-          message: 'No user has been found',
+          message: 'No user has been found'
         });
       }
       console.log(user);
       return res.send({
-        message: `${values} added to ${user}`,
+        message: `${values} added to ${user}`
       });
-    },
+    }
   );
 };
 
@@ -400,7 +429,8 @@ exports.addRole = async (req, res) => {
 exports.removeRole = async (req, res) => {
   const values = req.body;
 
-  const user = await getUserIdFromToken(req.headers.authorization);
+  const token = parseToken(req.headers.authorization);
+  const user = await getUserIdFromToken(token);
 
   await UserModelClass.findOneAndUpdate(
     { _id: user._id },
@@ -417,14 +447,14 @@ exports.removeRole = async (req, res) => {
       if (!user) {
         console.log('No user found!');
         return res.status(404).send({
-          message: 'No user has been found',
+          message: 'No user has been found'
         });
       }
       console.log(user);
       return res.send({
-        message: `${values} added to ${user}`,
+        message: `${values} added to ${user}`
       });
-    },
+    }
   );
 };
 
@@ -494,14 +524,14 @@ exports.updateRole = async (req, res) => {
       if (!user) {
         console.log('No user found!');
         return res.status(404).send({
-          message: 'Unable to update role!',
+          message: 'Unable to update role!'
         });
       }
       console.log(user);
       return res.send({
-        message: `Role: "${selectedRole}" assigned to ${user.email}`,
+        message: `Role: "${selectedRole}" assigned to ${user.email}`
       });
-    },
+    }
   );
 };
 
@@ -528,15 +558,15 @@ exports.activateUser = async (req, res) => {
       } else if (!user) {
         console.log('No user found!');
         return res.status(404).send({
-          message: 'No user has found',
+          message: 'No user has found'
         });
       } else {
         console.log(user);
         return res.send({
-          message: `${values} added to ${user}`,
+          message: `${values} added to ${user}`
         });
       }
-    },
+    }
   );
 };
 
@@ -562,14 +592,14 @@ exports.deactivateUser = async (req, res) => {
       } else if (!user) {
         console.log('No user found!');
         return res.status(404).send({
-          message: 'No user has found',
+          message: 'No user has found'
         });
       } else {
         console.log(user);
         return res.send({
-          message: `${values} added to ${user}`,
+          message: `${values} added to ${user}`
         });
       }
-    },
+    }
   );
 };

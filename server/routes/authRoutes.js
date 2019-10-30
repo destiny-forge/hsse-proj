@@ -4,23 +4,15 @@
  * @description Declaration of all authentication routes
  */
 
-const passport = require('passport');
 const Authentication = require('../controllers/authentication');
+const auth = require('../services/auth');
 
-/* Note: These should be modified to be more modular as they
-modify passport state for the entire app = magick */
-require('../services/passport');
-require('../config/baseConfig');
-
-// const requireAuth = passport.authenticate('jwt', { session: false });
-const requireSignin = passport.authenticate('local', { session: false });
-
-module.exports = (app) => {
+module.exports = app => {
   app.get('/', (req, res, next) => {
     res.send({ message: 'HSSE API' });
   });
 
-  app.post('/signin', requireSignin, Authentication.signin);
+  app.post('/signin', auth.local, Authentication.signin);
   app.post('/signup', Authentication.signup);
 
   app.get('/confirmuser/:token', Authentication.confirmUser);

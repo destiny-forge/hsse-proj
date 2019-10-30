@@ -5,31 +5,29 @@
  * and assigned to the current user.
  */
 
-const passport = require('passport');
-
-const requireAuth = passport.authenticate('jwt', { session: false });
+const auth = require('../../services/auth');
 const SSEAssignedEligibilityFiltersArticleQueueController = require('../../controllers/sse/SSEAssignedEligibilityFiltersArticleQueueController');
 
-module.exports = (app) => {
+module.exports = app => {
   app.get(
     '/sse/assignedeligibilityfiltersarticlequeue',
-    requireAuth,
-    SSEAssignedEligibilityFiltersArticleQueueController.listArticles,
+    auth.jwt,
+    SSEAssignedEligibilityFiltersArticleQueueController.listArticles
   );
   app.get(
     '/sse/assignedeligibilityfiltersarticlequeue/fetcharticle/:articleId',
-    requireAuth,
-    SSEAssignedEligibilityFiltersArticleQueueController.fetchArticle,
+    auth.jwt,
+    SSEAssignedEligibilityFiltersArticleQueueController.fetchArticle
   );
 
   app.post(
     '/sse/assignedeligibilityfiltersarticlequeue/savevalues/:articleId',
-    requireAuth,
-    SSEAssignedEligibilityFiltersArticleQueueController.setEligibilityFilterValues,
+    auth.jwt,
+    SSEAssignedEligibilityFiltersArticleQueueController.setEligibilityFilterValues
   );
   app.post(
     '/sse/assignedeligibilityfiltersarticlequeue/setcompleted/:articleId',
-    requireAuth,
-    SSEAssignedEligibilityFiltersArticleQueueController.setEligibilityFilterComplete,
+    auth.jwt,
+    SSEAssignedEligibilityFiltersArticleQueueController.setEligibilityFilterComplete
   );
 };

@@ -5,26 +5,23 @@
  * and are not assigned to any user.
  */
 
-const passport = require('passport');
-
-const requireAuth = passport.authenticate('jwt', { session: false });
-
+const auth = require('../../services/auth');
 const SSEPendingTranslatingTitlesArticleQueueController = require('../../controllers/sse/SSEPendingTranslatingTitlesArticleQueueController');
 
-module.exports = (app) => {
+module.exports = app => {
   app.get(
     '/sse/pendingtranslatingtitlesarticlequeue',
-    requireAuth,
-    SSEPendingTranslatingTitlesArticleQueueController.listArticles,
+    auth.jwt,
+    SSEPendingTranslatingTitlesArticleQueueController.listArticles
   );
   app.get(
     '/sse/pendingtranslatingtitlesarticlequeue/fetcharticle/:id',
-    requireAuth,
-    SSEPendingTranslatingTitlesArticleQueueController.listArticle,
+    auth.jwt,
+    SSEPendingTranslatingTitlesArticleQueueController.listArticle
   );
   app.post(
     '/sse/pendingtranslatingtitlesarticlequeue/addjuniordetailer/:articleId',
-    requireAuth,
-    SSEPendingTranslatingTitlesArticleQueueController.addArticleToJuniorTranslatingTitlesTranslator,
+    auth.jwt,
+    SSEPendingTranslatingTitlesArticleQueueController.addArticleToJuniorTranslatingTitlesTranslator
   );
 };
