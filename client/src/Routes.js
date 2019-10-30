@@ -54,7 +54,6 @@ import HSEAssignedLinkingStudiesArticleQueue from './components/HSE/HSEAssignedL
 import HSEAssignedPresentationDetailsArticleInput from './components/HSE/HSEAssignedPresentationDetailsArticleInput';
 import HSEAssignedPresentationDetailsArticleQueue from './components/HSE/HSEAssignedPresentationDetailsArticleQueue';
 
-import HSEAssignedTranslatingTitlesArticleQueue from './components/HSE/HSEAssignedTranslatingTitlesArticleQueue';
 import HSEAssignedTrackingPrioritizingArticleQueue from './components/HSE/HSEAssignedTrackingPrioritizingArticleQueue';
 
 import AddArticle from './components/HSE/Article/AddArticle';
@@ -212,7 +211,6 @@ const Routes = ({ location }) => {
                 <Route path="/hse/assignedpresentationdetailsarticlequeue" component={HSEAssignedPresentationDetailsArticleQueue} />
                 <Route path="/hse/assignedpresentationdetailsarticleinput/:articleId" component={HSEAssignedPresentationDetailsArticleInput} />
 
-                <Route path="/hse/assignedtranslatingtitlesarticlequeue" component={HSEAssignedTranslatingTitlesArticleQueue} />
                 <Route path="/hse/assignedtrackingprioritizingarticlequeue" component={HSEAssignedTrackingPrioritizingArticleQueue} />
 
 
