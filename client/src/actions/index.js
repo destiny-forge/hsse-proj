@@ -375,9 +375,10 @@ export const forgotpassword = (formProps, callback) => async dispatch => {
 export const getCurrentUser = ( ) => async dispatch => {
   
   try {
-      const response = await axios.get(`${api}/currentuser`, {
-      headers: { authorization: localStorage.getItem('token') }
+    const response = await axios.get(`${api}/currentuser`, {
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
+    console.log(response);
     
     dispatch({ type: CURRENT_USER, payload: response.data });
     return response.data;
@@ -392,7 +393,7 @@ export const fetchUserByEmail = (email) => async dispatch => {
   
   try {
       const response = await axios.get(`${api}/fetchuserbyemail/${email}`, {
-      headers: { authorization: localStorage.getItem('token') },
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`},
     });
     
     dispatch({ type: FETCH_USER_BY_EMAIL, payload: response.data });
@@ -408,7 +409,7 @@ export const fetchAllUsers = ( ) => async dispatch => {
   
   try {
       const response = await axios.get(`${api}/fetchallusers`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
     
     dispatch({ type: FETCH_ALL_USERS, payload: response.data });
@@ -437,7 +438,7 @@ export const addRole = (value) => async dispatch => {
     const response = await axios.post(`${api}/addrole`, 
     { value },
     {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
   
     dispatch({ type: ADD_USER_ROLE, payload: response.data });
@@ -455,7 +456,7 @@ export const updateRole = (value) => async dispatch => {
     const response = await axios.post(`${api}/updaterole`, 
     { value },
     {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
   
     dispatch({ type: UPDATE_USER_ROLE, payload: response.data });
@@ -474,7 +475,7 @@ export const removeRole = (value) => async dispatch => {
     const response = await axios.post(`${api}/removerole`, 
     { value },
     {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
   
     dispatch({ type: REMOVE_USER_ROLE, payload: response.data });
@@ -491,7 +492,7 @@ export const activateUser = (value) => async dispatch => {
     const response = await axios.post(`${api}/activateuser`, 
     { value },
     {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
   
     dispatch({ type: ACTIVATE_USER, payload: response.data });
@@ -508,7 +509,7 @@ export const deactivateUser = (value) => async dispatch => {
     const response = await axios.post(`${api}/deactivateuser`, 
     { value },
     {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
   
     dispatch({ type: DEACTIVATE_USER, payload: response.data });
@@ -576,7 +577,7 @@ export const submitHSEBatchFile = (state, history) => async dispatch => {
 export const listHSEPendingEligibilityFiltersArticlesQueue = (history) => async dispatch => {
   try {
     const response = await axios.get(`${api}/hse/pendingeligibilityfiltersarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
 
     // history.push('/dashboard');
@@ -591,7 +592,7 @@ export const listHSEPendingEligibilityFiltersArticlesQueue = (history) => async 
 export const listHSEPendingQualityAppraisalsArticlesQueue = () => async dispatch => {
   try {
     const response = await axios.get(`${api}/hse/pendingqualityappraisalsarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
 
     // history.push('/dashboard');
@@ -605,7 +606,7 @@ export const listHSEPendingQualityAppraisalsArticlesQueue = () => async dispatch
 export const listHSEPendingLinkingStudiesArticlesQueue = (history) => async dispatch => {
   try {
     const response = await axios.get(`${api}/hse/pendinglinkingstudiesarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
 
     // history.push('/dashboard');
@@ -619,7 +620,7 @@ export const listHSEPendingLinkingStudiesArticlesQueue = (history) => async disp
 export const listHSEPendingPresentationDetailsArticlesQueue = (history) => async dispatch => {
   try {
     const response = await axios.get(`${api}/hse/pendingpresentationdetailsarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
 
     // history.push('/dashboard');
@@ -676,7 +677,7 @@ export const listHSEPendingPresentationDetailsBatchfilesQueue = (history) => asy
 export const listHSEAssignedEligibilityFiltersArticlesQueue = (history) => async dispatch => {
   try {
     const response = await axios.get(`${api}/hse/assignedeligibilityfiltersarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
 
     // history.push('/dashboard');
@@ -690,7 +691,7 @@ export const listHSEAssignedEligibilityFiltersArticlesQueue = (history) => async
 export const listHSEAssignedQualityAppraisalsArticlesQueue = (history) => async dispatch => {
   try {
     const response = await axios.get(`${api}/hse/assignedqualityappraisalsarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
 
     // history.push('/dashboard');
@@ -704,7 +705,7 @@ export const listHSEAssignedQualityAppraisalsArticlesQueue = (history) => async 
 export const listHSEAssignedLinkingStudiesArticlesQueue = (history) => async dispatch => {
   try {
     const response = await axios.get(`${api}/hse/assignedlinkingstudiesarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
 
     // history.push('/dashboard');
@@ -718,7 +719,7 @@ export const listHSEAssignedLinkingStudiesArticlesQueue = (history) => async dis
 export const listHSEAssignedPresentationDetailsArticlesQueue = (history) => async dispatch => {
   try {
     const response = await axios.get(`${api}/hse/assignedpresentationdetailsarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
 
     // history.push('/dashboard');
@@ -1217,7 +1218,7 @@ export const submitSSEBatchFile = (state, history) => async dispatch => {
 export const listSSEPendingEligibilityFiltersArticlesQueue = (history) => async dispatch => {
   try {
     const response = await axios.get(`${api}/sse/pendingeligibilityfiltersarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
 
     // history.push('/dashboard');
@@ -1232,7 +1233,7 @@ export const listSSEPendingEligibilityFiltersArticlesQueue = (history) => async 
 export const listSSEPendingQualityAppraisalsArticlesQueue = (history) => async dispatch => {
   try {
     const response = await axios.get(`${api}/sse/pendingqualityappraisalsarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
 
     // history.push('/dashboard');
@@ -1246,7 +1247,7 @@ export const listSSEPendingQualityAppraisalsArticlesQueue = (history) => async d
 export const listSSEPendingLinkingStudiesArticlesQueue = (history) => async dispatch => {
   try {
     const response = await axios.get(`${api}/sse/pendinglinkingstudiesarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
 
     // history.push('/dashboard');
@@ -1260,7 +1261,7 @@ export const listSSEPendingLinkingStudiesArticlesQueue = (history) => async disp
 export const listSSEPendingPresentationDetailsArticlesQueue = (history) => async dispatch => {
   try {
     const response = await axios.get(`${api}/sse/pendingpresentationdetailsarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
 
     // history.push('/dashboard');
@@ -1320,7 +1321,7 @@ export const listSSEPendingPresentationDetailsBatchfilesQueue = (history) => asy
 export const listSSEAssignedEligibilityFiltersArticlesQueue = (history) => async dispatch => {
   try {
     const response = await axios.get(`${api}/sse/assignedeligibilityfiltersarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
 
     // history.push('/dashboard');
@@ -1334,7 +1335,7 @@ export const listSSEAssignedEligibilityFiltersArticlesQueue = (history) => async
 export const listSSEAssignedQualityAppraisalsArticlesQueue = (history) => async dispatch => {
   try {
     const response = await axios.get(`${api}/sse/assignedqualityappraisalsarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
     // history.push('/dashboard');
     // console.log(response.data);
@@ -1347,7 +1348,7 @@ export const listSSEAssignedQualityAppraisalsArticlesQueue = (history) => async 
 export const listSSEAssignedLinkingStudiesArticlesQueue = (history) => async dispatch => {
   try {
     const response = await axios.get(`${api}/sse/assignedlinkingstudiesarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
     dispatch({ type: SSE_ASSIGNED_LINKING_STUDIES_ARTICLE_QUEUE, payload: response.data })
   } catch(e) {
@@ -1358,7 +1359,7 @@ export const listSSEAssignedLinkingStudiesArticlesQueue = (history) => async dis
 export const listSSEAssignedPresentationDetailsArticlesQueue = (history) => async dispatch => {
   try {
     const response = await axios.get(`${api}/sse/assignedpresentationdetailsarticlequeue`, {
-      headers: { authorization: localStorage.getItem('token') }
+      headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`}
     });
     dispatch({ type: SSE_ASSIGNED_PRESENTATION_DETAILS_ARTICLE_QUEUE, payload: response.data })
   } catch(e) {
