@@ -19,7 +19,7 @@ const AdminMenu = [
   translate: 'sidebar.nav.element.AssignedHealth',
   submenu: [{
     name: ' Eligibility & Filters',
-    path: '/hse/assignedeligibilityfiltersarticlequeue',
+    path: '/hse/assigned-eligibility-filters-articlequeue',
     translate: 'sidebar.nav.element.ASSIGNEDELIGIBILITYFILTERS'
   },
   {
