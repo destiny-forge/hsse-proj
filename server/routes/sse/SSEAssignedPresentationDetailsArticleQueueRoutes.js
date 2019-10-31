@@ -5,32 +5,29 @@
  * and assigned to the current user.
  */
 
-const passport = require('passport');
-
-const requireAuth = passport.authenticate('jwt', { session: false });
-
+const auth = require('../../services/auth');
 const SSEAssignedPresentationDetailsArticleQueueController = require('../../controllers/sse/SSEAssignedPresentationDetailsArticleQueueController');
 
-module.exports = (app) => {
+module.exports = app => {
   app.get(
     '/sse/assignedpresentationdetailsarticlequeue',
-    requireAuth,
-    SSEAssignedPresentationDetailsArticleQueueController.listArticles,
+    auth.jwt,
+    SSEAssignedPresentationDetailsArticleQueueController.listArticles
   );
   app.get(
     '/sse/assignedpresentationdetailsarticlequeue/fetcharticle/:articleId',
-    requireAuth,
-    SSEAssignedPresentationDetailsArticleQueueController.fetchArticle,
+    auth.jwt,
+    SSEAssignedPresentationDetailsArticleQueueController.fetchArticle
   );
 
   app.post(
     '/sse/assignedpresentationdetailsarticlequeue/savevalues/:articleId',
-    requireAuth,
-    SSEAssignedPresentationDetailsArticleQueueController.setPresentationDetailsValues,
+    auth.jwt,
+    SSEAssignedPresentationDetailsArticleQueueController.setPresentationDetailsValues
   );
   // app.post(
   //   '/sse/assignedpresentationdetailsarticlequeue/setcompleted/:articleId',
-  //   requireAuth,
+  //   auth.jwt,
   //   SSEAssignedPresentationDetailsArticleQueueController.setPresentationDetailsComplete
   // );
 };

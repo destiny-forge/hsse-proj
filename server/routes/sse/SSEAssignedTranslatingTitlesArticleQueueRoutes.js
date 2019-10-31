@@ -5,21 +5,18 @@
  * and assigned to the current user.
  */
 
-const passport = require('passport');
-
-const requireAuth = passport.authenticate('jwt', { session: false });
-
+const auth = require('../../services/auth');
 const SSEAssignedTranslatingTitlesArticleQueueController = require('../../controllers/sse/SSEAssignedTranslatingTitlesArticleQueueController');
 
-module.exports = (app) => {
+module.exports = app => {
   app.get(
     '/sse/assignedtranslatingtitlesarticlequeue',
-    requireAuth,
-    SSEAssignedTranslatingTitlesArticleQueueController.listArticles,
+    auth.jwt,
+    SSEAssignedTranslatingTitlesArticleQueueController.listArticles
   );
   app.get(
     '/sse/assignedtranslatingtitlesarticlequeue/fetcharticle/:articleId',
-    requireAuth,
-    SSEAssignedTranslatingTitlesArticleQueueController.fetchArticle,
+    auth.jwt,
+    SSEAssignedTranslatingTitlesArticleQueueController.fetchArticle
   );
 };

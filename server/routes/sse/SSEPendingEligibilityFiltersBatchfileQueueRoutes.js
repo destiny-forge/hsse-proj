@@ -4,21 +4,18 @@
  * @description TODO: unknown
  */
 
-const passport = require('passport');
-
-const requireAuth = passport.authenticate('jwt', { session: false });
-
+const auth = require('../../services/auth');
 const SSEEligibilityFilterBatchfileQueueController = require('../../controllers/sse/SSEPendingEligibilityFiltersBatchfileQueueController');
 
-module.exports = (app) => {
+module.exports = app => {
   app.get(
     '/sse/pendingeligibilityfiltersbatchfilequeue',
-    requireAuth,
-    SSEEligibilityFilterBatchfileQueueController.listBatchfiles,
+    auth.jwt,
+    SSEEligibilityFilterBatchfileQueueController.listBatchfiles
   );
   app.get(
     '/sse/pendingeligibilityfiltersbatchfilequeue/:id',
-    requireAuth,
-    SSEEligibilityFilterBatchfileQueueController.listBatchfile,
+    auth.jwt,
+    SSEEligibilityFilterBatchfileQueueController.listBatchfile
   );
 };

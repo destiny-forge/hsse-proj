@@ -5,34 +5,31 @@
  * and assigned to the current user.
  */
 
-const passport = require('passport');
-
-const requireAuth = passport.authenticate('jwt', { session: false });
-
+const auth = require('../../services/auth');
 const SSEAssignedQualityAppraisalsArticleQueueController = require('../../controllers/sse/SSEAssignedQualityAppraisalsArticleQueueController');
 
-module.exports = (app) => {
+module.exports = app => {
   app.get(
     '/sse/assignedqualityappraisalsarticlequeue',
-    requireAuth,
-    SSEAssignedQualityAppraisalsArticleQueueController.listArticles,
+    auth.jwt,
+    SSEAssignedQualityAppraisalsArticleQueueController.listArticles
   );
 
   app.get(
     '/sse/assignedqualityappraisalsarticle/fetcharticle/:articleId',
-    requireAuth,
-    SSEAssignedQualityAppraisalsArticleQueueController.fetchArticle,
+    auth.jwt,
+    SSEAssignedQualityAppraisalsArticleQueueController.fetchArticle
   );
 
   app.post(
     '/sse/assignedqualityappraisalsarticlequeue/savevalues/:articleId',
-    requireAuth,
-    SSEAssignedQualityAppraisalsArticleQueueController.setQualityAppraisalValues,
+    auth.jwt,
+    SSEAssignedQualityAppraisalsArticleQueueController.setQualityAppraisalValues
   );
 
   // app.post(
   //   '/sse/assignedqualityappraisalarticlequeue/setcompleted/:articleId',
-  //   requireAuth,
+  //   auth.jwt,
   //   SSEAssignedQualityAppraisalsArticleQueueController.setQualityAppraisalComplete
   // );
 };

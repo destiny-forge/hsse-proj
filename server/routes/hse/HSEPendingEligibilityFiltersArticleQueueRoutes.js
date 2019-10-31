@@ -5,41 +5,38 @@
  * and are not assigned to any user.
  */
 
-const passport = require('passport');
-
-const requireAuth = passport.authenticate('jwt', { session: false });
-
+const auth = require('../../services/auth');
 const HSEEligibilityFilterArticleQueueController = require('../../controllers/hse/HSEPendingEligibilityFiltersArticleQueueController');
 
-module.exports = (app) => {
+module.exports = app => {
   app.get(
     '/hse/pendingeligibilityfiltersarticlequeue',
-    requireAuth,
-    HSEEligibilityFilterArticleQueueController.listArticles,
+    auth.jwt,
+    HSEEligibilityFilterArticleQueueController.listArticles
   );
   app.get(
     '/hse/pendingeligibilityfiltersarticlequeue/fetcharticle/:id',
-    requireAuth,
-    HSEEligibilityFilterArticleQueueController.listArticle,
+    auth.jwt,
+    HSEEligibilityFilterArticleQueueController.listArticle
   );
   app.post(
     '/hse/pendingeligibilityfiltersarticlequeue/addjuniorfilterer/:articleId',
-    requireAuth,
-    HSEEligibilityFilterArticleQueueController.addArticleToJuniorEligibilityFilterer,
+    auth.jwt,
+    HSEEligibilityFilterArticleQueueController.addArticleToJuniorEligibilityFilterer
   );
   app.post(
     '/hse/pendingeligibilityfiltersarticlequeue/addalljuniorfilterer',
-    requireAuth,
-    HSEEligibilityFilterArticleQueueController.addAllArticlesToJuniorEligibilityFilterer,
+    auth.jwt,
+    HSEEligibilityFilterArticleQueueController.addAllArticlesToJuniorEligibilityFilterer
   );
   app.post(
     '/hse/pendingeligibilityfiltersarticlequeue/addseniorfilterer/:articleId',
-    requireAuth,
-    HSEEligibilityFilterArticleQueueController.addArticleToSeniorEligibilityFilterer,
+    auth.jwt,
+    HSEEligibilityFilterArticleQueueController.addArticleToSeniorEligibilityFilterer
   );
   app.post(
     '/hse/pendingeligibilityfiltersarticlequeue/addallseniorfilterer',
-    requireAuth,
-    HSEEligibilityFilterArticleQueueController.addAllArticlesToSeniorEligibilityFilterer,
+    auth.jwt,
+    HSEEligibilityFilterArticleQueueController.addAllArticlesToSeniorEligibilityFilterer
   );
 };

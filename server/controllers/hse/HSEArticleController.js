@@ -7,10 +7,18 @@
 const mongoose = require('mongoose');
 
 const HSEArticleModelClass = mongoose.model('HSEArticles');
-const HSEArticleEligibilityFilterModelClass = mongoose.model('HSEArticleEligibilityFilters');
-const HSEArticleQualityAppraisalModelClass = mongoose.model('HSEArticleQualityAppraisals');
-const HSEArticleLinkingStudiesModelClass = mongoose.model('HSEArticleLinkingStudies');
-const HSEArticlePresentationDetailsModelClass = mongoose.model('HSEArticlePresentationDetails');
+const HSEArticleEligibilityFilterModelClass = mongoose.model(
+  'HSEArticleEligibilityFilters'
+);
+const HSEArticleQualityAppraisalModelClass = mongoose.model(
+  'HSEArticleQualityAppraisals'
+);
+const HSEArticleLinkingStudiesModelClass = mongoose.model(
+  'HSEArticleLinkingStudies'
+);
+const HSEArticlePresentationDetailsModelClass = mongoose.model(
+  'HSEArticlePresentationDetails'
+);
 
 /**
  * Creates a new article and writes it to the database
@@ -51,13 +59,14 @@ exports.create = (req, res) => {
 
   newHSEArticle.linkingStudiesJuniorInput = newLinkingStudiesJunior._id;
 
-  newHSEArticle.presentationDetailsJuniorInput = newPresentationDetailsJunior._id;
+  newHSEArticle.presentationDetailsJuniorInput =
+    newPresentationDetailsJunior._id;
 
-  return newHSEArticle.save((err) => {
+  return newHSEArticle.save(err => {
     if (err) {
       console.log(err);
       return res.status(422).send({
-        message: 'Unable to save new article',
+        message: 'Unable to save new article'
       });
     }
     return res.status(201).send(newHSEArticle);
@@ -77,7 +86,7 @@ exports.read = (req, res) => {
 
   if (!mongoose.Types.ObjectId.isValid(articleId)) {
     return res.status(400).send({
-      message: 'Article is invalid',
+      message: 'Article is invalid'
     });
   }
 
@@ -87,7 +96,7 @@ exports.read = (req, res) => {
     }
     if (!article) {
       return res.status(404).send({
-        message: 'No article with that identifier has been found',
+        message: 'No article with that identifier has been found'
       });
     }
     return res.status(200).send(article);
@@ -102,7 +111,12 @@ exports.read = (req, res) => {
  * @param object req.body An object of properties to update the article with
  * @param WritableStream res The function's response body
  */
-exports.update = (req, res) => HSEArticleModelClass.findByIdAndUpdate(req.params.articleId, req.body, (err) => {});
+exports.update = (req, res) =>
+  HSEArticleModelClass.findByIdAndUpdate(
+    req.params.articleId,
+    req.body,
+    err => {}
+  );
 
 /**
  * Removes an article from the database
@@ -111,13 +125,14 @@ exports.update = (req, res) => HSEArticleModelClass.findByIdAndUpdate(req.params
  * @param string req.params.articleId The ID of the article to remove
  * @param WritableStream res The function's response body
  */
-exports.delete = (req, res) => HSEArticleModelClass.findByIdAndRemove(req.params.articleId, (err) => {
-  if (err) {
-    res.send(err);
-  } else {
-    res.json({ message: 'Article has been removed!' });
-  }
-});
+exports.delete = (req, res) =>
+  HSEArticleModelClass.findByIdAndRemove(req.params.articleId, err => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json({ message: 'Article has been removed!' });
+    }
+  });
 
 /**
  * Returns a list of articles from the database
@@ -125,17 +140,18 @@ exports.delete = (req, res) => HSEArticleModelClass.findByIdAndRemove(req.params
  * @param ReadableStream req The function's request body
  * @param WritableStream res The function's response body
  */
-exports.list = (req, res) => HSEArticleModelClass.find((err, articles) => {
-  if (err) {
-    return res.send(err);
-  }
-  if (!articles) {
-    return res.status(404).send({
-      message: 'No article has been found',
-    });
-  }
-  return res.status(200).send(articles);
-});
+exports.list = (req, res) =>
+  HSEArticleModelClass.find((err, articles) => {
+    if (err) {
+      return res.send(err);
+    }
+    if (!articles) {
+      return res.status(404).send({
+        message: 'No article has been found'
+      });
+    }
+    return res.status(200).send(articles);
+  });
 
 /**
  * Adds an article to the complicated queue
@@ -149,7 +165,7 @@ exports.addToComplicatedQueue = async (req, res) => {
 
   if (!mongoose.Types.ObjectId.isValid(articleId)) {
     return res.status(400).send({
-      message: 'Article is invalid',
+      message: 'Article is invalid'
     });
   }
 
@@ -166,8 +182,8 @@ exports.addToComplicatedQueue = async (req, res) => {
       if (err) return res.status(500).send(err);
 
       return res.send({
-        message: `Article: ${article._id} has been added to the complicated queue`,
+        message: `Article: ${article._id} has been added to the complicated queue`
       });
-    },
+    }
   );
 };
