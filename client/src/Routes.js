@@ -180,20 +180,21 @@ const Routes = ({ location }) => {
               <Switch location={location}>
                 <Route path="/dashboard" component={DashboardMain}/>
                 
-                <Route path="/settings/usereditor" component={UserEditor} />
+                <Route path="/settings/edit-user" component={UserEditor} />
                 
-                <Route path="/administrator/hsegolivequeue" component={AdministratorHSEGoLiveQueue} />
-                <Route path="/administrator/hsetrackingprioritizing" component={AdministratorHSETrackingPrioritizingQueue} />
-                <Route path="/administrator/hseeligibilityfilters" component={AdministratorHSEEligibilityFiltersQueue} />
-                <Route path="/administrator/hsequalityappraisals" component={AdministratorHSEQualityAppraisalsQueue} />
-                <Route path="/administrator/hselinkingstudies" component={AdministratorHSELinkingStudiesQueue} />
-                <Route path="/administrator/hsepresentationdetails" component={AdministratorHSEPresentationDetailsQueue} />
-                <Route path="/administrator/ssegolivequeue" component={AdministratorSSEGoLiveQueue} />
-                <Route path="/administrator/ssetrackingprioritizingqueue" component={AdministratorSSETrackingPrioritizingQueue} />
-                <Route path="/administrator/sseeligibilityfiltersqueue" component={AdministratorSSEEligibilityFiltersQueue} />
-                <Route path="/administrator/ssequalityappraisalsqueue" component={AdministratorSSEQualityAppraisalsQueue} />
-                <Route path="/administrator/sselinkingstudiesqueue" component={AdministratorSSELinkingStudiesQueue} />
-                <Route path="/administrator/ssepresentationdetailsqueue" component={AdministratorSSEPresentationDetailsQueue} />
+                <Route path="/administrator/hse/golive-queue" component={AdministratorHSEGoLiveQueue} />
+                <Route path="/administrator/hse/tracking-prioritizing" component={AdministratorHSETrackingPrioritizingQueue} />
+                <Route path="/administrator/hse/eligibility-filters" component={AdministratorHSEEligibilityFiltersQueue} />
+                <Route path="/administrator/hse/quality-appraisals" component={AdministratorHSEQualityAppraisalsQueue} />
+                <Route path="/administrator/hse/linking-studies" component={AdministratorHSELinkingStudiesQueue} />
+                <Route path="/administrator/hse/presentation-details" component={AdministratorHSEPresentationDetailsQueue} />
+
+                <Route path="/administrator/sse/golive-queue" component={AdministratorSSEGoLiveQueue} />
+                <Route path="/administrator/sse/tracking-prioritizing" component={AdministratorSSETrackingPrioritizingQueue} />
+                <Route path="/administrator/sse/eligibility-filters" component={AdministratorSSEEligibilityFiltersQueue} />
+                <Route path="/administrator/sse/quality-appraisals" component={AdministratorSSEQualityAppraisalsQueue} />
+                <Route path="/administrator/sse/linking-studies" component={AdministratorSSELinkingStudiesQueue} />
+                <Route path="/administrator/sse/presentation-details" component={AdministratorSSEPresentationDetailsQueue} />
 
                 <Route path="/hse/edit-article/:articleId" component={EditArticle} />
 

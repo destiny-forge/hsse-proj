@@ -788,7 +788,7 @@ setStateDocumentType = (documentType) => {
 }
 
 render() {
-
+  // FIXME: this.state.fetchedArticle never returns anything, checked on staging as well
   if(!this.state.fetchedArticle)
     return <div>Loading...</div>
         //console.log(`currentArticle: ${this.props.currentArticle}`);
