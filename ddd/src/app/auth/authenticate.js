@@ -1,4 +1,4 @@
-const Token = require('src/domain/token');
+const Auth = require('src/domain/auth');
 
 /**
  * Authenticate user
@@ -7,7 +7,7 @@ module.exports = ({ userRepository, webToken }) => {
   const authenticate = ({ body }) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const { email, password } = Token(body);
+        const { email, password } = Auth(body);
         const user = await userRepository.findByEmail(email);
 
         const validatePass = userRepository.validatePassword(user.password);
