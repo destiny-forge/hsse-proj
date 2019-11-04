@@ -31,6 +31,15 @@ const findById = async (collection, id) => {
   }
 };
 
+const findOne = async (collection, query) => {
+  try {
+    const results = await collection.findOne(query);
+    return results;
+  } catch (e) {
+    throw e;
+  }
+};
+
 const findByEmail = async (collection, email) => {
   try {
     if (!Email.isValid(email)) throw 'Invalid email address';
@@ -53,4 +62,4 @@ const update = async (collection, userId, fields) => {
   }
 };
 
-module.exports = { create, getAll, findById, findByEmail, update };
+module.exports = { create, getAll, findById, findOne, findByEmail, update };

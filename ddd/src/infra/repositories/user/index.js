@@ -20,7 +20,7 @@ module.exports = ({ model }) => {
 
   const findById = (...args) =>
     model
-      .findByPk(...args)
+      .findById(...args)
       .then(({ dataValues }) => toEntity(dataValues))
       .catch(error => {
         throw new Error(error);

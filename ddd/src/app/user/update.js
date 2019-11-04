@@ -9,10 +9,9 @@ module.exports = ({ userRepository }) => {
     return new Promise(async (resolve, reject) => {
       try {
         const domainUser = User(user);
-        await userRepository.update(domainUser, {
-          where: { id }
-        });
-
+        // note: we should validate the user here if it's not
+        // done as part of creating the entity above
+        await userRepository.update(id, domainUser);
         resolve(user);
       } catch (error) {
         reject(error);
