@@ -1,40 +1,40 @@
-const statusMonitor = require('express-status-monitor')
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const compression = require('compression')
+const statusMonitor = require('express-status-monitor');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const compression = require('compression');
 
-const { Router } = require('express')
-const { partialRight } = require('ramda')
+const { Router } = require('express');
+const { partialRight } = require('ramda');
 
-const controller = require('./utils/create_controller')
-const httpLogger = require('./middlewares/http_logger')
-const errorHandler = require('./middlewares/error_handler')
+const controller = require('./utils/create_controller');
+const httpLogger = require('./middlewares/http_logger');
+const errorHandler = require('./middlewares/error_handler');
 
 module.exports = ({ config, logger, database }) => {
-  const router = Router()
+  const router = Router();
 
   /* istanbul ignore if */
   if (config.env === 'development') {
-    router.use(statusMonitor())
+    router.use(statusMonitor());
   }
 
   /* istanbul ignore if */
   if (config.env !== 'test') {
-    router.use(httpLogger(logger))
+    router.use(httpLogger(logger));
   }
 
-  const apiRouter = Router()
+  const apiRouter = Router();
 
   apiRouter
-    .use(cors({
-      origin: [
-        'http://localhost:3000'
-      ],
-      methods: ['GET', 'POST', 'PUT', 'DELETE'],
-      allowedHeaders: ['Content-Type', 'Authorization']
-    }))
+    .use(
+      cors({
+        origin: ['http://localhost:3000'],
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+        allowedHeaders: ['Content-Type', 'Authorization']
+      })
+    )
     .use(bodyParser.json())
-    .use(compression())
+    .use(compression());
 
   /*
    * Add your API routes here
@@ -45,14 +45,14 @@ module.exports = ({ config, logger, database }) => {
    * The `controllerPath` is relative to the `interfaces/http` folder
    */
 
-  apiRouter.use('/', controller('index'))
-  apiRouter.use('/token', controller('token').router)
-  apiRouter.use('/users', controller('user').router)
-  apiRouter.use('/companies', controller('company').router)
+  apiRouter.use('/', controller('index'));
+  apiRouter.use('/auth', controller('auth').router);
+  apiRouter.use('/accounts', controller('account').router);
+  apiRouter.use('/users', controller('user').router);
 
-  router.use(`/api/${config.version}`, apiRouter)
+  router.use(`/api/${config.version}`, apiRouter);
 
-  router.use(partialRight(errorHandler, [logger, config]))
+  router.use(partialRight(errorHandler, [logger, config]));
 
-  return router
-}
+  return router;
+};

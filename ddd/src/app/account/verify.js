@@ -1,5 +1,5 @@
 /**
- * User email verification
+ * Account verification
  */
 module.exports = ({ userRepository, mailService, webToken }) => {
   const verify = async (userId, isVerified) => {

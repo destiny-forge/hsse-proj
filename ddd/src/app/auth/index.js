@@ -1,5 +1,5 @@
-const token = require('./token');
+const authenticate = require('./authenticate');
 
 module.exports = {
-  token
+  authenticate
 };

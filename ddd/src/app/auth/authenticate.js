@@ -4,7 +4,7 @@ const Token = require('src/domain/token');
  * Authenticate user
  */
 module.exports = ({ userRepository, webToken }) => {
-  const token = ({ body }) => {
+  const authenticate = ({ body }) => {
     return new Promise(async (resolve, reject) => {
       try {
         const { email, password } = Token(body);
@@ -30,6 +30,6 @@ module.exports = ({ userRepository, webToken }) => {
   };
 
   return {
-    token
+    authenticate
   };
 };

@@ -1,7 +1,9 @@
-const role = require('./role');
+const { register } = require('./register');
+const { reset } = require('./reset');
+const { verify } = require('./verify');
 
 module.exports = {
-  addRole: role.add,
-  removeRole: role.remove,
-  updateRole: role.update
+  register: register,
+  reset: reset,
+  verify: verify
 };
