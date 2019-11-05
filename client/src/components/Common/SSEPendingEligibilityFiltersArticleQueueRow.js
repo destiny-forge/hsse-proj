@@ -3,7 +3,6 @@ import moment from "moment";
 import Swal from '../Elements/Swal';
 import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
-
 import * as actions from '../../actions';
 
 class SSEPendingEligibilityFiltersArticleQueueRow extends Component {
@@ -39,21 +38,6 @@ class SSEPendingEligibilityFiltersArticleQueueRow extends Component {
 
   }
 
-  renderPriority(priority) {
-
-    switch (priority) {
-      case 'LOW':
-      return <td className="text-center"><span className="badge badge-success">{ priority }</span></td>
-      case 'MODERATE':
-      return <td className="text-center"><span className="badge badge-warning">{ priority }</span></td>
-      case 'HIGH':
-      return <td className="text-center"><span className="badge badge-danger">{ priority }</span></td>
-      default:
-      return <td className="text-center"><span className="badge badge-success">LOW</span></td>
-    }
-
-  }
-
   swalCallbackAssignJunior(isConfirm, articleId, history) {
     if(isConfirm)
       this.props.assignSSEPendingEligibilityFiltersArticlesJuniorFilter(articleId, history);
@@ -83,7 +67,7 @@ class SSEPendingEligibilityFiltersArticleQueueRow extends Component {
     const { article, history } = this.props;
     return (
       <tr key={article._id}>
-        <td></td>{ /*this.renderPriority(article.priority)*/  }
+        <td></td>
         <td>LOW</td>
         <td key={Math.random()}>
           { article.articleSource }
