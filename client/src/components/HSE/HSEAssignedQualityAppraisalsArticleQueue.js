@@ -4,10 +4,9 @@ import ContentWrapper from '../Layout/ContentWrapper';
 import { Card, CardBody, CardHeader } from 'reactstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
 import * as actions from '../../actions';
-
 import Datatable from '../Tables/Datatable';
+import Priority from '../Common/Priority';
 
 const dtOptions = {
   'paging': true, // Table pagination
@@ -38,31 +37,13 @@ class HSEAssignedQualityAppraisalsArticleQueue extends Component {
     this.props.listHSEAssignedQualityAppraisalsArticlesQueue();
   }
 
-  renderPriority(priority) {
-    switch (priority) {
-      case 'LOW':
-        return <td className="text-center"><span className="badge badge-success">{priority}</span></td>
-      case 'MODERATE':
-        return <td className="text-center"><span className="badge badge-warning">{priority}</span></td>
-      case 'HIGH':
-        return <td className="text-center"><span className="badge badge-danger">{priority}</span></td>
-      default:
-        return <td className="text-center"><span className="badge badge-success">LOW</span></td>
-    }
-  }
-
   renderArticles() {
 
     if (this.props.assignedArticles !== undefined) {
       const rows = Object.entries(this.props.assignedArticles).map(article => {
         return (
           <tr key={article[1]._id}>
-            {/*
-            <td className="text-center">
-                <span className="badge badge-success">{ article[1].priority }</span>
-            </td>
-            */}
-            {this.renderPriority(article[1].priority)}
+            <Priority priority={article[1].priority} />
             <td>
               {article[1].author}
             </td>
@@ -70,8 +51,6 @@ class HSEAssignedQualityAppraisalsArticleQueue extends Component {
               {moment(article[1].harvestDate).format("DD-MM-YYYY")}
             </td>
             <td>
-              {/*<a className="mr-1 badge badge-primary" href="">Something</a>*/}
-              {/*<Link to="" className="mr-1 badge badge-primary" >{ article[1]._qualityAppraisalsJuniorEmail+ ", " + article[1]._qualityAppraisalsSeniorEmail }</Link>*/}
               {((article[1]._qualityAppraisalsJuniorEmail) && (this.props.currentUser.user.email === article[1]._qualityAppraisalsSeniorEmail)) ? article[1]._qualityAppraisalsJuniorEmail : ''} {((article[1]._qualityAppraisalsSeniorEmail) && (this.props.currentUser.user.email === article[1]._qualityAppraisalsJuniorEmail)) ? article[1]._qualityAppraisalsSeniorEmail : ''}
             </td>
             <td><a className="mr-1 badge badge-primary" href="">{article[1]._id}</a></td>
@@ -81,29 +60,11 @@ class HSEAssignedQualityAppraisalsArticleQueue extends Component {
 
             <td>{article[1].qualityAppraisalsResolve ? <Link className="mr-1 badge badge-danger" to={{ pathname: "/hse/assignedqualityappraisalsarticleresolution/" + article[1]._id }}>Resolve</Link> : "Incomplete"}</td>
             <td className="text-right">
-
               <Link to={{ pathname: "/hse/assignedqualityappraisalsarticleinput/" + article[1]._id }} className="btn btn-block btn-secondary"><em className="fas fa-pencil-alt"></em></Link>
-              {/*<button type="button" className="btn btn-sm btn-secondary">
-                                <em className="fas fa-pencil-alt"></em>
-                            </button>*/}
             </td>
-            {/*         
-                        <td className="text-right">
-                            <button type="button" className="btn btn-sm btn-secondary">
-                                <em className="fas fa-pencil-alt"></em>
-                            </button>
-                            <button type="button" className="btn btn-sm btn-danger">
-                                <em className="fas fa-trash-alt"></em>
-                            </button>
-                            <button type="button" className="btn btn-sm btn-success">
-                                <em className="fa fa-check"></em>
-                            </button>
-                        </td>
-                    */}
           </tr>
         )
       });
-      // <a className="mr-1 badge badge-success" href="">{ article[1].language }</a>
       return (
         <Datatable options={dtOptions}>
           <table className="table table-striped my-4 w-100">
@@ -119,7 +80,6 @@ class HSEAssignedQualityAppraisalsArticleQueue extends Component {
                 <th>Language</th>
                 <th>Status</th>
                 <th style={{ width: "10px" }} className="text-right" data-priority="2">Edit</th>
-                {/* <th style={{width:"130px"}} className="text-right" data-priority="2">Assign</th> */}
               </tr>
             </thead>
             <tbody>
@@ -137,7 +97,7 @@ class HSEAssignedQualityAppraisalsArticleQueue extends Component {
       <ContentWrapper>
         <div className="content-heading">
           <div>Appraisaing Quality Articles
-                            <small>Health Systems Evidence - Assigned Queue</small>
+            <small>Health Systems Evidence - Assigned Queue</small>
           </div>
         </div>
         <Card className="card-default">

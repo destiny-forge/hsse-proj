@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import moment from "moment";
 import Swal from '../Elements/Swal';
-
 import { connect } from 'react-redux';
-
 import * as actions from '../../actions';
 
 class PendingTranslatingTitlesArticleQueueRow extends Component {
@@ -38,21 +36,6 @@ class PendingTranslatingTitlesArticleQueueRow extends Component {
 
   }
 
-  renderPriority(priority) {
-
-    switch (priority) {
-      case 'LOW':
-      return <td className="text-center"><span className="badge badge-success">{ priority }</span></td>
-      case 'MODERATE':
-      return <td className="text-center"><span className="badge badge-warning">{ priority }</span></td>
-      case 'HIGH':
-      return <td className="text-center"><span className="badge badge-danger">{ priority }</span></td>
-      default:
-      return <td className="text-center"><span className="badge badge-success">LOW</span></td>
-    }
-
-  }
-
   swalCallbackAssignJunior(isConfirm, articleId, history) {
     if(isConfirm)
       this.props.assignHSEPendingTranslatingTitlesArticlesJuniorAppraiser(articleId, history);
@@ -67,7 +50,7 @@ class PendingTranslatingTitlesArticleQueueRow extends Component {
     const { article, history } = this.props;
     return (
       <tr key={article._id}>
-        <td>LOW</td>{ /*this.renderPriority(article.priority)*/  }
+        <td>LOW</td>{
         <td key={Math.random()}>
           { article.articleSource }
         </td>

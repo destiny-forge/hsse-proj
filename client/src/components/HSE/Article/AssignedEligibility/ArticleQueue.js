@@ -51,8 +51,7 @@ class ArticleQueue extends Component {
                         </td>
                         */}
             <Priority 
-              priority={article[1].priority} 
-            />
+              priority={article[1].priority} />
             <td>
               {article[1].articleSource}
             </td>
