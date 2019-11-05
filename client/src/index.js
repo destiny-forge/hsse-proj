@@ -7,7 +7,7 @@ import App from './App';
 import './i18n';
 
 ReactDOM.render(
-    <Root>
-        <App />
-    </Root>,
-    document.getElementById('app'));
+  <Root>
+    <App />
+  </Root>,
+  document.getElementById('app'));

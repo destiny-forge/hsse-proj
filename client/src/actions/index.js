@@ -306,7 +306,7 @@ export const forgotpassword = (formProps, callback) => async dispatch => {
 export const getCurrentUser = () => async dispatch => {
   try {
     const response = await axios.get(`${api}/currentuser`);
-    console.log(response);
+    console.log("response from getCurrentUser: ", response);
 
     dispatch({ type: CURRENT_USER, payload: response.data });
     return response.data;

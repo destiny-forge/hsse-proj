@@ -32,9 +32,9 @@ class App extends Component {
     const basename = process.env.NODE_ENV === 'development' ? '/' : (PUBLIC_URL || '/');
 
     return (
-        <BrowserRouter basename={basename}>
-            <Routes />
-        </BrowserRouter>
+      <BrowserRouter basename={basename}>
+        <Routes />
+      </BrowserRouter>
     );
 
   }

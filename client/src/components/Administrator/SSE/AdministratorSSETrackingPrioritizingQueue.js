@@ -39,58 +39,42 @@ class AdministratorSSETrackingPrioritizingQueue extends Component {
   }
 
   renderArticles() {
+    console.log("...", this.props.assignedArticles);
     if (this.props.assignedArticles !== undefined) {
       const rows = Object.entries(this.props.assignedArticles).map(article => {
         return (
           <tr key={article[1]._id}>
-            {/*
-              <td className="text-center">
-                  <span className="badge badge-success">{ article[1].priority }</span>
-              </td>
-            */}
             <Priority
               priority={article[1].priority} />
+            <td>{article[1].author}</td>
+            <td>{moment(article[1].harvestDate).format("DD-MM-YYYY")}</td>
             <td>
-              {article[1].author}
-            </td>
-            <td>
-              {moment(article[1].harvestDate).format("DD-MM-YYYY")}
-            </td>
-            <td>
-              {/*<a className="mr-1 badge badge-primary" href="">Something</a>*/}
-              {/*<Link to="" className="mr-1 badge badge-primary" >{ article[1]._trackingPrioritizingJuniorEmail+ ", " + article[1]._trackingPrioritizingSeniorEmail }</Link>*/}
               {((article[1]._trackingPrioritizingJuniorEmail) && (this.props.currentUser.user.email === article[1]._trackingPrioritizingSeniorEmail)) ? article[1]._trackingPrioritizingJuniorEmail : ''} {((article[1]._qualityAppraisalsSeniorEmail) && (this.props.currentUser.user.email === article[1]._qualityAppraisalsJuniorEmail)) ? article[1]._qualityAppraisalsSeniorEmail : ''}
             </td>
             <td><a className="mr-1 badge badge-primary" href="">{article[1]._id}</a></td>
             <td>{article[1].title}</td>
             <td>{article[1].author}</td>
             <td>{article[1].language}</td>
-
-            <td>{article[1].trackingPrioritizingResolve ? <Link className="mr-1 badge badge-danger" to={{ pathname: "/hse/assignedtrackingprioritizingarticleresolution/" + article[1]._id }}>Resolve</Link> : "Incomplete"}</td>
-            <td className="text-right">
-
-              <Link to={{ pathname: "/hse/assignedtrackingprioritizingarticleinput/" + article[1]._id }} className="btn btn-block btn-secondary"><em className="fas fa-pencil-alt"></em></Link>
-              {/*<button type="button" className="btn btn-sm btn-secondary">
-                                <em className="fas fa-pencil-alt"></em>
-                            </button>*/}
+            <td>
+              {
+                article[1].trackingPrioritizingResolve 
+                ? <Link className="mr-1 badge badge-danger" 
+                  to={{ pathname: "/hse/assignedtrackingprioritizingarticleresolution/" + article[1]._id }}>
+                    Resolve
+                  </Link> 
+                : "Incomplete"
+              }
             </td>
-            {/*         
-              <td className="text-right">
-                  <button type="button" className="btn btn-sm btn-secondary">
-                      <em className="fas fa-pencil-alt"></em>
-                  </button>
-                  <button type="button" className="btn btn-sm btn-danger">
-                      <em className="fas fa-trash-alt"></em>
-                  </button>
-                  <button type="button" className="btn btn-sm btn-success">
-                      <em className="fa fa-check"></em>
-                  </button>
-              </td>
-            */}
+            <td className="text-right">
+              <Link 
+                to={{ pathname: "/hse/assignedtrackingprioritizingarticleinput/" + article[1]._id }} 
+                className="btn btn-block btn-secondary">
+                  <em className="fas fa-pencil-alt"></em>
+              </Link>
+            </td>
           </tr>
         )
       });
-      // <a className="mr-1 badge badge-success" href="">{ article[1].language }</a>
       return (
         <Datatable options={dtOptions}>
           <table className="table table-striped my-4 w-100">
@@ -106,7 +90,6 @@ class AdministratorSSETrackingPrioritizingQueue extends Component {
                 <th>Language</th>
                 <th>Status</th>
                 <th style={{ width: "10px" }} className="text-right" data-priority="2">Edit</th>
-                {/* <th style={{width:"130px"}} className="text-right" data-priority="2">Assign</th> */}
               </tr>
             </thead>
             <tbody>
@@ -124,7 +107,7 @@ class AdministratorSSETrackingPrioritizingQueue extends Component {
       <ContentWrapper>
         <div className="content-heading">
           <div>Tracking Prioritizing Articles
-                            <small>Social Systems Evidence - Assigned Queue</small>
+            <small>Social Systems Evidence - Assigned Queue</small>
           </div>
         </div>
         <Card className="card-default">
