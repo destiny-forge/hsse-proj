@@ -9,7 +9,7 @@ require('dotenv').config({ path: dotEnvPath });
 module.exports = {
   development: {
     url: process.env.DATABASE_URL,
-    name: 'hsse_dev',
+    name: 'hsse',
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true

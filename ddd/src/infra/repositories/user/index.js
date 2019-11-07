@@ -1,6 +1,8 @@
 const { toEntity } = require('./transform');
 const { comparePassword } = require('../../encryption');
 
+// we also need to pass the db entity down through the repository
+// to the model so that it can do db.collection('users').find...
 module.exports = ({ model }) => {
   const getAll = (...args) =>
     model.getAll(...args).then(entity =>

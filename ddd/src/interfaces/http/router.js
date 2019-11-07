@@ -10,7 +10,7 @@ const controller = require('./utils/create_controller');
 const httpLogger = require('./middlewares/http_logger');
 const errorHandler = require('./middlewares/error_handler');
 
-module.exports = ({ config, logger, database }) => {
+module.exports = ({ config, logger }) => {
   const router = Router();
 
   /* istanbul ignore if */

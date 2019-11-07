@@ -1,12 +1,10 @@
-const User = require('./user')
-const Company = require('./company')
+const User = require('./user');
 
 module.exports = ({ database }) => {
-  const userModel = database.models.users
-  const companyModel = database.models.companies
+  console.log(database);
+  const userModel = database.mongo.models.users;
 
   return {
-    userRepository: User({ model: userModel }),
-    companyRepository: Company({ model: companyModel })
-  }
-}
+    userRepository: User({ model: userModel, db: database.mongo.db })
+  };
+};

@@ -1,4 +1,5 @@
-const db = require('src/infra/mongodb');
+const mongo = require('src/infra/mongodb');
+const models = require('./models');
 
 module.exports = ({ logger, config }) => {
   if (!config.db) {
@@ -7,6 +8,6 @@ module.exports = ({ logger, config }) => {
     /* eslint-enable no-console */
     return false;
   }
-
-  return db({ config });
+  mongo.init({ config, models });
+  return mongo;
 };
