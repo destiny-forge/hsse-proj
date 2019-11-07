@@ -156,7 +156,7 @@ class HSEPendingEligibilityFiltersArticleQueue extends Component {
                 </tr>
               </thead>
               <tbody>
-                { testRows }
+                { queueRows }
               </tbody>
             </table>
           </Datatable>
@@ -190,8 +190,8 @@ class HSEPendingEligibilityFiltersArticleQueue extends Component {
             { this.renderArticles() }
           </CardBody>
         </Card>
-        </ContentWrapper>
-        );
+      </ContentWrapper>
+    );
   }
 }
 
