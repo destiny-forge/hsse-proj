@@ -111,7 +111,7 @@ const Menu = [
     },
     {
       name: 'Eligibility & Filters',
-      path: '/hse/pendingeligibilityfiltersarticlequeue',
+      path: '/hse/filters-article-queue',
       translate: 'sidebar.nav.element.PENDINGELIGIBILITYFILTERARTICLES'
     },/*
             {

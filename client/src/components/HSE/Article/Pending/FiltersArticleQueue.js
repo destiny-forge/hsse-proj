@@ -1,10 +1,10 @@
 /**
- * @name HSEPendingEligibilityFiltersArticleQueue.js
+ * @name FiltersArticleQueue.js
  * @description This component renders articles that are pending (have not been assigned yet)
  */
 
 import React, { Component } from 'react';
-import ContentWrapper from '../Layout/ContentWrapper';
+import ContentWrapper from '../../../Layout/ContentWrapper';
 import {
   Card,
   CardBody,
@@ -16,11 +16,11 @@ import {
   Button
 } from 'reactstrap';
 import { connect } from 'react-redux';
-import PendingEligibilityFiltersArticleQueueRow from '../Common/PendingEligibilityFiltersArticleQueueRow';
+import PendingEligibilityFiltersArticleQueueRow from '../../../Common/PendingEligibilityFiltersArticleQueueRow';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import * as actions from '../../actions';
-import Datatable from '../Tables/Datatable';
+import * as actions from '../../../../actions';
+import Datatable from '../../../Tables/Datatable';
 
 const dtOptions2 = {
   'paging': true, // Table pagination
@@ -55,7 +55,7 @@ const dtOptions2 = {
   order: [[1, 'asc']]
 };
 
-class HSEPendingEligibilityFiltersArticleQueue extends Component {
+class FiltersArticleQueue extends Component {
   constructor(props) {
     super(props);
 
@@ -195,11 +195,11 @@ class HSEPendingEligibilityFiltersArticleQueue extends Component {
   }
 }
 
-function mapStateToProps({ hsePendingEligibilityFiltersArticleQueue }) {
+function mapStateToProps({ filtersArticleQueue }) {
   return {
-    errorMessage: hsePendingEligibilityFiltersArticleQueue.hsePendingEligibilityFiltersArticleErrorMessage,
-    pendingArticles: hsePendingEligibilityFiltersArticleQueue.hsePendingEligibilityFiltersArticles
+    errorMessage: filtersArticleQueue.filtersArticleErrorMessage,
+    pendingArticles: filtersArticleQueue.filtersArticles
   }
 }
 
-export default connect(mapStateToProps, actions)(HSEPendingEligibilityFiltersArticleQueue);
+export default connect(mapStateToProps, actions)(FiltersArticleQueue);
