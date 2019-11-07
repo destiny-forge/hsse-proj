@@ -97,7 +97,7 @@ const AdminMenu = [
     translate: 'sidebar.nav.element.ADDHSEARTICLE'
   },{
     name: 'Batch Upload',
-    path: '/hse/batchfileupload',
+    path: '/hse/batch-upload',
     translate: 'sidebar.nav.element.BATCHHSEUPLOAD'
   },{
     name: 'Eligibility & Filters',
