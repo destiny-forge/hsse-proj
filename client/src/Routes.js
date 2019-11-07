@@ -1,6 +1,5 @@
 /**
  * @name Routes.js
- * @author Kwadwo Sakyi
  * @description This file defines all routes used by the front-end to render a user interface for various paths.
  * 
  * Every route combines a path (which can be loaded in a browser) and a component which is rendered when that

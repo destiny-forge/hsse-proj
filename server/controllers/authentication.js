@@ -1,6 +1,5 @@
 /**
  * @name authentication.js
- * @author Kwadwo Sakyi
  * @description This file defines all functions that manage user authentication
  */
 
@@ -12,7 +11,7 @@ const nodemailer = require('nodemailer');
 const ses = require('nodemailer-ses-transport');
 
 /* lets do this a better way */
-require('../config/baseConfig');
+const config = require('../config/baseConfig');
 
 const USER = ['user'];
 const UPLOADER = ['user', 'uploader'];

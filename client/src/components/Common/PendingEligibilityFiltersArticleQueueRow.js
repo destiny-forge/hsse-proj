@@ -68,28 +68,61 @@ class PendingEligibilityFiltersArticleQueueRow extends Component {
   }
 
   render() {
-    console.log(this.props.currentUser.user.roles.includes('juniorfilter'));
-    const { article, history } = this.props;
+    const {
+      currentUser,
+      article,
+      history
+    } = this.props;
+
+    const {
+      swalOptionJunior,
+      swalOptionSenior
+    } = this.state;
+
+    // TODO: When server is done to get roles, extract this to service.
+    const isJuniorFilter = currentUser.user.roles.includes('juniorfilterer');
+    const isSeniorFilter = currentUser.user.roles.includes('seniorfilterer');
+
     return (
       <tr key={article._id}>
         <td></td>
         <td>LOW</td>
+        <td key={Math.random()}>{article.articleSource}</td>
+        <td key={Math.random()}>{moment(article.harvestDate).format("DD-MM-YYYY")}</td>
         <td key={Math.random()}>
-          {article.articleSource}
+        {
+          article._eligibilityFiltersJuniorEmail
+          || <Button size="xs"
+                color="primary"
+                className="btn-oval"
+                disabled={!isJuniorFilter || isSeniorFilter}>
+            <Swal disabled={!isJuniorFilter || isSeniorFilter}
+               options={swalOptionJunior}
+               callback={(isConfirm) => this.swalCallbackAssignJunior(isConfirm, article._id, history)}>
+                 Assign
+            </Swal>
+            </Button>
+          }
         </td>
         <td key={Math.random()}>
-          {moment(article.harvestDate).format("DD-MM-YYYY")}
+          {
+            article._eligibilityFiltersSeniorEmail
+            ||
+            <Button size="xs" color="primary"
+              className="btn-oval"
+              disabled={!isSeniorFilter}>
+                <Swal
+                disabled={!isSeniorFilter}
+                options={swalOptionSenior}
+                callback={(isConfirm) => this.swalCallbackAssignSenior(isConfirm, article._id, history)} >Assign
+                </Swal>
+            </Button>
+          }
         </td>
-        <td key={Math.random()}>
-          {article._eligibilityFiltersJuniorEmail || <Button size="xs" color="primary" className="btn-oval" disabled={!(this.props.currentUser.user.roles.includes('juniorfilterer') || this.props.currentUser.user.roles.includes('seniorfilterer'))}><Swal disabled={!(this.props.currentUser.user.roles.includes('juniorfilterer') || this.props.currentUser.user.roles.includes('seniorfilterer'))} options={this.state.swalOptionJunior} callback={(isConfirm) => this.swalCallbackAssignJunior(isConfirm, article._id, history)} >Assign</Swal></Button>}
-        </td>
-        <td key={Math.random()}>
-          {article._eligibilityFiltersSeniorEmail || <Button size="xs" color="primary" className="btn-oval" disabled={!this.props.currentUser.user.roles.includes('seniorfilterer')}><Swal disabled={!this.props.currentUser.user.roles.includes('seniorfilterer')} options={this.state.swalOptionSenior} callback={(isConfirm) => this.swalCallbackAssignSenior(isConfirm, article._id, history)} >Assign</Swal></Button>}
-        </td>
-        <td key={Math.random()}>{article.articleIdShort}</td>
-        <td key={Math.random()}>{article.title}</td>
-        <td key={Math.random()}>{article.authors}</td>
-        <td key={Math.random()}>{article.language}</td>
+        <td>{article.articleIdShort}</td>
+        <td>{article.title}</td>
+        <td>{article.authors}</td>
+        <td>{article.language}</td>
       </tr>
     );
   }
@@ -99,4 +132,4 @@ function mapStateToProps({ auth }) {
   return { currentUser: auth.currentUser, errorState: auth.errorState }
 }
 
-export default connect(mapStateToProps, actions)(PendingEligibilityFiltersArticleQueueRow); 
+export default connect(mapStateToProps, actions)(PendingEligibilityFiltersArticleQueueRow);
