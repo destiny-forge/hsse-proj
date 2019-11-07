@@ -43,24 +43,27 @@ class PendingEligibilityFiltersArticleQueueRow extends Component {
 
   }
 
+  // TODO clean this up
   swalCallbackAssignJunior(isConfirm, articleId, history) {
     if (isConfirm)
       this.props.assignHSEPendingEligibilityFiltersArticlesJuniorFilter(articleId, history);
     window.location.reload()
   }
 
+  // TODO clean this up
   swalCallbackAssignSenior(isConfirm, articleId, history) {
     if (isConfirm)
       this.props.assignHSEPendingEligibilityFiltersArticlesSeniorFilter(articleId, history);
     window.location.reload()
   }
 
+  // TODO clean this up
   swalCallbackAssignAllJunior(isConfirm, history) {
     if (isConfirm)
       this.props.assignAllHSEPendingEligibilityFiltersArticlesJuniorFilter(this.state.selectedIds, history);
     window.location.reload()
   }
-
+  // TODO clean this up
   swalCallbackAssignAllSenior(isConfirm, history) {
     if (isConfirm)
       this.props.assignAllHSEPendingEligibilityFiltersArticlesSeniorFilter(this.state.selectedIds, history);

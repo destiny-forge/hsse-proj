@@ -104,7 +104,6 @@ class HSEPendingEligibilityFiltersArticleQueue extends Component {
   }
 
   swalCallbackAssignJunior(isConfirm, articleId) {
-    console.log("we ever here 2?");
     if(isConfirm) {
       const result = this.props.assignHSEPendingEligibilityFiltersArticlesJuniorFilter(articleId, this.props.history);
       console.log(result);
@@ -112,7 +111,6 @@ class HSEPendingEligibilityFiltersArticleQueue extends Component {
   }
 
   swalCallbackAssignSenior(isConfirm, articleId) {
-    console.log("we ever here 3?");
     if(isConfirm) {
       const result = this.props.assignHSEPendingEligibilityFiltersArticlesSeniorFilter(articleId, this.props.history);
       console.log(result);
@@ -125,15 +123,20 @@ class HSEPendingEligibilityFiltersArticleQueue extends Component {
   });
 
   handleSelected = (tableElement) => {
-    console.log(tableElement);
     this.setState({ instance : tableElement })
   }
 
   renderArticles() {
     if(this.state.pendingArticles && this.state.pendingArticles.length > 0 ) {
-      let testRows = this.state.pendingArticles.map(article => {
-        return (<PendingEligibilityFiltersArticleQueueRow key = {article._id} article = {article} history = {this.props.history}/>);
+      let queueRows = this.state.pendingArticles.map(article => {
+        return (
+          <PendingEligibilityFiltersArticleQueueRow
+            key={article._id}
+            article={article}
+            history={this.props.history} />
+        );
       });
+
       return (
         <div>
           <Datatable options={dtOptions2} onSelected={this.handleSelected} >
