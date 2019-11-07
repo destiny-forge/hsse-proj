@@ -12,24 +12,24 @@ import Datetime from 'react-datetime';
 import HSEFormValidator from '../HSEFormValidator.js';
 
 /**
- * Validation flow using controlled components
- *
- * 1- User type on input
- * 2- onChange event trigger validation
- * 3- Validate methods are listed using "data-validate"
- *    attribute. Content must be an array in json format.
- * 4- The validation returns an object with format {[input name]: status}
- *    where status is an array of boolean per each method
- * 5- Methods that requires an argument, read the 'data-param' attribute
- * 6- Similarly, onSubmit event does a bulk validation on all form elements
- */
+* Validation flow using controlled components
+*
+* 1- User type on input
+* 2- onChange event trigger validation
+* 3- Validate methods are listed using "data-validate"
+*    attribute. Content must be an array in json format.
+* 4- The validation returns an object with format {[input name]: status}
+*    where status is an array of boolean per each method
+* 5- Methods that requires an argument, read the 'data-param' attribute
+* 6- Similarly, onSubmit event does a bulk validation on all form elements
+*/
 
 /*
- const ARTICLE_SOURCES = [
-     { value: '', label: '' },
-     { value: '', label: '' }
- ];
- */
+const ARTICLE_SOURCES = [
+{ value: '', label: '' },
+{ value: '', label: '' }
+];
+*/
 
 class AddArticle extends Component {
 
@@ -45,7 +45,7 @@ class AddArticle extends Component {
     }
   }
 
- /**
+  /**
   * Validate input using onChange event
   * @param  {String} formName The name of the form in the state object
   * @return {Function} a function used for the event
@@ -95,85 +95,81 @@ class AddArticle extends Component {
 
   /* Simplify error check */
   hasError = (formName, inputName, method) => {
-    return  this.state[formName] &&
-    this.state[formName].errors &&
-    this.state[formName].errors[inputName] &&
-    this.state[formName].errors[inputName][method]
+    return this.state[formName] &&
+      this.state[formName].errors &&
+      this.state[formName].errors[inputName] &&
+      this.state[formName].errors[inputName][method]
   }
 
   onDateChange(event) {
-        // this.setState({ harvestDate: event._d })
-    console.log(event._d);
+    // TODO - Fix - this is probably incorrect. It was here already
+    // as well as a console.log so guessing this was not complete.
+    this.setState({ harvestDate: event._d })
   }
 
   handleChangeSelect = (selectedSourceOption) => {
     this.setState({ selectedSourceOption });
   }
 
-  renderTitleField = ({input}) => {
+  renderTitleField = ({ input }) => {
     return <Input type="text"
-    name="title"
-    className="border-right-0"
-    placeholder="Enter title"
-    invalid={this.hasError('hseSingleArticle','title','required')}
-    onChange={this.validateOnChange}
-    data-validate='["required"]'
-            //value={this.state.formLogin.email}
-    {...input}
+      name="title"
+      className="border-right-0"
+      placeholder="Enter title"
+      invalid={this.hasError('hseSingleArticle', 'title', 'required')}
+      onChange={this.validateOnChange}
+      data-validate='["required"]'
+      {...input}
     />
   }
 
-  renderAuthorsField = ({input}) => {
+  renderAuthorsField = ({ input }) => {
     return <Input type="text"
-    name="authors"
-    className="border-right-0"
-    placeholder="Enter author(s)"
-    invalid={this.hasError('hseSingleArticle','authors','required')}
-    onChange={this.validateOnChange}
-    data-validate='["required"]'
-            //value={this.state.formLogin.email}
-    {...input}
+      name="authors"
+      className="border-right-0"
+      placeholder="Enter author(s)"
+      invalid={this.hasError('hseSingleArticle', 'authors', 'required')}
+      onChange={this.validateOnChange}
+      data-validate='["required"]'
+      {...input}
     />
   }
 
-  renderJournalField = ({input}) => {
+  renderJournalField = ({ input }) => {
     return <Input type="text"
-    name="journal"
-    className="border-right-0"
-    placeholder="Enter journal"
-    invalid={this.hasError('hseSingleArticle','journal','required')}
-    onChange={this.validateOnChange}
-    data-validate='["required"]'
-            //value={this.state.formLogin.email}
-    {...input}
+      name="journal"
+      className="border-right-0"
+      placeholder="Enter journal"
+      invalid={this.hasError('hseSingleArticle', 'journal', 'required')}
+      onChange={this.validateOnChange}
+      data-validate='["required"]'
+      {...input}
     />
   }
 
-  renderPublishedDateField = ({input}) => {
+  renderPublishedDateField = ({ input }) => {
     return <Datetime
-    dateFormat="YYYY"
-    inputProps={{className: 'form-control'}}
-    timeFormat={false}
-    onChange={this.onDateChange.bind(this)}
-    {...input}
-            //defaultValue=""
+      dateFormat="YYYY"
+      inputProps={{ className: 'form-control' }}
+      timeFormat={false}
+      onChange={this.onDateChange.bind(this)}
+      {...input}
     />
   }
 
-  renderSourceField = ({input}) => {
+  renderSourceField = ({ input }) => {
     return <Input
-    type="select"
-    name="articleSource"
-    className="border-right-0"
-    placeholder="Select source"
-    invalid={this.hasError('hseSingleArticle','articleSource','required')}
-    onChange={this.validateOnChange}
-    data-validate='["required"]'
-            //value={this.state.formLogin.email}
-    {...input}
+      type="select"
+      name="articleSource"
+      className="border-right-0"
+      placeholder="Select source"
+      invalid={this.hasError('hseSingleArticle', 'articleSource', 'required')}
+      onChange={this.validateOnChange}
+      data-validate='["required"]'
+      {...input}
     >
-    <option value="Single article from referrals">Single article from referrals</option>
-    <option value="Single article from other sources">Single article from other sources</option>
+      <option value="Single article from referrals">Single article from referrals</option>
+      <option value="Single article from other sources">Single article from other sources</option>
     </Input>
   }
 
@@ -181,20 +177,18 @@ class AddArticle extends Component {
 
     const { selectedSourceOption } = this.state;
     const SourceValue = selectedSourceOption && selectedSourceOption.value;
-
-
     const { handleSubmit } = this.props;
 
     return (
       <ContentWrapper>
         <div className="content-heading">
           <div>Add Article
-            <small>Health Systems Evidence</small>
+              <small>Health Systems Evidence</small>
           </div>
         </div>
         <Row>
           <div className="col-md-12">
-            <form onSubmit={ handleSubmit(this.handleSubmit) } name="hseSingleArticle">
+            <form onSubmit={handleSubmit(this.handleSubmit)} name="hseSingleArticle">
               <Card className="card-default">
                 <CardHeader>
                   <div className="card-title">Add Single Article</div>
@@ -204,107 +198,105 @@ class AddArticle extends Component {
                   <fieldset>
                     <div className="form-group row align-items-center">
                       <label className="col-md-2 col-form-label">Title</label>
-                      <Col md={ 6 }>
-                        <Field 
+                      <Col md={6}>
+                        <Field
                           type="text"
                           name="title"
                           component={this.renderTitleField}
                           autoComplete="none"
                           className="form-control"
-                          invalid={this.hasError('hseSingleArticle','title','required')}
+                          invalid={this.hasError('hseSingleArticle', 'title', 'required')}
                           onChange={this.validateOnChange}
                           data-validate='["required"]'
                           value={this.state.title}
                         />
                         <span className="invalid-feedback">Field is required</span>
                       </Col>
-                      <Col md={ 4 }>
-                      </Col>
+                      <Col md={4}></Col>
                     </div>
                   </fieldset>
                   <fieldset>
                     <div className="form-group row align-items-center">
                       <label className="col-md-2 col-form-label">Authors</label>
-                      <Col md={ 6 }>
-                        <Field 
+                      <Col md={6}>
+                        <Field
                           type="text"
                           name="authors"
                           component={this.renderAuthorsField}
                           autoComplete="none"
                           className="form-control"
-                          invalid={this.hasError('hseSingleArticle', 'text', 'required')||this.hasError('hseSingleArticle','email','email')}
+                          invalid={this.hasError('hseSingleArticle', 'text', 'required') || this.hasError('hseSingleArticle', 'email', 'email')}
                           onChange={this.validateOnChange}
                           data-validate='["required"]'
-                          value={this.state.authors}/>
-                          { this.hasError('hseSingleArticle', 'authors', 'required') && <span className="invalid-feedback">Field is required</span> }
-                        </Col>
-                        <Col md={ 4 }></Col>
-                      </div>
-                    </fieldset>
+                          value={this.state.authors} />
+                        {this.hasError('hseSingleArticle', 'authors', 'required') && <span className="invalid-feedback">Field is required</span>}
+                      </Col>
+                      <Col md={4}></Col>
+                    </div>
+                  </fieldset>
 
-                    <fieldset>
-                      <div className="form-group row mb">
-                        <label className="col-md-2 col-form-label mb">Published Date</label>
-                        <Col md={ 6 }>
-                          <Field
-                            name="publishedDate"
-                            component={this.renderPublishedDateField}
-                            value={this.state.harvestDate}
-                          />
-                        </Col>
-                      </div>
-                    </fieldset>
-                    <fieldset>
-                      <div className="form-group row align-items-center">
-                        <label className="col-md-2 col-form-label mb">Journal</label>
-                        <Col md={ 5 }>
-                          <Field 
-                            /*type="select"*/
-                            name="journal"
-                            component={this.renderJournalField}
-                            invalid={this.hasError('hseSingleArticle','articleSource','required')}
-                            onChange={this.validateOnChange}
-                            data-validate='["integer"]'
-                            value={this.state.journal}/>
-                            <span className="invalid-feedback">Field is required</span>
-                          </Col>
-                          <Col md={ 4 }>
-                          </Col>
-                        </div>
-                      </fieldset>
-                      <fieldset>
-                        <div className="form-group row align-items-center">
-                          <label className="col-md-2 col-form-label mb">Article Source</label>
-                          <Col md={ 6 }>
-                            <Field
-                              name="articleSource"
-                              component={this.renderSourceField}
-                              invalid={this.hasError('hseSingleArticle','text','required')}
-                              onChange={this.handleChangeSelect}
-                              data-validate='["required"]'
-                              value={SourceValue} />
-                              <span className="invalid-feedback">Field is required</span>
-                            </Col>
-                            <Col md={ 4 }>
-                            </Col>
-                          </div>
-                        </fieldset>
+                  <fieldset>
+                    <div className="form-group row mb">
+                      <label className="col-md-2 col-form-label mb">Published Date</label>
+                      <Col md={6}>
+                        <Field
+                          name="publishedDate"
+                          component={this.renderPublishedDateField}
+                          value={this.state.harvestDate}
+                        />
+                      </Col>
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <div className="form-group row align-items-center">
+                      <label className="col-md-2 col-form-label mb">Journal</label>
+                      <Col md={5}>
+                        <Field
+                          /*type="select"*/
+                          name="journal"
+                          component={this.renderJournalField}
+                          invalid={this.hasError('hseSingleArticle', 'articleSource', 'required')}
+                          onChange={this.validateOnChange}
+                          data-validate='["integer"]'
+                          value={this.state.journal} />
+                        <span className="invalid-feedback">Field is required</span>
+                      </Col>
+                      <Col md={4}>
+                      </Col>
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <div className="form-group row align-items-center">
+                      <label className="col-md-2 col-form-label mb">Article Source</label>
+                      <Col md={6}>
+                        <Field
+                          name="articleSource"
+                          component={this.renderSourceField}
+                          invalid={this.hasError('hseSingleArticle', 'text', 'required')}
+                          onChange={this.handleChangeSelect}
+                          data-validate='["required"]'
+                          value={SourceValue} />
+                        <span className="invalid-feedback">Field is required</span>
+                      </Col>
+                      <Col md={4}>
+                      </Col>
+                    </div>
+                  </fieldset>
 
-                      </CardBody>
-                      <CardFooter className="text-center">
-                        <button type="submit" className="btn btn-danger">Cancel</button>
-                        {'  '}
-                        <button type="submit" className="btn btn-success">Save</button>
-                      </CardFooter>
-                    </Card>
-                  </form>
-                </div>
-              </Row>
-            </ContentWrapper>
-          );
-        }
-
-      }
+                </CardBody>
+                <CardFooter className="text-center">
+                  <button type="submit" className="btn btn-danger">Cancel</button>
+                  {'  '}
+                  <button type="submit" className="btn btn-success">Save</button>
+                </CardFooter>
+              </Card>
+            </form>
+          </div>
+        </Row>
+      </ContentWrapper>
+    );
+  }
+}
 
 function mapStateToProps(state) {
   return { errorMessage: state.auth.errorMessage };
@@ -315,5 +307,4 @@ export default compose(
   reduxForm({
     form: 'addhsearticleform'
   })
-  ) (AddArticle);
-
+)(AddArticle);

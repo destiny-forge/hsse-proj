@@ -7,7 +7,7 @@ import {
 
     HSE_PENDING_ELIGIBILITY_FILTERS_ARTICLE_ASSIGN_SENIOR_FILTER,
     HSE_PENDING_ELIGIBILITY_FILTERS_ARTICLE_ASSIGN_SENIOR_FILTER_ERROR
-} from '../actions/types';
+} from '../../../actions/types'
 
 const INITIAL_STATE = {
     pendingEligibilityFiltersErrorMessage: ''

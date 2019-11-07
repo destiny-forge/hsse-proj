@@ -1,6 +1,5 @@
 /**
  * @name Routes.js
- * @author Kwadwo Sakyi
  * @description This file defines all routes used by the front-end to render a user interface for various paths.
  * 
  * Every route combines a path (which can be loaded in a browser) and a component which is rendered when that
@@ -58,8 +57,8 @@ import HSEAssignedTrackingPrioritizingArticleQueue from './components/HSE/HSEAss
 
 import AddArticle from './components/HSE/Article/AddArticle';
 import EditArticle from './components/HSE/Article/EditArticle';
-import HSEBatchUpload from './components/HSE/HSEBatchUpload';
-import HSEPendingEligibilityFiltersArticleQueue from './components/HSE/HSEPendingEligibilityFiltersArticleQueue';
+import BatchUpload from './components/HSE/Article/BatchUpload';
+import FiltersArticleQueue from './components/HSE/Article/Pending/FiltersArticleQueue';
 import HSEPendingEligibilityFiltersBatchfileQueue from './components/HSE/HSEPendingEligibilityFiltersBatchfileQueue';
 import HSEPendingQualityAppraisalsArticleQueue from './components/HSE/HSEPendingQualityAppraisalsArticleQueue';
 import HSEPendingLinkingStudiesArticleQueue from './components/HSE/HSEPendingLinkingStudiesArticleQueue';
@@ -217,8 +216,8 @@ const Routes = ({ location }) => {
 
                 {/* Pending HSE Queue */}
                 <Route path="/hse/add-article" component={AddArticle} />
-                <Route path="/hse/batchfileupload" component={HSEBatchUpload} />
-                <Route path="/hse/pendingeligibilityfiltersarticlequeue" component={HSEPendingEligibilityFiltersArticleQueue} />
+                <Route path="/hse/batch-upload" component={BatchUpload} />
+                <Route path="/hse/filters-article-queue" component={FiltersArticleQueue} />
                 <Route path="/hse/pendingeligibilityfiltersbatchfilequeue" component={HSEPendingEligibilityFiltersBatchfileQueue} />
                 <Route path="/hse/pendingqualityappraisalsarticlequeue" component={HSEPendingQualityAppraisalsArticleQueue} />
                 <Route path="/hse/pendinglinkingstudiesarticlequeue" component={HSEPendingLinkingStudiesArticleQueue} />

@@ -10,7 +10,6 @@ const INITIAL_STATE = {
 };
 
 export default function(state = INITIAL_STATE, action) {
-
     switch(action.type) {
         case SSE_ASSIGNED_QUALITY_APPRAISALS_ARTICLE_QUEUE: 
             return { ...state, sseAssignedQualityAppraisalsArticles: action.payload };

@@ -11,7 +11,7 @@ import authReducer from './authReducer';
 
 import HSEArticleReducer from './HSEArticleReducer';
 
-import HSEPendingEligibilityFiltersArticleQueueReducer from './HSEPendingEligibilityFiltersArticleQueueReducer';
+import FiltersArticleQueueReducer from './HSE/Pending/FiltersArticleQueueReducer';
 import HSEPendingEligibilityFiltersBatchfileQueueReducer from './HSEPendingEligibilityFiltersBatchfileQueueReducer';
 
 import HSEAssignedEligibilityFiltersArticleQueueReducer from './HSEAssignedEligibilityFiltersArticleReducer';
@@ -92,7 +92,7 @@ export default combineReducers({
     form: formReducer,
     auth: authReducer,
 
-    hsePendingEligibilityFiltersArticleQueue: HSEPendingEligibilityFiltersArticleQueueReducer,
+    filtersArticleQueue: FiltersArticleQueueReducer,
     hsePendingEligibilityFiltersBatchfileQueue: HSEPendingEligibilityFiltersBatchfileQueueReducer,
     
     hsePendingQualityAppraisalsArticleQueue: HSEPendingQualityAppraisalsArticleQueueReducer,
