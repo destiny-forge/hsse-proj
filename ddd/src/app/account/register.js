@@ -2,7 +2,7 @@
  * Account registration
  */
 module.exports = ({ userRepository, webToken }) => {
-  const register = async (email, password) => {
+  const register = (email, password) => {
     try {
       // we should use the user service here instead
       // of going to the user repository inside the

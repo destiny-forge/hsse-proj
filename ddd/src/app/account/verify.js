@@ -2,7 +2,7 @@
  * Account verification
  */
 module.exports = ({ userRepository, mailService, webToken }) => {
-  const verify = async (userId, isVerified) => {
+  const verify = (userId, isVerified) => {
     try {
       return userRepository.update(userId, { isVerified: isVerified });
     } catch (error) {
@@ -10,7 +10,7 @@ module.exports = ({ userRepository, mailService, webToken }) => {
     }
   };
 
-  const send = async user => {
+  const send = user => {
     const token = webToken.sign({ expiresIn: '48h' });
     const verifyToken = token({
       id: user._id,
@@ -27,9 +27,9 @@ module.exports = ({ userRepository, mailService, webToken }) => {
     });
   };
 
-  const isVerified = async userId => {
+  const isVerified = userId => {
     try {
-      const user = await userRepository.findById(userId);
+      const user = userRepository.findById(userId);
       return user.isVerified;
     } catch (error) {
       throw new Error(error);

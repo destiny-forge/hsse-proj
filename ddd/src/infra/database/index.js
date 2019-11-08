@@ -8,6 +8,6 @@ module.exports = ({ logger, config }) => {
     /* eslint-enable no-console */
     return false;
   }
-  mongo.init({ config, models });
+  mongo.init({ config: config.db, models });
   return mongo;
 };

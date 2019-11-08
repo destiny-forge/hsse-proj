@@ -2,7 +2,7 @@
  * Account reset password
  */
 module.exports = ({ userRepository, webToken, mailService }) => {
-  const reset = async email => {
+  const reset = email => {
     try {
       const user = userRepository.getByEmail(email);
       const token = webToken.sign({ expiresIn: '48h' });
