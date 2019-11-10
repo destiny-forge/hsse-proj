@@ -43,16 +43,6 @@ const Menu = [
         path: '/hse/assignedpresentationdetailsarticlequeue',
         translate: 'sidebar.nav.element.ASSIGNEDPRESENTATIONDETAILS'
       },
-      {
-        name: 'Translating Titles',
-        path: '/hse/assignedtranslatingtitlesqueue',
-        translate: 'sidebar.nav.element.ASSIGNEDTRANSLATINGTITLES'
-      },
-      {
-        name: 'Tracking & Prioritizing',
-        path: '/hse/assignedtrackingprioritizingqueue',
-        translate: 'sidebar.nav.element.ASSIGNEDTRACKINGPRIORITIZING'
-      }
     ]
   },
   {
@@ -74,21 +64,6 @@ const Menu = [
         name: 'Linking Studies',
         path: '/sse/assignedlinkingstudiesarticlequeue',
         translate: 'sidebar.nav.element.LINKINGSTUDIES'
-      },
-      {
-        name: 'Presentation Details',
-        path: '/sse/assignedpresentationdetailsarticlequeue',
-        translate: 'sidebar.nav.element.PRESENTATIONDETAILS'
-      },
-      {
-        name: 'Translating Titles',
-        path: '/sse/assignedtranslatingtitlesqueue',
-        translate: 'sidebar.nav.element.TRANSLATINGTITLES'
-      },
-      {
-        name: 'Tracking & Prioritizing',
-        path: '/sse/assignedtrackingprioritizingqueue',
-        translate: 'sidebar.nav.element.TRACKINGPRIORITIZING'
       }
     ]
   },
@@ -189,84 +164,6 @@ const Menu = [
       path: 'cards',
       translate: 'sidebar.nav.element.PENDIGTRACKINGPRIORITIZINGARTICLES'
     }
-    ]
-  },
-  {
-    heading: 'Complicated Queue',
-    translate: 'sidebar.heading.Evidence Systems'
-  },
-  {
-    name: 'Health Systems Compl...',
-    icon: 'icon-layers',
-    translate: 'sidebar.nav.element.QueuedHealth',
-    submenu: [
-      {
-        name: 'Eligibility & Filters Article',
-        path: '/hse/complicatedeligibilityfiltersarticlequeue',
-        translate: 'sidebar.nav.element.COMPLICATEDELIGIBILITYFILTERARTICLES'
-      },
-      {
-        name: 'Quality Appraisals',
-        path: '/hse/complicatedqualityappraisalsqueue',
-        translate: 'sidebar.nav.element.COMPLICATEDQUALITYAPPRAISALSARTICLES'
-      },
-      {
-        name: 'Linking Studies',
-        path: '/hse/complicatedlinkingstudiesqueue',
-        translate: 'sidebar.nav.element.COMPLICATEDLINKINGSTUDIESARTICLES'
-      },
-      {
-        name: 'Presentation Details',
-        path: '/hse/complicatedpresentationdetailsqueue',
-        translate: 'sidebar.nav.element.COMPLICATEDPRESENTATIONDETAILSARTICLES'
-      },
-      {
-        name: 'Translating Titles',
-        path: '/hse/complicatedtranslatingtitlesqueue',
-        translate: 'sidebar.nav.element.COMPLICATEDTRANSLATINGTITLESARTICLES'
-      },
-      {
-        name: 'Tracking & Prioritizing',
-        path: '/hse/complicatedtrackingprioritizingqueue',
-        translate: 'sidebar.nav.element.COMPLICATEDTRACKINGPRIORITIZINGARTICLES'
-      }
-    ]
-  },
-  {
-    name: 'Social Systems Compli...',
-    icon: 'icon-chemistry',
-    translate: 'sidebar.nav.element.Social',
-    submenu: [
-      {
-        name: 'Eligibility & Filters Article',
-        path: '/sse/complicatedeligibilityfiltersarticlequeue',
-        translate: 'sidebar.nav.element.COMPLICATEDELIGIBILITYFILTERARTICLES'
-      },
-      {
-        name: 'Quality Appraisals',
-        path: '/sse/complicatedqualityappraisalsarticlequeue',
-        translate: 'sidebar.nav.element.COMPLICATEDQUALITYAPPRAISALSARTICLES'
-      },
-      {
-        name: 'Linking Studies',
-        path: '/sse/complicatedlinkingstudies',
-        translate: 'sidebar.nav.element.COMPLICATEDLINKINGSTUDIESARTICLES'
-      },
-      {
-        name: 'Presentation Details',
-        path: '/sse/complicatedpresentationdetails',
-        translate: 'sidebar.nav.element.COMPLICATEDPRESENTATIONDETAILSARTICLES'
-      },
-      {
-        name: 'Translating Titles',
-        path: '/sse/complicated/translatingtitles',
-        translate: 'sidebar.nav.element.COMPLICATEDTRANSLATINGTITLESARTICLES'
-      },
-      {
-        name: 'Tracking & Prioritizing',
-        path: '/sse/complicatedtrackingprioritizing',
-        translate: 'sidebar.nav.element.COMPLICATEDTRACKINGPRIORITIZINGARTICLES'
-      }
     ]
   },
   {
