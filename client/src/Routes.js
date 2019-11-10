@@ -220,7 +220,6 @@ const Routes = ({ location }) => {
                 <Route path="/hse/batch-upload" component={BatchUpload} />
                 <Route path="/hse/filters-article-queue" component={FiltersArticleQueue} />
                 
-                {/* START HERE TOMORROW!!! */}
                 <Route path="/hse/batch-file-queue" component={BatchFileQueue} />
                 <Route path="/hse/pendingqualityappraisalsarticlequeue" component={HSEPendingQualityAppraisalsArticleQueue} />
                 <Route path="/hse/pendinglinkingstudiesarticlequeue" component={HSEPendingLinkingStudiesArticleQueue} />
