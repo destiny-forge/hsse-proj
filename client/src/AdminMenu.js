@@ -105,7 +105,7 @@ const AdminMenu = [
     translate: 'sidebar.nav.element.PENDINGELIGIBILITYFILTERARTICLES'
   },/*{
     name: 'Eligibility & Filters Batch',
-    path: '/hse/pendingeligibilityfiltersbatchfilequeue',
+    path: '/hse/batch-file-queue',
     translate: 'sidebar.nav.element.PENDINGELIGIBILITYFILTERBATCHFILES'
   },*/ {
     name: 'Quality Appraisals',

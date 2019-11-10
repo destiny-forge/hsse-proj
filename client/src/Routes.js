@@ -59,7 +59,7 @@ import AddArticle from './components/HSE/Article/AddArticle';
 import EditArticle from './components/HSE/Article/EditArticle';
 import BatchUpload from './components/HSE/Article/BatchUpload';
 import FiltersArticleQueue from './components/HSE/Article/Pending/FiltersArticleQueue';
-import HSEPendingEligibilityFiltersBatchfileQueue from './components/HSE/HSEPendingEligibilityFiltersBatchfileQueue';
+import BatchFileQueue from './components/HSE/Article/Pending/BatchFileQueue';
 import HSEPendingQualityAppraisalsArticleQueue from './components/HSE/HSEPendingQualityAppraisalsArticleQueue';
 import HSEPendingLinkingStudiesArticleQueue from './components/HSE/HSEPendingLinkingStudiesArticleQueue';
 import HSEPendingPresentationDetailsArticleQueue from './components/HSE/HSEPendingPresentationDetailsArticleQueue';
@@ -115,6 +115,7 @@ import AdministratorSSELinkingStudiesQueue from './components/Administrator/SSE/
 import AdministratorSSEPresentationDetailsQueue from './components/Administrator/SSE/AdministratorSSEPresentationDetailsQueue';
 import AdministratorSSEGoLiveQueue from './components/Administrator/SSE/AdministratorSSEGoLiveQueue';
 import AdministratorSSETrackingPrioritizingQueue from './components/Administrator/SSE/AdministratorSSETrackingPrioritizingQueue';
+
 
 // List of routes that uses the page layout
 // listed here to Switch between layouts
@@ -218,7 +219,9 @@ const Routes = ({ location }) => {
                 <Route path="/hse/add-article" component={AddArticle} />
                 <Route path="/hse/batch-upload" component={BatchUpload} />
                 <Route path="/hse/filters-article-queue" component={FiltersArticleQueue} />
-                <Route path="/hse/pendingeligibilityfiltersbatchfilequeue" component={HSEPendingEligibilityFiltersBatchfileQueue} />
+                
+                {/* START HERE TOMORROW!!! */}
+                <Route path="/hse/batch-file-queue" component={BatchFileQueue} />
                 <Route path="/hse/pendingqualityappraisalsarticlequeue" component={HSEPendingQualityAppraisalsArticleQueue} />
                 <Route path="/hse/pendinglinkingstudiesarticlequeue" component={HSEPendingLinkingStudiesArticleQueue} />
                 <Route path="/hse/pendingpresentationdetailsarticlequeue" component={HSEPendingPresentationDetailsArticleQueue} />
