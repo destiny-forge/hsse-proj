@@ -10,8 +10,14 @@ module.exports = ({ model }) => {
       })
     );
 
-  const create = (...args) =>
-    model.create(...args).then(({ dataValues }) => toEntity(dataValues));
+  const create = async (...args) => {
+    try {
+      const user = model.create(...args);
+      return toEntity(user);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
 
   const update = (...args) =>
     model.update(...args).catch(error => {
@@ -34,6 +40,15 @@ module.exports = ({ model }) => {
         throw new Error(error);
       });
 
+  const findByEmail = async (...args) => {
+    try {
+      const user = await model.findByEmail(...args);
+      return user === null ? user : toEntity(user);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const validatePassword = endcodedPassword => password =>
     comparePassword(password, endcodedPassword);
 
@@ -42,6 +57,7 @@ module.exports = ({ model }) => {
     create,
     update,
     findById,
+    findByEmail,
     findOne,
     validatePassword
   };

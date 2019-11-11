@@ -20,7 +20,10 @@ module.exports = ({ config, router, logger, auth }) => {
             logger.info(`🤘 API - Port ${port}`);
             resolve();
           })
-          .on('error', reject);
+          .on('error', err => {
+            console.log(err);
+            reject();
+          });
       })
   };
 };

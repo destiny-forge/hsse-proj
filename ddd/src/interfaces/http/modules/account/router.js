@@ -47,8 +47,9 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.post('/register', (req, res) => {
+    const { email, password } = req.body;
     registerUseCase
-      .validate({ body: req.body })
+      .register(email, password)
       .then(data => {
         res.status(Status.OK).json(Success(data));
       })

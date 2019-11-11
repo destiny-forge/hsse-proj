@@ -1,13 +1,49 @@
 /**
  * Account registration
  */
-module.exports = ({ userRepository, webToken }) => {
-  const register = (email, password) => {
+module.exports = ({ config, userRepository, webToken }) => {
+  const register = async (email, password) => {
     try {
       // we should use the user service here instead
       // of going to the user repository inside the
       // account registration service!!!!
-      const user = userRepository.getByEmail(email);
+      let existingUser = await userRepository.findByEmail(email);
+
+      if (existingUser) {
+        throw new Error('email has already been taken');
+      }
+
+      // note: password length and complexity should also be managed
+      // @todo - Lock down the roles!
+      const now = Date.now();
+
+      const userObj = {
+        email,
+        password,
+        roles: [
+          'user',
+          'uploader',
+          'detailer',
+          'linker',
+          'juniorappraiser',
+          'seniorappraiser',
+          'juniorfilterer',
+          'seniorfilterer',
+          'prioritizer',
+          'administrator'
+        ],
+        createdAt: now,
+        updatedAt: now
+      };
+
+      const newUser = userRepository.create(userObj);
+
+      // emit user registered event = decoupled
+      // which will be listened to by the mail service
+      // and will use the infra email service to send
+      // the emails out in a non blocking fashion
+
+      console.log(newUser);
 
       /* Only register if the user doesn't already exist */
 
@@ -19,8 +55,8 @@ module.exports = ({ userRepository, webToken }) => {
       const token = webToken.sign({ expiresIn: '48h' });
 
       const emailToken = token({
-        id: user._id,
-        email: user.email
+        id: newUser._id,
+        email: newUser.email
       });
 
       const confirmationUrl = `${config.backendServer}/confirmuser/${emailToken}`;
@@ -28,7 +64,7 @@ module.exports = ({ userRepository, webToken }) => {
       const html = `Please click this email to confirm your email: <a href="${confirmationUrl}">${confirmationUrl}</a>`;
 
       const sentStatus = mailService.send({
-        to: user.email,
+        to: newUser.email,
         subject,
         html
       });

@@ -1,6 +1,6 @@
 const t = require('tcomb');
 const { compose } = require('ramda');
-const { cleanData } = require('../helper');
+const { cleanData, cleanMongoId } = require('../helper');
 
 const User = t.struct({
   _id: t.String,
@@ -14,5 +14,6 @@ const User = t.struct({
 
 module.exports = compose(
   cleanData,
-  User
+  User,
+  cleanMongoId
 );

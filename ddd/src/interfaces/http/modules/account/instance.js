@@ -4,10 +4,12 @@ const { register, reset, verify } = require('src/app/account');
 module.exports = () => {
   const {
     repository: { userRepository },
-    jwt
+    jwt,
+    config
   } = container.cradle;
 
   const registerUseCase = register({
+    config,
     userRepository,
     webToken: jwt
   });

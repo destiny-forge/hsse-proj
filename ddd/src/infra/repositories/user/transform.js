@@ -1,7 +1,7 @@
-const { User } = require('src/domain/user')
+const { User } = require('src/domain/user');
 
-const toEntity = User
+const toEntity = User;
 
 module.exports = {
   toEntity
-}
+};

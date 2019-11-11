@@ -2,11 +2,14 @@ const ObjectID = require('mongodb').ObjectID;
 const { encryptPassword } = require('../../encryption');
 const Email = require('../../support/email');
 
-module.exports = ({ db }) => {
+module.exports = ({ database }) => {
   const create = async user => {
     try {
       user.password = encryptPassword(user.password);
-      const results = await db.collection('users').insertOne(user);
+      const results = await database
+        .get()
+        .collection('users')
+        .insertOne(user);
       return results.ops[0];
     } catch (e) {
       throw e;
@@ -15,7 +18,8 @@ module.exports = ({ db }) => {
 
   const getAll = async () => {
     try {
-      const results = await db
+      const results = await database
+        .get()
         .collection('users')
         .find()
         .toArray();
@@ -28,7 +32,10 @@ module.exports = ({ db }) => {
   const findById = async id => {
     try {
       if (!ObjectID.isValid(id)) throw 'Invalid MongoDB ID.';
-      const results = await db.collection('users').findOne(ObjectID(id));
+      const results = await database
+        .get()
+        .collection('users')
+        .findOne(ObjectID(id));
       return results;
     } catch (e) {
       throw e;
@@ -37,7 +44,10 @@ module.exports = ({ db }) => {
 
   const findOne = async query => {
     try {
-      const results = await db.collection('users').findOne(query);
+      const results = await database
+        .get()
+        .collection('users')
+        .findOne(query);
       return results;
     } catch (e) {
       throw e;
@@ -47,10 +57,10 @@ module.exports = ({ db }) => {
   const findByEmail = async email => {
     try {
       if (!Email.isValid(email)) throw 'Invalid email address';
-      const results = await db
+      return await database
+        .get()
         .collection('users')
         .findOne({ email: { $in: [email] } });
-      return results;
     } catch (e) {
       throw e;
     }
@@ -58,7 +68,8 @@ module.exports = ({ db }) => {
 
   const update = async (userId, fields) => {
     try {
-      const results = await db
+      const results = await database
+        .get()
         .collection('users')
         .updateOne({ _id: { $eq: userId } }, { $set: fields });
       return results.ops[0];

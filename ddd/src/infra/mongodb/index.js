@@ -21,6 +21,7 @@ const init = ({ config, models }) =>
 
 const connect = () =>
   new Promise((resolve, reject) => {
+    // console.log('connecting to the database');
     const { client, config } = mongo;
     if (client === null) {
       return reject('The mongodb client has not been initialized');
@@ -50,8 +51,13 @@ const close = () =>
     }
   });
 
+const get = () => {
+  return mongo.db;
+};
+
 module.exports = {
   mongo,
+  get,
   init,
   connect,
   close

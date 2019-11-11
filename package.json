@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@hapi/joi": "^16.1.7"
+  }
+}
