@@ -1,4 +1,4 @@
-const { createContainer, asValue, asFunction } = require('awilix');
+const { createContainer, asValue, asFunction, asClass } = require('awilix');
 // you can do this
 const app = require('./app');
 const server = require('./interfaces/http/server');
@@ -11,12 +11,13 @@ const jwt = require('./infra/jwt');
 const response = require('./infra/support/response');
 const date = require('./infra/support/date');
 const repository = require('./infra/repositories');
-
+const events = require('./infra/events');
 const container = createContainer();
 
 // SYSTEM
 container.register({
   app: asFunction(app).singleton(),
+  events: asClass(events).singleton(),
   server: asFunction(server).singleton(),
   router: asFunction(router).singleton(),
   logger: asFunction(logger).singleton(),
