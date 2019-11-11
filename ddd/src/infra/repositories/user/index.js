@@ -12,7 +12,7 @@ module.exports = ({ model }) => {
 
   const create = async (...args) => {
     try {
-      const user = model.create(...args);
+      const user = await model.create(...args);
       return toEntity(user);
     } catch (err) {
       throw new Error(err);

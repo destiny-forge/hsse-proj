@@ -30,11 +30,12 @@ module.exports = ({ userRepository, events }) => {
 };
 
 const stubUser = ({ email, password }) => {
-  const now = Date.now();
+  const now = new Date();
   return {
     email,
     // note: password length and complexity should also be managed
     password,
+    confirmed: false,
     // @todo - Lock down the roles!
     roles: [
       'user',

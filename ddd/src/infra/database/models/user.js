@@ -10,6 +10,7 @@ module.exports = ({ database }) => {
         .get()
         .collection('users')
         .insertOne(user);
+      // console.log(results);
       return results.ops[0];
     } catch (e) {
       throw e;

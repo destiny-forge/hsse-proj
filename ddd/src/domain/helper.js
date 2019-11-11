@@ -7,7 +7,7 @@ const notNull = compose(complement(isNil));
 const cleanData = entity => pickBy(notNull, entity);
 
 const cleanMongoId = entity => {
-  if (entity._id) {
+  if (entity && entity._id) {
     entity._id = entity._id.toString();
   }
   return entity;

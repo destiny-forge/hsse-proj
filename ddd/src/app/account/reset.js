@@ -5,12 +5,18 @@ module.exports = ({ userRepository, webToken, mailService }) => {
   const reset = email => {
     try {
       const user = userRepository.getByEmail(email);
-      const token = webToken.sign({ expiresIn: '48h' });
-      const emailToken = token({
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      const createToken = webToken.sign({ expiresIn: '48h' });
+
+      const token = createToken({
         id: user._id,
         email: user.email
       });
-      const resetUrl = `${config.frontendServer}/resetpassword/${emailToken}`;
+
+      const resetUrl = `${config.frontendServer}/resetpassword/${token}`;
       const subject = 'Reset Password Email';
       const html = `Please click this to reset your password: <a href="${resetUrl}">${resetUrl}</a>`;
 
