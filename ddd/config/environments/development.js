@@ -10,5 +10,8 @@ module.exports = {
   authSecret: process.env.SECRET,
   authSession: {
     session: false
+  },
+  api: {
+    url: `localhost`
   }
-}
+};

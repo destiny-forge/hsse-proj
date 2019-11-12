@@ -1,11 +1,12 @@
 const container = require('src/container');
-const { register, reset, verify } = require('src/app/account');
+const { register, reset, verify, initEvents } = require('src/app/account');
 
 module.exports = () => {
   const {
     repository: { userRepository },
     jwt,
-    events
+    events,
+    config
   } = container.cradle;
 
   const registerUseCase = register({
@@ -21,6 +22,18 @@ module.exports = () => {
   const verifyUseCase = verify({
     userRepository,
     webToken: jwt
+  });
+
+  initEvents({
+    config,
+    events,
+    webToken: jwt,
+    mailService: {
+      send: args => {
+        // replace with a real service :)
+        console.log(args);
+      }
+    }
   });
 
   return {

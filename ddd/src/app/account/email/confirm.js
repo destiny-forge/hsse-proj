@@ -1,20 +1,23 @@
 /* Confirm registration email */
-module.exports = ({ config, mailService }) => {
-  const sendConfirmation = token => {
-    const url = `${config.backendServer}/confirmuser/${token}`;
-    const subject = 'Confirm Registration Email';
-    const html = `Please click this email to confirm your email: <a href="${url}">${url}</a>`;
+module.exports = ({ config, webToken, mailService }) => {
+  const send = ({ id, email }) => {
+    const createToken = webToken.sign({ expiresIn: '48h' });
+    const token = createToken({ id, email });
 
-    const sentStatus = mailService.send({
-      to: newUser.email,
+    const url = `${config.api.url}:${config.port}/api/account/confirm/${token}`;
+    const subject = 'Confirm Registration Email';
+    const html = `Please click the following link to confirm your email: <a href="${url}">Confirm Email</a>`;
+
+    const status = mailService.send({
+      to: email,
       subject,
       html
     });
 
-    return sentStatus;
+    return status;
   };
 
   return {
-    sendConfirmation
+    send
   };
 };

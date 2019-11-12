@@ -1,4 +1,3 @@
-
 module.exports = {
   version: process.env.APP_VERSION,
   port: process.env.PORT || 4000,
@@ -11,5 +10,8 @@ module.exports = {
   authSecret: process.env.SECRET,
   authSession: {
     session: false
+  },
+  api: {
+    url: `localhost`
   }
-}
+};

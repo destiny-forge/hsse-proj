@@ -1,5 +1,5 @@
-const { sendConfirmation } = require('./confirm');
+const confirm = require('./confirm');
 
 module.exports = {
-  sendConfirmation
+  confirm
 };
