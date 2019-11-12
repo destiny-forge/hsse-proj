@@ -1,7 +1,7 @@
 /**
  * Account verification
  */
-module.exports = ({ userRepository, mailService, webToken }) => {
+module.exports = ({ userRepository, mailer, webToken }) => {
   const verify = (userId, isVerified) => {
     try {
       return userRepository.update(userId, { isVerified: isVerified });
@@ -20,7 +20,7 @@ module.exports = ({ userRepository, mailService, webToken }) => {
     const subject = 'Confirm Registration Email';
     const html = `Please click this link to confirm your email: <a href="${confirmationUrl}">${confirmationUrl}</a>`;
 
-    mailService.send({
+    mailer.send({
       to: user.email,
       subject,
       html

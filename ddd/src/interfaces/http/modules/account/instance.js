@@ -28,7 +28,7 @@ module.exports = () => {
     config,
     events,
     webToken: jwt,
-    mailService: {
+    mailer: {
       send: args => {
         // replace with a real service :)
         console.log(args);

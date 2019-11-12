@@ -1,7 +1,7 @@
 /**
  * Account reset password
  */
-module.exports = ({ userRepository, webToken, mailService }) => {
+module.exports = ({ userRepository, webToken, mailer }) => {
   const reset = email => {
     try {
       const user = userRepository.getByEmail(email);
@@ -20,7 +20,7 @@ module.exports = ({ userRepository, webToken, mailService }) => {
       const subject = 'Reset Password Email';
       const html = `Please click this to reset your password: <a href="${resetUrl}">${resetUrl}</a>`;
 
-      const sentStatus = mailService.send({
+      const sentStatus = mailer.send({
         to: user.email,
         subject,
         html
