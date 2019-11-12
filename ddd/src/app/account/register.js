@@ -10,7 +10,7 @@ module.exports = ({ userRepository, events }) => {
       }
 
       user = stubUser({ email, password });
-      user = userRepository.create(user);
+      user = await userRepository.create(user);
 
       const data = {
         id: user._id,

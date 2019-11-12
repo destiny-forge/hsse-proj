@@ -5,13 +5,12 @@ module.exports = () => {
   const {
     repository: { userRepository },
     jwt,
-    config
+    events
   } = container.cradle;
 
   const registerUseCase = register({
-    config,
     userRepository,
-    webToken: jwt
+    events
   });
 
   const resetUseCase = reset({
