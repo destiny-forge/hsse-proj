@@ -13,5 +13,16 @@ module.exports = {
   },
   api: {
     url: `localhost`
+  },
+  mail: {
+    from: 'forum@mcmaster.ca',
+    settings: {
+      host: 'smtp.ethereal.email',
+      port: 587,
+      auth: {
+        user: 'real.user',
+        pass: 'verysecret'
+      }
+    }
   }
 };
