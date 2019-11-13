@@ -2,13 +2,16 @@ const { toEntity } = require('./transform');
 const { comparePassword } = require('../../encryption');
 
 module.exports = ({ model }) => {
-  const getAll = (...args) =>
-    model.getAll(...args).then(entity =>
-      entity.map(data => {
-        const { dataValues } = data;
-        return toEntity(dataValues);
-      })
-    );
+  const getAll = async (...args) => {
+    try {
+      const users = await model.getAll(...args);
+      return users.map(user => {
+        return toEntity(user);
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
 
   const create = async (...args) => {
     try {
@@ -27,21 +30,23 @@ module.exports = ({ model }) => {
     }
   };
 
-  const findById = (...args) =>
-    model
-      .findById(...args)
-      .then(({ dataValues }) => toEntity(dataValues))
-      .catch(error => {
-        throw new Error(error);
-      });
+  const findById = async (...args) => {
+    try {
+      const user = await model.findById(...args);
+      return toEntity(user);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
 
-  const findOne = (...args) =>
-    model
-      .findOne(...args)
-      .then(({ dataValues }) => toEntity(dataValues))
-      .catch(error => {
-        throw new Error(error);
-      });
+  const findOne = async (...args) => {
+    try {
+      const user = await model.findOne(...args);
+      return toEntity(user);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
 
   const findByEmail = async (...args) => {
     try {
