@@ -11,6 +11,7 @@ module.exports = {
   authSession: {
     session: false
   },
+  frontend: 'localhost:4000',
   api: {
     url: `localhost`
   },

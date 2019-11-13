@@ -9,9 +9,9 @@ module.exports = ({ config }) => ({
     const opt = Object.assign({}, options, { expiresIn: '1h' });
     return jwt.sign(payload, config.authSecret, opt);
   },
-  verify: options => token => {
+  confirm: options => token => {
     const opt = Object.assign({}, options);
-    return jwt.verify(token, config.authSecret, opt);
+    return jwt.confirm(token, config.authSecret, opt);
   },
   decode: options => token => {
     const opt = Object.assign({}, options);

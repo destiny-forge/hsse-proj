@@ -7,17 +7,17 @@ module.exports = () => {
     jwt
   } = container.cradle;
 
-  const addUseCase = register({
+  const addUseCase = add({
     userRepository,
     webToken: jwt
   });
 
-  const removeUseCase = reset({
+  const removeUseCase = remove({
     userRepository,
     webToken: jwt
   });
 
-  const updateUseCase = verify({
+  const updateUseCase = update({
     userRepository,
     webToken: jwt
   });

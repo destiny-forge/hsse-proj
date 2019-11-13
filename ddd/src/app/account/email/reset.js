@@ -1,12 +1,13 @@
-/* Confirm registration email */
+/* Account password reset email */
 module.exports = ({ config, webToken, mailer }) => {
   const send = ({ id, email }) => {
     const createToken = webToken.sign({ expiresIn: '48h' });
+
     const token = createToken({ id, email });
 
-    const url = `${config.api.url}:${config.port}/api/account/confirm/${token}`;
-    const subject = 'Confirm Registration Email';
-    const html = `Please click the following link to confirm your email: <a href="${url}">Confirm Email</a>`;
+    const url = `${config.frontend}/account/reset/${token}`;
+    const subject = 'Reset Password Email';
+    const html = `Please click the following link to reset your password: <a href="${url}">Reset Password</a>`;
 
     mailer.send({
       to: email,

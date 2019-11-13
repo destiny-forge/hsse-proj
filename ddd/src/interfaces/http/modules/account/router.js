@@ -4,7 +4,7 @@ const { Router } = require('express');
 module.exports = ({
   registerUseCase,
   resetUseCase,
-  verifyUseCase,
+  confirmUseCase,
   logger,
   response: { Success, Fail }
 }) => {
@@ -102,7 +102,7 @@ module.exports = ({
    *   post:
    *     tags:
    *       - Authentication
-   *     description: Account verify
+   *     description: Account confirmation
    *     consumes:
    *       - application/json
    *     produces:
@@ -121,8 +121,8 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.post('/verify', (req, res) => {
-    verifyUseCase
+  router.post('/confirm', (req, res) => {
+    confirmUseCase
       .validate({ body: req.body })
       .then(data => {
         res.status(Status.OK).json(Success(data));

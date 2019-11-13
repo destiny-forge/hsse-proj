@@ -1,5 +1,5 @@
 const container = require('src/container');
-const { register, reset, verify, initEvents } = require('src/app/account');
+const { register, reset, confirm, initEvents } = require('src/app/account');
 
 module.exports = () => {
   const {
@@ -19,7 +19,7 @@ module.exports = () => {
     webToken: jwt
   });
 
-  const verifyUseCase = verify({
+  const confirmUseCase = confirm({
     userRepository,
     webToken: jwt
   });
@@ -39,6 +39,6 @@ module.exports = () => {
   return {
     registerUseCase,
     resetUseCase,
-    verifyUseCase
+    confirmUseCase
   };
 };
