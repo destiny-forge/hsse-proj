@@ -71,9 +71,9 @@ module.exports = ({
    *     produces:
    *       - application/json
    *     parameters:
-   *       - name: token
-   *         description: User's jwt
-   *         in: querystring
+   *       - name: email
+   *         description: User's email address
+   *         in: body
    *         required: true
    *         type: string
    *         schema:
@@ -84,9 +84,10 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.post('/reset/:token', (req, res) => {
+  router.post('/reset', (req, res) => {
+    const { email } = req.body;
     resetUseCase
-      .reset({ token: req.params.token })
+      .reset(email)
       .then(data => {
         res.status(Status.OK).json(Success(data));
       })
