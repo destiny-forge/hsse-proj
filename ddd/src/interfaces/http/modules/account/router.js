@@ -86,7 +86,7 @@ module.exports = ({
    */
   router.post('/reset', (req, res) => {
     resetUseCase
-      .validate({ body: req.body })
+      .reset({ body: req.body })
       .then(data => {
         res.status(Status.OK).json(Success(data));
       })
@@ -121,9 +121,9 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.post('/confirm', (req, res) => {
+  router.post('/confirm/:token', (req, res) => {
     confirmUseCase
-      .validate({ body: req.body })
+      .confirm({ token: req.params.token })
       .then(data => {
         res.status(Status.OK).json(Success(data));
       })

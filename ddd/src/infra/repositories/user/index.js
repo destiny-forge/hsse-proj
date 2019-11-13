@@ -19,10 +19,13 @@ module.exports = ({ model }) => {
     }
   };
 
-  const update = (...args) =>
-    model.update(...args).catch(error => {
-      throw new Error(error);
-    });
+  const update = async (...args) => {
+    try {
+      return model.update(...args);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
 
   const findById = (...args) =>
     model

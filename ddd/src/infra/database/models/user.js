@@ -67,13 +67,14 @@ module.exports = ({ database }) => {
     }
   };
 
-  const update = async (userId, fields) => {
+  const update = async (id, fields) => {
     try {
-      const results = await database
+      const cmdResult = await database
         .get()
         .collection('users')
-        .updateOne({ _id: { $eq: userId } }, { $set: fields });
-      return results.ops[0];
+        .updateOne({ _id: { $eq: ObjectID(id) } }, { $set: fields });
+      const { result } = cmdResult.toJSON();
+      return result;
     } catch (e) {
       throw e;
     }

@@ -2,7 +2,6 @@
 module.exports = ({ config, webToken, mailer }) => {
   const send = ({ id, email }) => {
     const createToken = webToken.sign({ expiresIn: '48h' });
-
     const token = createToken({ id, email });
 
     const url = `${config.frontend}/account/reset/${token}`;
