@@ -1,6 +1,5 @@
 /**
  * @name index.js
- * @author Kwadwo Sakyi
  * @description This file is responsible for combining all the reducers
  */
 

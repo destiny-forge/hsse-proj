@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import ContentWrapper from '../Layout/ContentWrapper';
+import ContentWrapper from '../../../Layout/ContentWrapper';
 import { Card, CardBody, CardHeader } from 'reactstrap';
 import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
 
+import * as actions from '../../../../actions';
 
-import * as actions from '../../actions';
-
-import Datatable from '../Tables/Datatable';
+import Datatable from '../../../Tables/Datatable';
 
 const dtOptions = {
   'paging': true, // Table pagination
@@ -30,7 +28,7 @@ const dtOptions = {
   }
 }
 
-class HSEPendingEligibilityFiltersBatchfileQueue extends Component {
+class BatchFileQueue extends Component {
 
   componentDidMount() {
     this.props.listHSEPendingEligibilityFiltersBatchfilesQueue();
@@ -44,19 +42,12 @@ class HSEPendingEligibilityFiltersBatchfileQueue extends Component {
           <tr key={batchfile[1]._id}>
             <td>Test</td>
             <td>{batchfile[1]._id}</td>
-            <td>
-              {batchfile[1].harvestDate}
-            </td>
-            <td>
-              {batchfile[1].uploadDate}
-            </td>
-            <td>
-              <a className="mr-1 badge badge-primary" href="">{batchfile[1].articleSource}</a>
-            </td>
+            <td>{batchfile[1].harvestDate}</td>
+            <td>{batchfile[1].uploadDate}</td>
+            <td><a className="mr-1 badge badge-primary" href="">{batchfile[1].articleSource}</a></td>
             <td>{batchfile[1].fileName}</td>
             <td><a className="mr-1 badge badge-primary" href="https://s3.amazonaws.com/hsse-staging/{batchfile[1].batchfileUrl}">https://s3.amazonaws.com/hsse-staging/{batchfile[1].batchfileUrl}</a></td>
             <td>{batchfile[1].language}</td>
-
           </tr>
         )
       });
@@ -91,7 +82,7 @@ class HSEPendingEligibilityFiltersBatchfileQueue extends Component {
       <ContentWrapper>
         <div className="content-heading">
           <div>Assessing Eligibility and Assigning Filters Batchfiles
-                            <small>Health Systems Evidence - Main Queue</small>
+            <small>Health Systems Evidence - Main Queue</small>
           </div>
         </div>
         <Card className="card-default">
@@ -112,6 +103,4 @@ function mapStateToProps({ hsePendingEligibilityFiltersBatchfileQueue }) {
   }
 }
 
-export default connect(mapStateToProps, actions)(HSEPendingEligibilityFiltersBatchfileQueue);
-
-
+export default connect(mapStateToProps, actions)(BatchFileQueue);

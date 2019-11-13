@@ -45,11 +45,6 @@ class ArticleQueue extends Component {
       const rows = Object.entries(this.props.assignedArticles).map(article => {
         return (
           <tr key={article[1]._id}>
-            {/*
-                        <td className="text-center">
-                            <span className="badge badge-success">{ article[1].priority }</span>
-                        </td>
-                        */}
             <Priority 
               priority={article[1].priority} />
             <td>
@@ -65,32 +60,13 @@ class ArticleQueue extends Component {
             <td>{article[1].title}</td>
             <td>{article[1].authors}</td>
             <td>{article[1].language}</td>
-            {/*<td>{ article[1].eligibilityFilterResolve ? <a className="mr-1 badge badge-danger" href="">Resolve</a> : "Incomplete" }</td> */}
             <td>{article[1].eligibilityFiltersResolve ? <Link className="mr-1 badge badge-danger" to={{ pathname: "/hse/assignedeligibilityfiltersarticleresolution/" + article[1]._id }}>Resolve</Link> : "Incomplete"}</td>
             <td className="text-right">
-
               <Link to={{ pathname: "/hse/assignedeligibilityfiltersarticleinput/" + article[1]._id }} className="btn btn-block btn-secondary"><em className="fas fa-pencil-alt"></em></Link>
-              {/*<button type="button" className="btn btn-sm btn-secondary">
-                                <em className="fas fa-pencil-alt"></em>
-                            </button>*/}
             </td>
-            {/*         
-                        <td className="text-right">
-                            <button type="button" className="btn btn-sm btn-secondary">
-                                <em className="fas fa-pencil-alt"></em>
-                            </button>
-                            <button type="button" className="btn btn-sm btn-danger">
-                                <em className="fas fa-trash-alt"></em>
-                            </button>
-                            <button type="button" className="btn btn-sm btn-success">
-                                <em className="fa fa-check"></em>
-                            </button>
-                        </td>
-                    */}
           </tr>
         )
       });
-      // <a className="mr-1 badge badge-success" href="">{ article[1].language }</a>
       return (
         <Datatable options={dtOptions}>
           <table className="table table-striped my-4 w-100">
@@ -106,7 +82,6 @@ class ArticleQueue extends Component {
                 <th>Language</th>
                 <th>Status</th>
                 <th style={{ width: "10px" }} className="text-right" data-priority="2">Edit</th>
-                {/* <th style={{width:"130px"}} className="text-right" data-priority="2">Assign</th> */}
               </tr>
             </thead>
             <tbody>
