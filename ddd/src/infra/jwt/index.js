@@ -11,7 +11,7 @@ module.exports = ({ config }) => ({
   },
   confirm: options => token => {
     const opt = Object.assign({}, options);
-    return jwt.confirm(token, config.authSecret, opt);
+    return jwt.verify(token, config.authSecret, opt);
   },
   decode: options => token => {
     const opt = Object.assign({}, options);
