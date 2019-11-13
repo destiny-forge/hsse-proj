@@ -71,9 +71,9 @@ module.exports = ({
    *     produces:
    *       - application/json
    *     parameters:
-   *       - name: body
-   *         description: User's credentials
-   *         in: body
+   *       - name: token
+   *         description: User's jwt
+   *         in: querystring
    *         required: true
    *         type: string
    *         schema:
@@ -84,9 +84,9 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.post('/reset', (req, res) => {
+  router.post('/reset/:token', (req, res) => {
     resetUseCase
-      .reset({ body: req.body })
+      .reset({ token: req.params.token })
       .then(data => {
         res.status(Status.OK).json(Success(data));
       })
@@ -108,9 +108,9 @@ module.exports = ({
    *     produces:
    *       - application/json
    *     parameters:
-   *       - name: body
-   *         description: User's credentials
-   *         in: body
+   *       - name: token
+   *         description: User's jwt
+   *         in: querystring
    *         required: true
    *         type: string
    *         schema:
