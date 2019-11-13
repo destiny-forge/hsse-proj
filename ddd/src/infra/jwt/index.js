@@ -9,7 +9,7 @@ module.exports = ({ config }) => ({
     const opt = Object.assign({}, options, { expiresIn: '1h' });
     return jwt.sign(payload, config.authSecret, opt);
   },
-  confirm: options => token => {
+  verify: options => token => {
     const opt = Object.assign({}, options);
     return jwt.verify(token, config.authSecret, opt);
   },
