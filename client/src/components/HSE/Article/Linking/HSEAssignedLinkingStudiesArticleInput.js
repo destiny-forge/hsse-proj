@@ -92,8 +92,7 @@ class HSEAssignedLinkingStudiesArticleInput extends Component {
   getInputValues() {
     // TODO: ??? needs to be changed to real data!!!
     if (this.isJuniorLinker()) {
-      this.setState({ linkingStudiesModel: { test: '' }/*this.props.currentArticle.linkingStudiesJuniorInput*/ });
-
+      this.setState({ linkingStudiesModel: { test: '' } });
     }
   }
 

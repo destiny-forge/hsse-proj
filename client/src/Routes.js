@@ -48,7 +48,7 @@ import HSEAssignedQualityAppraisalsArticleQueue from './components/HSE/HSEAssign
 import HSEAssignedQualityAppraisalsArticleInput from './components/HSE/HSEAssignedQualityAppraisalsArticleInput';
 import HSEAssignedQualityAppraisalsArticleResolution from './components/HSE/HSEAssignedQualityAppraisalsArticleResolution';
 //import HSEAssignedQualityAppraisalsResolution from './components/HSE/HSEAssignedQualityAppraisalsResolution';
-import HSEAssignedLinkingStudiesArticleInput from './components/HSE/HSEAssignedLinkingStudiesArticleInput';
+import HSEAssignedLinkingStudiesArticleInput from './components/HSE/Article/Linking/HSEAssignedLinkingStudiesArticleInput';
 import HSEAssignedLinkingStudiesArticleQueue from './components/HSE/HSEAssignedLinkingStudiesArticleQueue';
 import HSEAssignedPresentationDetailsArticleInput from './components/HSE/HSEAssignedPresentationDetailsArticleInput';
 import HSEAssignedPresentationDetailsArticleQueue from './components/HSE/HSEAssignedPresentationDetailsArticleQueue';
