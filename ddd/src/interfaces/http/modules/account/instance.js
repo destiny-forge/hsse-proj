@@ -16,7 +16,7 @@ module.exports = () => {
 
   const resetUseCase = reset({
     userRepository,
-    webToken: jwt
+    events
   });
 
   const confirmUseCase = confirm({

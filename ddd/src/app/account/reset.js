@@ -2,9 +2,9 @@
  * Account reset password
  */
 module.exports = ({ userRepository, events }) => {
-  const reset = email => {
+  const reset = async email => {
     try {
-      const user = userRepository.getByEmail(email);
+      const user = await userRepository.findByEmail(email);
       if (!user) {
         throw new Error('User not found');
       }
