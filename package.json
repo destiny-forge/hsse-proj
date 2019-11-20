@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@hapi/joi": "^16.1.7"
+    "@hapi/joi": "^16.1.7",
+    "react-router-dom": "^5.1.2"
   }
 }
