@@ -13,7 +13,7 @@ function PrivateRoute({ component: Component, ...rest }) {
         isAuthentcated ? (
           <Component {...props} />
         ) : (
-          <Redirect to="/" />
+          <Redirect to="/login" />
         )
       }
     />
