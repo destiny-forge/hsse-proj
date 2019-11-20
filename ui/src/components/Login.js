@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import './Login.css';
+import AuthService from './AuthService';
 
 class Login extends Component {
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.Auth = new AuthService();
+  }
+
+  componentWillMount() {
+    if (this.Auth.loggedIn())
+      this.props.history.replace('/');
   }
 
   handleChange(e) {
@@ -17,23 +25,39 @@ class Login extends Component {
       [name]: value
     });
   }
+
+  handleFormSubmit(e) {
+    e.preventDefault();
+    const {
+      username,
+      password
+    } = this.state;
+
+    this.Auth.login(username, password)
+      .then(res => {
+        this.props.history.replace('/');
+      })
+      .catch(err => {
+        alert(err);
+      })
+  }
   
   render() {
     return (
       <div className="center">
         <div className="card">
           <h1>Login</h1>
-          <form>
+          <form onSubmit={this.handleFormSubmit}>
             <input
               className="form-item"
-              placeholder="Username goes here..."
+              placeholder="Username."
               name="username"
               type="text"
               onChange={this.handleChange}
             />
             <input
               className="form-item"
-              placeholder="Password goes here..."
+              placeholder="Password"
               name="password"
               type="password"
               onChange={this.handleChange}
