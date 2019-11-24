@@ -3,7 +3,7 @@ import AuthService from './AuthService';
 
 export default function withAuth(AuthComponent) {
   // TODO Update the URL with the actual backend URL
-  const Auth = new AuthService('http://localhost:5001');
+  const Auth = new AuthService('http://localhost:8080');
 
   return class AuthWrapped extends Component {
     constructor() {
@@ -13,7 +13,7 @@ export default function withAuth(AuthComponent) {
       };
     }
 
-    componentWillMount() {
+    componentDidMount() {
       const {
         history
       } = this.props;

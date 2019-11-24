@@ -3,7 +3,7 @@ import decode from 'jwt-decode';
 class AuthService {
   // Initializing important variables
   constructor(domain) {
-    this.domain = domain || 'http://localhost:5001'; // TODO: change to eric's server
+    this.domain = domain || 'http://localhost:8080'; // TODO: change to eric's server
     this.fetch = this.fetch.bind(this);
     this.login = this.login.bind(this);
     this.getProfile = this.getProfile.bind(this);
@@ -11,7 +11,7 @@ class AuthService {
 
   login(username, password) {
     // Get a token from api server using the fetch api
-    return this.fetch(`${this.domain}/api/auth`, {
+    return this.fetch(`${this.domain}/login`, {
       method: 'POST',
       body: JSON.stringify({
         username,

@@ -22,7 +22,9 @@ class App extends Component {
         </div>
         <p className="App-intro">
           <button type="button" className="form-submit" onClick={this.handleLogout.bind(this)}>Logout</button>
+          <a href="/dashboard">Dashboard</a>
         </p>
+        
       </div>
     );
   }

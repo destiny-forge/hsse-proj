@@ -5,12 +5,14 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Login from './components/Login'
+import Dashboard from './components/Dashboard';
 
 ReactDOM.render(
   <Router>
     <div>
       <Route exact path='/' component={App} />
       <Route exact path="/login" component={Login} />
+      <Route exact path="/dashboard" component={Dashboard} />
     </div>
   </Router>,
   document.getElementById('app'))
