@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import AuthService from './components/AuthService';
+import AuthService from './services/AuthService';
 import withAuth from './components/withAuth';
 
 const Auth = new AuthService();

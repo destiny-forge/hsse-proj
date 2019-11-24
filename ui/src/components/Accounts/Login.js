@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AuthService from './AuthService';
+import AuthService from '../../services/AuthService';
 
 class Login extends Component {
   constructor() {
@@ -83,14 +83,14 @@ class Login extends Component {
                         <i className="primary"></i> Keep me signed in
                       </label>
                     </div>
-                    <button type="submit" className="btn primary">Sign in</button>
+                    <button type="submit" className="btn primary"> Sign in</button>
                   </form>
                   <div className="my-4">
-                    <a href="" className="text-primary _600">Forgot password?</a>
+                    <a href="/forgot-password" className="text-primary _600"> Forgot password?</a>
                   </div>
                   <div>
                     Do not have an account?
-                    <a href="" className="text-primary _600">Sign up</a>
+                    <a href="/signup" className="text-primary _600"> Sign up</a>
                   </div>
                 </div>
               </div>
