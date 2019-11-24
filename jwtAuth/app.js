@@ -37,36 +37,35 @@ const jwtMW = exjwt({
 let users = [
     {
         id: 1,
-        username: 'test',
-        password: 'asdf123'
+        email: 'test@test.com',
+        password: 'fecfec'
     },
     {
         id: 2,
-        username: 'test2',
+        email: 'test2',
         password: 'asdf12345'
     }
 ];
 
 // LOGIN ROUTE
 app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-    
+    const { email, password } = req.body;
     // Use your DB ORM logic here to find user and compare password
     
-    // Finds first username and password match in users array (assumes usernames are unique)
-    var user = users.find(u => username == u.username && password == u.password);
+    // Finds first email and password match in users array (assumes emails are unique)
+    var user = users.find(u => email == u.email && password == u.password);
     if (user) { // User credentials matched (are valid)
-        let token = jwt.sign({ id: user.id, username: user.username }, 'keyboard cat 4 ever', { expiresIn: 129600 }); // Sigining the token
+        let token = jwt.sign({ id: user.id, email: user.email }, 'keyboard cat 4 ever', { expiresIn: 129600 }); // Sigining the token
         res.json({
             sucess: true,
             err: null,
             token
         });
-    } else { // User credentials did not match (are not valid) or no user with this username/password exists
+    } else { // User credentials did not match (are not valid) or no user with this email/password exists
         res.status(401).json({
             sucess: false,
             token: null,
-            err: 'Username or password is incorrect'
+            err: 'email or password is incorrect'
         });
     }
 });

@@ -28,11 +28,11 @@ class Login extends Component {
   handleFormSubmit(e) {
     e.preventDefault();
     const {
-      username,
+      email,
       password
     } = this.state;
-
-    this.Auth.login(username, password)
+    
+    this.Auth.login(email, password)
       .then(res => {
         this.props.history.replace('/');
       })
@@ -58,12 +58,24 @@ class Login extends Component {
             <div className="mx-auto w-xxl w-auto-xs">
               <div className="px-3">
                 <div className="my-3 text-lg">Sign in</div>
-                  <form name="form">
+                  <form onSubmit={this.handleFormSubmit}>
                     <div className="form-group">
-                      <input type="email" className="form-control" placeholder="Email" required />
+                      <input 
+                        type="email" 
+                        name="email"
+                        className="form-control" 
+                        placeholder="Email"
+                        onChange={this.handleChange}
+                      />
                     </div>
                     <div className="form-group">
-                      <input type="password" className="form-control" placeholder="password" required />
+                      <input 
+                        type="password" 
+                        name="password"
+                        className="form-control" 
+                        placeholder="password"
+                      onChange={this.handleChange}
+                      />
                     </div>
                     <div className="mb-3">
                       <label className="md-check">
