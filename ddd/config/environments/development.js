@@ -11,18 +11,18 @@ module.exports = {
   authSession: {
     session: false
   },
-  frontend: 'localhost:4000',
+  frontend: "localhost:4000",
   api: {
     url: `localhost`
   },
   mail: {
-    from: 'forum@mcmaster.ca',
+    from: "forum@mcmaster.ca",
     settings: {
-      host: 'smtp.ethereal.email',
+      host: "smtp.ethereal.email",
       port: 587,
       auth: {
-        user: 'real.user',
-        pass: 'verysecret'
+        user: "ed.spinka98@ethereal.email",
+        pass: "AsSyswC9tr54PxY9Mz"
       }
     }
   }

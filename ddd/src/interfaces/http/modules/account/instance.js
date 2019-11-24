@@ -6,6 +6,7 @@ module.exports = () => {
     repository: { userRepository },
     jwt,
     events,
+    mailer,
     config
   } = container.cradle;
 
@@ -17,12 +18,7 @@ module.exports = () => {
   const resetUseCase = reset({
     config,
     userRepository,
-    mailer: {
-      send: args => {
-        // replace with a real service :)
-        console.log(args);
-      }
-    },
+    mailer,
     webToken: jwt,
     events
   });
@@ -36,12 +32,7 @@ module.exports = () => {
     config,
     events,
     webToken: jwt,
-    mailer: {
-      send: args => {
-        // replace with a real service :)
-        console.log(args);
-      }
-    }
+    mailer
   });
 
   return {

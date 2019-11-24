@@ -1,32 +1,23 @@
-const nodemailer = require('nodemailer');
-const ses = require('nodemailer-ses-transport');
+const nodemailer = require("nodemailer");
+const ses = require("nodemailer-ses-transport");
 
-/* @TODO - replace this on local develop with fake mailer
- * Also, swap out the process.env for config settings and
- * move it under the module.exports ftw :)
- */
-const transporter = nodemailer.createTransport(
-  ses({
-    accessKeyId: process.env.HSSE_SES_ACCESS_KEY,
-    secretAccessKey: process.env.HSSE_SES_SECRET_KEY,
-    region: process.env.REGION
-  })
-);
-
-module.exports = ({ config }) => {
-  console.log(config);
-
-  /* note: what about text version? */
-  const send = ({ to, subject, html }) => {
-    transporter.sendMail({
-      from: config.mail.from,
+class Mailer {
+  constructor({ config }) {
+    this.from = config.mail.from;
+    const transport =
+      config.env === "development"
+        ? config.mail.settings
+        : ses(config.mail.settings);
+    this.transporter = nodemailer.createTransport(transport);
+  }
+  send({ to, subject, html }) {
+    this.transporter.sendMail({
+      from: this.from,
       to,
       subject,
       html
     });
-  };
+  }
+}
 
-  return {
-    send
-  };
-};
+module.exports = Mailer;

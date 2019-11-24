@@ -1,5 +1,3 @@
-const { send } = require('./send');
+const send = require("./send");
 
-module.exports = {
-  send
-};
+module.exports = send;
