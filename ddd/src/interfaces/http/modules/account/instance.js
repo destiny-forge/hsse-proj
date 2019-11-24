@@ -1,5 +1,5 @@
-const container = require('src/container');
-const { register, reset, confirm, initEvents } = require('src/app/account');
+const container = require("src/container");
+const { register, reset, confirm, initEvents } = require("src/app/account");
 
 module.exports = () => {
   const {
@@ -15,7 +15,15 @@ module.exports = () => {
   });
 
   const resetUseCase = reset({
+    config,
     userRepository,
+    mailer: {
+      send: args => {
+        // replace with a real service :)
+        console.log(args);
+      }
+    },
+    webToken: jwt,
     events
   });
 
