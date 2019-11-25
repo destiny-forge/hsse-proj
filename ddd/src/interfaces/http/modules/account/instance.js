@@ -1,11 +1,12 @@
-const container = require('src/container');
-const { register, reset, confirm, initEvents } = require('src/app/account');
+const container = require("src/container");
+const { register, reset, confirm, initEvents } = require("src/app/account");
 
 module.exports = () => {
   const {
     repository: { userRepository },
     jwt,
     events,
+    mailer,
     config
   } = container.cradle;
 
@@ -15,7 +16,10 @@ module.exports = () => {
   });
 
   const resetUseCase = reset({
+    config,
     userRepository,
+    mailer,
+    webToken: jwt,
     events
   });
 
@@ -28,12 +32,7 @@ module.exports = () => {
     config,
     events,
     webToken: jwt,
-    mailer: {
-      send: args => {
-        // replace with a real service :)
-        console.log(args);
-      }
-    }
+    mailer
   });
 
   return {

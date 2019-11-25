@@ -1,11 +1,11 @@
-const register = require('./register');
-const reset = require('./reset');
-const confirm = require('./confirm');
-const initEvents = require('./events');
+const register = require("./register");
+const reset = require("./reset");
+const confirm = require("./confirm");
+const initEvents = require("./events");
 
 module.exports = {
   register,
-  reset,
   confirm,
+  reset,
   initEvents
 };

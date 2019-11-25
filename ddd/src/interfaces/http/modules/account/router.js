@@ -1,5 +1,5 @@
-const Status = require('http-status');
-const { Router } = require('express');
+const Status = require("http-status");
+const { Router } = require("express");
 
 module.exports = ({
   registerUseCase,
@@ -46,7 +46,7 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.post('/register', (req, res) => {
+  router.post("/register", (req, res) => {
     const { email, password } = req.body;
     registerUseCase
       .register(email, password)
@@ -84,10 +84,56 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.post('/reset', (req, res) => {
+  router.post("/reset", (req, res) => {
     const { email } = req.body;
     resetUseCase
-      .reset(email)
+      .send(email)
+      .then(data => {
+        res.status(Status.OK).json(Success(data));
+      })
+      .catch(error => {
+        logger.error(error); // we still need to log every error for debugging
+        res.status(Status.BAD_REQUEST).json(Fail(error.message));
+      });
+  });
+
+  /**
+   * @swagger
+   * /token:
+   *   post:
+   *     tags:
+   *       - Account
+   *     description: Account password reset
+   *     consumes:
+   *       - application/json
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: token
+   *         description: Auth token for this user
+   *         in: querystring
+   *         required: true
+   *         type: string
+   *         schema:
+   *           $ref: '#/definitions/account'
+   *       - name: password
+   *         description: New password
+   *         in: body
+   *         required: true
+   *         type: string
+   *         schema:
+   *           $ref: '#/definitions/account'
+   *     responses:
+   *       200:
+   *         description: Successfully login
+   *       400:
+   *         $ref: '#/responses/BadRequest'
+   */
+  router.post("/reset/:token", (req, res) => {
+    const { token } = req.params;
+    const { password } = req.body;
+    resetUseCase
+      .reset(token, password)
       .then(data => {
         res.status(Status.OK).json(Success(data));
       })
@@ -122,7 +168,7 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.post('/confirm/:token', (req, res) => {
+  router.post("/confirm/:token", (req, res) => {
     confirmUseCase
       .confirm({ token: req.params.token })
       .then(data => {

@@ -1,18 +1,18 @@
-const { createContainer, asValue, asFunction, asClass } = require('awilix');
+const { createContainer, asValue, asFunction, asClass } = require("awilix");
 // you can do this
-const app = require('./app');
-const server = require('./interfaces/http/server');
-const router = require('./interfaces/http/router');
-const auth = require('./interfaces/http/auth');
-const config = require('../config');
-const logger = require('./infra/logging/logger');
-const database = require('./infra/database');
-const jwt = require('./infra/jwt');
-const response = require('./infra/support/response');
-const date = require('./infra/support/date');
-const repository = require('./infra/repositories');
-const events = require('./infra/events');
-const mailer = require('./infra/mailer');
+const app = require("./app");
+const server = require("./interfaces/http/server");
+const router = require("./interfaces/http/router");
+const auth = require("./interfaces/http/auth");
+const config = require("../config");
+const logger = require("./infra/logging/logger");
+const database = require("./infra/database");
+const jwt = require("./infra/jwt");
+const response = require("./infra/support/response");
+const date = require("./infra/support/date");
+const repository = require("./infra/repositories");
+const events = require("./infra/events");
+const mailer = require("./infra/mailer");
 const container = createContainer();
 
 // SYSTEM
@@ -29,7 +29,7 @@ container.register({
   date: asFunction(date).singleton(),
   config: asValue(config),
   repository: asFunction(repository).singleton(),
-  mailer: asValue(mailer)
+  mailer: asClass(mailer).singleton()
 });
 
 module.exports = container;

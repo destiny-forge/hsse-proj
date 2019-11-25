@@ -1,5 +1,5 @@
-const { toEntity } = require('./transform');
-const { comparePassword } = require('../../encryption');
+const { toEntity } = require("./transform");
+const { comparePassword, encryptPassword } = require("../../encryption");
 
 module.exports = ({ model }) => {
   const getAll = async (...args) => {
@@ -67,6 +67,7 @@ module.exports = ({ model }) => {
     findById,
     findByEmail,
     findOne,
-    validatePassword
+    validatePassword,
+    encryptPassword
   };
 };

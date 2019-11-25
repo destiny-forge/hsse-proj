@@ -1,32 +1,30 @@
-const Auth = require('src/domain/auth');
+const Auth = require("src/domain/auth");
 
 /**
  * Authenticate user
  */
 module.exports = ({ userRepository, webToken }) => {
-  const authenticate = ({ body }) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const { email, password } = Auth(body);
-        const user = await userRepository.findByEmail(email);
+  const authenticate = async (email, password) => {
+    try {
+      const auth = Auth({ email, password });
+      const user = await userRepository.findByEmail(auth.email);
 
-        const validatePass = userRepository.validatePassword(user.password);
+      const validatePass = userRepository.validatePassword(user.password);
 
-        if (!validatePass(password)) {
-          throw new Error('Invalid Credentials');
-        }
-        const signIn = webToken.signin();
-
-        resolve({
-          token: signIn({
-            id: user._id,
-            email: user.email
-          })
-        });
-      } catch (error) {
-        reject(error);
+      if (!validatePass(password)) {
+        throw new Error("Invalid Credentials");
       }
-    });
+      const signIn = webToken.signin();
+
+      return {
+        token: signIn({
+          id: user._id,
+          email: user.email
+        })
+      };
+    } catch (error) {
+      throw new Error(error);
+    }
   };
 
   return {
