@@ -55,7 +55,6 @@ const configure = () => {
       });
       resolve(true);
     } catch (err) {
-      console.log(err);
       reject(err);
     }
   });
