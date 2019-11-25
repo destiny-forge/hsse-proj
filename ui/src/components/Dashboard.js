@@ -1,7 +1,20 @@
 import React, { Component } from 'react';
 import withAuth from './withAuth';
+import AuthService from '../services/AuthService';
+
+const Auth = new AuthService();
 
 class Dashboard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  handleLogout() {
+    Auth.logout()
+    this.props.history.replace('/login');
+  }
 
   render() {
     return (
@@ -9,6 +22,7 @@ class Dashboard extends Component {
         <div className="box">
           <div className="box-header">
             <h3>Table with elements</h3>
+            <button type="button" onClick={this.handleLogout}>Logout</button>
           </div>
           <div className="p-2">
             <div className="row">

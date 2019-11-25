@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import AuthService from './services/AuthService';
 import withAuth from './components/withAuth';
@@ -8,12 +7,6 @@ import Dashboard from './components/Dashboard';
 const Auth = new AuthService();
 
 class App extends Component {
-
-  handleLogout() {
-    Auth.logout()
-    this.props.history.replace('/login');
-  }
-
   render() {
     return (
       <React.Fragment>

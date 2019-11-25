@@ -44,7 +44,7 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/authenticate", (req, res) => {
+  router.post("/authenticate", (req, res) => {
     const { email, password } = req.body;
     authenticateUseCase
       .authenticate(email, password)

@@ -3,28 +3,29 @@ import decode from 'jwt-decode';
 class AuthService {
   // Initializing important variables
   constructor(domain) {
-    this.domain = domain || 'http://localhost:8080'; // TODO: change to eric's server
+    this.domain = domain || 'http://localhost:5001'; // TODO: change to eric's server
     this.fetch = this.fetch.bind(this);
     this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
     this.getProfile = this.getProfile.bind(this);
   }
 
   login(email, password) {
     // Get a token from api server using the fetch api
-    return this.fetch(`${this.domain}/login`, {
+    return this.fetch(`${this.domain}/api/auth/authenticate`, {
       method: 'POST',
       body: JSON.stringify({
         email,
         password
       })
     }).then(res => {
-      this.setToken(res.token) // Setting the token in localStorage
+      this.setToken(res.data.token) // Setting the token in localStorage
       return Promise.resolve(res);
     })
   }
 
   register(email, password) {
-    return this.fetch(`${this.domain}/register`, {
+    return this.fetch(`${this.domain}/api/account/register`, {
       method: 'POST',
       body: JSON.stringify({
         email,
