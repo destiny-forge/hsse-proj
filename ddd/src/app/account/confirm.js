@@ -12,7 +12,7 @@ module.exports = ({ userRepository, webToken }) => {
       });
 
       if (!result.ok) {
-        throw new Error('Could not set user to confirmed status');
+        throw new Error("Could not set user to confirmed status");
       }
 
       return {
@@ -21,7 +21,7 @@ module.exports = ({ userRepository, webToken }) => {
         confirmed: true
       };
     } catch (error) {
-      throw new Error('Token not verified');
+      throw new Error("Token not verified");
     }
   };
 
