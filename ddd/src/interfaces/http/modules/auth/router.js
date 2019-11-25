@@ -1,5 +1,5 @@
-const Status = require('http-status');
-const { Router } = require('express');
+const Status = require("http-status");
+const { Router } = require("express");
 
 module.exports = ({
   authenticateUseCase,
@@ -44,9 +44,10 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.post('/authenticate', (req, res) => {
+  router.get("/authenticate", (req, res) => {
+    const { email, password } = req.body;
     authenticateUseCase
-      .validate({ body: req.body })
+      .authenticate(email, password)
       .then(data => {
         res.status(Status.OK).json(Success(data));
       })

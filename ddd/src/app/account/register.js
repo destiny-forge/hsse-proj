@@ -6,7 +6,7 @@ module.exports = ({ userRepository, events }) => {
     try {
       let user = await userRepository.findByEmail(email);
       if (user) {
-        throw new Error('email has already been taken');
+        throw new Error("email has already been taken");
       }
 
       user = stubUser({ email, password });
@@ -17,7 +17,7 @@ module.exports = ({ userRepository, events }) => {
         email: user.email
       };
 
-      events.emit('account.registered', data);
+      events.emit("account.registered", data);
       return data;
     } catch (error) {
       throw new Error(error);
@@ -38,16 +38,16 @@ const stubUser = ({ email, password }) => {
     confirmed: false,
     // @todo - Lock down the roles!
     roles: [
-      'user',
-      'uploader',
-      'detailer',
-      'linker',
-      'juniorappraiser',
-      'seniorappraiser',
-      'juniorfilterer',
-      'seniorfilterer',
-      'prioritizer',
-      'administrator'
+      "user",
+      "uploader",
+      "detailer",
+      "linker",
+      "juniorappraiser",
+      "seniorappraiser",
+      "juniorfilterer",
+      "seniorfilterer",
+      "prioritizer",
+      "administrator"
     ],
     createdAt: now,
     updatedAt: now
