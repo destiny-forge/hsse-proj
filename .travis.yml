@@ -9,15 +9,15 @@ script:
   - docker run tdelam/hsse-admin-client-test npm test -- --coverage
 
 after_success:
-  - docker build -t sakksoftware/hsse-admin-client ./reactjs
-  - docker build -t sakksoftware/hsse-nginx ./nginx
-  - docker build -t sakksoftware/hsse-server ./server
+  - docker build -t tdelam/hsse-admin-client ./reactjs
+  - docker build -t tdelam/hsse-nginx ./nginx
+  - docker build -t tdelam/hsse-server ./server
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push sakksoftware/hsse-admin-client
-  - docker push sakksoftware/hsse-nginx
-  - docker push sakksoftware/hsse-server
+  - docker push tdelam/hsse-admin-client
+  - docker push tdelam/hsse-nginx
+  - docker push tdelam/hsse-server
 
 deploy:
   provider: elasticbeanstalk
