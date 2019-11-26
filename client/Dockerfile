@@ -1,18 +1,12 @@
-FROM node:11-alpine as builder
-
-RUN apk update \ 
-    && apk upgrade \
-    && apk add git
+FROM node:alpine as builder
 
 WORKDIR '/app'
 
 COPY ./package.json ./
 
-#RUN npm install --unsafe-perm
+RUN npm install 
 
-RUN npm install
-
-COPY ./ ./
+COPY . .
 
 RUN npm run build
 
