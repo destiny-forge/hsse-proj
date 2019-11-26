@@ -3,10 +3,10 @@ services:
   - docker
 
 before_install:
-  - docker build -t sakksoftware/hsse-admin-client-test -f ./reactjs/Dockerfile.dev ./reactjs
+  - docker build -t tdelam/hsse-admin-client-test -f ./ui/Dockerfile.dev ./ui
 
 script:
-  - docker run sakksoftware/hsse-admin-client-test npm test -- --coverage
+  - docker run tdelam/hsse-admin-client-test npm test -- --coverage
 
 after_success:
   - docker build -t sakksoftware/hsse-admin-client ./reactjs
