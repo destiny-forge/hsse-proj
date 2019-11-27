@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import withAuth from './withAuth';
 import AuthService from '../services/AuthService';
+import { withRouter } from 'react-router';
 
 const Auth = new AuthService();
 
@@ -171,4 +172,4 @@ class Dashboard extends Component {
   }
 }
 
-export default withAuth(Dashboard);
+export default withRouter(withAuth(Dashboard));
