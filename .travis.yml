@@ -6,9 +6,10 @@ before_install:
   - docker build -t tdelam/hsse-admin-client-test -f ./ui/Dockerfile.dev ./ui
 
 script:
-  - docker run tdelam/hsse-admin-client-test npm test -- --coverage
+  - docker ps -a
 
 after_success:
+  - echo "Success - ..."
   - docker build -t tdelam/hsse-admin-client ./reactjs
   - docker build -t tdelam/hsse-nginx ./nginx
   - docker build -t tdelam/hsse-server ./server
