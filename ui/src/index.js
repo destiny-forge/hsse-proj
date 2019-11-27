@@ -8,6 +8,8 @@ import Login from './components/Accounts/Login'
 import Dashboard from './components/Dashboard';
 import Signup from './components/Accounts/Signup';
 
+import Assigned from './components/HealthSystemsAssigned/Assigned';
+
 ReactDOM.render(
   <Router>
     <div>
@@ -15,6 +17,7 @@ ReactDOM.render(
       <Route exact path="/login" component={Login} />
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/dashboard" component={Dashboard} />
+      <Route exact path="/health-systems-assigned" component={Assigned} />
     </div>
   </Router>,
   document.getElementById('app'))

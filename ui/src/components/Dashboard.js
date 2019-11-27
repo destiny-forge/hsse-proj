@@ -1,29 +1,14 @@
 import React, { Component } from 'react';
 import withAuth from './withAuth';
-import AuthService from '../services/AuthService';
 import { withRouter } from 'react-router';
 
-const Auth = new AuthService();
-
 class Dashboard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleLogout = this.handleLogout.bind(this);
-  }
-
-  handleLogout() {
-    Auth.logout()
-    this.props.history.replace('/login');
-  }
-
   render() {
     return (
       <div className="padding">
         <div className="box">
           <div className="box-header">
             <h3>Table with elements</h3>
-            <button type="button" onClick={this.handleLogout}>Logout</button>
           </div>
           <div className="p-2">
             <div className="row">
@@ -76,7 +61,7 @@ class Dashboard extends Component {
                   <td>4c</td>
                   <td>Jul 7, 2013</td>
                   <td>
-                    <a href="#" className="active" data-toggle-class>
+                    <a href="!#" className="active" data-toggle-class>
                       <i className="fa fa-check text-success d-none"></i>
                       <i className="fa fa-times text-danger d-inline"></i>
                     </a>
@@ -93,7 +78,7 @@ class Dashboard extends Component {
                   <td>15c</td>
                   <td>Jul 2, 2013</td>
                   <td>
-                    <a href="#" className="active" data-toggle-class>
+                    <a href="!#" className="active" data-toggle-class>
                       <i className="fa fa-check text-success d-none"></i>
                       <i className="fa fa-times text-danger d-inline"></i>
                     </a>
@@ -110,7 +95,7 @@ class Dashboard extends Component {
                   <td>4c</td>
                   <td>Jul 1, 2013</td>
                   <td>
-                    <a href="#" className="active" data-toggle-class>
+                    <a href="!#" className="active" data-toggle-class>
                       <i className="fa fa-check text-success d-none"></i>
                       <i className="fa fa-times text-danger d-inline"></i>
                     </a>
@@ -136,28 +121,28 @@ class Dashboard extends Component {
               <div className="col-sm-4">
                 <ul className="pagination justify-content-sm-end m-0">
                   <li className="page-item disabled">
-                    <a className="page-link" href="#" aria-label="Previous">
+                    <a className="page-link" href="!#" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                       <span className="sr-only">Previous</span>
                     </a>
                   </li>
                   <li className="page-item active">
-                    <a className="page-link" href="#">1 <span className="sr-only">(current)</span></a>
+                    <a className="page-link" href="!#">1 <span className="sr-only">(current)</span></a>
                   </li>
                   <li className="page-item">
-                    <a className="page-link" href="#">2</a>
+                    <a className="page-link" href="!#">2</a>
                   </li>
                   <li className="page-item">
-                    <a className="page-link" href="#">3</a>
+                    <a className="page-link" href="!#">3</a>
                   </li>
                   <li className="page-item">
-                    <a className="page-link" href="#">4</a>
+                    <a className="page-link" href="!#">4</a>
                   </li>
                   <li className="page-item">
-                    <a className="page-link" href="#">5</a>
+                    <a className="page-link" href="!#">5</a>
                   </li>
                   <li className="page-item">
-                    <a className="page-link" href="#" aria-label="Next">
+                    <a className="page-link" href="!#" aria-label="Next">
                       <span aria-hidden="true">&raquo;</span>
                       <span className="sr-only">Next</span>
                     </a>
