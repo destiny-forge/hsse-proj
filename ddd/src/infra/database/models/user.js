@@ -1,6 +1,6 @@
-const ObjectID = require('mongodb').ObjectID;
-const { encryptPassword } = require('../../encryption');
-const Email = require('../../support/email');
+const ObjectID = require("mongodb").ObjectID;
+const { encryptPassword } = require("../../encryption");
+const Email = require("../../support/email");
 
 module.exports = ({ database }) => {
   const create = async user => {
@@ -8,7 +8,7 @@ module.exports = ({ database }) => {
       user.password = encryptPassword(user.password);
       const results = await database
         .get()
-        .collection('users')
+        .collection("users")
         .insertOne(user);
       // console.log(results);
       return results.ops[0];
@@ -21,7 +21,7 @@ module.exports = ({ database }) => {
     try {
       const results = await database
         .get()
-        .collection('users')
+        .collection("users")
         .find()
         .toArray();
       return results;
@@ -32,10 +32,10 @@ module.exports = ({ database }) => {
 
   const findById = async id => {
     try {
-      if (!ObjectID.isValid(id)) throw 'Invalid MongoDB ID.';
+      if (!ObjectID.isValid(id)) throw "Invalid MongoDB ID.";
       const results = await database
         .get()
-        .collection('users')
+        .collection("users")
         .findOne(ObjectID(id));
       return results;
     } catch (e) {
@@ -47,7 +47,7 @@ module.exports = ({ database }) => {
     try {
       const results = await database
         .get()
-        .collection('users')
+        .collection("users")
         .findOne(query);
       return results;
     } catch (e) {
@@ -57,10 +57,10 @@ module.exports = ({ database }) => {
 
   const findByEmail = async email => {
     try {
-      if (!Email.isValid(email)) throw 'Invalid email address';
+      if (!Email.isValid(email)) throw "Invalid email address";
       return await database
         .get()
-        .collection('users')
+        .collection("users")
         .findOne({ email: { $in: [email] } });
     } catch (e) {
       throw e;
@@ -71,7 +71,7 @@ module.exports = ({ database }) => {
     try {
       const cmdResult = await database
         .get()
-        .collection('users')
+        .collection("users")
         .updateOne({ _id: { $eq: ObjectID(id) } }, { $set: fields });
       const { result } = cmdResult.toJSON();
       return result;
@@ -80,12 +80,20 @@ module.exports = ({ database }) => {
     }
   };
 
+  const createIndexes = () => {
+    database
+      .get()
+      .collection("users")
+      .createIndex("email");
+  };
+
   return {
     create,
     getAll,
     findById,
     findOne,
     findByEmail,
-    update
+    update,
+    createIndexes
   };
 };

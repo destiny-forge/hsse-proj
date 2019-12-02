@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient } = require("mongodb");
 
 const mongo = {
   config: null,
@@ -15,7 +15,7 @@ const init = ({ config, models }) =>
       mongo.models = models;
       resolve(mongo);
     } catch (err) {
-      reject('The mongodb client could not be initialized');
+      reject("The mongodb client could not be initialized");
     }
   });
 
@@ -24,7 +24,7 @@ const connect = () =>
     // console.log('connecting to the database');
     const { client, config } = mongo;
     if (client === null) {
-      return reject('The mongodb client has not been initialized');
+      return reject("The mongodb client has not been initialized");
     }
     client.connect(err => {
       if (err) {
@@ -36,10 +36,34 @@ const connect = () =>
     });
   });
 
+const configure = () => {
+  return new Promise((resolve, reject) => {
+    const { models, db, client } = mongo;
+    if (client === null) {
+      return reject("The mongodb client has not been initialized");
+    }
+    if (db === null) {
+      return reject("The mongodb client has not been connected");
+    }
+    try {
+      // loop through models and setIndexes
+      Object.keys(models).forEach(key => {
+        const Model = models[key]({ database: { get } });
+        if (Model.hasOwnProperty("createIndexes")) {
+          Model.createIndexes();
+        }
+      });
+      resolve(true);
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+
 const close = () =>
   new Promise((resolve, reject) => {
     if (mongo.client === null) {
-      return reject('The mongodb connection is already closed!');
+      return reject("The mongodb connection is already closed!");
     }
     try {
       mongo.client.close();
@@ -60,5 +84,6 @@ module.exports = {
   get,
   init,
   connect,
+  configure,
   close
 };

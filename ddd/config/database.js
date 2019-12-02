@@ -1,15 +1,15 @@
-const path = require('path');
-const dotEnvPath = path.resolve('.env');
+const path = require("path");
+const dotEnvPath = path.resolve(".env");
 
 /**
  * since mocha doesn't see enviroment variables we have to use dotenv
  */
-require('dotenv').config({ path: dotEnvPath });
+require("dotenv").config({ path: dotEnvPath });
 
 module.exports = {
   development: {
     url: process.env.DATABASE_URL,
-    name: 'hsse',
+    name: "hsse",
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true
@@ -17,7 +17,7 @@ module.exports = {
   },
   test: {
     url: process.env.DATABASE_URL_TEST,
-    name: 'hsse_test',
+    name: "hsse_test",
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true
@@ -26,7 +26,7 @@ module.exports = {
   },
   staging: {
     url: process.env.DATABASE_URL_STAGING,
-    name: 'hsse_staging',
+    name: "hsse_staging",
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true
@@ -34,7 +34,7 @@ module.exports = {
   },
   production: {
     url: process.env.DATABASE_URL_PRODUCTION,
-    name: 'hsse_prod',
+    name: "hsse_prod",
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true
