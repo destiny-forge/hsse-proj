@@ -7,12 +7,13 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app/
+COPY .env /usr/src/app/
 
 COPY . /usr/src/app/
 
 RUN yarn install && \
-  npm rebuild bcrypt --build-from-source
+    npm rebuild bcrypt --build-from-source
 
-# EXPOSE 4000
+EXPOSE 4000
 
-CMD [ "npm", "run", "start"]
+CMD [ "npm", "run", "start:dev"]

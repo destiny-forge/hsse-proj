@@ -3,7 +3,7 @@ import AuthService from '../services/AuthService';
 
 export default function withAuth(AuthComponent) {
   // TODO Update the URL with the actual backend URL
-  const Auth = new AuthService('/api');
+  const Auth = new AuthService(process.env.REACT_APP_BACKEND_SERVER);
 
   return class AuthWrapped extends Component {
     constructor() {
