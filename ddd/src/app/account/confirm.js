@@ -12,7 +12,9 @@ module.exports = ({ userRepository, webToken }) => {
       });
 
       if (!result.ok) {
-        throw new Error("Could not set user to confirmed status");
+        return {
+          error: "Could not set user to confirmed status"
+        };
       }
 
       return {

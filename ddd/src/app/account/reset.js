@@ -8,7 +8,9 @@ module.exports = ({ config, userRepository, webToken, mailer, events }) => {
     try {
       const user = await userRepository.findByEmail(email);
       if (!user) {
-        throw new Error("User not found");
+        return {
+          error: "User not found"
+        };
       }
 
       const data = {

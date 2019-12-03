@@ -9,10 +9,14 @@ module.exports = ({ userRepository, webToken }) => {
       const auth = Auth({ email, password });
       const user = await userRepository.findByEmail(auth.email);
 
+      if (!user) {
+        return { error: "user not found" };
+      }
+
       const validatePass = userRepository.validatePassword(user.password);
 
       if (!validatePass(password)) {
-        throw new Error("Invalid Credentials");
+        return { error: "invalid credentials" };
       }
       const signIn = webToken.signin();
 

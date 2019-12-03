@@ -6,7 +6,7 @@ module.exports = ({ userRepository, events }) => {
     try {
       let user = await userRepository.findByEmail(email);
       if (user) {
-        throw new Error("email has already been taken");
+        return { error: "email has already been taken" };
       }
 
       user = stubUser({ email, password });
