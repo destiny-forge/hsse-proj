@@ -74,7 +74,7 @@ class Login extends Component {
                         name="password"
                         className="form-control" 
                         placeholder="password"
-                      onChange={this.handleChange}
+                        onChange={this.handleChange}
                       />
                     </div>
                     <div className="mb-3">
