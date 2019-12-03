@@ -14,8 +14,9 @@ class App extends Component {
     this.handleLogout = this.handleLogout.bind(this);
   }
 
-  handleLogout() {
-    Auth.logout()
+  handleLogout(e) {
+    e.preventDefault();
+    Auth.logout();
     this.props.history.replace('/login');
   }
 

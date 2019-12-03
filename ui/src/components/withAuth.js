@@ -3,7 +3,7 @@ import AuthService from '../services/AuthService';
 
 export default function withAuth(AuthComponent) {
   // TODO Update the URL with the actual backend URL
-  const Auth = new AuthService('http://localhost:5001');
+  const Auth = new AuthService('/api');
 
   return class AuthWrapped extends Component {
     constructor() {
