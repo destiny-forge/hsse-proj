@@ -13,6 +13,6 @@ COPY . /usr/src/app/
 RUN yarn install && \
   npm rebuild bcrypt --build-from-source
 
-EXPOSE 4000
+EXPOSE 5000
 
 CMD [ "npm", "run", "start"]
