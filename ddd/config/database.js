@@ -29,7 +29,7 @@ module.exports = {
     name: "hsse_staging",
     options: {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: false
     }
   },
   production: {
