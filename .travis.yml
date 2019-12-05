@@ -3,7 +3,7 @@ services:
   - docker
 
 before_install:
-  - docker build -t tdelam/hsse-admin-client-test -f ./ui/Dockerfile.dev ./ui
+  - docker build -t tdelam/hsse-admin-client-test -f ./ui/Dockerfile ./ui
 
 script:
   - docker ps -a
