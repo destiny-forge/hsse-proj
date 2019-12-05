@@ -19,6 +19,7 @@ after_success:
   - docker push tdelam/hsse-admin-client
   - docker push tdelam/hsse-nginx
   - docker push tdelam/hsse-server
+  
 
 deploy:
   provider: elasticbeanstalk
