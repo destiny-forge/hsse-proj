@@ -18,7 +18,7 @@ after_success:
   # Take those images and push them to docker hub
   - docker push tdelam/hsse-admin-client
   - docker push tdelam/hsse-nginx
-  - docker push tdelam/hsse-server
+  - docker push tdelam/hsse-server:latest
 
 deploy:
   provider: elasticbeanstalk
