@@ -12,7 +12,7 @@ after_success:
   - echo "Success - ..."
   - docker build -t tdelam/hsse-admin-client ./ui
   - docker build -t tdelam/hsse-nginx ./nginx
-  - docker build -t tdelam/hsse-server ./ddd
+  - docker build -t tdelam/hsse-server -f ./ddd/Dockerfile ./ddd
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
