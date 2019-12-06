@@ -11,7 +11,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build
+RUN REACT_APP_BACKEND_SERVER=$REACT_APP_BACKEND_SERVER npm run build
 
 FROM nginx
 EXPOSE 3000
