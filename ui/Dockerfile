@@ -2,6 +2,7 @@ FROM node:alpine as builder
 
 # environment variable to inject into build
 ARG REACT_APP_BACKEND_SERVER
+ENV REACT_APP_APIKEY=$REACT_APP_APIKEY
 
 WORKDIR /app
 
@@ -11,7 +12,7 @@ RUN npm install
 
 COPY . .
 
-RUN REACT_APP_BACKEND_SERVER=$REACT_APP_BACKEND_SERVER npm run build
+RUN npm run build
 
 FROM nginx
 EXPOSE 3000
