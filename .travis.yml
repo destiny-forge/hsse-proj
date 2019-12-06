@@ -10,16 +10,15 @@ script:
 
 after_success:
   - echo "Success - ..."
-  - docker build -t tdelam/hsse-admin-client ./ui
+  - docker build -t tdelam/hsse-admin-client ./ui --build-arg REACT_APP_BACKEND_SERVER=$REACT_APP_BACKEND_SERVER
   - docker build -t tdelam/hsse-nginx ./nginx
-  - docker build -t tdelam/hsse-server -f ./ddd/Dockerfile ./ddd
+  - docker build -t tdelam/hsse-server ./ddd
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
   - docker push tdelam/hsse-admin-client
   - docker push tdelam/hsse-nginx
   - docker push tdelam/hsse-server
-  
 
 deploy:
   provider: elasticbeanstalk
