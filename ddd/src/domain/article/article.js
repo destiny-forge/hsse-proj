@@ -1,8 +1,6 @@
 const t = require("tcomb");
 // const tx = require("tcomb-additional-types");
-const { compose } = require("ramda");
 const shortid = require("shortid");
-const { cleanData, cleanMongoId } = require("../helper");
 
 /* Not to be instantiated directly, used as the base Article
  * for all the shared fields between the HSEArticle and SSEArticle
