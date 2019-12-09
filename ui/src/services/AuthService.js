@@ -54,6 +54,18 @@ class AuthService {
     });
   }
 
+  passwordReset(token, password) {
+    return this.fetch(`${this.domain}/account/reset/${token}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        token,
+        password
+      })
+    }).then(res => {
+      return Promise.resolve(res);
+    });
+  }
+
   forgotPassword(email) {
     return this.fetch(`${this.domain}/account/reset`, {
       method: 'POST',

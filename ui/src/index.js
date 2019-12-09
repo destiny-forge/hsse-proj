@@ -11,6 +11,7 @@ import SignupSuccess from './components/Accounts/SignupSuccess';
 import ConfirmEmail from './components/Accounts/ConfirmEmail';
 import ForgotPassword from './components/Accounts/ForgotPassword';
 import Assigned from './components/HealthSystemsAssigned/Assigned';
+import PasswordReset from './components/Accounts/PasswordReset';
 
 ReactDOM.render(
   <Router>
@@ -18,6 +19,7 @@ ReactDOM.render(
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
       <Route path="/forgot-password" component={ForgotPassword} />
+      <Route path="/account/reset/:token" component={PasswordReset} />
       <Route path="/signup-success" component={SignupSuccess} />
       <Route path="/account/confirm/:token" component={ConfirmEmail} />
       <Route path="/dashboard" component={Dashboard} />
