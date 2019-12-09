@@ -44,7 +44,6 @@ class AuthService {
   }
 
   confirmEmail(token) {
-    // Currently ddd does not store token, need to add token and check for it
     return this.fetch(`${this.domain}/account/confirm/${token}`, {
       method: 'POST',
       body: JSON.stringify({
