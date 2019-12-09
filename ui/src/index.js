@@ -7,18 +7,23 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Login from './components/Accounts/Login'
 import Dashboard from './components/Dashboard';
 import Signup from './components/Accounts/Signup';
-
+import SignupSuccess from './components/Accounts/SignupSuccess';
+import ConfirmEmail from './components/Accounts/ConfirmEmail';
+import ForgotPassword from './components/Accounts/ForgotPassword';
 import Assigned from './components/HealthSystemsAssigned/Assigned';
+import PasswordReset from './components/Accounts/PasswordReset';
 
 ReactDOM.render(
   <Router>
-    <div>
       <Route exact path='/' component={App} />
-      <Route exact path="/login" component={Login} />
-      <Route exact path="/signup" component={Signup} />
-      <Route exact path="/dashboard" component={Dashboard} />
-      <Route exact path="/health-systems-assigned" component={Assigned} />
-    </div>
+      <Route path="/login" component={Login} />
+      <Route path="/signup" component={Signup} />
+      <Route path="/forgot-password" component={ForgotPassword} />
+      <Route path="/account/reset/:token" component={PasswordReset} />
+      <Route path="/signup-success" component={SignupSuccess} />
+      <Route path="/account/confirm/:token" component={ConfirmEmail} />
+      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/health-systems-assigned" component={Assigned} />
   </Router>,
   document.getElementById('app'))
 

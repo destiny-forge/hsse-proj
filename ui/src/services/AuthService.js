@@ -14,6 +14,10 @@ class AuthService {
   }
 
   login(email, password) {
+    // TODO: return res.data.error for invalid logins
+    // Also need to check for confirmed or not. Currently ddd does not
+    // check for that
+
     // Get a token from api server using the fetch api
     return this.fetch(`${this.domain}/auth/authenticate`, {
       method: 'POST',
@@ -33,6 +37,40 @@ class AuthService {
       body: JSON.stringify({
         email,
         password
+      })
+    }).then(res => {
+      return Promise.resolve(res);
+    });
+  }
+
+  confirmEmail(token) {
+    return this.fetch(`${this.domain}/account/confirm/${token}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        token
+      })
+    }).then(res => {
+      return Promise.resolve(res);
+    });
+  }
+
+  passwordReset(token, password) {
+    return this.fetch(`${this.domain}/account/reset/${token}`, {
+      method: 'POST',
+      body: JSON.stringify({
+        token,
+        password
+      })
+    }).then(res => {
+      return Promise.resolve(res);
+    });
+  }
+
+  forgotPassword(email) {
+    return this.fetch(`${this.domain}/account/reset`, {
+      method: 'POST',
+      body: JSON.stringify({
+        email
       })
     }).then(res => {
       return Promise.resolve(res);

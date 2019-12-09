@@ -7,6 +7,10 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.Auth = new AuthService();
+
+    this.state = {
+      message: ""
+    };
   }
 
   componentDidMount() {
@@ -34,19 +38,35 @@ class Login extends Component {
     
     this.Auth.login(email, password)
       .then(res => {
-        this.props.history.replace('/');
+        if (res.data.error) {
+          this.setState({
+            message: res.data.error
+          })
+        } else {
+          this.props.history.replace('/');
+        }
       })
       .catch(err => {
         alert(err);
       })
   }
+
+  titleCase = (str) => {
+    return str.replace(/[a-z]/i, function (letter) {
+      return letter.toUpperCase();
+    }).trim();
+  }
   
   render() {
+    const {
+      message
+    } = this.state;
+
     return (
       <div className="d-flex flex-column flex">
         <div className="navbar light bg pos-rlt box-shadow">
           <div className="mx-auto">
-            <a href="index.html" className="navbar-brand">
+            <a href="/" className="navbar-brand">
               <span className="hidden-folded d-inline">
                 <img src="../assets/images/mcmaster-logo.png" alt="." className="logo-login" />
               </span>
@@ -57,6 +77,12 @@ class Login extends Component {
           <div className="py-5 text-center w-100">
             <div className="mx-auto w-xxl w-auto-xs">
               <div className="px-3">
+                {
+                  message &&
+                  <div className="alert alert-danger">
+                    {this.titleCase(message)}
+                  </div>
+                }
                 <div className="my-3 text-lg">Sign in</div>
                   <form onSubmit={this.handleFormSubmit}>
                     <div className="form-group">
