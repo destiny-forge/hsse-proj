@@ -17,9 +17,6 @@ module.exports = ({ articleRepository }) => {
       const entity =
         article.type === "sse" ? sseArticle(article) : hseArticle(article);
 
-      console.log(articleRepository);
-
-      console.log(entity);
       return await articleRepository.create(entity);
     } catch (error) {
       throw new Error(error);
