@@ -1,5 +1,5 @@
 const container = require("src/container");
-const { create } = require("src/app/article");
+const { create, list } = require("src/app/article");
 
 module.exports = () => {
   const {
@@ -10,7 +10,12 @@ module.exports = () => {
     articleRepository
   });
 
+  const listUseCase = list({
+    articleRepository
+  });
+
   return {
-    createUseCase
+    createUseCase,
+    listUseCase
   };
 };
