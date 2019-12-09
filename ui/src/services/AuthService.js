@@ -15,7 +15,7 @@ class AuthService {
 
   login(email, password) {
     // Get a token from api server using the fetch api
-    return this.fetch(`${this.domain}/auth/authenticate`, {
+    return this.fetch(`/auth/authenticate`, {
       method: 'POST',
       body: JSON.stringify({
         email,
@@ -28,7 +28,7 @@ class AuthService {
   }
 
   register(email, password) {
-    return this.fetch(`${this.domain}/account/register`, {
+    return this.fetch(`/account/register`, {
       method: 'POST',
       body: JSON.stringify({
         email,
@@ -92,7 +92,7 @@ class AuthService {
       headers['Authorization'] = 'Bearer ' + this.getToken();
     }
 
-    return fetch(url, {
+    return fetch(`${this.domain}${url}`, {
       headers,
       ...options
     })

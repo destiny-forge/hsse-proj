@@ -13,7 +13,7 @@ const Article = t.struct(
 
     title: t.String,
     journal: t.String,
-    authors: t.list(t.String),
+    authors: t.String,
     source: t.String,
     type: t.String,
 

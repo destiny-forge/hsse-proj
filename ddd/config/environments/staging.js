@@ -13,7 +13,7 @@ module.exports = {
   },
   frontend: process.env.FRONTEND_SERVER,
   mail: {
-    from: 'forum@mcmaster.ca',
+    from: "forum@mcmaster.ca",
     settings: {
       accessKeyId: process.env.HSSE_SES_ACCESS_KEY,
       secretAccessKey: process.env.HSSE_SES_SECRET_KEY,
