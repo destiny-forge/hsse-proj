@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Login from './components/Accounts/Login'
 import Dashboard from './components/Dashboard';
 import Signup from './components/Accounts/Signup';
+import Confirmation from './components/Accounts/Confirmation';
 
 import Assigned from './components/HealthSystemsAssigned/Assigned';
 
@@ -16,6 +17,7 @@ ReactDOM.render(
       <Route exact path='/' component={App} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/signup" component={Signup} />
+      <Route exact path="/confirmation" component={Confirmation} />
       <Route exact path="/dashboard" component={Dashboard} />
       <Route exact path="/health-systems-assigned" component={Assigned} />
     </div>

@@ -46,7 +46,7 @@ class Login extends Component {
       <div className="d-flex flex-column flex">
         <div className="navbar light bg pos-rlt box-shadow">
           <div className="mx-auto">
-            <a href="index.html" className="navbar-brand">
+            <a href="/" className="navbar-brand">
               <span className="hidden-folded d-inline">
                 <img src="../assets/images/mcmaster-logo.png" alt="." className="logo-login" />
               </span>
