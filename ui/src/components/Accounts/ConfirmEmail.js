@@ -57,7 +57,7 @@ class ConfirmEmail extends Component {
                 <div className="mx-auto w-auto-xs">
                   <div className="px-3">
 
-                    <div className="my-3 text-lg">You are not confirmed</div>
+                    <div className="my-3 text-lg">You are now confirmed</div>
                     <p>You will be redirected to the login page.</p>
                     <p>If you are not redirected to the login page, <Link to="/login">click here</Link>.</p>
                   </div>

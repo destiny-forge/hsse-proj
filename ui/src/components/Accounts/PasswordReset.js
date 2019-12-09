@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AuthService from '../../services/AuthService';
+import { Link } from 'react-router-dom'
 
 class PasswordReset extends Component {
   constructor(props) {
@@ -8,7 +9,9 @@ class PasswordReset extends Component {
     this.state = {
       password: "",
       passwordConfirmation: "",
-      token: ""
+      token: "",
+      success: false,
+      mismatch: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -37,23 +40,61 @@ class PasswordReset extends Component {
     e.preventDefault();
     const {
       passwordConfirmation,
+      password,
       token
     } = this.state;
-    
-    // TODO: check for token, check for password matching state
-    this.Auth.passwordReset(token, passwordConfirmation)
-      .then(res => {
-        console.log("response ", res);
-        if (res.success) {
-          // handle
-        }
-      })
-      .catch(err => {
-        alert(err);
-      })
+
+    if (passwordConfirmation !== password) {
+      this.setState({
+        mismatch: true,
+        password: "",
+        passwordConfirmation: ""
+      });
+    } else {
+      this.Auth.passwordReset(token, passwordConfirmation)
+        .then(res => {
+          if (res.success) {
+            this.setState({
+              success: true,
+              password: "",
+              passwordConfirmation: ""
+            });
+          }
+        })
+        .catch(err => {
+          alert(err);
+        })
+      }
+  }
+
+  validate() {
+    const {
+      success,
+      mismatch
+    } = this.state;
+
+    if (success) {
+      return (
+        <div className="alert alert-success">
+          Password has been successfully updated. <Link to='/login'>Login now.</Link>
+        </div>
+      )
+    }
+    if (mismatch) {
+      return (
+        <div className="alert alert-danger">
+          Password's do not match. Please try again
+        </div>
+      )
+    }
+
   }
 
   render() {
+    const {
+      password,
+      passwordConfirmation
+    } = this.state;
     return (
       <div className="d-flex flex-column flex">
         <div className="navbar light bg pos-rlt box-shadow">
@@ -69,6 +110,7 @@ class PasswordReset extends Component {
           <div className="py-5 text-center w-100">
             <div className="mx-auto w-xxl w-auto-xs">
               <div className="px-3">
+                { this.validate() }
                 <div className="my-3 text-lg">Password reset</div>
                 <form onSubmit={this.handleFormSubmit}>
                   <div className="form-group">
@@ -77,6 +119,7 @@ class PasswordReset extends Component {
                       className="form-control"
                       placeholder="Password"
                       name="password"
+                      value={password}
                       onChange={this.handleChange}
                     />
                   </div>
@@ -86,6 +129,7 @@ class PasswordReset extends Component {
                       className="form-control"
                       placeholder="Password Confirmation"
                       name="passwordConfirmation"
+                      value={passwordConfirmation}
                       onChange={this.handleChange}
                     />
                   </div>
