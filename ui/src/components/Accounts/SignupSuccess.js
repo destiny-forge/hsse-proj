@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Confirmation = () => {
+const SignupSuccess = () => {
 
   return (
     <div className="d-flex flex-column flex">
@@ -27,4 +27,4 @@ const Confirmation = () => {
   )
 }
 
-export default Confirmation;
+export default SignupSuccess;

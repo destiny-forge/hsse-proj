@@ -57,6 +57,7 @@ class Login extends Component {
           <div className="py-5 text-center w-100">
             <div className="mx-auto w-xxl w-auto-xs">
               <div className="px-3">
+                
                 <div className="my-3 text-lg">Sign in</div>
                   <form onSubmit={this.handleFormSubmit}>
                     <div className="form-group">

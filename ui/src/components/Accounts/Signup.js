@@ -37,10 +37,11 @@ class Signup extends Component {
       passwordConfirmation
     } = this.state;
     
-    // TODO, check password against confirmation
     this.Auth.register(email, passwordConfirmation)
       .then(res => {
-        this.props.history.replace('/confirmation');
+        if (res.success) {
+          this.props.history.replace('/signup-success');  
+        }
       })
       .catch(err => {
         alert(err);
