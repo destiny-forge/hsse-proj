@@ -9,7 +9,7 @@ import Dashboard from './components/Dashboard';
 import Signup from './components/Accounts/Signup';
 import SignupSuccess from './components/Accounts/SignupSuccess';
 import ConfirmEmail from './components/Accounts/ConfirmEmail';
-
+import ForgotPassword from './components/Accounts/ForgotPassword';
 import Assigned from './components/HealthSystemsAssigned/Assigned';
 
 ReactDOM.render(
@@ -17,6 +17,7 @@ ReactDOM.render(
       <Route exact path='/' component={App} />
       <Route path="/login" component={Login} />
       <Route path="/signup" component={Signup} />
+      <Route path="/forgot-password" component={ForgotPassword} />
       <Route path="/signup-success" component={SignupSuccess} />
       <Route path="/account/confirm/:token" component={ConfirmEmail} />
       <Route path="/dashboard" component={Dashboard} />
