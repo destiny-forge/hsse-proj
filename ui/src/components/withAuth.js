@@ -14,11 +14,9 @@ export default function withAuth(AuthComponent) {
     }
 
     componentDidMount() {
-      const {
-        history
-      } = this.props;
+      const { history } = this.props;
 
-      if (!Auth.loggedIn()) { 
+      if (!Auth.loggedIn()) {
         history.replace('/login');
       } else {
         try {
@@ -34,21 +32,14 @@ export default function withAuth(AuthComponent) {
     }
 
     render() {
-      const {
-        user
-      } = this.state;
+      const { user } = this.state;
 
-      const {
-        history
-      } = this.props;
+      const { history } = this.props;
 
       if (this.state.user) {
         return (
-          <AuthComponent 
-            history={history} 
-            user={user} 
-          />
-        )
+          <AuthComponent history={history} user={user} fetch={Auth.fetch} />
+        );
       } else {
         return null;
       }
