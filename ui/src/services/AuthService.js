@@ -3,7 +3,10 @@ import decode from 'jwt-decode';
 class AuthService {
   // Initializing important variables
   constructor(domain) {
-    this.domain = domain;
+    this.domain =
+      domain || window.location.origin.indexOf('localhost') > 0
+        ? 'http://localhost:5001'
+        : '/api';
     this.fetch = this.fetch.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
