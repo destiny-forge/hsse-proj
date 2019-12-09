@@ -1,6 +1,10 @@
 FROM node:alpine as builder
 
-WORKDIR '/app'
+# environment variable to inject into build
+ARG REACT_APP_BACKEND_SERVER
+ENV REACT_APP_APIKEY=$REACT_APP_APIKEY
+
+WORKDIR /app
 
 COPY ./package.json ./
 

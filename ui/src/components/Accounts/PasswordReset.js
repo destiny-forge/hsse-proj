@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import AuthService from '../../services/AuthService';
+import { Link } from 'react-router-dom'
 
-class Signup extends Component {
+class PasswordReset extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       password: "",
-      passwordConfirmation: ""
+      passwordConfirmation: "",
+      token: "",
+      success: false,
+      mismatch: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -16,8 +20,10 @@ class Signup extends Component {
   }
 
   componentDidMount() {
-    if (this.Auth.loggedIn())
-      this.props.history.replace('/');
+    const { token } = this.props.match.params;
+    this.setState({
+      token
+    })
   }
 
   handleChange(e) {
@@ -33,22 +39,62 @@ class Signup extends Component {
   handleFormSubmit(e) {
     e.preventDefault();
     const {
-      email,
-      passwordConfirmation
+      passwordConfirmation,
+      password,
+      token
     } = this.state;
-    
-    this.Auth.register(email, passwordConfirmation)
-      .then(res => {
-        if (res.success) {
-          this.props.history.replace('/signup-success');  
-        }
-      })
-      .catch(err => {
-        alert(err);
-      })
+
+    if (passwordConfirmation !== password) {
+      this.setState({
+        mismatch: true,
+        password: "",
+        passwordConfirmation: ""
+      });
+    } else {
+      this.Auth.passwordReset(token, passwordConfirmation)
+        .then(res => {
+          if (res.success) {
+            this.setState({
+              success: true,
+              password: "",
+              passwordConfirmation: ""
+            });
+          }
+        })
+        .catch(err => {
+          alert(err);
+        })
+      }
+  }
+
+  validate() {
+    const {
+      success,
+      mismatch
+    } = this.state;
+
+    if (success) {
+      return (
+        <div className="alert alert-success">
+          Password has been successfully updated. <Link to='/login'>Login now.</Link>
+        </div>
+      )
+    }
+    if (mismatch) {
+      return (
+        <div className="alert alert-danger">
+          Password's do not match. Please try again
+        </div>
+      )
+    }
+
   }
 
   render() {
+    const {
+      password,
+      passwordConfirmation
+    } = this.state;
     return (
       <div className="d-flex flex-column flex">
         <div className="navbar light bg pos-rlt box-shadow">
@@ -64,48 +110,31 @@ class Signup extends Component {
           <div className="py-5 text-center w-100">
             <div className="mx-auto w-xxl w-auto-xs">
               <div className="px-3">
-                <div className="my-3 text-lg">Sign up</div>
+                { this.validate() }
+                <div className="my-3 text-lg">Password reset</div>
                 <form onSubmit={this.handleFormSubmit}>
                   <div className="form-group">
-                    <input 
-                      type="email"
-                      className="form-control" 
-                      placeholder="Email" 
-                      name="email"
-                      onChange={this.handleChange}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <input 
-                      type="password" 
-                      className="form-control" 
+                    <input
+                      type="password"
+                      className="form-control"
                       placeholder="Password"
                       name="password"
+                      value={password}
                       onChange={this.handleChange}
                     />
                   </div>
                   <div className="form-group">
-                    <input 
-                      type="password" 
-                      className="form-control" 
-                      placeholder="Password Confirmation" 
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder="Password Confirmation"
                       name="passwordConfirmation"
+                      value={passwordConfirmation}
                       onChange={this.handleChange}
                     />
-                  </div>
-                  <div className="mb-3 text-sm">
-                    <span className="text-muted"> By clicking Sign Up, I agree to the</span>
-                    <a href="/terms"> Terms of service</a>
-                    <span className="text-muted"> and</span>
-                    <a href="/privacy"> Policy Privacy.</a>
                   </div>
                   <button type="submit" className="btn primary"> Sign Up</button>
                 </form>
-                <div className="py-4 text-center">
-                  <div>Already have an account?
-                    <a href="/login" className="text-primary _600"> Sign in</a>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -115,4 +144,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default PasswordReset;

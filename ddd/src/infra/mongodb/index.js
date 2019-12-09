@@ -11,7 +11,8 @@ const init = ({ config, models }) =>
   new Promise((resolve, reject) => {
     try {
       mongo.config = config;
-      mongo.client = new MongoClient(config.url, config.options);
+      const uri = `${config.url}/${config.name}`;
+      mongo.client = new MongoClient(uri, config.options);
       mongo.models = models;
       resolve(mongo);
     } catch (err) {

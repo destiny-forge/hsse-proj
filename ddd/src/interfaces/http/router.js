@@ -49,9 +49,9 @@ module.exports = ({ config, logger }) => {
   apiRouter.use("/auth", controller("auth").router);
   apiRouter.use("/account", controller("account").router);
 
-  apiRouter.use("/article", controller("article").router);
+  apiRouter.use("/articles", controller("article").router);
 
-  router.use(`/api/${config.version}`, apiRouter);
+  router.use(`${config.version}`, apiRouter);
 
   router.use(partialRight(errorHandler, [logger, config]));
 
