@@ -7,7 +7,6 @@ module.exports = ({ database }) => {
         .get()
         .collection("articles")
         .insertOne(article);
-      // console.log(results);
       return results.ops[0];
     } catch (e) {
       throw e;
@@ -22,6 +21,18 @@ module.exports = ({ database }) => {
         .find()
         .toArray();
       return results;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const findByType = async type => {
+    try {
+      return await database
+        .get()
+        .collection("articles")
+        .find({ type: { $eq: type } })
+        .toArray();
     } catch (e) {
       throw e;
     }
@@ -66,16 +77,17 @@ module.exports = ({ database }) => {
   };
 
   const createIndexes = () => {
-    // database
-    //   .get()
-    //   .collection("articles")
-    //   .createIndex("??");
+    database
+      .get()
+      .collection("articles")
+      .createIndex("type");
   };
 
   return {
     create,
     getAll,
     findById,
+    findByType,
     findOne,
     update,
     createIndexes

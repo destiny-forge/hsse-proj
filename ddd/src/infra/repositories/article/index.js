@@ -12,6 +12,17 @@ module.exports = ({ model }) => {
     }
   };
 
+  const findByType = async type => {
+    try {
+      const articles = await model.findByType(type);
+      return articles.map(article => {
+        return toEntity(article);
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const create = async (...args) => {
     try {
       const article = await model.create(...args);
@@ -52,6 +63,7 @@ module.exports = ({ model }) => {
     create,
     update,
     findById,
+    findByType,
     findOne
   };
 };

@@ -61,7 +61,7 @@ module.exports = ({ database }) => {
       return await database
         .get()
         .collection("users")
-        .findOne({ email: { $in: [email] } });
+        .findOne({ email: { $eq: email } });
     } catch (e) {
       throw e;
     }
