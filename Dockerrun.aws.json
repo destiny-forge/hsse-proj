@@ -1,33 +1,30 @@
 {
-    "AWSEBDockerrunVersion": 2,
-    "containerDefinitions": [
-      {
-        "name": "client",
-        "image": "tdelam/hsse-admin-client",
-        "hostname": "hsse-admin-client",
-        "essential": false,
-        "memory": 128
-      },
-      {
-        "name": "server",
-        "image": "tdelam/hsse-server",
-        "hostname": "hsse-server",
-        "essential": false,
-        "memory": 128
-      },
-      {
-        "name": "nginx",
-        "image": "tdelam/hsse-nginx",
-        "hostname": "nginx",
-        "essential": true,
-        "portMappings": [
-          {
-            "hostPort": 80,
-            "containerPort": 80
-          }
-        ],
-        "links": ["client", "server"],
-        "memory": 128
-      }
-    ]
-  }
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "hsse-admin-client",
+      "image": "tdelam/hsse-admin-client",
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "hsse-server",
+      "image": "tdelam/hsse-server",
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "nginx",
+      "image": "tdelam/hsse-nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["hsse-admin-client", "hsse-server"],
+      "memory": 128
+    }
+  ]
+}
