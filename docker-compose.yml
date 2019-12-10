@@ -1,0 +1,36 @@
+version: '3.6'
+services:
+  mongo:
+    image: mongo
+    ports:
+      - '37017:27017'
+
+  hsse-admin-client:
+    build: ./ui
+    ports:
+      - '3000:3000'
+
+  hsse-server:
+    build: ./ddd
+    ports:
+      - '5001:4000'
+    environment:
+      - APP_BASE_URL=
+      - APP_VERSION=
+      - API_SWAGGER=
+      - FRONTEND_URL=localhost:3000
+      - DATABASE_URL=mongodb://mongo:27017
+      - DATABASE_URL_TEST=mongodb://mongo:27017
+      - DATABASE_URL_STAGING=
+      - DATABASE_URL_PRODUCTION=
+      - PORT=4000
+      - TIMEZONE=
+      - SECRET=akfjlaksdjlasfjasdfljiasdfasfksldf
+
+  nginx:
+    build: ./nginx
+    ports:
+      - '80:80'
+    depends_on:
+      - hsse-admin-client
+      - hsse-server
