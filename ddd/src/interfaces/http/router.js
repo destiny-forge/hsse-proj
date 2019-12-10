@@ -51,7 +51,7 @@ module.exports = ({ config, logger }) => {
 
   apiRouter.use("/articles", controller("article").router);
 
-  router.use(`${config.version}`, apiRouter);
+  router.use("", apiRouter);
 
   router.use(partialRight(errorHandler, [logger, config]));
 
