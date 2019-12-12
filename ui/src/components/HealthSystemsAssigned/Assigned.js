@@ -7,7 +7,7 @@ class Assigned extends Component {
     return (
       <div className="padding">
         <div className="box">
-          <p>Henlo, fren</p>
+          <p>Henlo, fren... this is where we'll list assigned.</p>
         </div>
       </div>
     );
