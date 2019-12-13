@@ -30,10 +30,6 @@ class List extends Component {
 
   render() {
     const { articles } = this.state;
-
-    if (articles) {
-      console.log("articles ", this.state.articles);  
-    }
     
     return (
       <div className="padding">
@@ -85,7 +81,7 @@ class List extends Component {
               <tbody>
               {
                 articles && articles.map(article => (
-                  <tr>
+                  <tr key={Math.random()}>
                     <td>
                       <label className="ui-check m-0">
                         <input type="checkbox" name="post[]" />

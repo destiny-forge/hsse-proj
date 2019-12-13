@@ -42,7 +42,7 @@ class ArticleCreate extends Component {
     if (ok) {
       this.Article.create(article);
       this.setState({ errors: [] });
-      // @TODO redirect to queue
+      this.props.history.replace('/articles');
     } else {
       console.log(errors);
       this.setState({ errors });
