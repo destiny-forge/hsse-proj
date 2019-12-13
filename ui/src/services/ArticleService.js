@@ -12,12 +12,7 @@ const ArticleService = ({ fetch }) => {
   };
 
   const list = async type => {
-    const res = await fetch('/articles', {
-      method: 'GET',
-      body: JSON.stringify({
-        type
-      })
-    });
+    const res = await fetch('/articles')
     return Promise.resolve(res);
   };
 

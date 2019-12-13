@@ -21,7 +21,7 @@ class ForgotPassword extends Component {
       value
     } = e.target;
     this.setState({
-      email: value
+      [name]: value
     });
   }
 

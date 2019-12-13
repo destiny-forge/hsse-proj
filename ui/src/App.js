@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Login from './components/Accounts/Login';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Accounts/Signup';
-import ArticleCreate from './components/Articles/Create';
+import ArticleCreate from './components/Articles/ArticleCreate';
+import ArticleList from './components/Articles/ArticleList';
 import SignupSuccess from './components/Accounts/SignupSuccess';
 import ConfirmEmail from './components/Accounts/ConfirmEmail';
 import ForgotPassword from './components/Accounts/ForgotPassword';
-import Assigned from './components/HealthSystemsAssigned/Assigned';
 import PasswordReset from './components/Accounts/PasswordReset';
 
 
@@ -25,7 +25,7 @@ class App extends Component {
           <Route path="/account/confirm/:token" component={ConfirmEmail} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/article" component={ArticleCreate} />
-          <Route path="/assigned" component={Assigned} />
+          <Route path="/articles" component={ArticleList} />
         </Router>
       </React.Fragment>
     );
