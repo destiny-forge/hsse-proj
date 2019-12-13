@@ -74,64 +74,45 @@ class List extends Component {
                       <i></i>
                     </label>
                   </th>
-                  <th>Project</th>
-                  <th>Task</th>
-                  <th>Date</th>
-                  <th style={{ width: "50px" }}></th>
+                  <th>Title</th>
+                  <th>Journal</th>
+                  <th>Authors</th>
+                  <th>Source</th>
+                  <th>Complicated</th>
+                  <th>Lost</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <label className="ui-check m-0">
-                      <input type="checkbox" name="post[]" />
-                      <i className="dark-white"></i>
-                    </label>
-                  </td>
-                  <td>Idrawfast</td>
-                  <td>4c</td>
-                  <td>Jul 7, 2013</td>
-                  <td>
-                    <a href="!#" className="active" data-toggle-class>
-                      <i className="fa fa-check text-success d-none"></i>
-                      <i className="fa fa-times text-danger d-inline"></i>
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <label className="ui-check m-0">
-                      <input type="checkbox" name="post[]" />
-                      <i className="dark-white"></i>
-                    </label>
-                  </td>
-                  <td>Avatar system</td>
-                  <td>15c</td>
-                  <td>Jul 2, 2013</td>
-                  <td>
-                    <a href="!#" className="active" data-toggle-class>
-                      <i className="fa fa-check text-success d-none"></i>
-                      <i className="fa fa-times text-danger d-inline"></i>
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <label className="ui-check m-0">
-                      <input type="checkbox" name="post[]" />
-                      <i className="dark-white"></i>
-                    </label>
-                  </td>
-                  <td>Videodown</td>
-                  <td>4c</td>
-                  <td>Jul 1, 2013</td>
-                  <td>
-                    <a href="!#" className="active" data-toggle-class>
-                      <i className="fa fa-check text-success d-none"></i>
-                      <i className="fa fa-times text-danger d-inline"></i>
-                    </a>
-                  </td>
-                </tr>
+              {
+                articles && articles.map(article => (
+                  <tr>
+                    <td>
+                      <label className="ui-check m-0">
+                        <input type="checkbox" name="post[]" />
+                        <i className="dark-white"></i>
+                      </label>
+                    </td>
+                    <td>{article.title}</td>
+                    <td>{article.journal}</td>
+                    <td>{article.authors}</td>
+                    <td>{article.source}</td>
+                    <td>
+                      {
+                        article.complicated
+                          ? <i className="fa fa-check text-success d-none"></i>
+                          : <i className="fa fa-times text-danger d-inline"></i>
+                      } 
+                    </td>
+                    <td>
+                      {
+                        article.lost
+                          ? <i className="fa fa-check text-success d-none"></i>
+                          : <i className="fa fa-times text-danger d-inline"></i>
+                      }
+                    </td>
+                  </tr>
+                ))
+              }
               </tbody>
             </table>
           </div>
@@ -147,38 +128,9 @@ class List extends Component {
                 <button className="btn white">Apply</button>
               </div>
               <div className="col-sm-4">
-                <small className="text-muted py-2 d-block text-center">showing 20-30 of 50 items</small>
-              </div>
-              <div className="col-sm-4">
-                <ul className="pagination justify-content-sm-end m-0">
-                  <li className="page-item disabled">
-                    <a className="page-link" href="!#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                      <span className="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li className="page-item active">
-                    <a className="page-link" href="!#">1 <span className="sr-only">(current)</span></a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="!#">2</a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="!#">3</a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="!#">4</a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="!#">5</a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="!#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                      <span className="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
+                <small className="text-muted py-2 d-block text-center">
+                  showing 1-4 of {articles && articles.length} items
+                </small>
               </div>
             </div>
           </footer>
