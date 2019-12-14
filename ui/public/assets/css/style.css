@@ -10,3 +10,7 @@ Custom css
 .logo-login {
   margin-top: 15px;
 }
+
+div.react-datepicker-wrapper {
+  display: block;
+}

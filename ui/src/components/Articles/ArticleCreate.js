@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import ArticleService from '../../services/ArticleService';
@@ -21,6 +24,7 @@ class ArticleCreate extends Component {
     };
 
     this.change = this.change.bind(this);
+    this.handlePublished = this.handlePublished.bind(this);
     this.submit = this.submit.bind(this);
     this.hasError = this.hasError.bind(this);
 
@@ -33,6 +37,12 @@ class ArticleCreate extends Component {
       article: { ...this.state.article, [name]: value }
     });
   }
+
+  handlePublished = date => {
+    this.setState({
+      article: { ...this.state.article, published: date }
+    });
+  };
 
   submit(e) {
     e.preventDefault();
@@ -98,12 +108,11 @@ class ArticleCreate extends Component {
               <div className="form-group form-row">
                 <div className="col-md-6">
                   <label htmlFor="published">Published Date</label>
-                  <input
-                    type="text"
+                  <DatePicker
                     className="form-control"
                     name="published"
-                    onChange={this.change}
-                    placeholder="Published Date"
+                    selected={this.state.article.published}
+                    onChange={this.handlePublished}
                   />
                 </div>
               </div>
