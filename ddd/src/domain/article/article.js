@@ -21,7 +21,8 @@ const Article = t.struct(
     complicated: t.Boolean,
     lost: t.Boolean,
 
-    published: t.Date
+    published: t.Date,
+    harvested: t.Date
   },
   {
     defaultProps: {
