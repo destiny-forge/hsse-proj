@@ -4,8 +4,6 @@ const uuid = require("uuid/v1");
 
 module.exports = ({ bucket, accessKeyId, secretAccessKey }) => {
   const s3 = new AWS.S3({ accessKeyId, secretAccessKey });
-  console.log("wtf s3?");
-  console.log(s3);
 
   getSignedUrl = async () => {
     const key = `${Date.now()}-${uuid()}.txt`;
