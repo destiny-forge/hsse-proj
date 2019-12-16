@@ -84,6 +84,15 @@ export default function withAuth(AuthComponent) {
                             <span className="nav-text">Dashboard</span>
                           </a>
                         </li>
+                        {/* TODO: Move this link into the article page? */}
+                        <li>
+                          <a href="/upload">
+                            <span className="nav-icon">
+                              <i className="fa fa-align-left"></i>
+                            </span>
+                            <span className="nav-text">Batch Upload</span>
+                          </a>
+                        </li>
                         <li>
                           <a href="/articles">
                             <span className="nav-icon">

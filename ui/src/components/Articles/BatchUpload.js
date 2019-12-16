@@ -65,18 +65,18 @@ class BatchUpload extends Component {
             <form>
               <div className="form-group form-row">
                 <div className="col-md-6">
-                  <label for="inputState" class="d-block">Article Source</label>
-                  <select id="inputState" class="custom-select w-100">
-                    <option selected>Choose...</option>
+                  <label htmlFor="inputState" className="d-block">Article Source</label>
+                  <select id="inputState" className="custom-select w-100">
+                    <option defaultValue="selected">Choose...</option>
                     <option>...</option>
                   </select>
                 </div>
               </div>
               <div className="form-group form-row">
                 <div className="col-md-6">
-                  <label for="inputState" class="d-block">Languages</label>
-                  <select id="inputState" class="custom-select w-100">
-                    <option selected>Choose...</option>
+                  <label htmlFor="inputState" className="d-block">Languages</label>
+                  <select id="inputState" className="custom-select w-100">
+                    <option defaultValue="selected">Choose...</option>
                     <option>...</option>
                   </select>
                 </div>
