@@ -1,4 +1,6 @@
 const Batch = require("src/domain/batch");
+const { hseArticle, sseArticle } = require("src/domain/article");
+
 const { parse } = require("./parse");
 const { s3 } = require("../../infra/aws");
 
@@ -8,31 +10,33 @@ const { s3 } = require("../../infra/aws");
 module.exports = ({ batchRepository }) => {
   const create = async batch => {
     try {
-      // if (!article.type || (article.type !== "sse" && article.type !== "hse")) {
-      //   return {
-      //     error: "A valid file is required"
-      //   };
-      // }
+      if (!batch.type || (batch.type !== "sse" && batch.type !== "hse")) {
+        return {
+          error: "A valid batch type is required"
+        };
+      }
       console.log(batch);
 
       // Create batch
       const entity = Batch(batch);
       const newBatch = await batchRepository.create(entity);
 
+      // this needs an ._id to prevent another db call!
       console.log(newBatch);
 
       // Create articles from csv and associate to batch
       const csv = await s3.getFile(batch.fileUrl);
       const articles = await parse(csv);
 
-      articles.map(article => {
-        // await HSEArticleBatchfileModelClass.find({ batchfileUrl: url }, (err, batchfile) => {
-        //   console.log(batchfile);
-        //   article._batchFile = newBatch._id;
-        //   article.language = batch.language;
-        //   article.source = batch.source;
-        //   article.harvested = batch.harvested;
-        // });
+      articles.map(async article => {
+        article.batchId = newBatch._id;
+        article.published = new Date(batch.published);
+        article.harvested = new Date(batch.harvested);
+
+        const entity =
+          batch.type === "sse" ? sseArticle(article) : hseArticle(article);
+
+        await articleRepository.create(entity);
       });
 
       return newBatch;
