@@ -25,5 +25,10 @@ module.exports = {
         pass: "AsSyswC9tr54PxY9Mz"
       }
     }
+  },
+  s3: {
+    bucket: process.env.HSSE_S3_Bucket,
+    accessKeyId: process.env.HSSE_S3_ACCESS_KEY,
+    secretAccessKey: process.env.HSSE_S3_SECRET_KEY
   }
 };
