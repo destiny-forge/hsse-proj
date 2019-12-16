@@ -9,7 +9,7 @@ import SignupSuccess from './components/Accounts/SignupSuccess';
 import ConfirmEmail from './components/Accounts/ConfirmEmail';
 import ForgotPassword from './components/Accounts/ForgotPassword';
 import PasswordReset from './components/Accounts/PasswordReset';
-
+import BatchUpload from './components/Articles/BatchUpload';
 
 class App extends Component {
   render() {
@@ -26,6 +26,7 @@ class App extends Component {
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/article" component={ArticleCreate} />
           <Route path="/articles" component={ArticleList} />
+          <Route path="/upload" component={BatchUpload} />
         </Router>
       </React.Fragment>
     );

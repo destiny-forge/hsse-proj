@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-
-import Select from 'react-select';
-import 'react-select/dist/react-select.css';
-
-import Datetime from 'react-datetime';
+import Dropzone from 'react-dropzone-uploader'
+import withAuth from '../withAuth';
+import { withRouter } from 'react-router';
 
 const ARTICLE_SOURCES = [
   { value: 'referrals', label: 'Referrals' },
@@ -30,90 +28,24 @@ const LANGUAGES = [
 ]
 
 class BatchUpload extends Component {
-  state = {
-    selectedSourceOption: '',
-    selectedLanguageOption: LANGUAGES[0],
-    languages: [],
-    articleSources: [],
-    files: [],
-    file: null,
-    harvestDate: new Date()
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      files: []
+    }
   }
 
-  onFileChange(event) {
-    this.setState({ file: event.target.files[0] });
+  onDrop(files) {
+    console.log("files ", files);
   }
 
-  onDateChange(event) {
-    this.setState({ harvestDate: event._d })
+  handleSubmit(files, allFiles) {
+    console.log(files.map(f => f.meta))
+    allFiles.forEach(f => f.remove());
   }
-
-  handleChangeSourceSelect = (selectedSourceOption) => {
-    this.setState({ selectedSourceOption });
-  }
-
-  handleChangeLanguageSelect = (selectedLanguageOption) => {
-    this.setState({ selectedLanguageOption });
-  }
-
-  onSubmit = (event) => {
-    event.preventDefault();
-    const { submitHSEBatchFile, history } = this.props;
-    // TODO - this doesn't do anything, this will need to be fixed
-    submitHSEBatchFile(this.state, history);
-  }
-
-  renderUploadField = ({ input: { value, ...input } }) => {
-    return <input
-      name="batchfileupload"
-      className="form-control"
-      value={value === '' && value}
-      type="file"
-      data-input="false"
-      data-btnclass="btn btn-info"
-      data-text="UPLOAD"
-      data-icon="&lt;span class='fa fa-upload mr-2'&gt;&lt;/span&gt;"
-      onChange={this.onFileChange.bind(this)}
-      accept="text/plain"
-      {...input}
-    />
-  }
-
-  adaptFileEventToValue = delegate => e => delegate(e.target.files[0]);
-
-  FileInput = ({ input: { value: omitValue, onChange, onBlur, ...inputProps }, meta: omitMeta, ...props }) => {
-    return (
-      <input
-        onChange={this.onFileChange.bind(this)}
-        type="file"
-        {...props.input}
-        {...props}
-      />
-    );
-  };
-
-  handleChangeSelect = (selectedOption) => {
-    this.setState({ selectedOption });
-    console.log(`Selected: ${selectedOption.label}`);
-  }
-
-  onDrop = files => this.setState({ files: files[0] })
-
-  createImageItem = (file, index) => (
-    <Col md={3} key={index}>
-      <img className="img-fluid mb-2" src={file.preview} alt="Item" />
-    </Col>
-  )
 
   render() {
-    const {
-      selectedLanguageOption,
-      selectedSourceOption
-    } = this.state;
-
-    const languageValue = selectedLanguageOption && selectedLanguageOption.value;
-    const SourceValue = selectedSourceOption && selectedSourceOption.value;
-
     return (
       <div className="padding">
         <div className="box">
@@ -123,12 +55,15 @@ class BatchUpload extends Component {
           </div>
           <div className="box-body">
             <form>
-              <button
-                type="submit"
-                className="btn primary"
-                onClick={this.submit}>
-                Upload
-              </button>
+              <div className="dropzone white b-a b-3x b-dashed b-primary p-a rounded p-5 text-center">
+              <Dropzone onDrop={this.onDrop.bind(this)} multiple onSubmit={this.handleSubmit}> 
+                  {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                    </div>
+                  )}
+                </Dropzone>
+              </div>
             </form>
           </div>
         </div>
