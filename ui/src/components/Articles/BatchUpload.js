@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone-uploader'
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
+import DatePicker from 'react-datepicker';
 
 const ARTICLE_SOURCES = [
   { value: 'referrals', label: 'Referrals' },
@@ -32,13 +33,20 @@ class BatchUpload extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      files: []
+      files: [],
+      harvestDate: Date.now()
     }
   }
 
   onDrop(files) {
     console.log("files ", files);
   }
+
+  handleHarvestDate = date => {
+    this.setState({
+      harvestDate: date
+    });
+  };
 
   handleSubmit(files, allFiles) {
     console.log(files.map(f => f.meta))
@@ -55,6 +63,35 @@ class BatchUpload extends Component {
           </div>
           <div className="box-body">
             <form>
+              <div className="form-group form-row">
+                <div className="col-md-6">
+                  <label for="inputState" class="d-block">Article Source</label>
+                  <select id="inputState" class="custom-select w-100">
+                    <option selected>Choose...</option>
+                    <option>...</option>
+                  </select>
+                </div>
+              </div>
+              <div className="form-group form-row">
+                <div className="col-md-6">
+                  <label for="inputState" class="d-block">Languages</label>
+                  <select id="inputState" class="custom-select w-100">
+                    <option selected>Choose...</option>
+                    <option>...</option>
+                  </select>
+                </div>
+              </div>
+              <div className="form-group form-row">
+                <div className="col-md-6">
+                  <label htmlFor="published">Harvest Date</label>
+                  <DatePicker
+                    className="form-control"
+                    name="published"
+                    selected={this.state.harvestDate}
+                    onChange={this.handleHarvestDate}
+                  />
+                </div>
+              </div>
               <div className="dropzone white b-a b-3x b-dashed b-primary p-a rounded p-5 text-center">
               <Dropzone onDrop={this.onDrop.bind(this)} multiple onSubmit={this.handleSubmit}> 
                   {({ getRootProps, getInputProps }) => (
