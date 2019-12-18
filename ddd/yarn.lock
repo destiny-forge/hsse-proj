@@ -12164,7 +12164,15 @@ tar@^4, tar@^4.4.10, tar@^4.4.12, tar@^4.4.13:
     safe-buffer "^5.1.2"
     yallist "^3.0.3"
 
-tcomb@3.2.29:
+tcomb-additional-types@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/tcomb-additional-types/-/tcomb-additional-types-0.0.2.tgz#180aef46aa78f6225ed0a23dca2e84b17052231b"
+  integrity sha512-us5HDwN+raLTGqhkewRrDFSHAQGhcMes1p+3m10Krrhi/75CQg3KwL+i/y2g4j75QunMBuFRaibCX5jQ4FUBiw==
+  dependencies:
+    tcomb "^3.2.22"
+    validator "^8.0.0"
+
+tcomb@3.2.29, tcomb@^3.2.22:
   version "3.2.29"
   resolved "https://registry.yarnpkg.com/tcomb/-/tcomb-3.2.29.tgz#32404fe9456d90c2cf4798682d37439f1ccc386c"
   integrity sha512-di2Hd1DB2Zfw6StGv861JoAF5h/uQVu/QJp2g8KVbtfKnoHdBQl5M32YWq6mnSYBQ1vFFrns5B1haWJL7rKaOQ==
@@ -12809,6 +12817,11 @@ validator@^10.0.0, validator@^10.11.0:
   version "10.11.0"
   resolved "https://registry.yarnpkg.com/validator/-/validator-10.11.0.tgz#003108ea6e9a9874d31ccc9e5006856ccd76b228"
   integrity sha512-X/p3UZerAIsbBfN/IwahhYaBbY68EN/UQBWHtsbXGT5bfrH/p4NQzUCG1kF/rtKaNpnJ7jAu6NGTdSNtyNIXMw==
+
+validator@^8.0.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-8.2.0.tgz#3c1237290e37092355344fef78c231249dab77b9"
+  integrity sha512-Yw5wW34fSv5spzTXNkokD6S6/Oq92d8q/t14TqsS3fAiA1RYnxSFSIZ+CY3n6PGGRCq5HhJTSepQvFUS2QUDxA==
 
 vary@^1, vary@~1.1.2:
   version "1.1.2"

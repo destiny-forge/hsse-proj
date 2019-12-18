@@ -1,5 +1,5 @@
 const t = require("tcomb");
-// const tx = require("tcomb-additional-types");
+const tx = require("tcomb-additional-types");
 const shortid = require("shortid");
 
 /* Not to be instantiated directly, used as the base Article
@@ -7,8 +7,9 @@ const shortid = require("shortid");
  */
 const Article = t.struct(
   {
-    // legacyId: t.String,
-    // batchId: tx.String.MongoId,
+    _id: t.maybe(t.String),
+    legacyId: t.maybe(t.String),
+    batchId: t.maybe(tx.String.MongoId),
     shortId: t.String,
 
     title: t.String,
@@ -22,7 +23,47 @@ const Article = t.struct(
     lost: t.Boolean,
 
     published: t.Date,
-    harvested: t.Date
+    harvested: t.maybe(t.Date),
+
+    //refMan fields
+    referenceType: t.maybe(t.String),
+    rating: t.maybe(t.String),
+    year: t.maybe(t.String),
+    volume: t.maybe(t.String),
+    issue: t.maybe(t.String),
+    pages: t.maybe(t.String),
+    startPage: t.maybe(t.String),
+    ePubDate: t.maybe(t.String),
+    date: t.maybe(t.String),
+    typeOfArticle: t.maybe(t.String),
+    shortTitle: t.maybe(t.String),
+    alternateJournal: t.maybe(t.String),
+    ISSN: t.maybe(t.String),
+    DOI: t.maybe(t.String),
+    originalPublication: t.maybe(t.String),
+    rePrintEdition: t.maybe(t.String),
+    reviewedItem: t.maybe(t.String),
+    legalNote: t.maybe(t.String),
+    PMCID: t.maybe(t.String),
+    NIHMSID: t.maybe(t.String),
+    articleNumber: t.maybe(t.String),
+    accessionNumber: t.maybe(t.String),
+    callNumber: t.maybe(t.String),
+    label: t.maybe(t.String),
+    abstract: t.maybe(t.String),
+    keywords: t.maybe(t.String),
+    notes: t.maybe(t.String),
+    researchNotes: t.maybe(t.String),
+    URL: t.maybe(t.String),
+    fileAttachments: t.maybe(t.String),
+    authorAddress: t.maybe(t.String),
+    figure: t.maybe(t.String),
+    caption: t.maybe(t.String),
+    accessDate: t.maybe(t.String),
+    translatedAuthor: t.maybe(t.String),
+    translatedTitle: t.maybe(t.String),
+    nameOfDatabase: t.maybe(t.String),
+    databaseProvider: t.maybe(t.String)
   },
   {
     defaultProps: {

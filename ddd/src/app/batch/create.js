@@ -2,12 +2,12 @@ const Batch = require("src/domain/batch");
 const { hseArticle, sseArticle } = require("src/domain/article");
 
 const { parse } = require("./parse");
-const { s3 } = require("../../infra/aws");
+const file = require("./file");
 
 /**
  * Batch creation
  */
-module.exports = ({ batchRepository }) => {
+module.exports = ({ batchRepository, articleRepository, config }) => {
   const create = async batch => {
     try {
       if (!batch.type || (batch.type !== "sse" && batch.type !== "hse")) {
@@ -15,20 +15,17 @@ module.exports = ({ batchRepository }) => {
           error: "A valid batch type is required"
         };
       }
-      console.log(batch);
 
       // Create batch
       const entity = Batch(batch);
       const newBatch = await batchRepository.create(entity);
 
-      // this needs an ._id to prevent another db call!
-      console.log(newBatch);
-
-      // Create articles from csv and associate to batch
-      const csv = await s3.getFile(batch.fileUrl);
+      // Create articles from csv and associate with batch
+      const { getFile } = file({ config });
+      const csv = await getFile(batch.fileUrl);
       const articles = await parse(csv);
 
-      articles.map(async article => {
+      const result = articles.map(async article => {
         article.batchId = newBatch._id;
         article.published = new Date(batch.published);
         article.harvested = new Date(batch.harvested);
@@ -39,7 +36,7 @@ module.exports = ({ batchRepository }) => {
         await articleRepository.create(entity);
       });
 
-      return newBatch;
+      return result;
     } catch (error) {
       throw new Error(error);
     }

@@ -3,12 +3,14 @@ const { create, list, file } = require("src/app/batch");
 
 module.exports = () => {
   const {
-    repository: { batchRepository },
+    repository: { batchRepository, articleRepository },
     config
   } = container.cradle;
 
   const createUseCase = create({
-    batchRepository
+    batchRepository,
+    articleRepository,
+    config
   });
 
   const listUseCase = list({

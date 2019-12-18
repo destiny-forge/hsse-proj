@@ -5,6 +5,7 @@ const shortid = require("shortid");
 
 const Batch = t.struct(
   {
+    _id: t.maybe(t.String),
     // legacyId: t.String,
     shortId: t.String,
 
