@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone-uploader'
+import Dropzone from 'react-dropzone-uploader';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import DatePicker from 'react-datepicker';
@@ -14,9 +14,12 @@ const ARTICLE_SOURCES = [
   { value: 'lilacsSREE', label: 'LILACS SR & EE' },
   { value: 'plusEE', label: 'PLUS EE' },
   { value: 'pubMedEE', label: 'PubMed EE' },
-  { value: 'healthSystemHealthReformDescriptions', label: 'Health System and Health Reform Descriptions' },
+  {
+    value: 'healthSystemHealthReformDescriptions',
+    label: 'Health System and Health Reform Descriptions'
+  },
   { value: 'other', label: 'Other' }
-]
+];
 
 const LANGUAGES = [
   { value: 'english', label: 'English' },
@@ -27,22 +30,21 @@ const LANGUAGES = [
   { value: 'russian', label: 'Russian' },
   { value: 'spanish', label: 'Spanish' },
   { value: 'other', label: 'Other' }
-]
+];
 
 class BatchUpload extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       files: [],
       harvestDate: Date.now()
-    }
+    };
 
     this.Batch = BatchService({ fetch: this.props.fetch });
   }
 
   onDrop(files) {
-    console.log("files ", files);
+    console.log('files ', files);
   }
 
   handleHarvestDate = date => {
@@ -52,31 +54,30 @@ class BatchUpload extends Component {
   };
 
   handleSubmit = () => {
-    console.log("not yet implemented");
-  }
+    console.log('not yet implemented');
+  };
 
   handleChangeStatus = ({ file, meta: { name } }, status) => {
     if (status === 'done') {
       this.Batch.signedUrl({
         type: 'sse'
       })
-      .then(res => {
-        console.log("result: ", res);
-        fetch(
-          new Request(res.data.url, {
-            method: 'PUT',
-            body: file,
-            headers: new Headers({
-              'Content-Type': 'csv/*',
-            }),
-          }),
-        );
-      })
-      .catch(err => {
-        console.log(err);
-      })
+        .then(res => {
+          fetch(
+            new Request(res.data.url, {
+              method: 'PUT',
+              body: file,
+              headers: new Headers({
+                'Content-Type': 'text/plain'
+              })
+            })
+          );
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
-  }
+  };
 
   render() {
     return (
@@ -90,7 +91,9 @@ class BatchUpload extends Component {
             <form>
               <div className="form-group form-row">
                 <div className="col-md-6">
-                  <label htmlFor="inputState" className="d-block">Article Source</label>
+                  <label htmlFor="inputState" className="d-block">
+                    Article Source
+                  </label>
                   <select id="inputState" className="custom-select w-100">
                     <option defaultValue="selected">Choose...</option>
                     <option>...</option>
@@ -99,7 +102,9 @@ class BatchUpload extends Component {
               </div>
               <div className="form-group form-row">
                 <div className="col-md-6">
-                  <label htmlFor="inputState" className="d-block">Languages</label>
+                  <label htmlFor="inputState" className="d-block">
+                    Languages
+                  </label>
                   <select id="inputState" className="custom-select w-100">
                     <option defaultValue="selected">Choose...</option>
                     <option>...</option>

@@ -1,5 +1,5 @@
 const container = require("src/container");
-const { create, list, file } = require("src/app/batch");
+const { create, list, signature } = require("src/app/batch");
 
 module.exports = () => {
   const {
@@ -17,11 +17,11 @@ module.exports = () => {
     batchRepository
   });
 
-  const fileUseCase = file({ config });
+  const signatureUseCase = signature({ config });
 
   return {
     createUseCase,
     listUseCase,
-    fileUseCase
+    signatureUseCase
   };
 };

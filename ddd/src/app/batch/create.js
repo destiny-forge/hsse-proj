@@ -21,7 +21,7 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
       const newBatch = await batchRepository.create(entity);
 
       // Create articles from csv and associate with batch
-      const { getFile } = file({ config });
+      const { getFile } = file({ config, type: batch.type });
       const csv = await getFile(batch.fileUrl);
       const articles = await parse(csv);
 

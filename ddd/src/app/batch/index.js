@@ -1,9 +1,9 @@
 const create = require("./create");
 const list = require("./list");
-const file = require("./file");
+const signature = require("./signature");
 
 module.exports = {
   create,
   list,
-  file
+  signature
 };
