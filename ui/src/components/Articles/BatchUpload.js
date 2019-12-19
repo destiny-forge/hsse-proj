@@ -3,6 +3,7 @@ import Dropzone from 'react-dropzone-uploader'
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import DatePicker from 'react-datepicker';
+import BatchService from '../../services/BatchService';
 
 const ARTICLE_SOURCES = [
   { value: 'referrals', label: 'Referrals' },
@@ -36,6 +37,8 @@ class BatchUpload extends Component {
       files: [],
       harvestDate: Date.now()
     }
+
+    this.Batch = BatchService({ fetch: this.props.fetch });
   }
 
   onDrop(files) {
@@ -48,13 +51,31 @@ class BatchUpload extends Component {
     });
   };
 
-  handleSubmit(files, allFiles) {
-    console.log(files.map(f => f.meta))
-    allFiles.forEach(f => f.remove());
+  handleSubmit = () => {
+    console.log("not yet implemented");
   }
 
-  handleChangeStatus = ({ meta }, status) => {
-    console.log(status, meta);
+  handleChangeStatus = ({ file, meta: { name } }, status) => {
+    if (status === 'done') {
+      this.Batch.signedUrl({
+        type: 'sse'
+      })
+      .then(res => {
+        console.log("result: ", res);
+        fetch(
+          new Request(res.data.url, {
+            method: 'PUT',
+            body: file,
+            headers: new Headers({
+              'Content-Type': 'csv/*',
+            }),
+          }),
+        );
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    }
   }
 
   render() {

@@ -24,7 +24,7 @@ class List extends Component {
         }
       })
       .catch(err => {
-        alert(err);
+        console.log(err);
       })
   }
 
