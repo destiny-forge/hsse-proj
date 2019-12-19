@@ -16,7 +16,7 @@ const BatchService = ({ fetch }) => {
     const res = await fetch('/batches/signed-url', {
       method: 'POST',
       body: {
-        type: 'sse'
+        type: type
       }
     });
     return Promise.resolve(res);
