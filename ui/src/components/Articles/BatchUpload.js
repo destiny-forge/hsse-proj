@@ -53,6 +53,10 @@ class BatchUpload extends Component {
     allFiles.forEach(f => f.remove());
   }
 
+  handleChangeStatus = ({ meta }, status) => {
+    console.log(status, meta);
+  }
+
   render() {
     return (
       <div className="padding">
@@ -93,13 +97,12 @@ class BatchUpload extends Component {
                 </div>
               </div>
               <div className="dropzone white b-a b-3x b-dashed b-primary p-a rounded p-5 text-center">
-              <Dropzone onDrop={this.onDrop.bind(this)} multiple onSubmit={this.handleSubmit}> 
-                  {({ getRootProps, getInputProps }) => (
-                    <div {...getRootProps()}>
-                      <input {...getInputProps()} />
-                    </div>
-                  )}
-                </Dropzone>
+                <Dropzone
+                  maxFiles={1}
+                  onChangeStatus={this.handleChangeStatus}
+                  onSubmit={this.handleSubmit}
+                  styles={{ dropzone: { minHeight: 200, maxHeight: 250 } }}
+                />
               </div>
             </form>
           </div>
