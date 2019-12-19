@@ -31,7 +31,7 @@ class ArticleCreate extends Component {
     this.Article = ArticleService({ fetch: this.props.fetch });
   }
 
-  change(e) {
+  change = e => {
     const { name, value } = e.target;
     this.setState({
       article: { ...this.state.article, [name]: value }
@@ -44,7 +44,7 @@ class ArticleCreate extends Component {
     });
   };
 
-  submit(e) {
+  submit = e => {
     e.preventDefault();
     const { article } = this.state;
     const { ok, errors } = validate(article);
@@ -59,7 +59,7 @@ class ArticleCreate extends Component {
     }
   }
 
-  hasError(field, value) {
+  hasError = (field, value) => {
     return this.state.errors[field] === value;
   }
 
