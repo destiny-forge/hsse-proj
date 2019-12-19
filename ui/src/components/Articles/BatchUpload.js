@@ -67,8 +67,8 @@ class BatchUpload extends Component {
             method: 'PUT',
             body: file,
             headers: new Headers({
-              'Content-Type': 'csv/*',
-            }),
+              'Content-Type': 'text/plain'
+            })
           }),
         );
       })
