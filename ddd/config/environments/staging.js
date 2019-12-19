@@ -19,5 +19,10 @@ module.exports = {
       secretAccessKey: process.env.HSSE_SES_SECRET_KEY,
       region: process.env.REGION
     }
+  },
+  s3: {
+    bucket: process.env.HSSE_S3_Bucket,
+    accessKeyId: process.env.HSSE_S3_ACCESS_KEY,
+    secretAccessKey: process.env.HSSE_S3_SECRET_KEY
   }
 };
