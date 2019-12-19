@@ -59,21 +59,23 @@ class BatchUpload extends Component {
 
   handleChangeStatus = ({ file, meta: { name } }, status) => {
     if (status === 'done') {
-      this.Batch.signedUrl('sse')
-        .then(res => {
-          fetch(
-            new Request(res.data.url, {
-              method: 'PUT',
-              body: file,
-              headers: new Headers({
-                'Content-Type': 'text/plain'
-              })
+      this.Batch.signedUrl({
+        type: 'sse'
+      })
+      .then(res => {
+        fetch(
+          new Request(res.data.url, {
+            method: 'PUT',
+            body: file,
+            headers: new Headers({
+              'Content-Type': 'text/plain'
             })
-          );
-        })
-        .catch(err => {
-          console.log(err);
-        });
+          })
+        );
+      })
+      .catch(err => {
+        console.log(err);
+      });
     }
   };
 
