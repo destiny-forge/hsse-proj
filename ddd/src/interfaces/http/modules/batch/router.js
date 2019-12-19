@@ -110,7 +110,7 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/signed-url", (req, res) => {
+  router.post("/signed-url", (req, res) => {
     const { type } = req.body;
     signatureUseCase
       .getSignature(type)
