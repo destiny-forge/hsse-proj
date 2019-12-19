@@ -13,7 +13,12 @@ const BatchService = ({ fetch }) => {
   };
 
   const signedUrl = async type => {
-    const res = await fetch('/batches/signed-url')
+    const res = await fetch('/batches/signed-url', {
+      method: 'POST',
+      body: {
+        type: 'sse'
+      }
+    });
     return Promise.resolve(res);
   };
 
