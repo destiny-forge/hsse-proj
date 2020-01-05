@@ -51,6 +51,7 @@ module.exports = ({ config, logger }) => {
 
   apiRouter.use("/articles", controller("article").router);
   apiRouter.use("/batches", controller("batch").router);
+  apiRouter.use("/notes", controller("note").router);
 
   router.use("", apiRouter);
 
