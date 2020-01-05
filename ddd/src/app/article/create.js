@@ -12,7 +12,9 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      article.published = new Date(article.published);
+      article.published = article.published
+        ? new Date(article.published, 1, 1)
+        : new Date();
 
       const entity =
         article.type === "sse" ? sseArticle(article) : hseArticle(article);

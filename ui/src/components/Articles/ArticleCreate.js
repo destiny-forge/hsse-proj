@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import YearPicker from 'react-year-picker';
 
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
@@ -18,7 +17,7 @@ class ArticleCreate extends Component {
         journal: '',
         type: 'sse',
         source: 'Single article from referrals',
-        published: Date.now()
+        published: new Date().getFullYear()
       },
       errors: []
     };
@@ -36,11 +35,11 @@ class ArticleCreate extends Component {
     this.setState({
       article: { ...this.state.article, [name]: value }
     });
-  }
+  };
 
-  handlePublished = date => {
+  handlePublished = year => {
     this.setState({
-      article: { ...this.state.article, published: date }
+      article: { ...this.state.article, published: year }
     });
   };
 
@@ -57,11 +56,11 @@ class ArticleCreate extends Component {
       console.log(errors);
       this.setState({ errors });
     }
-  }
+  };
 
   hasError = (field, value) => {
     return this.state.errors[field] === value;
-  }
+  };
 
   render() {
     return (
@@ -107,13 +106,8 @@ class ArticleCreate extends Component {
               </div>
               <div className="form-group form-row">
                 <div className="col-md-6">
-                  <label htmlFor="published">Published Date</label>
-                  <DatePicker
-                    className="form-control"
-                    name="published"
-                    selected={this.state.article.published}
-                    onChange={this.handlePublished}
-                  />
+                  <label htmlFor="published">Published Year</label>
+                  <YearPicker name="year" onChange={this.handlePublished} />
                 </div>
               </div>
               <div className="form-group form-row">
