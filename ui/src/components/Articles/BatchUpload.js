@@ -4,6 +4,7 @@ import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import DatePicker from 'react-datepicker';
 import BatchService from '../../services/BatchService';
+import Select from 'react-select';
 
 const ARTICLE_SOURCES = [
   { value: 'referrals', label: 'Referrals' },
@@ -37,14 +38,12 @@ class BatchUpload extends Component {
     super(props);
     this.state = {
       files: [],
-      harvestDate: Date.now()
+      harvestDate: Date.now(),
+      selectedArticleSource: null,
+      selectedLanguage: null
     };
 
     this.Batch = BatchService({ fetch: this.props.fetch });
-  }
-
-  onDrop(files) {
-    console.log('files ', files);
   }
 
   handleHarvestDate = date => {
@@ -53,8 +52,10 @@ class BatchUpload extends Component {
     });
   };
 
-  handleSubmit = () => {
-    console.log('not yet implemented');
+  handleSubmit = (e) => {
+    e.preventDefault();
+    // TODO
+    console.log('Not yet implemented');
   };
 
   handleChangeStatus = ({ file, meta: { name } }, status) => {
@@ -63,6 +64,7 @@ class BatchUpload extends Component {
         type: 'sse'
       })
       .then(res => {
+        console.log("res ", res);
         fetch(
           new Request(res.data.url, {
             method: 'PUT',
@@ -79,7 +81,18 @@ class BatchUpload extends Component {
     }
   };
 
+  handleChange = (field, value) => {
+    this.setState({
+      [field]: value,
+    });
+  }
+
   render() {
+    const {
+      selectedArticleSource,
+      selectedLanguage
+    } = this.state;
+
     return (
       <div className="padding">
         <div className="box">
@@ -94,10 +107,12 @@ class BatchUpload extends Component {
                   <label htmlFor="inputState" className="d-block">
                     Article Source
                   </label>
-                  <select id="inputState" className="custom-select w-100">
-                    <option defaultValue="selected">Choose...</option>
-                    <option>...</option>
-                  </select>
+                  <Select
+                    value={selectedArticleSource}
+                    onChange={(value) => this.handleChange('selectedArticleSource', value)}
+                    options={ARTICLE_SOURCES}
+                    isSearchable
+                  /> 
                 </div>
               </div>
               <div className="form-group form-row">
@@ -105,10 +120,12 @@ class BatchUpload extends Component {
                   <label htmlFor="inputState" className="d-block">
                     Languages
                   </label>
-                  <select id="inputState" className="custom-select w-100">
-                    <option defaultValue="selected">Choose...</option>
-                    <option>...</option>
-                  </select>
+                  <Select
+                    value={selectedLanguage}
+                    onChange={(value) => this.handleChange('selectedLanguage', value)}
+                    options={LANGUAGES}
+                    isSearchable
+                  /> 
                 </div>
               </div>
               <div className="form-group form-row">
@@ -122,14 +139,20 @@ class BatchUpload extends Component {
                   />
                 </div>
               </div>
-              <div className="dropzone white b-a b-3x b-dashed b-primary p-a rounded p-5 text-center">
+              <div className="dropzone white b-a b-3x b-dashed b-primary p-a rounded p-5 text-center mb-3">
                 <Dropzone
                   maxFiles={1}
                   onChangeStatus={this.handleChangeStatus}
                   onSubmit={this.handleSubmit}
-                  styles={{ dropzone: { minHeight: 200, maxHeight: 250 } }}
+                  styles={{ dropzone: { minHeight: 10, maxHeight: 30 } }}
                 />
               </div>
+              <button
+                type="submit"
+                className="btn primary"
+                onClick={this.handleSubmit}>
+                Submit
+              </button>
             </form>
           </div>
         </div>
