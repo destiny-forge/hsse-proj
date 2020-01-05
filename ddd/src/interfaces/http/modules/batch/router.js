@@ -4,7 +4,7 @@ const { Router } = require("express");
 module.exports = ({
   createUseCase,
   listUseCase,
-  fileUseCase,
+  signatureUseCase,
   logger,
   response: { Success, Fail }
 }) => {
@@ -110,10 +110,10 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/signed-url", (req, res) => {
+  router.post("/signed-url", (req, res) => {
     const { type } = req.body;
-    fileUseCase
-      .getSignedUrl(type)
+    signatureUseCase
+      .getSignature(type)
       .then(data => {
         res.status(Status.OK).json(Success(data));
       })

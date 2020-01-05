@@ -15,6 +15,7 @@ class List extends Component {
   }
 
   componentDidMount() {
+    console.log("are we mouned?");
     this.Article.list('sse') // default to sse for now
       .then(res => {
         if (res.success) {
@@ -24,7 +25,7 @@ class List extends Component {
         }
       })
       .catch(err => {
-        alert(err);
+        console.log(err);
       })
   }
 

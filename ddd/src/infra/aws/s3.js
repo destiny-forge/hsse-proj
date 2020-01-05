@@ -27,7 +27,9 @@ module.exports = ({ bucket, accessKeyId, secretAccessKey }) => {
   };
 
   getFile = async url => {
-    const result = await axios.get(`https://s3.amazonaws.com/${bucket}/${url}`);
+    //const result = await axios.get(`https://s3.amazonaws.com/${bucket}/${url}`);
+    const file = url.split("?")[0];
+    const result = await axios.get(file);
     return result.data;
   };
 

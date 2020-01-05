@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone-uploader'
+import Dropzone from 'react-dropzone-uploader';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import DatePicker from 'react-datepicker';
+import BatchService from '../../services/BatchService';
+import Select from 'react-select';
 
 const ARTICLE_SOURCES = [
   { value: 'referrals', label: 'Referrals' },
@@ -13,9 +15,12 @@ const ARTICLE_SOURCES = [
   { value: 'lilacsSREE', label: 'LILACS SR & EE' },
   { value: 'plusEE', label: 'PLUS EE' },
   { value: 'pubMedEE', label: 'PubMed EE' },
-  { value: 'healthSystemHealthReformDescriptions', label: 'Health System and Health Reform Descriptions' },
+  {
+    value: 'healthSystemHealthReformDescriptions',
+    label: 'Health System and Health Reform Descriptions'
+  },
   { value: 'other', label: 'Other' }
-]
+];
 
 const LANGUAGES = [
   { value: 'english', label: 'English' },
@@ -26,20 +31,19 @@ const LANGUAGES = [
   { value: 'russian', label: 'Russian' },
   { value: 'spanish', label: 'Spanish' },
   { value: 'other', label: 'Other' }
-]
+];
 
 class BatchUpload extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      files: [],
-      harvestDate: Date.now()
-    }
-  }
+      harvestDate: Date.now(),
+      selectedArticleSource: null,
+      selectedLanguage: null,
+      complete: false
+    };
 
-  onDrop(files) {
-    console.log("files ", files);
+    this.Batch = BatchService({ fetch: this.props.fetch });
   }
 
   handleHarvestDate = date => {
@@ -48,16 +52,66 @@ class BatchUpload extends Component {
     });
   };
 
-  handleSubmit(files, allFiles) {
-    console.log(files.map(f => f.meta))
-    allFiles.forEach(f => f.remove());
-  }
+  handleSubmit = (e) => {
+    e.preventDefault();
+    
+    const upload = {
+      type: 'sse',
+      fileUrl: this.state.fileUrl,
+      source: this.state.selectedArticleSource.value,
+      language: this.state.selectedLanguage.value,
+      harvested: this.state.harvestDate
+    }
 
-  handleChangeStatus = ({ meta }, status) => {
-    console.log(status, meta);
+    if (this.state.complete) {
+      this.Batch.create(upload);
+      this.props.history.replace('/articles');
+    }
+  };
+
+  handleChangeStatus = ({ file, meta: { name } }, status) => {
+    if (status === 'done') {
+      this.Batch.signedUrl({
+        type: 'sse'
+      })
+      .then(res => {
+        console.log(res);
+        fetch(
+          new Request(res.data.url, {
+            method: 'PUT',
+            body: file,
+            headers: new Headers({
+              'Content-Type': 'text/plain'
+            })
+          })
+        ).then(res => {
+          console.log(res.url);
+          if (res.ok) {
+            this.setState({
+              fileUrl: res.url,
+              complete: true
+            })
+          }
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
+  };
+
+  handleChange = (field, value) => {
+    this.setState({
+      [field]: value,
+    });
   }
 
   render() {
+    const {
+      selectedArticleSource,
+      selectedLanguage
+    } = this.state;
+
     return (
       <div className="padding">
         <div className="box">
@@ -69,20 +123,28 @@ class BatchUpload extends Component {
             <form>
               <div className="form-group form-row">
                 <div className="col-md-6">
-                  <label htmlFor="inputState" className="d-block">Article Source</label>
-                  <select id="inputState" className="custom-select w-100">
-                    <option defaultValue="selected">Choose...</option>
-                    <option>...</option>
-                  </select>
+                  <label htmlFor="inputState" className="d-block">
+                    Article Source
+                  </label>
+                  <Select
+                    value={selectedArticleSource}
+                    onChange={(value) => this.handleChange('selectedArticleSource', value)}
+                    options={ARTICLE_SOURCES}
+                    isSearchable
+                  /> 
                 </div>
               </div>
               <div className="form-group form-row">
                 <div className="col-md-6">
-                  <label htmlFor="inputState" className="d-block">Languages</label>
-                  <select id="inputState" className="custom-select w-100">
-                    <option defaultValue="selected">Choose...</option>
-                    <option>...</option>
-                  </select>
+                  <label htmlFor="inputState" className="d-block">
+                    Languages
+                  </label>
+                  <Select
+                    value={selectedLanguage}
+                    onChange={(value) => this.handleChange('selectedLanguage', value)}
+                    options={LANGUAGES}
+                    isSearchable
+                  /> 
                 </div>
               </div>
               <div className="form-group form-row">
@@ -96,14 +158,21 @@ class BatchUpload extends Component {
                   />
                 </div>
               </div>
-              <div className="dropzone white b-a b-3x b-dashed b-primary p-a rounded p-5 text-center">
+              <div className="dropzone white b-a b-3x b-dashed b-primary p-a rounded p-5 text-center mb-3">
                 <Dropzone
                   maxFiles={1}
                   onChangeStatus={this.handleChangeStatus}
                   onSubmit={this.handleSubmit}
-                  styles={{ dropzone: { minHeight: 200, maxHeight: 250 } }}
+                  styles={{ dropzone: { minHeight: 10, maxHeight: 30 } }}
                 />
               </div>
+              <button
+                type="submit"
+                disabled={!this.state.complete}
+                className="btn primary"
+                onClick={this.handleSubmit}>
+                Submit
+              </button>
             </form>
           </div>
         </div>
