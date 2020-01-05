@@ -37,10 +37,10 @@ class BatchUpload extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      files: [],
       harvestDate: Date.now(),
       selectedArticleSource: null,
-      selectedLanguage: null
+      selectedLanguage: null,
+      complete: false
     };
 
     this.Batch = BatchService({ fetch: this.props.fetch });
@@ -54,8 +54,19 @@ class BatchUpload extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    // TODO
-    console.log('Not yet implemented');
+    
+    const upload = {
+      type: 'sse',
+      fileUrl: this.state.fileUrl,
+      source: this.state.selectedArticleSource.value,
+      language: this.state.selectedLanguage.value,
+      harvested: this.state.harvestDate
+    }
+
+    if (this.state.complete) {
+      this.Batch.create(upload);
+      this.props.history.replace('/articles');
+    }
   };
 
   handleChangeStatus = ({ file, meta: { name } }, status) => {
@@ -64,7 +75,7 @@ class BatchUpload extends Component {
         type: 'sse'
       })
       .then(res => {
-        console.log("res ", res);
+        console.log(res);
         fetch(
           new Request(res.data.url, {
             method: 'PUT',
@@ -73,7 +84,15 @@ class BatchUpload extends Component {
               'Content-Type': 'text/plain'
             })
           })
-        );
+        ).then(res => {
+          console.log(res.url);
+          if (res.ok) {
+            this.setState({
+              fileUrl: res.url,
+              complete: true
+            })
+          }
+        });
       })
       .catch(err => {
         console.log(err);
@@ -149,6 +168,7 @@ class BatchUpload extends Component {
               </div>
               <button
                 type="submit"
+                disabled={!this.state.complete}
                 className="btn primary"
                 onClick={this.handleSubmit}>
                 Submit
