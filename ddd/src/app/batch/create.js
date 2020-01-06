@@ -31,6 +31,7 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
         article.batchId = newBatch._id;
         article.published = new Date(batch.uploaded);
         article.harvested = new Date(batch.harvested);
+        console.log(typeof(article.notes));
 
         const entity =
           batch.type === "sse" ? sseArticle(article) : hseArticle(article);

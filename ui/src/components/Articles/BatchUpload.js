@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import DatePicker from 'react-datepicker';
 import BatchService from '../../services/BatchService';
 import Select from 'react-select';
+import "react-datepicker/dist/react-datepicker.css";
 
 const ARTICLE_SOURCES = [
   { value: 'referrals', label: 'Referrals' },
@@ -75,7 +76,6 @@ class BatchUpload extends Component {
         type: 'sse'
       })
       .then(res => {
-        console.log(res);
         fetch(
           new Request(res.data.url, {
             method: 'PUT',
@@ -85,7 +85,6 @@ class BatchUpload extends Component {
             })
           })
         ).then(res => {
-          console.log(res.url);
           if (res.ok) {
             this.setState({
               fileUrl: res.url,
