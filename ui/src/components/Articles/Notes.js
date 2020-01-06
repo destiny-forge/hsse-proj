@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import NotesService from '../../services/NotesService';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class Notes extends Component {
   constructor(props) {
@@ -18,6 +20,10 @@ class Notes extends Component {
     this.setState({
       articles: this.props.history.location.state.articles
     });
+  }
+
+  notify = () => {
+    toast.success("Changes saved!");
   }
 
   compareChanges = (oldArray, newArray) => {
@@ -62,6 +68,7 @@ class Notes extends Component {
     if (changes.length) {    
       this.Note.create(changes)
         .then(res => {
+          this.notify();
           // Need to have a chat about something here:
           // I can redirect them on save OR, I think it would be better
           // if we saved and maybe pushed up a toaster message saying it's
