@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
+import NotesService from '../../services/NotesService';
 
 class Notes extends Component {
   constructor(props) {
@@ -9,6 +10,8 @@ class Notes extends Component {
     this.state = {
       articles: []
     }
+
+    this.Note = NotesService({ fetch: this.props.fetch });
   }
 
   componentDidMount() {
@@ -31,6 +34,8 @@ class Notes extends Component {
         changes.push(item);
       }
     }
+    // leave for debugging purposes for now.
+    console.log("changed ", changes);
     return changes;
   };
 
@@ -54,11 +59,20 @@ class Notes extends Component {
       updatedArticles
     );
 
-    if (changes.length) {
-      changes.map(change => {
-        console.log(change.notes, change._id);
-      })
-    }
+    if (changes.length) {    
+      this.Note.create(changes)
+        .then(res => {
+          // Need to have a chat about something here:
+          // I can redirect them on save OR, I think it would be better
+          // if we saved and maybe pushed up a toaster message saying it's
+          // saved. We can then have a button say "Finished" that will move
+          // them away from this screen. I just don't think the idea of having
+          // an explicit "save" is good UX.
+        })
+        .catch(err => {
+          console.log(err);
+        })
+      }
   };
 
   render() {
@@ -68,16 +82,16 @@ class Notes extends Component {
         <div className="box p-md-4">
           {
             articles && articles.map((article, idx) => (
-              <ul className="list">
+              <ul className="list" key={idx}>
                 <li className="list-item">
                   <div className="clear">
                     <h5 className="text-md">{article.title}</h5>
-                    <div class="form-group row">
-                      <label class="col-sm-2 col-form-label">Notes</label>
-                      <div class="col-sm-12">
+                    <div className="form-group row">
+                      <label className="col-sm-2 col-form-label">Notes</label>
+                      <div className="col-sm-12">
                         <textarea 
                           value={article.notes}
-                          class="form-control"
+                          className="form-control"
                           onChange={this.handleChange(idx)}
                           rows="5" />
                       </div>
