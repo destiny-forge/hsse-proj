@@ -16,9 +16,9 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
         };
       }
       // Create batch
-      batch.uploaded = new Date(batch.uploaded);
+      batch.uploaded = new Date();
       batch.harvested = new Date(batch.harvested);
-      
+
       const entity = Batch(batch);
       const newBatch = await batchRepository.create(entity);
 
@@ -29,15 +29,16 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
 
       const result = articles.map(async article => {
         article.batchId = newBatch._id;
-        article.published = new Date(batch.published);
+        article.published = new Date(batch.uploaded);
         article.harvested = new Date(batch.harvested);
+
         const entity =
           batch.type === "sse" ? sseArticle(article) : hseArticle(article);
 
-        await articleRepository.create(entity);
+        return await articleRepository.create(entity);
       });
 
-      return result;
+      return Promise.all(result);
     } catch (error) {
       throw new Error(error);
     }
