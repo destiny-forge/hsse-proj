@@ -10,6 +10,7 @@ import ConfirmEmail from './components/Accounts/ConfirmEmail';
 import ForgotPassword from './components/Accounts/ForgotPassword';
 import PasswordReset from './components/Accounts/PasswordReset';
 import BatchUpload from './components/Articles/BatchUpload';
+import Notes from './components/Articles/Notes';
 
 class App extends Component {
   render() {
@@ -27,6 +28,7 @@ class App extends Component {
           <Route path="/article" component={ArticleCreate} />
           <Route path="/articles" component={ArticleList} />
           <Route path="/upload" component={BatchUpload} />
+          <Route path="/notes" component={Notes} />
         </Router>
       </React.Fragment>
     );
