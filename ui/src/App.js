@@ -10,11 +10,25 @@ import ConfirmEmail from './components/Accounts/ConfirmEmail';
 import ForgotPassword from './components/Accounts/ForgotPassword';
 import PasswordReset from './components/Accounts/PasswordReset';
 import BatchUpload from './components/Articles/BatchUpload';
+import Notes from './components/Articles/Notes';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class App extends Component {
   render() {
     return (
       <React.Fragment>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
         <Router>
           <Route exact path="/" component={Dashboard} />
           <Route path="/login" component={Login} />
@@ -27,6 +41,7 @@ class App extends Component {
           <Route path="/article" component={ArticleCreate} />
           <Route path="/articles" component={ArticleList} />
           <Route path="/upload" component={BatchUpload} />
+          <Route path="/notes" component={Notes} />
         </Router>
       </React.Fragment>
     );

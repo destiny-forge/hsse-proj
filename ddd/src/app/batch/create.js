@@ -26,7 +26,7 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
       const { getFile } = file({ config, type: batch.type });
       const csv = await getFile(batch.fileUrl);
       const articles = await parse(csv);
-
+      
       const result = articles.map(async article => {
         article.batchId = newBatch._id;
         article.published = new Date(batch.uploaded);

@@ -5,6 +5,8 @@ import { withRouter } from 'react-router';
 import DatePicker from 'react-datepicker';
 import BatchService from '../../services/BatchService';
 import Select from 'react-select';
+import "react-datepicker/dist/react-datepicker.css";
+import { Redirect } from 'react-router';
 
 const ARTICLE_SOURCES = [
   { value: 'referrals', label: 'Referrals' },
@@ -40,7 +42,9 @@ class BatchUpload extends Component {
       harvestDate: Date.now(),
       selectedArticleSource: null,
       selectedLanguage: null,
-      complete: false
+      complete: false,
+      redirect: false,
+      path: null,
     };
 
     this.Batch = BatchService({ fetch: this.props.fetch });
@@ -54,18 +58,46 @@ class BatchUpload extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
+    const {
+      fileUrl,
+      selectedArticleSource,
+      selectedLanguage,
+      harvestDate,
+      complete
+    } = this.state;
     
     const upload = {
       type: 'sse',
-      fileUrl: this.state.fileUrl,
-      source: this.state.selectedArticleSource.value,
-      language: this.state.selectedLanguage.value,
-      harvested: this.state.harvestDate
+      fileUrl: fileUrl,
+      source: selectedArticleSource.value,
+      language: selectedLanguage.value,
+      harvested: harvestDate
     }
 
-    if (this.state.complete) {
-      this.Batch.create(upload);
-      this.props.history.replace('/articles');
+    if (complete) {
+      this.Batch.create(upload)
+        .then(res => {
+          if (res.success) {
+            if (selectedArticleSource.value === 'referrals') {
+              this.setState({
+                redirect: true,
+                path: '/notes',
+                articles: res.data
+              });  
+            } else {
+              this.setState({
+                redirect: true,
+                path: '/articles',
+                articles: res.data
+              });  
+            }
+            
+          }
+        })
+        .catch(err => {
+          alert(err);
+        });
     }
   };
 
@@ -75,7 +107,6 @@ class BatchUpload extends Component {
         type: 'sse'
       })
       .then(res => {
-        console.log(res);
         fetch(
           new Request(res.data.url, {
             method: 'PUT',
@@ -85,7 +116,6 @@ class BatchUpload extends Component {
             })
           })
         ).then(res => {
-          console.log(res.url);
           if (res.ok) {
             this.setState({
               fileUrl: res.url,
@@ -109,75 +139,82 @@ class BatchUpload extends Component {
   render() {
     const {
       selectedArticleSource,
-      selectedLanguage
+      selectedLanguage,
+      redirect,
+      path,
+      articles
     } = this.state;
 
-    return (
-      <div className="padding">
-        <div className="box">
-          <div className="box-header">
-            <h2>Batch Upload</h2>
-            <small>Drag and drop multiple files to upload</small>
-          </div>
-          <div className="box-body">
-            <form>
-              <div className="form-group form-row">
-                <div className="col-md-6">
-                  <label htmlFor="inputState" className="d-block">
-                    Article Source
-                  </label>
-                  <Select
-                    value={selectedArticleSource}
-                    onChange={(value) => this.handleChange('selectedArticleSource', value)}
-                    options={ARTICLE_SOURCES}
-                    isSearchable
-                  /> 
+    if (redirect) {
+      return (<Redirect to={{ pathname: path, state: { articles } }} />)
+    } else {
+      return (
+        <div className="padding">
+          <div className="box">
+            <div className="box-header">
+              <h2>Batch Upload</h2>
+              <small>Drag and drop multiple files to upload</small>
+            </div>
+            <div className="box-body">
+              <form>
+                <div className="form-group form-row">
+                  <div className="col-md-6">
+                    <label htmlFor="inputState" className="d-block">
+                      Article Source
+                    </label>
+                    <Select
+                      value={selectedArticleSource}
+                      onChange={(value) => this.handleChange('selectedArticleSource', value)}
+                      options={ARTICLE_SOURCES}
+                      isSearchable
+                    /> 
+                  </div>
                 </div>
-              </div>
-              <div className="form-group form-row">
-                <div className="col-md-6">
-                  <label htmlFor="inputState" className="d-block">
-                    Languages
-                  </label>
-                  <Select
-                    value={selectedLanguage}
-                    onChange={(value) => this.handleChange('selectedLanguage', value)}
-                    options={LANGUAGES}
-                    isSearchable
-                  /> 
+                <div className="form-group form-row">
+                  <div className="col-md-6">
+                    <label htmlFor="inputState" className="d-block">
+                      Languages
+                    </label>
+                    <Select
+                      value={selectedLanguage}
+                      onChange={(value) => this.handleChange('selectedLanguage', value)}
+                      options={LANGUAGES}
+                      isSearchable
+                    /> 
+                  </div>
                 </div>
-              </div>
-              <div className="form-group form-row">
-                <div className="col-md-6">
-                  <label htmlFor="published">Harvest Date</label>
-                  <DatePicker
-                    className="form-control"
-                    name="published"
-                    selected={this.state.harvestDate}
-                    onChange={this.handleHarvestDate}
+                <div className="form-group form-row">
+                  <div className="col-md-6">
+                    <label htmlFor="published">Harvest Date</label>
+                    <DatePicker
+                      className="form-control"
+                      name="published"
+                      selected={this.state.harvestDate}
+                      onChange={this.handleHarvestDate}
+                    />
+                  </div>
+                </div>
+                <div className="dropzone white b-a b-3x b-dashed b-primary p-a rounded p-5 text-center mb-3">
+                  <Dropzone
+                    maxFiles={1}
+                    onChangeStatus={this.handleChangeStatus}
+                    onSubmit={this.handleSubmit}
+                    styles={{ dropzone: { minHeight: 10, maxHeight: 30 } }}
                   />
                 </div>
-              </div>
-              <div className="dropzone white b-a b-3x b-dashed b-primary p-a rounded p-5 text-center mb-3">
-                <Dropzone
-                  maxFiles={1}
-                  onChangeStatus={this.handleChangeStatus}
-                  onSubmit={this.handleSubmit}
-                  styles={{ dropzone: { minHeight: 10, maxHeight: 30 } }}
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={!this.state.complete}
-                className="btn primary"
-                onClick={this.handleSubmit}>
-                Submit
-              </button>
-            </form>
+                <button
+                  type="submit"
+                  disabled={!this.state.complete}
+                  className="btn primary"
+                  onClick={this.handleSubmit}>
+                  Submit
+                </button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
