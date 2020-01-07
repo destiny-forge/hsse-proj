@@ -11,7 +11,7 @@ import ForgotPassword from './components/Accounts/ForgotPassword';
 import PasswordReset from './components/Accounts/PasswordReset';
 import BatchUpload from './components/Articles/BatchUpload';
 import Notes from './components/Articles/Notes';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 class App extends Component {

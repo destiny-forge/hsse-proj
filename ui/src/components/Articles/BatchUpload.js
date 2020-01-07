@@ -43,7 +43,8 @@ class BatchUpload extends Component {
       selectedArticleSource: null,
       selectedLanguage: null,
       complete: false,
-      redirect: false
+      redirect: false,
+      path: null,
     };
 
     this.Batch = BatchService({ fetch: this.props.fetch });
@@ -57,23 +58,41 @@ class BatchUpload extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
+    const {
+      fileUrl,
+      selectedArticleSource,
+      selectedLanguage,
+      harvestDate,
+      complete
+    } = this.state;
     
     const upload = {
       type: 'sse',
-      fileUrl: this.state.fileUrl,
-      source: this.state.selectedArticleSource.value,
-      language: this.state.selectedLanguage.value,
-      harvested: this.state.harvestDate
+      fileUrl: fileUrl,
+      source: selectedArticleSource.value,
+      language: selectedLanguage.value,
+      harvested: harvestDate
     }
 
-    if (this.state.complete) {
+    if (complete) {
       this.Batch.create(upload)
         .then(res => {
           if (res.success) {
-            this.setState({
-              redirect: true,
-              articles: res.data
-            });
+            if (selectedArticleSource.value === 'referrals') {
+              this.setState({
+                redirect: true,
+                path: '/notes',
+                articles: res.data
+              });  
+            } else {
+              this.setState({
+                redirect: true,
+                path: '/articles',
+                articles: res.data
+              });  
+            }
+            
           }
         })
         .catch(err => {
@@ -120,15 +139,14 @@ class BatchUpload extends Component {
   render() {
     const {
       selectedArticleSource,
-      selectedLanguage
+      selectedLanguage,
+      redirect,
+      path,
+      articles
     } = this.state;
 
-    if (this.state.redirect) {
-      return (<Redirect to={{
-          pathname: '/notes',
-          state: { articles: this.state.articles }
-        }}
-      />)
+    if (redirect) {
+      return (<Redirect to={{ pathname: path, state: { articles } }} />)
     } else {
       return (
         <div className="padding">

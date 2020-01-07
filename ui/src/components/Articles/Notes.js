@@ -22,9 +22,8 @@ class Notes extends Component {
     });
   }
 
-  notify = () => {
-    toast.success("Changes saved!");
-  }
+  notifyChangesSaved = () => toast.success("Changes saved.") 
+  notifyDone = () => toast.info("Notes complete.") 
 
   compareChanges = (oldArray, newArray) => {
     // Compare the old article props array to the new articles
@@ -40,8 +39,6 @@ class Notes extends Component {
         changes.push(item);
       }
     }
-    // leave for debugging purposes for now.
-    console.log("changed ", changes);
     return changes;
   };
 
@@ -52,6 +49,12 @@ class Notes extends Component {
     });
 
     this.setState({ articles: newArticleData });
+  }
+
+  handleDone = (e) => {
+    e.preventDefault();
+    this.notifyDone();
+    this.props.history.replace('/articles');
   }
 
   handleSubmit = (e) => {
@@ -68,13 +71,7 @@ class Notes extends Component {
     if (changes.length) {    
       this.Note.create(changes)
         .then(res => {
-          this.notify();
-          // Need to have a chat about something here:
-          // I can redirect them on save OR, I think it would be better
-          // if we saved and maybe pushed up a toaster message saying it's
-          // saved. We can then have a button say "Finished" that will move
-          // them away from this screen. I just don't think the idea of having
-          // an explicit "save" is good UX.
+          this.notifyChangesSaved();
         })
         .catch(err => {
           console.log(err);
@@ -110,9 +107,16 @@ class Notes extends Component {
           }
           <button
             type="submit"
-            className="btn primary"
+            className="btn success mr-3"
             onClick={this.handleSubmit}>
-              Submit
+              Save Changes
+          </button>
+
+          <button
+            type="submit"
+            className="btn primary"
+            onClick={this.handleDone}>
+            Done
           </button>
         </div>
       </div>
