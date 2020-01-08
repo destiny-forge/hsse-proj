@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import YearPicker from 'react-year-picker';
-
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import ArticleService from '../../services/ArticleService';
 import validate from './validate';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class ArticleCreate extends Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class ArticleCreate extends Component {
 
   change = e => {
     const { name, value } = e.target;
+
     this.setState({
       article: { ...this.state.article, [name]: value }
     });
@@ -43,6 +45,8 @@ class ArticleCreate extends Component {
     });
   };
 
+  notifyDone = () => toast.success("Article created successfully.");
+
   submit = e => {
     e.preventDefault();
     const { article } = this.state;
@@ -52,6 +56,7 @@ class ArticleCreate extends Component {
       this.Article.create(article);
       this.setState({ errors: [] });
       this.props.history.replace('/articles');
+      this.notifyDone();
     } else {
       console.log(errors);
       this.setState({ errors });
@@ -63,6 +68,8 @@ class ArticleCreate extends Component {
   };
 
   render() {
+    const { source } = this.state.article;
+
     return (
       <div className="padding">
         <div className="box">
@@ -149,6 +156,19 @@ class ArticleCreate extends Component {
                   )}
                 </div>
               </div>
+              {
+                source === 'Single article from referrals' &&
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">Notes</label>
+                    <div className="col-sm-12">
+                      <textarea
+                        name="notes"
+                        className="form-control"
+                        onChange={this.change}
+                        rows="5" />
+                    </div>
+                  </div>
+              }
               <button
                 type="submit"
                 className="btn primary"
