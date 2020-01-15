@@ -44,7 +44,7 @@ class AuthService {
   }
 
   confirmEmail(token) {
-    return this.fetch(`${this.domain}/account/confirm/${token}`, {
+    return this.fetch(`/account/confirm/${token}`, {
       method: 'POST',
       body: JSON.stringify({
         token
@@ -55,7 +55,7 @@ class AuthService {
   }
 
   passwordReset(token, password) {
-    return this.fetch(`${this.domain}/account/reset/${token}`, {
+    return this.fetch(`/account/reset/${token}`, {
       method: 'POST',
       body: JSON.stringify({
         token,
@@ -67,7 +67,7 @@ class AuthService {
   }
 
   forgotPassword(email) {
-    return this.fetch(`${this.domain}/account/reset`, {
+    return this.fetch(`/account/reset`, {
       method: 'POST',
       body: JSON.stringify({
         email
