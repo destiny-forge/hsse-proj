@@ -65,7 +65,9 @@ const Article = t.struct(
     nameOfDatabase: t.maybe(t.String),
     databaseProvider: t.maybe(t.String),
     stage: t.String,
-    status: t.String
+    status: t.String,
+    junior: t.Object,
+    senior: t.Object
   },
   {
     defaultProps: {
@@ -75,7 +77,9 @@ const Article = t.struct(
       complicated: false,
       lost: false,
       stage: "eligibility",
-      status: "needs_assignment"
+      status: "needs_assignment",
+      junior: null,
+      senior: null
     }
   }
 );
