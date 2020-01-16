@@ -80,7 +80,9 @@ module.exports = ({ database }) => {
     database
       .get()
       .collection("articles")
-      .createIndex("type");
+      .createIndex("type")
+      .createIndex("stage")
+      .createIndex("status");
   };
 
   return {
