@@ -271,6 +271,7 @@ const HSEFilter = Filter.extend(
   },
   {
     defaultProps: {
+      type: "hse",
       documentType:
         "NO. After reviewing the document types and eligibility criteria, this record is not eligible for inclusion in HSE."
     }
