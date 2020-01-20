@@ -63,7 +63,11 @@ const Article = t.struct(
     translatedAuthor: t.maybe(t.String),
     translatedTitle: t.maybe(t.String),
     nameOfDatabase: t.maybe(t.String),
-    databaseProvider: t.maybe(t.String)
+    databaseProvider: t.maybe(t.String),
+    stage: t.String,
+    status: t.String,
+    junior: t.maybe(t.Object),
+    senior: t.maybe(t.Object)
   },
   {
     defaultProps: {
@@ -71,7 +75,11 @@ const Article = t.struct(
       source: "Single article from referrals",
       language: "English",
       complicated: false,
-      lost: false
+      lost: false,
+      stage: "eligibility",
+      status: "needs_assignment",
+      junior: null,
+      senior: null
     }
   }
 );

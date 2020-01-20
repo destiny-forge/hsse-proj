@@ -1,11 +1,13 @@
 const ObjectID = require("mongodb").ObjectID;
 
+const COLLECTION = "eligibility";
+
 module.exports = ({ database }) => {
   const create = async article => {
     try {
       const results = await database
         .get()
-        .collection("articles")
+        .collection(COLLECTION)
         .insertOne(article);
       return results.ops[0];
     } catch (e) {
@@ -17,7 +19,7 @@ module.exports = ({ database }) => {
     try {
       const results = await database
         .get()
-        .collection("articles")
+        .collection(COLLECTION)
         .find()
         .toArray();
       return results;
@@ -30,20 +32,8 @@ module.exports = ({ database }) => {
     try {
       return await database
         .get()
-        .collection("articles")
+        .collection(COLLECTION)
         .find({ type: { $eq: type } })
-        .toArray();
-    } catch (e) {
-      throw e;
-    }
-  };
-
-  const find = async (type, stage) => {
-    try {
-      return await database
-        .get()
-        .collection("articles")
-        .find({ type: { $eq: type }, stage: { $eq: stage } })
         .toArray();
     } catch (e) {
       throw e;
@@ -55,7 +45,7 @@ module.exports = ({ database }) => {
       if (!ObjectID.isValid(id)) throw "Invalid MongoDB ID.";
       const results = await database
         .get()
-        .collection("articles")
+        .collection(COLLECTION)
         .findOne(ObjectID(id));
       return results;
     } catch (e) {
@@ -67,7 +57,7 @@ module.exports = ({ database }) => {
     try {
       const results = await database
         .get()
-        .collection("articles")
+        .collection(COLLECTION)
         .findOne(query);
       return results;
     } catch (e) {
@@ -79,7 +69,7 @@ module.exports = ({ database }) => {
     try {
       const cmdResult = await database
         .get()
-        .collection("articles")
+        .collection(COLLECTION)
         .updateOne({ _id: { $eq: ObjectID(id) } }, { $set: fields });
       const { result } = cmdResult.toJSON();
       return result;
@@ -89,26 +79,10 @@ module.exports = ({ database }) => {
   };
 
   const createIndexes = () => {
-    const collection = database.get().collection("articles");
-    collection.createIndex("type");
-    collection.createIndex("stage");
-    collection.createIndex("status");
-  };
-
-  const migrate = () => {
-    const collection = database.get().collection("articles");
-    collection.updateMany(
-      { stage: { $exists: false } },
-      {
-        $set: {
-          junior: null,
-          senior: null,
-          stage: "eligibility",
-          status: "needs_assignment"
-        }
-      },
-      { multi: true, upsert: true }
-    );
+    database
+      .get()
+      .collection(COLLECTION)
+      .createIndex("type");
   };
 
   return {
@@ -117,9 +91,7 @@ module.exports = ({ database }) => {
     findById,
     findByType,
     findOne,
-    find,
     update,
-    createIndexes,
-    migrate
+    createIndexes
   };
 };

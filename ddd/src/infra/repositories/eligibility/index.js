@@ -3,9 +3,9 @@ const { toEntity } = require("./transform");
 module.exports = ({ model }) => {
   const getAll = async (...args) => {
     try {
-      const articles = await model.getAll(...args);
-      return articles.map(article => {
-        return toEntity(article);
+      const filters = await model.getAll(...args);
+      return filters.map(filter => {
+        return toEntity(filter);
       });
     } catch (err) {
       throw new Error(err);
@@ -14,20 +14,9 @@ module.exports = ({ model }) => {
 
   const findByType = async type => {
     try {
-      const articles = await model.findByType(type);
-      return articles.map(article => {
-        return toEntity(article);
-      });
-    } catch (err) {
-      throw new Error(err);
-    }
-  };
-
-  const find = async (type, stage) => {
-    try {
-      const articles = await model.find(type, stage);
-      return articles.map(article => {
-        return toEntity(article);
+      const filters = await model.findByType(type);
+      return filters.map(filter => {
+        return toEntity(filter);
       });
     } catch (err) {
       throw new Error(err);
@@ -36,8 +25,8 @@ module.exports = ({ model }) => {
 
   const create = async (...args) => {
     try {
-      const article = await model.create(...args);
-      return toEntity(article);
+      const filter = await model.create(...args);
+      return toEntity(filter);
     } catch (err) {
       throw new Error(err);
     }
@@ -53,8 +42,8 @@ module.exports = ({ model }) => {
 
   const findById = async (...args) => {
     try {
-      const article = await model.findById(...args);
-      return toEntity(article);
+      const filter = await model.findById(...args);
+      return toEntity(filter);
     } catch (err) {
       throw new Error(err);
     }
@@ -62,8 +51,8 @@ module.exports = ({ model }) => {
 
   const findOne = async (...args) => {
     try {
-      const article = await model.findOne(...args);
-      return toEntity(article);
+      const filter = await model.findOne(...args);
+      return toEntity(filter);
     } catch (err) {
       throw new Error(err);
     }
@@ -75,7 +64,6 @@ module.exports = ({ model }) => {
     update,
     findById,
     findByType,
-    find,
     findOne
   };
 };
