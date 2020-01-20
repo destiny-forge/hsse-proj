@@ -38,12 +38,12 @@ module.exports = ({ database }) => {
     }
   };
 
-  const find = async (type, stage) => {
+  const find = async (type, stage, status) => {
     try {
       return await database
         .get()
         .collection("articles")
-        .find({ type: { $eq: type }, stage: { $eq: stage } })
+        .find({ type: { $eq: type }, [`stages.${stage}.status`]: status })
         .toArray();
     } catch (e) {
       throw e;
@@ -91,20 +91,26 @@ module.exports = ({ database }) => {
   const createIndexes = () => {
     const collection = database.get().collection("articles");
     collection.createIndex("type");
-    collection.createIndex("stage");
-    collection.createIndex("status");
+    collection.createIndex("stages.eligibility.status");
+    collection.createIndex("stages.studies.status");
+    collection.createIndex("stages.appraisals.status");
+    collection.createIndex("stages.prioritizing.status");
+    collection.createIndex("stages.translations.status");
   };
 
   const migrate = () => {
     const collection = database.get().collection("articles");
     collection.updateMany(
-      { stage: { $exists: false } },
+      { stages: { $exists: false } },
       {
         $set: {
-          junior: null,
-          senior: null,
-          stage: "eligibility",
-          status: "needs_assignment"
+          stages: {
+            eligibility: { status: "pending_assignment" },
+            studies: { status: "pending_assignment" },
+            appraisals: { status: "pending_assignment" },
+            prioritizing: { status: "pending_assignment" },
+            translations: { status: "pending_assignment" }
+          }
         }
       },
       { multi: true, upsert: true }

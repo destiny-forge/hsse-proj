@@ -10,6 +10,7 @@ const Filter = t.struct(
     _id: t.maybe(t.String),
     shortId: t.String,
     articleId: tx.String.MongoId,
+    user: t.Object,
 
     type: t.String,
 

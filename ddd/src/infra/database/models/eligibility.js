@@ -40,15 +40,13 @@ module.exports = ({ database }) => {
     }
   };
 
-  const find = async (articleId, userId) => {
+  const find = async (articleId, user) => {
+    const { _id, type } = user;
     try {
       return await database
         .get()
         .collection(COLLECTION)
-        .find({
-          articleId: { $eq: articleId },
-          userId: { $eq: userId }
-        })
+        .find({ articleId, user: { _id, type } })
         .toArray();
     } catch (e) {
       throw e;

@@ -12,9 +12,9 @@ module.exports = ({ model }) => {
     }
   };
 
-  const find = async (articleId, userId) => {
+  const find = async (articleId, user) => {
     try {
-      const filters = await model.find(articleId, userId);
+      const filters = await model.find(articleId, user);
       return filters.map(filter => {
         return toEntity(filter);
       });

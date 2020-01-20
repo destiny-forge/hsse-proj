@@ -23,9 +23,9 @@ module.exports = ({ model }) => {
     }
   };
 
-  const find = async (type, stage) => {
+  const find = async (type, stage, status) => {
     try {
-      const articles = await model.find(type, stage);
+      const articles = await model.find(type, stage, status);
       return articles.map(article => {
         return toEntity(article);
       });
