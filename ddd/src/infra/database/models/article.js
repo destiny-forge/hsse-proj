@@ -75,6 +75,22 @@ module.exports = ({ database }) => {
     }
   };
 
+  const assign = async (id, stage, type, user) => {
+    try {
+      const assignment = {
+        [`stages.${stage}.${type}`]: user
+      };
+      const cmdResult = await database
+        .get()
+        .collection("articles")
+        .updateOne({ _id: { $eq: ObjectID(id) } }, { $set: assignment });
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const update = async (id, fields) => {
     try {
       const cmdResult = await database
@@ -124,6 +140,7 @@ module.exports = ({ database }) => {
     findByType,
     findOne,
     find,
+    assign,
     update,
     createIndexes,
     migrate

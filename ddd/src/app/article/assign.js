@@ -4,35 +4,40 @@
 module.exports = ({ articleRepository }) => {
   const assign = async assignment => {
     try {
-      if (
-        !assignment.type ||
-        assignment.type !== "junior" ||
-        assignment.type !== "senior"
-      ) {
+      const { articleId, stage, type, user } = assignment;
+
+      if (!type || (type !== "junior" && type !== "senior")) {
         return {
           error: "A valid assignment type is required"
         };
       }
 
-      if (!assignment.article._id) {
+      if (!articleId) {
         return {
           error: "A valid article _id is required"
         };
       }
 
-      if (!assignment.user._id) {
+      if (!user._id) {
         return {
           error: "A valid user _id is required"
         };
       }
 
-      const article_id = assignment.article._id;
-      const { _id, name } = assignment.user;
-      const entity = {
-        [assignment.type]: { _id, name }
-      };
+      if (
+        !stage ||
+        (stage !== "eligibility" &&
+          stage !== "studies" &&
+          stage !== "appraisals" &&
+          stage !== "prioritizing" &&
+          stage !== "translations")
+      ) {
+        return {
+          error: "A valid assignment stage is required"
+        };
+      }
 
-      return await articleRepository.update(article_id, entity);
+      return await articleRepository.assign(articleId, stage, type, user);
     } catch (error) {
       throw new Error(error);
     }

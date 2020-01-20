@@ -51,6 +51,14 @@ module.exports = ({ model }) => {
     }
   };
 
+  const assign = async (...args) => {
+    try {
+      return model.assign(...args);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const findById = async (...args) => {
     try {
       const article = await model.findById(...args);
@@ -76,6 +84,7 @@ module.exports = ({ model }) => {
     findById,
     findByType,
     find,
+    assign,
     findOne
   };
 };
