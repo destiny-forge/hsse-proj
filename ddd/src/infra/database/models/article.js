@@ -98,7 +98,7 @@ module.exports = ({ database }) => {
   const migrate = () => {
     const collection = database.get().collection("articles");
     collection.updateMany(
-      { junior: { $exists: false } },
+      { stage: { $exists: false } },
       {
         $set: {
           junior: null,
