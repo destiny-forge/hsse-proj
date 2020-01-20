@@ -55,7 +55,7 @@ class ArticleCreate extends Component {
     if (ok) {
       this.Article.create(article);
       this.setState({ errors: [] });
-      this.props.history.replace('/articles');
+      this.props.history.replace('/sse/articles');
       this.notifyDone();
     } else {
       console.log(errors);
