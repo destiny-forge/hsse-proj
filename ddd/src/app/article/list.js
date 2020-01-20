@@ -2,7 +2,7 @@
  * Article list
  */
 module.exports = ({ articleRepository }) => {
-  const list = async (type = "hse", stage) => {
+  const list = async (type, stage) => {
     try {
       if (!type || (type !== "sse" && type !== "hse")) {
         return {
