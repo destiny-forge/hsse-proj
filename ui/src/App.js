@@ -39,7 +39,7 @@ class App extends Component {
           <Route path="/account/confirm/:token" component={ConfirmEmail} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/article" component={ArticleCreate} />
-          <Route path="/articles" component={ArticleList} />
+          <Route path="/sse/articles" component={ArticleList} />
           <Route path="/upload" component={BatchUpload} />
           <Route path="/notes" component={Notes} />
         </Router>

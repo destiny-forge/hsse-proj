@@ -94,41 +94,32 @@ export default function withAuth(AuthComponent) {
                           </a>
                         </li>
                         <li>
-                          <a href="/articles">
+                          <a href="#!">
                             <span className="nav-icon">
                               <i className="fa fa-align-left"></i>
                             </span>
-                            <span className="nav-text">HS Assigned</span>
+                            <span className="nav-text">Health Systems</span>
                           </a>
                         </li>
+
                         <li>
-                          <a href="!#">
-                            <span className="nav-badge">
-                              <b className="badge badge-sm badge-pill success">
-                                6
-                              </b>
-                            </span>
-                            <span className="nav-icon">
-                              <i className="fa fa-envelope"></i>
-                            </span>
-                            <span className="nav-text">SS Assigned</span>
+                          <a>
+                            <span class="nav-caret"><i class="fa fa-caret-down"></i></span>
+                            <span class="nav-icon"><i class="fa fa-align-left"></i></span>
+                            <span class="nav-text">Social Systems</span>
                           </a>
-                        </li>
-                        <li>
-                          <a href="!#">
-                            <span className="nav-icon">
-                              <i className="fa fa-comment"></i>
-                            </span>
-                            <span className="nav-text">HS Pending</span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="!#">
-                            <span className="nav-icon">
-                              <i className="fa fa-phone-square"></i>
-                            </span>
-                            <span className="nav-text">SS Pending</span>
-                          </a>
+                          <ul class="nav-sub">
+                            <li>
+                              <a href="/sse/articles">
+                                <span class="nav-text">Articles</span>
+                              </a>
+                            </li>
+                            <li>
+                              <a href="/sse/eligibility-filters">
+                                <span class="nav-text">Eligibility & Filters</span>
+                              </a>
+                            </li>
+                          </ul>
                         </li>
                         <li className="pb-2 hidden-folded"></li>
                       </ul>
