@@ -109,9 +109,9 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.get("/", (req, res) => {
-    const { type } = req.body;
+    const { type, stage } = req.body;
     listUseCase
-      .list(type)
+      .list(type, stage)
       .then(data => {
         res.status(Status.OK).json(Success(data));
       })

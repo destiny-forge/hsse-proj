@@ -1,5 +1,5 @@
 const container = require("src/container");
-const { create, list } = require("src/app/eligibility");
+const { create, get } = require("src/app/eligibility");
 
 module.exports = () => {
   const {
@@ -10,12 +10,12 @@ module.exports = () => {
     eligibilityRepository
   });
 
-  const listUseCase = list({
+  const getUseCase = get({
     eligibilityRepository
   });
 
   return {
     createUseCase,
-    listUseCase
+    getUseCase
   };
 };

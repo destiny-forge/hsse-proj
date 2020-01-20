@@ -3,7 +3,7 @@ const { Router } = require("express");
 
 module.exports = ({
   createUseCase,
-  listUseCase,
+  getUseCase,
   logger,
   response: { Success, Fail }
 }) => {
@@ -71,10 +71,11 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/", (req, res) => {
-    const { type } = req.body;
-    listUseCase
-      .list(type)
+  router.get("/:articleId", (req, res) => {
+    const { userId } = req.body; // ideally this comes from req middleware not body
+    const { articleId } = req.params;
+    getUseCase
+      .get(articleId, userId)
       .then(data => {
         res.status(Status.OK).json(Success(data));
       })

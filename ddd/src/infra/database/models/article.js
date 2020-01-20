@@ -38,6 +38,18 @@ module.exports = ({ database }) => {
     }
   };
 
+  const find = async (type, stage) => {
+    try {
+      return await database
+        .get()
+        .collection("articles")
+        .find({ type: { $eq: type }, stage: { $eq: stage } })
+        .toArray();
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const findById = async id => {
     try {
       if (!ObjectID.isValid(id)) throw "Invalid MongoDB ID.";
@@ -77,12 +89,26 @@ module.exports = ({ database }) => {
   };
 
   const createIndexes = () => {
-    database
-      .get()
-      .collection("articles")
-      .createIndex("type")
-      .createIndex("stage")
-      .createIndex("status");
+    const collection = database.get().collection("articles");
+    collection.createIndex("type");
+    collection.createIndex("stage");
+    collection.createIndex("status");
+  };
+
+  const migrate = () => {
+    const collection = database.get().collection("articles");
+    collection.updateMany(
+      { junior: { $exists: false } },
+      {
+        $set: {
+          junior: null,
+          senior: null,
+          stage: "eligibility",
+          status: "needs_assignment"
+        }
+      },
+      { multi: true, upsert: true }
+    );
   };
 
   return {
@@ -91,7 +117,9 @@ module.exports = ({ database }) => {
     findById,
     findByType,
     findOne,
+    find,
     update,
-    createIndexes
+    createIndexes,
+    migrate
   };
 };

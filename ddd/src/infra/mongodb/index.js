@@ -53,6 +53,9 @@ const configure = () => {
         if (Model.hasOwnProperty("createIndexes")) {
           Model.createIndexes();
         }
+        if (Model.hasOwnProperty("migrate")) {
+          Model.migrate();
+        }
       });
       resolve(true);
     } catch (err) {

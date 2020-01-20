@@ -66,8 +66,8 @@ const Article = t.struct(
     databaseProvider: t.maybe(t.String),
     stage: t.String,
     status: t.String,
-    junior: t.Object,
-    senior: t.Object
+    junior: t.maybe(t.Object),
+    senior: t.maybe(t.Object)
   },
   {
     defaultProps: {
