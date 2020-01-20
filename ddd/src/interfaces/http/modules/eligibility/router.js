@@ -52,14 +52,14 @@ module.exports = ({
    *   get:
    *     tags:
    *       - Eligibility
-   *     description: Eligibility list by type
+   *     description: Eligibility filter by shortArticleId and userId
    *     consumes:
    *       - application/json
    *     produces:
    *       - application/json
    *     parameters:
    *       - name: body
-   *         description: Eligibility type
+   *         description: Eligibility filter
    *         in: body
    *         required: true
    *         type: string
@@ -71,11 +71,11 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/:articleId", (req, res) => {
+  router.get("/:shortArticleId", (req, res) => {
     const { userId } = req.body; // ideally this comes from req middleware not body
-    const { articleId } = req.params;
+    const { shortArticleId } = req.params;
     getUseCase
-      .get(articleId, userId)
+      .get(shortArticleId, userId)
       .then(data => {
         res.status(Status.OK).json(Success(data));
       })

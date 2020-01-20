@@ -40,6 +40,21 @@ module.exports = ({ database }) => {
     }
   };
 
+  const find = async (articleId, userId) => {
+    try {
+      return await database
+        .get()
+        .collection(COLLECTION)
+        .find({
+          articleId: { $eq: articleId },
+          userId: { $eq: userId }
+        })
+        .toArray();
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const findById = async id => {
     try {
       if (!ObjectID.isValid(id)) throw "Invalid MongoDB ID.";
@@ -91,6 +106,7 @@ module.exports = ({ database }) => {
     findById,
     findByType,
     findOne,
+    find,
     update,
     createIndexes
   };
