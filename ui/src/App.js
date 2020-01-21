@@ -13,6 +13,7 @@ import BatchUpload from './components/Articles/BatchUpload';
 import Notes from './components/Articles/Notes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import EligibilityFilters from './components/Articles/EligibilityFilters';
 
 class App extends Component {
   render() {
@@ -39,7 +40,8 @@ class App extends Component {
           <Route path="/account/confirm/:token" component={ConfirmEmail} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/article" component={ArticleCreate} />
-          <Route path="/articles" component={ArticleList} />
+          <Route path="/sse/articles" component={ArticleList} />
+          <Route path="/sse/eligibility-filters" component={EligibilityFilters} />
           <Route path="/upload" component={BatchUpload} />
           <Route path="/notes" component={Notes} />
         </Router>
