@@ -102,8 +102,8 @@ export default function withAuth(AuthComponent) {
                         </li>
                         <li>
                           <a href="/sse">
-                            <span class="nav-icon"><i class="fa fa-align-left"></i></span>
-                            <span class="nav-text">Social Systems</span>
+                            <span className="nav-icon"><i className="fa fa-align-left"></i></span>
+                            <span className="nav-text">Social Systems</span>
                           </a>
                         </li>
                         <li className="pb-2 hidden-folded"></li>
