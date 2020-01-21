@@ -64,10 +64,7 @@ const Article = t.struct(
     translatedTitle: t.maybe(t.String),
     nameOfDatabase: t.maybe(t.String),
     databaseProvider: t.maybe(t.String),
-    stage: t.String,
-    status: t.String,
-    junior: t.maybe(t.Object),
-    senior: t.maybe(t.Object)
+    stages: t.maybe(t.Object)
   },
   {
     defaultProps: {
@@ -76,10 +73,13 @@ const Article = t.struct(
       language: "English",
       complicated: false,
       lost: false,
-      stage: "eligibility",
-      status: "needs_assignment",
-      junior: null,
-      senior: null
+      stages: {
+        eligibility: { status: "pending_assignment" },
+        studies: { status: "pending_assignment" },
+        appraisals: { status: "pending_assignment" },
+        prioritizing: { status: "pending_assignment" },
+        translations: { status: "pending_assignment" }
+      }
     }
   }
 );

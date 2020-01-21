@@ -23,9 +23,9 @@ module.exports = ({ model }) => {
     }
   };
 
-  const find = async (type, stage) => {
+  const find = async (type, stage, status) => {
     try {
-      const articles = await model.find(type, stage);
+      const articles = await model.find(type, stage, status);
       return articles.map(article => {
         return toEntity(article);
       });
@@ -46,6 +46,14 @@ module.exports = ({ model }) => {
   const update = async (...args) => {
     try {
       return model.update(...args);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
+  const assign = async (...args) => {
+    try {
+      return model.assign(...args);
     } catch (err) {
       throw new Error(err);
     }
@@ -76,6 +84,7 @@ module.exports = ({ model }) => {
     findById,
     findByType,
     find,
+    assign,
     findOne
   };
 };

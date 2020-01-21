@@ -4,6 +4,7 @@ const { Router } = require("express");
 module.exports = ({
   createUseCase,
   listUseCase,
+  assignUseCase,
   logger,
   response: { Success, Fail }
 }) => {
@@ -109,9 +110,9 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.get("/", (req, res) => {
-    const { type, stage } = req.body;
+    const { type, stage, status } = req.body;
     listUseCase
-      .list(type, stage)
+      .list(type, stage, status)
       .then(data => {
         res.status(Status.OK).json(Success(data));
       })
