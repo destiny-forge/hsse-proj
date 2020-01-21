@@ -16,7 +16,7 @@ class ArticleCreate extends Component {
         title: '',
         authors: '',
         journal: '',
-        type: 'sse',
+        type: '',
         source: 'Single article from referrals',
         published: new Date().getFullYear()
       },
@@ -107,6 +107,32 @@ class ArticleCreate extends Component {
                     required
                   />
                   {this.hasError('authors', 'required') && (
+                    <div className="alert alert-danger">Field is required</div>
+                  )}
+                </div>
+              </div>
+              <div className="form-group form-row">
+                <div className="col-md-2">
+                  <label htmlFor="source" className="d-block">
+                    Type
+                  </label>
+                  <select
+                    name="type"
+                    className="custom-select"
+                    onChange={this.change}
+                    required
+                  >
+                    <option value="">
+                      Please select
+                    </option>
+                    <option value="hse">
+                      HSE
+                    </option>
+                    <option value="sse">
+                      SSE
+                    </option>
+                  </select>
+                  {this.hasError('type', 'required') && (
                     <div className="alert alert-danger">Field is required</div>
                   )}
                 </div>

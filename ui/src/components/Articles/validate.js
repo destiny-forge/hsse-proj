@@ -9,6 +9,10 @@ const validate = article => {
     errors.authors = 'required';
   }
 
+  if (!article.type) {
+    errors.type = 'required';
+  }
+
   if (!article.journal) {
     errors.journal = 'required';
   }
