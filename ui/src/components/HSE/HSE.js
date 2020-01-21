@@ -2,27 +2,21 @@ import React, { Component } from 'react';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 
-class SSE extends Component {
-
-  trackTab = (tab) => {
-    this.setState({
-      tab
-    }, () => console.log(this.state));
-  }
-
+class HSE extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="item sse">
+        <div className="item hse">
           <div className="p-4">
             <div className="row mt-3">
               <div className="col-sm-7">
                 <div className="media">
                   <div className="media-body mx-3 mb-2">
-                    <h4>SOCIAL SYSTEMS EVIDENCE</h4>
+                    <h4>HEALTH SYSTEMS EVIDENCE</h4>
                     <p>
-                      The world's most comprehensive, free access point for evidence about strengthening 20 government 
-                      sectors and program areas, and achieving the Sustainable Development Goals.
+                      The world's most comprehensive, free access point for evidence to support policy makers, stakeholders and 
+                      researchers interested in how to strengthen or reform health systems or in how to get cost-effective programs, 
+                      services and drugs to those who need them.
                     </p>
                   </div>
                 </div>
@@ -36,28 +30,13 @@ class SSE extends Component {
               <div className="py-4 clearfix nav-active-theme">
                 <ul className="nav nav-pills nav-sm">
                   <li className="nav-item">
-                    <a
-                      className="nav-link active"
-                      href="#!"
-                      data-toggle="tab"
-                      data-target="#tab_1"
-                      onClick={() => this.trackTab('pending')}>Pending</a>
+                    <a className="nav-link active" href="#" data-toggle="tab" data-target="#tab_1">Pending</a>
                   </li>
                   <li className="nav-item">
-                    <a
-                      className="nav-link"
-                      href="#!"
-                      data-toggle="tab"
-                      data-target="#tab_2"
-                      onClick={() => this.trackTab('assigned')}>Assigned</a>
+                    <a className="nav-link" href="#" data-toggle="tab" data-target="#tab_2">Assigned</a>
                   </li>
                   <li className="nav-item">
-                    <a 
-                      className="nav-link"
-                      href="#!"
-                      data-toggle="tab"
-                      data-target="#tab_3"
-                      onClick={() => this.trackTab('complicated')}>Complicated</a>
+                    <a className="nav-link" href="#" data-toggle="tab" data-target="#tab_3">Complicated</a>
                   </li>
                 </ul>
               </div>
@@ -71,18 +50,18 @@ class SSE extends Component {
                 <div className="tab-pane fade show active" id="tab_1">
                   First tab
                 </div>
-              
+
                 <div className="tab-pane fade" id="tab_2">
                   Second tab
                 </div>
-                
+
                 <div className="tab-pane fade" id="tab_3">
                   Third tab
                 </div>
               </div>
             </div>
-                
-            <div className="col-sm-4 col-lg-3">                  
+
+            <div className="col-sm-4 col-lg-3">
               <div className="box">
                 <div className="box-header">
                   <h2>Actions</h2>
@@ -120,7 +99,7 @@ class SSE extends Component {
                     </div>
                   </li>
                 </ul>
-              </div>                
+              </div>
             </div>
           </div>
         </div>
@@ -129,4 +108,4 @@ class SSE extends Component {
   }
 }
 
-export default withRouter(withAuth(SSE));
+export default withRouter(withAuth(HSE));

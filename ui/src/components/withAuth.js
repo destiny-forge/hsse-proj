@@ -93,7 +93,7 @@ export default function withAuth(AuthComponent) {
                           </a>
                         </li>
                         <li>
-                          <a href="#!">
+                          <a href="/hse">
                             <span className="nav-icon">
                               <i className="fa fa-align-left"></i>
                             </span>

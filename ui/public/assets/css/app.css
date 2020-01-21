@@ -2261,11 +2261,21 @@ Icon
 /*
 Item
 */
-.item {
+
+.sse {
   background: #a71930;
   background: linear-gradient(to right,#ed2124,#a71930);
-  position: relative;
   color: #fff;
+}
+
+.hse {
+  background: #1925e3;
+  background: linear-gradient(to right,#178eee,#1925e3);
+  color: #fff;
+}
+
+.item {
+  position: relative;
   margin: 0 auto; }
   .item::after {
     display: block;
