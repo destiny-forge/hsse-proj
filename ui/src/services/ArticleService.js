@@ -16,9 +16,15 @@ const ArticleService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
+  const eligibilityFilters = async () => {
+    const res = await fetch('/eligibility-filters')
+    return Promise.resolve(res);
+  };
+
   return {
     create,
-    list
+    list,
+    eligibilityFilters
   };
 };
 

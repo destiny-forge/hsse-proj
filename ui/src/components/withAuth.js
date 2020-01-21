@@ -84,7 +84,6 @@ export default function withAuth(AuthComponent) {
                             <span className="nav-text">Dashboard</span>
                           </a>
                         </li>
-                        {/* TODO: Move this link into the article page? */}
                         <li>
                           <a href="/upload">
                             <span className="nav-icon">
@@ -94,40 +93,17 @@ export default function withAuth(AuthComponent) {
                           </a>
                         </li>
                         <li>
-                          <a href="/articles">
+                          <a href="/hse">
                             <span className="nav-icon">
                               <i className="fa fa-align-left"></i>
                             </span>
-                            <span className="nav-text">HS Assigned</span>
+                            <span className="nav-text">Health Systems</span>
                           </a>
                         </li>
                         <li>
-                          <a href="!#">
-                            <span className="nav-badge">
-                              <b className="badge badge-sm badge-pill success">
-                                6
-                              </b>
-                            </span>
-                            <span className="nav-icon">
-                              <i className="fa fa-envelope"></i>
-                            </span>
-                            <span className="nav-text">SS Assigned</span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="!#">
-                            <span className="nav-icon">
-                              <i className="fa fa-comment"></i>
-                            </span>
-                            <span className="nav-text">HS Pending</span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="!#">
-                            <span className="nav-icon">
-                              <i className="fa fa-phone-square"></i>
-                            </span>
-                            <span className="nav-text">SS Pending</span>
+                          <a href="/sse">
+                            <span className="nav-icon"><i className="fa fa-align-left"></i></span>
+                            <span className="nav-text">Social Systems</span>
                           </a>
                         </li>
                         <li className="pb-2 hidden-folded"></li>

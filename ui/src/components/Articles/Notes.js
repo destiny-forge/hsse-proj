@@ -54,7 +54,7 @@ class Notes extends Component {
   handleDone = (e) => {
     e.preventDefault();
     this.notifyDone();
-    this.props.history.replace('/articles');
+    this.props.history.replace('/sse/articles');
   }
 
   handleSubmit = (e) => {
