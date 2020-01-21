@@ -14,3 +14,8 @@ Custom css
 div.react-datepicker-wrapper {
   display: block;
 }
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  color: #fff;
+  background-color: #9e9e9e;
+}

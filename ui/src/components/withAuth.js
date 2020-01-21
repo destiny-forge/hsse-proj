@@ -84,7 +84,6 @@ export default function withAuth(AuthComponent) {
                             <span className="nav-text">Dashboard</span>
                           </a>
                         </li>
-                        {/* TODO: Move this link into the article page? */}
                         <li>
                           <a href="/upload">
                             <span className="nav-icon">
@@ -101,25 +100,11 @@ export default function withAuth(AuthComponent) {
                             <span className="nav-text">Health Systems</span>
                           </a>
                         </li>
-
                         <li>
-                          <a>
-                            <span class="nav-caret"><i class="fa fa-caret-down"></i></span>
+                          <a href="/sse">
                             <span class="nav-icon"><i class="fa fa-align-left"></i></span>
                             <span class="nav-text">Social Systems</span>
                           </a>
-                          <ul class="nav-sub">
-                            <li>
-                              <a href="/sse/articles">
-                                <span class="nav-text">Articles</span>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="/sse/eligibility-filters">
-                                <span class="nav-text">Eligibility & Filters</span>
-                              </a>
-                            </li>
-                          </ul>
                         </li>
                         <li className="pb-2 hidden-folded"></li>
                       </ul>

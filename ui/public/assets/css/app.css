@@ -2262,7 +2262,10 @@ Icon
 Item
 */
 .item {
+  background: #a71930;
+  background: linear-gradient(to right,#ed2124,#a71930);
   position: relative;
+  color: #fff;
   margin: 0 auto; }
   .item::after {
     display: block;
