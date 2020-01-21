@@ -2,12 +2,30 @@
  * Eligibility get
  */
 module.exports = ({ eligibilityRepository, articleRepository }) => {
-  const get = async (shortArticleId, user) => {
+  const get = async (shortArticleId, userId) => {
+    if (!shortArticleId) {
+      return {
+        error: "A valid shortArticleId is required"
+      };
+    }
+
+    if (!userId) {
+      return {
+        error: "A valid userId is required"
+      };
+    }
+
     try {
-      article = await articleRepository.findOne({
+      const article = await articleRepository.findOne({
         shortId: { $eq: shortArticleId }
       });
-      return await eligibilityRepository.find(article._id, user);
+
+      if (!article) {
+        return {
+          error: "Article with shortArticleId not found"
+        };
+      }
+      return await eligibilityRepository.findOne(article._id, userId);
     } catch (error) {
       throw new Error(error);
     }

@@ -62,7 +62,7 @@ module.exports = ({ model }) => {
   const findById = async (...args) => {
     try {
       const article = await model.findById(...args);
-      return toEntity(article);
+      return article ? toEntity(article) : null;
     } catch (err) {
       throw new Error(err);
     }
@@ -71,7 +71,7 @@ module.exports = ({ model }) => {
   const findOne = async (...args) => {
     try {
       const article = await model.findOne(...args);
-      return toEntity(article);
+      return article ? toEntity(article) : null;
     } catch (err) {
       throw new Error(err);
     }
