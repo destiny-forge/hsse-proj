@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
+import withSection from '../Articles/Section';
 
 class HSE extends Component {
   render() {
+    const { trackTab } = this.props;
+    
     return (
       <React.Fragment>
         <div className="item hse">
@@ -30,13 +33,28 @@ class HSE extends Component {
               <div className="py-4 clearfix nav-active-theme">
                 <ul className="nav nav-pills nav-sm">
                   <li className="nav-item">
-                    <a className="nav-link active" href="#" data-toggle="tab" data-target="#tab_1">Pending</a>
+                    <a
+                      className="nav-link active"
+                      href="#!"
+                      data-toggle="tab"
+                      data-target="#tab_1"
+                      onClick={() => trackTab('hse', 'pending')}>Pending</a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#" data-toggle="tab" data-target="#tab_2">Assigned</a>
+                    <a
+                      className="nav-link"
+                      href="#!"
+                      data-toggle="tab"
+                      data-target="#tab_2"
+                      onClick={() => trackTab('hse', 'assigned')}>Assigned</a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#" data-toggle="tab" data-target="#tab_3">Complicated</a>
+                    <a
+                      className="nav-link"
+                      href="#!"
+                      data-toggle="tab"
+                      data-target="#tab_3"
+                      onClick={() => trackTab('hse', 'complicated')}>Complicated</a>
                   </li>
                 </ul>
               </div>
@@ -108,4 +126,4 @@ class HSE extends Component {
   }
 }
 
-export default withRouter(withAuth(HSE));
+export default withRouter(withAuth(withSection(HSE)));

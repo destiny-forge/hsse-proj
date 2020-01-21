@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
+import withSection from '../Articles/Section';
 
 class SSE extends Component {
 
-  trackTab = (tab) => {
-    this.setState({
-      tab
-    }, () => console.log(this.state));
-  }
-
   render() {
+    const { trackTab } = this.props;
+
     return (
       <React.Fragment>
         <div className="item sse">
@@ -41,7 +38,7 @@ class SSE extends Component {
                       href="#!"
                       data-toggle="tab"
                       data-target="#tab_1"
-                      onClick={() => this.trackTab('pending')}>Pending</a>
+                      onClick={() => trackTab('sse', 'pending')}>Pending</a>
                   </li>
                   <li className="nav-item">
                     <a
@@ -49,7 +46,7 @@ class SSE extends Component {
                       href="#!"
                       data-toggle="tab"
                       data-target="#tab_2"
-                      onClick={() => this.trackTab('assigned')}>Assigned</a>
+                      onClick={() => trackTab('sse', 'assigned')}>Assigned</a>
                   </li>
                   <li className="nav-item">
                     <a 
@@ -57,7 +54,7 @@ class SSE extends Component {
                       href="#!"
                       data-toggle="tab"
                       data-target="#tab_3"
-                      onClick={() => this.trackTab('complicated')}>Complicated</a>
+                      onClick={() => trackTab('sse', 'complicated')}>Complicated</a>
                   </li>
                 </ul>
               </div>
@@ -129,4 +126,4 @@ class SSE extends Component {
   }
 }
 
-export default withRouter(withAuth(SSE));
+export default withRouter(withAuth(withSection(SSE)));
