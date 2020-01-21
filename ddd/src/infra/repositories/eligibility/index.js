@@ -12,9 +12,9 @@ module.exports = ({ model }) => {
     }
   };
 
-  const find = async (articleId, user) => {
+  const find = async (...args) => {
     try {
-      const filters = await model.find(articleId, user);
+      const filters = await model.find(...args);
       return filters.map(filter => {
         return toEntity(filter);
       });
@@ -54,7 +54,7 @@ module.exports = ({ model }) => {
   const findById = async (...args) => {
     try {
       const filter = await model.findById(...args);
-      return toEntity(filter);
+      return filter ? toEntity(filter) : null;
     } catch (err) {
       throw new Error(err);
     }
@@ -63,7 +63,7 @@ module.exports = ({ model }) => {
   const findOne = async (...args) => {
     try {
       const filter = await model.findOne(...args);
-      return toEntity(filter);
+      return filter ? toEntity(filter) : null;
     } catch (err) {
       throw new Error(err);
     }

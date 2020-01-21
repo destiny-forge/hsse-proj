@@ -40,13 +40,12 @@ module.exports = ({ database }) => {
     }
   };
 
-  const find = async (articleId, user) => {
-    const { _id, type } = user;
+  const find = async query => {
     try {
       return await database
         .get()
         .collection(COLLECTION)
-        .find({ articleId, user: { _id, type } })
+        .findOne(query)
         .toArray();
     } catch (e) {
       throw e;
@@ -66,12 +65,12 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findOne = async query => {
+  const findOne = async (articleId, userId) => {
     try {
       const results = await database
         .get()
         .collection(COLLECTION)
-        .findOne(query);
+        .findOne({ articleId, userId });
       return results;
     } catch (e) {
       throw e;

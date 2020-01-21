@@ -72,10 +72,10 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.get("/:shortArticleId", (req, res) => {
-    const { user } = req.body; // ideally this comes from req middleware not body
+    const { userId } = req.body; // ideally this comes from req middleware not body
     const { shortArticleId } = req.params;
     getUseCase
-      .get(shortArticleId, user)
+      .get(shortArticleId, userId)
       .then(data => {
         res.status(Status.OK).json(Success(data));
       })

@@ -3,7 +3,7 @@ const { create, get } = require("src/app/eligibility");
 
 module.exports = () => {
   const {
-    repository: { eligibilityRepository }
+    repository: { eligibilityRepository, articleRepository }
   } = container.cradle;
 
   const createUseCase = create({
@@ -11,7 +11,8 @@ module.exports = () => {
   });
 
   const getUseCase = get({
-    eligibilityRepository
+    eligibilityRepository,
+    articleRepository
   });
 
   return {
