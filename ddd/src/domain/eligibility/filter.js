@@ -11,6 +11,7 @@ const Filter = t.struct(
     shortId: t.String,
     articleId: tx.String.MongoId,
     userId: tx.String.MongoId,
+    role: t.String,
 
     type: t.String,
 
