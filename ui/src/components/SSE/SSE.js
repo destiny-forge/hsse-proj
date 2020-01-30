@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import withSection from '../Articles/Section';
+import ArticleList from '../Articles/ArticleList';
 
 class SSE extends Component {
 
@@ -66,7 +67,7 @@ class SSE extends Component {
             <div className="col-sm-8 col-lg-9">
               <div className="tab-content">
                 <div className="tab-pane fade show active" id="tab_1">
-                  First tab
+                  <ArticleList/>
                 </div>
               
                 <div className="tab-pane fade" id="tab_2">
@@ -88,32 +89,32 @@ class SSE extends Component {
                 <ul className="list">
                   <li className="list-item">
                     <div className="list-body">
-                      <a href="#" className="text-primary">Eligibility &amp; Filters</a>
+                      <a href="#!" className="text-primary">Eligibility &amp; Filters</a>
                     </div>
                   </li>
                   <li className="list-item">
                     <div className="list-body">
-                      <a href="#" className="text-primary">Quality Appraisals</a>
+                      <a href="#!" className="text-primary">Quality Appraisals</a>
                     </div>
                   </li>
                   <li className="list-item">
                     <div className="list-body">
-                      <a href="#" className="text-primary">Linking Studies</a>
+                      <a href="#!" className="text-primary">Linking Studies</a>
                     </div>
                   </li>
                   <li className="list-item">
                     <div className="list-body">
-                      <a href="#" className="text-primary">Presentation Details</a>
+                      <a href="#!" className="text-primary">Presentation Details</a>
                     </div>
                   </li>
                   <li className="list-item">
                     <div className="list-body">
-                      <a href="#" className="text-primary">Translating Titles</a>
+                      <a href="#!" className="text-primary">Translating Titles</a>
                     </div>
                   </li>
                   <li className="list-item">
                     <div className="list-body">
-                      <a href="#" className="text-primary">Tracking &amp; Prioritizing</a>
+                      <a href="#!" className="text-primary">Tracking &amp; Prioritizing</a>
                     </div>
                   </li>
                 </ul>

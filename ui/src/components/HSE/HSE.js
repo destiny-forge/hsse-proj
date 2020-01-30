@@ -88,32 +88,32 @@ class HSE extends Component {
                 <ul className="list">
                   <li className="list-item">
                     <div className="list-body">
-                      <a href="#" className="text-primary">Eligibility &amp; Filters</a>
+                      <a href="#!" className="text-primary">Eligibility &amp; Filters</a>
                     </div>
                   </li>
                   <li className="list-item">
                     <div className="list-body">
-                      <a href="#" className="text-primary">Quality Appraisals</a>
+                      <a href="#!" className="text-primary">Quality Appraisals</a>
                     </div>
                   </li>
                   <li className="list-item">
                     <div className="list-body">
-                      <a href="#" className="text-primary">Linking Studies</a>
+                      <a href="#!" className="text-primary">Linking Studies</a>
                     </div>
                   </li>
                   <li className="list-item">
                     <div className="list-body">
-                      <a href="#" className="text-primary">Presentation Details</a>
+                      <a href="#!" className="text-primary">Presentation Details</a>
                     </div>
                   </li>
                   <li className="list-item">
                     <div className="list-body">
-                      <a href="#" className="text-primary">Translating Titles</a>
+                      <a href="#!" className="text-primary">Translating Titles</a>
                     </div>
                   </li>
                   <li className="list-item">
                     <div className="list-body">
-                      <a href="#" className="text-primary">Tracking &amp; Prioritizing</a>
+                      <a href="#!" className="text-primary">Tracking &amp; Prioritizing</a>
                     </div>
                   </li>
                 </ul>

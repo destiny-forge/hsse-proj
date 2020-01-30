@@ -29,7 +29,7 @@ class EligibilityFilters extends Component {
   }
 
   render() {
-    const { articles } = this.state;
+    // const { articles } = this.state;
 
     return (
       <div className="padding">
