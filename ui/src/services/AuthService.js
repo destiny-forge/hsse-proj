@@ -117,6 +117,13 @@ class AuthService {
     return decode(this.getToken());
   }
 
+  getQueryString(params) {
+    const esc = encodeURIComponent;
+    return Object.keys(params)
+      .map(k => esc(k) + '=' + esc(params[k]))
+      .join('&');
+  }
+
   fetch(url, options) {
     // performs api calls sending the required authentication headers
     const headers = {
@@ -124,12 +131,15 @@ class AuthService {
       'Content-Type': 'application/json'
     };
 
-    // Setting Authorization header
-    // Authorization: Bearer xxxxxxx.xxxxxxxx.xxxxxx
     if (this.loggedIn()) {
-      headers['Authorization'] = 'Bearer ' + this.getToken();
+      headers['Authorization'] = `Bearer ${this.getToken()}`;
     }
 
+    if (options.method === 'GET' || options.method === 'DELETE') {
+      const qs = '?' + this.getQueryString(options.data);
+      url = url + qs;
+    }
+      
     return fetch(`${this.domain}${url}`, {
       headers,
       ...options
