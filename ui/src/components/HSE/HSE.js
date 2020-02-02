@@ -21,7 +21,10 @@ class HSE extends Component {
           <div className="row">
             <div className="col-sm-12 order-sm-1">
               <div className="py-4 clearfix nav-active-theme">
-                <Tabs trackTab={trackTab} />
+                <Tabs 
+                  trackTab={trackTab} 
+                  type={'hse'}
+                />
               </div>
             </div>
           </div>

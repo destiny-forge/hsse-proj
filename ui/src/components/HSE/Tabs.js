@@ -9,7 +9,7 @@ const Tabs = (props) =>
           href="#!"
           data-toggle="tab"
           data-target="#tab_1"
-          onClick={() => props.trackTab('hse', 'pending_assignment')}>Pending</a>
+          onClick={() => props.trackTab(props.type, 'pending_assignment')}>Pending</a>
       </li>
       <li className="nav-item">
         <a
@@ -17,7 +17,7 @@ const Tabs = (props) =>
           href="#!"
           data-toggle="tab"
           data-target="#tab_2"
-          onClick={() => props.trackTab('hse', 'assigned')}>Assigned</a>
+          onClick={() => props.trackTab(props.type, 'assigned')}>Assigned</a>
       </li>
       <li className="nav-item">
         <a
@@ -25,7 +25,7 @@ const Tabs = (props) =>
           href="#!"
           data-toggle="tab"
           data-target="#tab_3"
-          onClick={() => props.trackTab('hse', 'complicated')}>Complicated</a>
+          onClick={() => props.trackTab(props.type, 'complicated')}>Complicated</a>
       </li>
     </ul>
   </React.Fragment>
