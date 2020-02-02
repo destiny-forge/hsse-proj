@@ -22,6 +22,7 @@ module.exports = () => {
 
   return {
     createUseCase,
-    getUseCase
+    getUseCase,
+    compareUseCase
   };
 };

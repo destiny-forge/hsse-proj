@@ -4,6 +4,7 @@ const { Router } = require("express");
 module.exports = ({
   createUseCase,
   getUseCase,
+  compareUseCase,
   logger,
   response: { Success, Fail }
 }) => {
