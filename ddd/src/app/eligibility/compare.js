@@ -1,4 +1,4 @@
-import { diff } from "deep-diff";
+const diff = require("deep-diff");
 
 /**
  * Eligibility compare
