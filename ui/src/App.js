@@ -4,7 +4,6 @@ import Login from './components/Accounts/Login';
 import Dashboard from './components/Dashboard';
 import Signup from './components/Accounts/Signup';
 import ArticleCreate from './components/Articles/ArticleCreate';
-import ArticleList from './components/Articles/ArticleList';
 import SignupSuccess from './components/Accounts/SignupSuccess';
 import ConfirmEmail from './components/Accounts/ConfirmEmail';
 import ForgotPassword from './components/Accounts/ForgotPassword';
@@ -44,7 +43,6 @@ class App extends Component {
           <Route path="/article" component={ArticleCreate} />
           <Route path="/hse" component={HSE} />
           <Route path="/sse" component={SSE} />
-          <Route path="/sse/articles" component={ArticleList} />
           <Route path="/sse/eligibility-filters" component={EligibilityFilters} />
           <Route path="/upload" component={BatchUpload} />
           <Route path="/notes" component={Notes} />
