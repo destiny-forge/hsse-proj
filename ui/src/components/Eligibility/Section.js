@@ -31,7 +31,6 @@ const withSection = (WrappedComponent) => {
     }
 
     trackTab = (type, tab) => {
-      console.log("type ", type);
       if (type && tab) {
         this.Article.list(type, 'eligibility', tab)
           .then(res => {

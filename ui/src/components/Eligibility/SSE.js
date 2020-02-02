@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
-import withSection from '../Articles/Section';
+import withSection from './Section';
 import Header from './Header';
 import ArticlesTable from './ArticlesTable';
 import Tabs from './Tabs';
