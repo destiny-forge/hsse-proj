@@ -41,7 +41,7 @@ module.exports = ({ articleRepository }) => {
       const other_type = type === "junior" ? "senior" : "junior";
       const other_assignment = article[stage][other_type];
 
-      if (stage === "elibility" && !other_assignment) {
+      if (stage === "eligibility" && !other_assignment) {
         assignment.status = "half_assigned";
       } else {
         assignment.status = "assigned";
