@@ -39,11 +39,12 @@ module.exports = ({ database }) => {
   };
 
   const find = async (type, stage, status) => {
+    const filters = Array.isArray(status) ? { $in: status } : status;
     try {
       return await database
         .get()
         .collection("articles")
-        .find({ type: { $eq: type }, [`stages.${stage}.status`]: status })
+        .find({ type: { $eq: type }, [`stages.${stage}.status`]: filters })
         .toArray();
     } catch (e) {
       throw e;
@@ -78,7 +79,8 @@ module.exports = ({ database }) => {
   const assign = async (id, stage, type, user) => {
     try {
       const assignment = {
-        [`stages.${stage}.${type}`]: user
+        [`stages.${stage}.${type}`]: user,
+        [`stages.${stage}.status`]: "assigned" //|| "half_assigned"
       };
       const cmdResult = await database
         .get()
