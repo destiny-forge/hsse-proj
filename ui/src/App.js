@@ -13,8 +13,8 @@ import Notes from './components/Articles/Notes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import EligibilityFilters from './components/Articles/EligibilityFilters';
-import SSE from './components/HSE/SSE';
-import HSE from './components/HSE/HSE';
+import SSE from './components/Eligibility/SSE';
+import HSE from './components/Eligibility/HSE';
 
 class App extends Component {
   render() {
