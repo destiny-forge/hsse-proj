@@ -22,9 +22,6 @@ module.exports = ({ eligibilityRepository }) => {
         };
       }
 
-      // @TODO - determine which filter is the junior, and which is
-      // the senior by using the .role property
-
       const source = filters[0];
       const target = filters[1];
 
@@ -40,11 +37,7 @@ module.exports = ({ eligibilityRepository }) => {
         ].indexOf(key) < 0;
 
       const differences = diff(source, target, filter);
-
-      // testing required
-      console.log(differences);
-
-      return differences;
+      return differences.length;
     } catch (error) {
       throw new Error(error);
     }
