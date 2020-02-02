@@ -3,6 +3,7 @@ import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import withSection from '../Articles/Section';
 import ArticleList from '../Articles/ArticleList';
+import Header from '../HSE/Header';
 
 class SSE extends Component {
 
@@ -11,23 +12,7 @@ class SSE extends Component {
 
     return (
       <React.Fragment>
-        <div className="item sse">
-          <div className="p-4">
-            <div className="row mt-3">
-              <div className="col-sm-7">
-                <div className="media">
-                  <div className="media-body mx-3 mb-2">
-                    <h4>SOCIAL SYSTEMS EVIDENCE</h4>
-                    <p>
-                      The world's most comprehensive, free access point for evidence about strengthening 20 government 
-                      sectors and program areas, and achieving the Sustainable Development Goals.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Header type={'sse'} />
         <div className="white bg b-b px-3">
           <div className="row">
             <div className="col-sm-12 order-sm-1">

@@ -11,13 +11,16 @@ const ArticleService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
-  const list = async type => {
+  const list = async (type, stage, status) => {
     const params = {
       method: 'GET',
       data: {
-        type: type 
+        type,
+        stage,
+        status,
       }
     };
+
     const res = await fetch('/articles', params)
     return Promise.resolve(res);
   };

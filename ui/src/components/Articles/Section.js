@@ -15,7 +15,9 @@ const withSection = (WrappedComponent) => {
     }
 
     componentDidMount() {
-      this.Article.list('hse') // default to sse for now
+      const type = this.props.history.location.pathname.replace(/\//g, "");
+
+      this.Article.list(type, 'eligibility', 'pending_assignment')
         .then(res => {
           if (res.success) {
             this.setState({
@@ -26,21 +28,29 @@ const withSection = (WrappedComponent) => {
         .catch(err => {
           console.log(err);
         })
-      //console.log(this.props.history.location.pathname)
     }
 
     trackTab = (type, tab) => {
       if (type && tab) {
-        console.log('type ', type);
-        console.log('tab ', tab);
+        this.Article.list(type, 'eligibility', tab)
+          .then(res => {
+            if (res.success) {
+              this.setState({
+                articles: res.data,
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          })
       }
     }
 
     render() {
-      console.log(this.state.articles);
       return (
         <WrappedComponent
           trackTab={this.trackTab}
+          articles={this.state.articles}
           {...this.props}
         />
       );
