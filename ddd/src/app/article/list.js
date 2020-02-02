@@ -9,7 +9,18 @@ module.exports = ({ articleRepository }) => {
           error: "A valid article type is required"
         };
       }
-      return await articleRepository.find(type, stage, status);
+
+      const filters = status;
+      switch (status) {
+        case "pending_assignment":
+          filters = ["pending_assignment", "half_assigned"];
+          break;
+        case "assigned":
+          filters = ["half_assigned", "assigned"];
+          break;
+      }
+
+      return await articleRepository.find(type, stage, filters);
     } catch (error) {
       throw new Error(error);
     }

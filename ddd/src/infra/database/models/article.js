@@ -76,16 +76,17 @@ module.exports = ({ database }) => {
     }
   };
 
-  const assign = async (id, stage, type, user) => {
+  const assign = async assignment => {
+    const { articleId, stage, type, user, status } = assignment;
     try {
-      const assignment = {
+      const fields = {
         [`stages.${stage}.${type}`]: user,
-        [`stages.${stage}.status`]: "assigned" //|| "half_assigned"
+        [`stages.${stage}.status`]: status
       };
       const cmdResult = await database
         .get()
         .collection("articles")
-        .updateOne({ _id: { $eq: ObjectID(id) } }, { $set: assignment });
+        .updateOne({ _id: { $eq: ObjectID(articleId) } }, { $set: fields });
       const { result } = cmdResult.toJSON();
       return result;
     } catch (e) {

@@ -37,7 +37,17 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      return await articleRepository.assign(articleId, stage, type, user);
+      const article = await articleRepository.findById(articleId);
+      const other_type = type === "junior" ? "senior" : "junior";
+      const other_assignment = article[stage][other_type];
+
+      if (stage === "elibility" && !other_assignment) {
+        assignment.status = "half_assigned";
+      } else {
+        assignment.status = "assigned";
+      }
+
+      return await articleRepository.assign(assignment);
     } catch (error) {
       throw new Error(error);
     }
