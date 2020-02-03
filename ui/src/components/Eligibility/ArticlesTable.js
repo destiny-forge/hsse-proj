@@ -14,6 +14,8 @@ const ArticlesTable = (props) =>
             </th>
             <th>Title</th>
             <th>Journal</th>
+            <th>Junior Appraiser</th>
+            <th>Senior Appraiser</th>
             <th>Authors</th>
             <th>Source</th>
             <th>Complicated</th>
@@ -32,6 +34,14 @@ const ArticlesTable = (props) =>
                 </td>
                 <td>{article.title}</td>
                 <td>{article.journal}</td>
+                <td>
+                  <button 
+                    className="md-btn md-flat mb-2 w-xs text-success"
+                    onClick={props.showModal}>
+                      Assign
+                  </button>
+                </td>
+                <td><button className="md-btn md-flat mb-2 w-xs text-success">Assign</button></td>
                 <td>{article.authors}</td>
                 <td>{article.source}</td>
                 <td>
