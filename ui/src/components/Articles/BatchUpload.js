@@ -88,7 +88,7 @@ class BatchUpload extends Component {
             } else {
               this.setState({
                 redirect: true,
-                path: '/sse/articles',
+                path: '/sse',
                 articles: res.data
               });  
             }
