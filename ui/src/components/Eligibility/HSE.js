@@ -11,9 +11,10 @@ class HSE extends Component {
   render() {
     const { 
       trackTab,
-      articles 
+      articles,
+      user
     } = this.props;
-  
+
     return (
       <React.Fragment>
         <Header type={'hse'} />
@@ -34,11 +35,19 @@ class HSE extends Component {
             <div className="col-sm-8 col-lg-9">
               <div className="tab-content">
                 <div className="tab-pane fade show active" id="tab_1">
-                  <ArticlesTable articles={articles} />
+                  <ArticlesTable 
+                    articles={articles} 
+                    user={user}
+                    type={'hse'}
+                  />
                 </div>
 
                 <div className="tab-pane fade" id="tab_2">
-                  <ArticlesTable articles={articles} />
+                  <ArticlesTable 
+                    articles={articles}
+                    user={user}
+                    type={'hse'}
+                  />
                 </div>
 
                 <div className="tab-pane fade" id="tab_3">

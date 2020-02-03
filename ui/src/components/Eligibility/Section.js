@@ -8,8 +8,7 @@ const withSection = (WrappedComponent) => {
       super(props);
 
       this.state = {
-        articles: [],
-        show: false,
+        articles: []
       }
 
       this.Article = ArticleService({ fetch: this.props.fetch });
@@ -30,14 +29,6 @@ const withSection = (WrappedComponent) => {
           console.log(err);
         })
     }
-
-    showModal = () => {
-      this.setState({ show: true });
-    };
-
-    hideModal = () => {
-      this.setState({ show: false });
-    };
 
     trackTab = (type, tab) => {
       if (type && tab) {
@@ -60,8 +51,6 @@ const withSection = (WrappedComponent) => {
         <WrappedComponent
           trackTab={this.trackTab}
           articles={this.state.articles}
-          showModal={this.showModal}
-          hideModal={this.hideModal}
           {...this.props}
         />
       );
