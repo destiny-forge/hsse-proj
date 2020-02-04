@@ -12,7 +12,8 @@ class HSE extends Component {
     const { 
       trackTab,
       articles,
-      user
+      user,
+      fetch
     } = this.props;
 
     return (
@@ -38,7 +39,8 @@ class HSE extends Component {
                   <ArticlesTable 
                     articles={articles} 
                     user={user}
-                    type={'hse'}
+                    fetch={fetch}
+                    history={this.props.history}
                   />
                 </div>
 
@@ -46,7 +48,6 @@ class HSE extends Component {
                   <ArticlesTable 
                     articles={articles}
                     user={user}
-                    type={'hse'}
                   />
                 </div>
 

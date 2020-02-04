@@ -1,5 +1,8 @@
 import React from 'react';
 import Modal from './Modal';
+import AssignService from '../../services/AssignService';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class ArticlesTable extends React.Component {
 
@@ -9,6 +12,7 @@ class ArticlesTable extends React.Component {
     this.state = { 
       show: false 
     }
+    this.Assign = AssignService({ fetch: this.props.fetch });
   }
 
   showModal = () => {
@@ -17,17 +21,27 @@ class ArticlesTable extends React.Component {
     });
   }
 
-  hideModal = () => {
+  notifyDone = () => toast.success("Assignment created successfully.");
+
+  hideModal = (user, stage, articleId, type) => {
+    if (user && stage && articleId && type) {
+      const assignment = {
+        user,
+        stage,
+        articleId,
+        type
+      };
+      this.Assign.assign(assignment);
+      this.props.history.replace('/hse');
+      this.notifyDone();
+    }
     this.setState({ 
       show: false 
     });
   }
 
   render() {
-    const { 
-      user,
-      type
-    } = this.props;
+    const { user } = this.props;
 
     return (
       <div className="box">
@@ -70,7 +84,7 @@ class ArticlesTable extends React.Component {
                         user={user}
                         stage='eligibility'
                         articleId={article._id}
-                        type={type}
+                        type={'junior'}
                       />
                       <button 
                         className="md-btn md-flat mb-2 w-xs text-success"
