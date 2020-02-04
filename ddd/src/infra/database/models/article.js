@@ -39,11 +39,12 @@ module.exports = ({ database }) => {
   };
 
   const find = async (type, stage, status) => {
+    const filters = Array.isArray(status) ? { $in: status } : status;
     try {
       return await database
         .get()
         .collection("articles")
-        .find({ type: { $eq: type }, [`stages.${stage}.status`]: status })
+        .find({ type: { $eq: type }, [`stages.${stage}.status`]: filters })
         .toArray();
     } catch (e) {
       throw e;
@@ -75,15 +76,17 @@ module.exports = ({ database }) => {
     }
   };
 
-  const assign = async (id, stage, type, user) => {
+  const assign = async assignment => {
+    const { articleId, stage, type, user, status } = assignment;
     try {
-      const assignment = {
-        [`stages.${stage}.${type}`]: user
+      const fields = {
+        [`stages.${stage}.${type}`]: user,
+        [`stages.${stage}.status`]: status
       };
       const cmdResult = await database
         .get()
         .collection("articles")
-        .updateOne({ _id: { $eq: ObjectID(id) } }, { $set: assignment });
+        .updateOne({ _id: { $eq: ObjectID(articleId) } }, { $set: fields });
       const { result } = cmdResult.toJSON();
       return result;
     } catch (e) {
