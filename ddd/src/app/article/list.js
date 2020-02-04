@@ -10,7 +10,7 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      const filters = status;
+      var filters = status;
       switch (status) {
         case "pending_assignment":
           filters = ["pending_assignment", "half_assigned"];
