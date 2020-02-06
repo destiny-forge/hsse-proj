@@ -14,7 +14,7 @@ const Modal = ({ handleClose, show, user, stage, articleId, type }) => {
             <p>Are you sure you want to assign this article to your assigned quality appraisals list?</p>
           </div>
           <div className="modal-footer">
-            <button onClick={() => handleClose(null, null, null, null, null)} type="button" className="btn dark-white p-x-md" data-dismiss="modal">No</button>
+            <button onClick={() => handleClose(user, null, null, type)} type="button" className="btn dark-white p-x-md" data-dismiss="modal">No</button>
             <button onClick={() => handleClose(user, stage, articleId, type)} type="button" className="btn danger p-x-md" data-dismiss="modal">Yes</button>
           </div>
         </div>

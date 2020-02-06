@@ -59,8 +59,7 @@ class ArticlesTable extends React.Component {
       .catch(err => {
         console.log(err);
       });
-    }
-    ;
+    };
     this.setState({ 
       [`show${this.toTitleCase(type)}`]: false 
     });
