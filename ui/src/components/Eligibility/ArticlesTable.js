@@ -48,6 +48,11 @@ class ArticlesTable extends React.Component {
       }
       this.Article.assign(assignment).then(res => {
         this.notifyDone();
+
+        // TODO: component did mount hook is grabbing the articles and setting articles in state. 
+        // Problem is when an assignment is made it should update the state on component did update 
+        // but we have a few states here to track and I am reusing a lot of components so will need
+        // to refetch the articles in order to reload state instead of reload. This will work for now.
         setTimeout(function () { window.location.reload(); }, 1500);
 
       })
