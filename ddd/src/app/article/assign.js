@@ -7,7 +7,7 @@ module.exports = ({ articleRepository }) => {
   const assign = async assignment => {
     try {
       const { articleId, stage, type, user } = assignment;
-
+      
       if (!type || (type !== "junior" && type !== "senior")) {
         return {
           error: "A valid assignment type is required"

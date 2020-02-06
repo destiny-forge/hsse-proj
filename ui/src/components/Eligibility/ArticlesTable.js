@@ -1,8 +1,9 @@
+import _ from 'lodash';
 import React from 'react';
 import Modal from './Modal';
-import AssignService from '../../services/AssignService';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import ArticleService from '../../services/ArticleService';
 
 class ArticlesTable extends React.Component {
 
@@ -10,15 +11,26 @@ class ArticlesTable extends React.Component {
     super(props);
 
     this.state = { 
-      show: false 
+      showJunior: false,
+      showSenior: false 
     }
-    this.Assign = AssignService({ fetch: this.props.fetch });
+    this.Article = ArticleService({ fetch: this.props.fetch });
   }
 
-  showModal = () => {
+  showModal = (type) => {
+    console.log(type);
     this.setState({ 
-      show: true 
+      [`show${type}`]: true 
     });
+  }
+
+  toTitleCase = (str) => {
+    return str.replace(
+      /\w\S*/g,
+      (txt) => {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
   }
 
   notifyDone = () => toast.success("Assignment created successfully.");
@@ -26,17 +38,26 @@ class ArticlesTable extends React.Component {
   hideModal = (user, stage, articleId, type) => {
     if (user && stage && articleId && type) {
       const assignment = {
-        user,
-        stage,
         articleId,
-        type
+        stage,
+        type,
       };
-      this.Assign.assign(assignment);
-      this.props.history.replace('/hse');
-      this.notifyDone();
+      assignment.user = {
+        _id: user.id,
+        email: user.email
+      }
+      this.Article.assign(assignment).then(res => {
+        console.log(res);
+        this.notifyDone();
+        this.props.history.replace("/hse");
+      })
+      .catch(err => {
+        console.log(err);
+      });
     }
+    ;
     this.setState({ 
-      show: false 
+      [`show${this.toTitleCase(type)}`]: false 
     });
   }
 
@@ -79,20 +100,44 @@ class ArticlesTable extends React.Component {
                     <td>{article.journal}</td>
                     <td>
                       <Modal 
-                        show={this.state.show} 
+                        show={this.state.showJunior} 
                         handleClose={this.hideModal}
                         user={user}
                         stage='eligibility'
                         articleId={article._id}
                         type={'junior'}
                       />
-                      <button 
-                        className="md-btn md-flat mb-2 w-xs text-success"
-                        onClick={this.showModal}>
-                          Assign
-                      </button>
+                      {
+                        (article.stages.eligibility.status === 'assigned' && !_.isUndefined(article.stages.eligibility.junior))
+                          ? article.stages.eligibility.junior.email
+                          :
+                          <button 
+                            className="md-btn md-flat mb-2 w-xs text-success"
+                            onClick={() => this.showModal(this.toTitleCase('junior'))}>
+                              Assign
+                          </button>
+                      } 
                     </td>
-                    <td><button className="md-btn md-flat mb-2 w-xs text-success">Assign</button></td>
+                    <td>
+                      <Modal
+                        show={this.state.showSenior}
+                        handleClose={this.hideModal}
+                        user={user}
+                        stage='eligibility'
+                        articleId={article._id}
+                        type={'senior'}
+                      />
+                      {
+                        (article.stages.eligibility.status === 'assigned' && !_.isUndefined(article.stages.eligibility.senior))
+                          ? article.stages.eligibility.senior.email
+                          :
+                          <button
+                            className="md-btn md-flat mb-2 w-xs text-success"
+                            onClick={() => this.showModal(this.toTitleCase('senior'))}>
+                            Assign
+                          </button>
+                      } 
+                    </td>
                     <td>{article.authors}</td>
                     <td>{article.source}</td>
                     <td>
