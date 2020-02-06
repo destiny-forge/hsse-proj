@@ -18,7 +18,6 @@ class ArticlesTable extends React.Component {
   }
 
   showModal = (type) => {
-    console.log(type);
     this.setState({ 
       [`show${type}`]: true 
     });
@@ -42,16 +41,15 @@ class ArticlesTable extends React.Component {
         stage,
         type,
       };
-      console.log("assignment object ", assignment);
+
       assignment.user = {
         _id: user.id,
         email: user.email
       }
       this.Article.assign(assignment).then(res => {
         this.notifyDone();
-        console.log("articles ", this.props.articles);
-        console.log("articles count ", this.props.articles.length);
-        this.props.history.replace("/hse");
+        setTimeout(function () { window.location.reload(); }, 1500);
+
       })
       .catch(err => {
         console.log(err);
