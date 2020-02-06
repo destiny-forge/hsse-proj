@@ -1,9 +1,9 @@
-import _ from 'lodash';
 import React from 'react';
 import Modal from './Modal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import ArticleService from '../../services/ArticleService';
+import Assignment from './Assignment';
 
 class ArticlesTable extends React.Component {
 
@@ -42,13 +42,15 @@ class ArticlesTable extends React.Component {
         stage,
         type,
       };
+      console.log("assignment object ", assignment);
       assignment.user = {
         _id: user.id,
         email: user.email
       }
       this.Article.assign(assignment).then(res => {
-        console.log(res);
         this.notifyDone();
+        console.log("articles ", this.props.articles);
+        console.log("articles count ", this.props.articles.length);
         this.props.history.replace("/hse");
       })
       .catch(err => {
@@ -107,16 +109,12 @@ class ArticlesTable extends React.Component {
                         articleId={article._id}
                         type={'junior'}
                       />
-                      {
-                        (article.stages.eligibility.status === 'assigned' && !_.isUndefined(article.stages.eligibility.junior))
-                          ? article.stages.eligibility.junior.email
-                          :
-                          <button 
-                            className="md-btn md-flat mb-2 w-xs text-success"
-                            onClick={() => this.showModal(this.toTitleCase('junior'))}>
-                              Assign
-                          </button>
-                      } 
+                      <Assignment 
+                        type="junior"
+                        showModal={this.showModal}
+                        toTitleCase={this.toTitleCase}
+                        article={article}
+                      />
                     </td>
                     <td>
                       <Modal
@@ -127,16 +125,12 @@ class ArticlesTable extends React.Component {
                         articleId={article._id}
                         type={'senior'}
                       />
-                      {
-                        (article.stages.eligibility.status === 'assigned' && !_.isUndefined(article.stages.eligibility.senior))
-                          ? article.stages.eligibility.senior.email
-                          :
-                          <button
-                            className="md-btn md-flat mb-2 w-xs text-success"
-                            onClick={() => this.showModal(this.toTitleCase('senior'))}>
-                            Assign
-                          </button>
-                      } 
+                      <Assignment
+                        type="senior"
+                        showModal={this.showModal}
+                        toTitleCase={this.toTitleCase}
+                        article={article}
+                      />
                     </td>
                     <td>{article.authors}</td>
                     <td>{article.source}</td>
