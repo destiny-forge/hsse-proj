@@ -8,21 +8,34 @@ import Select from 'react-select';
 import "react-datepicker/dist/react-datepicker.css";
 import { Redirect } from 'react-router';
 
-const ARTICLE_SOURCES = [
-  { value: 'referrals', label: 'Referrals' },
-  { value: 'handSearches', label: 'Hand Searches' },
-  { value: 'cochrane', label: 'Cochrane' },
-  { value: 'plusSR', label: 'PLUS SR' },
-  { value: 'pubMedSR', label: 'PubMed SR' },
-  { value: 'lilacsSREE', label: 'LILACS SR & EE' },
-  { value: 'plusEE', label: 'PLUS EE' },
-  { value: 'pubMedEE', label: 'PubMed EE' },
-  {
-    value: 'healthSystemHealthReformDescriptions',
-    label: 'Health System and Health Reform Descriptions'
-  },
-  { value: 'other', label: 'Other' }
+const HSE_ARTICLE_SOURCES = [
+  { value: 'Referrals', label: 'Referrals' },
+  { value: 'Hand Searches', label: 'Hand Searches' },
+  { value: 'Cochrane', label: 'Cochrane' },
+  { value: 'PLUS SR', label: 'PLUS SR' },
+  { value: 'PubMed SR', label: 'PubMed SR' },
+  { value: 'LILACS SR & EE', label: 'LILACS SR & EE' },
+  { value: 'PLUS EE', label: 'PLUS EE' },
+  { value: 'PubMed EE', label: 'PubMed EE' },
+  { value: 'Health System and Health Reform Descriptions', label: 'Health System and Health Reform Descriptions'},
+  { value: 'Other', label: 'Other' }
 ];
+
+const SSE_ARTICLE_SOURCES = [
+  { value: 'Referrals', label: 'Referrals' },
+  { value: 'Hand Searches', label: 'Hand Searches' },
+  { value: 'Campbell', label: 'Campbell' },
+  { value: 'EPPI - Centre', label: 'EPPI - Centre' },
+  { value: '3iE', label: '3iE' },
+  { value: 'WoS SR', label: 'WoS SR' },
+  { value: 'EBSCO SR', label: 'EBSCO SR' },
+  { value: 'Proquest SR', label: 'Proquest SR' },
+  { value: 'WoS EE', label: 'WoS EE' },
+  { value: 'EBSCO EE', label: 'EBSCO EE' },
+  { value: 'Proquest EE', label: 'Proquest EE' },
+  { value: 'SafetyLit', label: 'SafetyLit' },
+  { value: 'Other', label: 'Other' },
+]
 
 const LANGUAGES = [
   { value: 'english', label: 'English' },
@@ -68,7 +81,7 @@ class BatchUpload extends Component {
     } = this.state;
     
     const upload = {
-      type: 'sse',
+      type: this.state.article.type,
       fileUrl: fileUrl,
       source: selectedArticleSource.value,
       language: selectedLanguage.value,
@@ -88,7 +101,7 @@ class BatchUpload extends Component {
             } else {
               this.setState({
                 redirect: true,
-                path: '/sse',
+                path: `/${this.state.article.type}`,
                 articles: res.data
               });  
             }
@@ -101,10 +114,18 @@ class BatchUpload extends Component {
     }
   };
 
+  change = e => {
+    const { name, value } = e.target;
+
+    this.setState({
+      article: { ...this.state.article, [name]: value }
+    });
+  };
+
   handleChangeStatus = ({ file, meta: { name } }, status) => {
     if (status === 'done') {
       this.Batch.signedUrl({
-        type: 'sse'
+        type: this.state.article.type
       })
       .then(res => {
         fetch(
@@ -158,6 +179,29 @@ class BatchUpload extends Component {
             <div className="box-body">
               <form>
                 <div className="form-group form-row">
+                  <div className="col-md-2">
+                    <label htmlFor="source" className="d-block">
+                      Type
+                  </label>
+                    <select
+                      name="type"
+                      className="custom-select"
+                      onChange={this.change}
+                      required
+                    >
+                      <option value="">
+                        Please select
+                    </option>
+                      <option value="hse">
+                        HSE
+                    </option>
+                      <option value="sse">
+                        SSE
+                    </option>
+                    </select>
+                  </div>
+                </div>
+                <div className="form-group form-row">
                   <div className="col-md-6">
                     <label htmlFor="inputState" className="d-block">
                       Article Source
@@ -165,7 +209,12 @@ class BatchUpload extends Component {
                     <Select
                       value={selectedArticleSource}
                       onChange={(value) => this.handleChange('selectedArticleSource', value)}
-                      options={ARTICLE_SOURCES}
+                      options={
+                        this.state.article && 
+                        this.state.article.type === 'sse'
+                          ? SSE_ARTICLE_SOURCES
+                          : HSE_ARTICLE_SOURCES
+                      }
                       isSearchable
                     /> 
                   </div>

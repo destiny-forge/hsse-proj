@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Modal = ({ handleClose, show, user }) => {
+const Modal = ({ handleClose, show, user, stage, articleId, type }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
-  
+
   return (
     <div id="m" className={`model ${showHideClassName }`} databackdrop="true">
       <div className="modal-dialog">
@@ -14,8 +14,8 @@ const Modal = ({ handleClose, show, user }) => {
             <p>Are you sure you want to assign this article to your assigned quality appraisals list?</p>
           </div>
           <div className="modal-footer">
-            <button onClick={handleClose} type="button" className="btn dark-white p-x-md" data-dismiss="modal">No</button>
-            <button onClick={handleClose} type="button" className="btn danger p-x-md" data-dismiss="modal">Yes</button>
+            <button onClick={() => handleClose(user, null, null, type)} type="button" className="btn dark-white p-x-md" data-dismiss="modal">No</button>
+            <button onClick={() => handleClose(user, stage, articleId, type)} type="button" className="btn danger p-x-md" data-dismiss="modal">Yes</button>
           </div>
         </div>
       </div>

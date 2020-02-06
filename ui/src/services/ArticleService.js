@@ -30,10 +30,19 @@ const ArticleService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
+  const assign = async assignment => {
+    const res = await fetch('/articles/assign', {
+      method: 'POST',
+      body: JSON.stringify(assignment)
+    });
+    return Promise.resolve(res);
+  };
+
   return {
     create,
     list,
-    eligibilityFilters
+    eligibilityFilters,
+    assign
   };
 };
 
