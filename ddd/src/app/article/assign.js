@@ -1,3 +1,5 @@
+const _ = require("underscore");
+
 /**
  * Article assignment
  */
@@ -38,10 +40,14 @@ module.exports = ({ articleRepository }) => {
       }
 
       const article = await articleRepository.findById(articleId);
-      const other_type = type === "junior" ? "senior" : "junior";
-      const other_assignment = article[stage][other_type];
 
-      if (stage === "eligibility" && !other_assignment) {
+      const other_type = type === "junior" ? "senior" : "junior";
+      const has_stages = _.has(article, "stages");
+      const has_stage = has_stages && _.has(article.stages, stage);
+      const has_other_assignment =
+        has_stage && _.has(article.stages[stage], other_type);
+
+      if (stage === "eligibility" && !has_other_assignment) {
         assignment.status = "half_assigned";
       } else {
         assignment.status = "assigned";
