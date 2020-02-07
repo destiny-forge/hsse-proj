@@ -86,8 +86,8 @@ class ArticlesTable extends React.Component {
                 <th>Senior Appraiser</th>
                 <th>Authors</th>
                 <th>Source</th>
-                <th>Complicated</th>
-                <th>Lost</th>
+                <th>Status</th>
+                <th>Edit</th>
               </tr>
             </thead>
             <tbody>
@@ -136,18 +136,15 @@ class ArticlesTable extends React.Component {
                     </td>
                     <td>{article.authors}</td>
                     <td>{article.source}</td>
+                    <td>Incomplete</td>
                     <td>
                       {
-                        article.complicated
-                          ? <i className="fa fa-check text-success d-none"></i>
-                          : <i className="fa fa-times text-danger d-inline"></i>
-                      }
-                    </td>
-                    <td>
-                      {
-                        article.lost
-                          ? <i className="fa fa-check text-success d-none"></i>
-                          : <i className="fa fa-times text-danger d-inline"></i>
+                        article.stages.eligibility.status === 'assigned'
+                        ?
+                        <button className="md-btn md-flat text-success">
+                          Edit <i className="fa fa-edit"></i>
+                        </button>
+                        : "N/A"
                       }
                     </td>
                   </tr>
