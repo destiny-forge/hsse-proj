@@ -67,7 +67,7 @@ class EligibilityForm extends React.Component {
 
   render() {
     const { article } = this.state;
-    
+
     return (
       <div className="padding">
         <div className="box">
@@ -114,6 +114,8 @@ class EligibilityForm extends React.Component {
                   </label>
                 </div>
               </div>
+              <div class="box-divider pt-2 mb-3"></div>
+              <h6>Health Systems Topic</h6>
               <button
                 type="submit"
                 className="btn primary">
