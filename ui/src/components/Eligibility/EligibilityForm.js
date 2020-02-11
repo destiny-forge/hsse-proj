@@ -5,7 +5,14 @@ import Select from 'react-select';
 import ArticleService from '../../services/ArticleService';
 import { Tree } from 'antd';
 import 'antd/dist/antd.css';
-import { healthSystemTopicsTreeData } from './HSETreeData';
+import { 
+  healthSystemTopicsTreeData,
+  canadianAreasTreeData,
+  domainsTreeData,
+  lmicFocusTreeData,
+  provinceFocusTreeData,
+  themeTreeData
+} from './HSETreeData';
 
 const { TreeNode } = Tree;
 
@@ -177,6 +184,59 @@ class EligibilityForm extends React.Component {
                   healthSystemTopicsTreeData, 
                   this.handleTreeClick, 
                   this.state.selectedKeys, 
+                  false
+                )
+              }
+              <div className="box-divider pt-2 mb-3"></div>
+              <h6>Canadian Areas</h6>
+              {
+                this.renderTreeSection(
+                  canadianAreasTreeData,
+                  this.handleTreeClick,
+                  this.state.selectedKeys,
+                  false
+                )
+              }
+              <div className="box-divider pt-2 mb-3"></div>
+              <h6>Domains</h6>
+              {
+                this.renderTreeSection(
+                  domainsTreeData,
+                  this.handleTreeClick,
+                  this.state.selectedKeys,
+                  false
+                )
+              }
+
+              <div className="box-divider pt-2 mb-3"></div>
+              <h6>LMIC Focus</h6>
+              {
+                this.renderTreeSection(
+                  lmicFocusTreeData,
+                  this.handleTreeClick,
+                  this.state.selectedKeys,
+                  false
+                )
+              }
+
+              <div className="box-divider pt-2 mb-3"></div>
+              <h6>Province Focus</h6>
+              {
+                this.renderTreeSection(
+                  provinceFocusTreeData,
+                  this.handleTreeClick,
+                  this.state.selectedKeys,
+                  false
+                )
+              }
+
+              <div className="box-divider pt-2 mb-3"></div>
+              <h6>Theme</h6>
+              {
+                this.renderTreeSection(
+                  themeTreeData,
+                  this.handleTreeClick,
+                  this.state.selectedKeys,
                   false
                 )
               }

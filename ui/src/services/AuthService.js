@@ -141,7 +141,6 @@ class AuthService {
         url = url + qs;
       }  
     }
-
       
     return fetch(`${this.domain}${url}`, {
       headers,
