@@ -39,7 +39,10 @@ export default function withAuth(AuthComponent) {
 
     render() {
       const { user } = this.state;
-      const { history } = this.props;
+      const { 
+        history, 
+        match 
+      } = this.props;
 
       if (this.state.user) {
         return (
@@ -209,7 +212,12 @@ export default function withAuth(AuthComponent) {
                 </div>
               </div>
               <div className="content-main " id="content-main">
-                <AuthComponent history={history} user={user} fetch={Auth.fetch} />
+                <AuthComponent 
+                  history={history} 
+                  user={user} 
+                  fetch={Auth.fetch} 
+                  match={match}
+                />
               </div>
 
               <div className="content-footer white " id="content-footer">

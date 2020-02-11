@@ -48,6 +48,8 @@ class HSE extends Component {
                   <ArticlesTable 
                     articles={articles}
                     user={user}
+                    fetch={fetch}
+                    history={this.props.history}
                   />
                 </div>
 

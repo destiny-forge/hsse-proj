@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Modal = ({ handleClose, show, user, stage, articleId, type }) => {
+const AssignModal = ({ handleClose, show, user, stage, articleId, type }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
 
   return (
@@ -23,4 +23,4 @@ const Modal = ({ handleClose, show, user, stage, articleId, type }) => {
   );
 };
 
-export default Modal;
+export default AssignModal;

@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import ArticleService from '../../services/ArticleService';
 import Assignment from './Assignment';
+import { Link } from 'react-router-dom';
 
 class ArticlesTable extends React.Component {
 
@@ -141,9 +142,9 @@ class ArticlesTable extends React.Component {
                       {
                         article.stages.eligibility.status === 'assigned'
                         ?
-                        <button className="md-btn md-flat text-success">
-                          Edit <i className="fa fa-edit"></i>
-                        </button>
+                          <Link to={`/eligibility/${article._id}`}>
+                            Edit <i className="fa fa-edit"></i>
+                          </Link>
                         : "N/A"
                       }
                     </td>
