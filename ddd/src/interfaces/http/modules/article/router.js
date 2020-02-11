@@ -2,6 +2,7 @@ const Status = require("http-status");
 const { Router } = require("express");
 
 module.exports = ({
+  getUseCase,
   createUseCase,
   listUseCase,
   assignUseCase,
@@ -75,6 +76,44 @@ module.exports = ({
   router.post("/assign", (req, res) => {
     assignUseCase
       .assign(req.body)
+      .then(data => {
+        res.status(Status.OK).json(Success(data));
+      })
+      .catch(error => {
+        logger.error(error); // we still need to log every error for debugging
+        res.status(Status.BAD_REQUEST).json(Fail(error.message));
+      });
+  });
+
+  /**
+   * @swagger
+   * /:
+   *   get:
+   *     tags:
+   *       - Article
+   *     description: Article get by shortArticleId
+   *     consumes:
+   *       - application/json
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: shortArticleId
+   *         description: Article type
+   *         in: params
+   *         required: true
+   *         type: string
+   *         schema:
+   *           $ref: '#/definitions/article'
+   *     responses:
+   *       200:
+   *         description: Article
+   *       400:
+   *         $ref: '#/responses/BadRequest'
+   */
+  router.get("/:shortArticleId", (req, res) => {
+    const { shortArticleId } = req.params;
+    getUseCase
+      .get(shortArticleId)
       .then(data => {
         res.status(Status.OK).json(Success(data));
       })
