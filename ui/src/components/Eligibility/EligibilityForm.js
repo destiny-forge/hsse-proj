@@ -5,21 +5,7 @@ import Select from 'react-select';
 import ArticleService from '../../services/ArticleService';
 import { Tree } from 'antd';
 import 'antd/dist/antd.css';
-
-import {
-  healthSystemTopicsTreeData,
-  canadianAreasTreeData,
-  domainsTreeData,
-  lmicFocusTreeData,
-  provinceFocusTreeData,
-  themeTreeData,
-  populationTreeData,
-  ontarioPriorityAreasTreeData,
-  canadaHealthSystemSubtype,
-  ontarioHealthSubtype,
-  intergovernmentalOrganizationSubtype
-
-} from './HSETreeData';
+import { healthSystemTopicsTreeData } from './HSETreeData';
 
 const { TreeNode } = Tree;
 
@@ -68,6 +54,13 @@ class EligibilityForm extends React.Component {
     })
   }
 
+  handleTreeClick = (selectedKeys) => {
+    this.setState({
+      ...this.state,
+      selectedKeys
+    }, () => console.log(this.state))
+  }
+
   componentDidMount() {
     const { shortId } = this.props.match.params;
 
@@ -76,7 +69,7 @@ class EligibilityForm extends React.Component {
         if (res.success) {
           this.setState({
             article: res.data
-          }, () => console.log(this.state))
+          })
         }
       })
       .catch(err => {
@@ -85,34 +78,29 @@ class EligibilityForm extends React.Component {
   }
 
   onExpand = (expandedKeys) => {
-    console.log('onExpand', expandedKeys);
-    // if not set autoExpandParent to false, if children expanded, parent can not collapse.
-    // or, you can remove all expanded children keys.
     this.setState({
       expandedKeys,
       autoExpandParent: false,
     });
   }
 
-  renderTreeSection = (sectionTreeData, checkedEvent, checkedKeyState) => {
+  renderTreeSection = (sectionTreeData, handleTreeClick, checkedKeyState) => {
     return (
       <React.Fragment>
-          <label className="col-md-1 offset-md-1 col-form-label"></label>
-          <div className="col-md-10">
-            <Tree
-              checkable
-              showLine={true}
-              defaultExpandAll={true}
-              onExpand={this.onExpand}
-              autoExpandParent={true}
-              onCheck={checkedEvent}
-              checkedKeys={checkedKeyState}
-              onSelect={this.onSelect}
-            // selectedKeys={this.state.selectedKeys}
-            >
-              {this.renderTreeNodes(sectionTreeData)}
-            </Tree>
-          </div>
+        <label className="col-md-1 offset-md-1 col-form-label"></label>
+        <div className="col-md-10">
+          <Tree
+            checkable
+            showLine={true}
+            defaultExpandAll={false}
+            autoExpandParent={true}
+            onExpand={this.onExpand}
+            onCheck={handleTreeClick}
+            checkedKeys={checkedKeyState}
+          >
+            {this.renderTreeNodes(sectionTreeData)}
+          </Tree>
+        </div>
       </React.Fragment>
     );
   }
@@ -187,15 +175,15 @@ class EligibilityForm extends React.Component {
               {
                 this.renderTreeSection(
                   healthSystemTopicsTreeData, 
-                  this.handleCheckbox, 
-                  this.handleChange, 
+                  this.handleTreeClick, 
+                  this.state.selectedKeys, 
                   false
                 )
               }
               <button
                 type="submit"
                 className="btn primary">
-                Add Article
+                Save
               </button>
             </form>
           </div>
