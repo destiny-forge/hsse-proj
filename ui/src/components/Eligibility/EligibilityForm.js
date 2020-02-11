@@ -11,7 +11,9 @@ import {
   domainsTreeData,
   lmicFocusTreeData,
   provinceFocusTreeData,
-  themeTreeData
+  themeTreeData,
+  populationTreeData,
+  ontarioPriorityAreasTreeData
 } from './HSETreeData';
 
 const { TreeNode } = Tree;
@@ -235,6 +237,28 @@ class EligibilityForm extends React.Component {
               {
                 this.renderTreeSection(
                   themeTreeData,
+                  this.handleTreeClick,
+                  this.state.selectedKeys,
+                  false
+                )
+              }
+
+              <div className="box-divider pt-2 mb-3"></div>
+              <h6>Population</h6>
+              {
+                this.renderTreeSection(
+                  populationTreeData,
+                  this.handleTreeClick,
+                  this.state.selectedKeys,
+                  false
+                )
+              }
+
+              <div className="box-divider pt-2 mb-3"></div>
+              <h6>Ontario Priority Areas</h6>
+              {
+                this.renderTreeSection(
+                  ontarioPriorityAreasTreeData,
                   this.handleTreeClick,
                   this.state.selectedKeys,
                   false
