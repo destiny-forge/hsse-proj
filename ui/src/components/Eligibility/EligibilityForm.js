@@ -25,17 +25,39 @@ class EligibilityForm extends React.Component {
     super(props);
 
     this.state = {
-      article: ""
+      article: "",
+      generalFocus: false
     }
 
     this.Article = ArticleService({ fetch: this.props.fetch });
   }
 
+  handleChange = (field, value) => {
+    this.setState({
+      [field]: value
+    });
+  }
+
+  handleCheckbox = (e) => {
+    const { 
+      checked,
+      name
+    } = e.target;
+
+    this.setState({
+      [name]: checked
+    })
+  }
+
   componentDidMount() {
-    this.Article.list('hse', 'eligibility', 'pending_assignment')
+    const { shortId } = this.props.match.params;
+
+    this.Article.get(shortId)
       .then(res => {
         if (res.success) {
-          console.log("res ", res.data);
+          this.setState({
+            article: res.data
+          }, () => console.log(this.state))
         }
       })
       .catch(err => {
@@ -44,37 +66,52 @@ class EligibilityForm extends React.Component {
   }
 
   render() {
-  
+    const { article } = this.state;
+    
     return (
       <div className="padding">
         <div className="box">
           <div className="box-header">
-            <h2>Title</h2>
-            <small>Ref Id</small>
+            <h2>{article.title}</h2>
+            <small>Ref Id: {article.shortId}</small>
           </div>
           <div className="box-body">
             <form>
-              <div className="form-group form-row">
-                <div className="col-md-6">
-                  <label htmlFor="title">Title</label>
-                  Title 1
+              <div className="form-group row">
+                <label className="col-sm-2 col-form-label">Ref id</label>
+                <div className="col-sm-10">
+                  {article.shortId}
                 </div>
               </div>
-              <div className="form-group form-row">
-                <div className="col-md-6">
-                  <label htmlFor="authors">Authors</label>
-                  Author 1
+              <div className="form-group row">
+                <label className="col-sm-2 col-form-label">Live date</label>
+                <div className="col-sm-10">
+                  N/A
                 </div>
               </div>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Document type</label>
-                <div className="col-sm-10">
+                <div className="col-sm-4">
                   <Select
-                    value="selectedDocumentType"
+                    value={this.state.selectedDocumentType}
                     name="selectedDocumentType"
+                    onChange={(value) => this.handleChange('selectedDocumentType', value)}
                     options={DOCUMENT_TYPES}
                     isSearchable
                   />
+                </div>
+              </div>
+              <div className="form-group row">
+                <label className="col-sm-2 col-form-label">General focus?</label>
+                <div className="col-sm-10">
+                  <label class="form-check-label">
+                    <input 
+                      type="checkbox" 
+                      class="form-check-input"
+                      name="generalFocus"
+                      onChange={this.handleCheckbox}
+                    /> Yes, this article has a general focus (review definition and code accordingly, nothing that the default is set to specific)
+                  </label>
                 </div>
               </div>
               <button

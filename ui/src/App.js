@@ -45,7 +45,7 @@ class App extends Component {
           <Route path="/hse" component={HSE} />
           <Route path="/sse" component={SSE} />
           <Route path="/sse/eligibility-filters" component={EligibilityFilters} />
-          <Route path="/eligibility/:articleId" component={EligibilityForm} />
+          <Route path="/eligibility/:shortId" component={EligibilityForm} />
           <Route path="/upload" component={BatchUpload} />
           <Route path="/notes" component={Notes} />
         </Router>

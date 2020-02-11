@@ -142,7 +142,7 @@ class ArticlesTable extends React.Component {
                       {
                         article.stages.eligibility.status === 'assigned'
                         ?
-                          <Link to={`/eligibility/${article._id}`}>
+                          <Link to={`/eligibility/${article.shortId}`}>
                             Edit <i className="fa fa-edit"></i>
                           </Link>
                         : "N/A"
