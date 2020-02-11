@@ -227,7 +227,7 @@ const SSEFilter = Filter.extend(
     environmentalConservationRestoration: t.Boolean,
     environmentalConservationRestorationRemediation: t.Boolean,
     environmentalConservationRestorationLand: t.Boolean,
-    environmentalConservationRestorationRemediation: t.Boolean,
+    environmentalConservationRehabilitationLand: t.Boolean,
 
     environmentalConservationWaste: t.Boolean,
     environmentalConservationWasteHazardous: t.Boolean,
@@ -256,6 +256,7 @@ const SSEFilter = Filter.extend(
     financialGoodServices: t.Boolean,
     financialGuaranteedIncome: t.Boolean,
     financialIncomeRedistribution: t.Boolean,
+    financialIncomeReporting: t.Boolean,
     financialAssetReporting: t.Boolean,
 
     foodSafety: t.Boolean,
@@ -362,7 +363,6 @@ const SSEFilter = Filter.extend(
     systemGovernancePolicyStewardship: t.Boolean,
     systemGovernancePolicyDecisionMaking: t.Boolean,
     systemGovernancePolicyCorruptionProtections: t.Boolean,
-    systemGovernancePolicy: t.Boolean,
     systemOrganizational: t.Boolean,
     systemOrganizationalOwnership: t.Boolean,
     systemOrganizationalManagement: t.Boolean,
@@ -437,7 +437,7 @@ const SSEFilter = Filter.extend(
     deliveryArrangementDesignTimelyAcess: t.Boolean,
     deliveryArrangementDesignCulturallyAppropriate: t.Boolean,
     deliveryArrangementDesignCaseManagement: t.Boolean,
-    deliveryArrangementDesignDiseaseManagement: t.Boolean,
+    deliveryArrangementDesignServicesPackage: t.Boolean,
     deliveryArrangementDesignGroup: t.Boolean,
 
     serviceProvider: t.Boolean,
@@ -473,6 +473,7 @@ const SSEFilter = Filter.extend(
     serviceSupportElectronicHealthRecord: t.Boolean,
     serviceSupportOtherICTThatSupportIndividuals: t.Boolean,
     serviceSupportICTThatSupportIndividualsWhoReceiveCare: t.Boolean,
+    serviceSupportFinancialMonitoring: t.Boolean,
     serviceSupportQualityMonitoringAndImprovementSystems: t.Boolean,
     serviceSupportSafetyMonitoringAndImprovementSystems: t.Boolean,
 
@@ -542,7 +543,7 @@ const SSEFilter = Filter.extend(
     perspectivesProviderSocialInclusion: t.Boolean,
     perspectivesProviderWellBeing: t.Boolean,
     perspectivesProviderCitizenIntervention: t.Boolean,
-    perspectivesProvider: t.Boolean,
+    perspectivesProviderOther: t.Boolean,
 
     perspectivesDisciplines: t.Boolean,
     perspectivesDisciplineAnthropology: t.Boolean,
@@ -561,7 +562,26 @@ const SSEFilter = Filter.extend(
     perspectivesDisciplinePsychology: t.Boolean,
     perspectivesDisciplinePublicAdministration: t.Boolean,
     perspectivesDisciplineSocialWork: t.Boolean,
-    perspectivesDisciplineSociology: t.Boolean
+    perspectivesDisciplineSociology: t.Boolean,
+
+    // LMIC Focus
+    lmicTargetOfDocument: t.Boolean,
+    lmicAtLeastOneAuthor: t.Boolean,
+    lmicAtLeastOneStudy: t.Boolean,
+
+    // Theme
+    themeOptimalAging: t.Boolean,
+
+    ageNeonates: t.Boolean,
+    agePediatrics: t.Boolean,
+    ageAdolescents: t.Boolean,
+    ageAdults: t.Boolean,
+    ageGeriatrics: t.Boolean,
+
+    targetIndividual: t.Boolean,
+    targetFamily: t.Boolean,
+    targetCommunity: t.Boolean,
+    targetSystem: t.Boolean
   },
   {
     defaultProps: {
