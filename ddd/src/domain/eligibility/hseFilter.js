@@ -53,7 +53,7 @@ const HSEFilter = Filter.extend(
     professionalScopeOfPractice: t.Boolean,
     professionalContinuingCompetance: t.Boolean,
     professionalQualityAndSafety: t.Boolean,
-    professionalProfessionalLiability: t.Boolean,
+    professionalLiability: t.Boolean,
     professionalStrikeJobAction: t.Boolean,
 
     consumer: t.Boolean,
@@ -64,7 +64,7 @@ const HSEFilter = Filter.extend(
     consumerStakeholder: t.Boolean,
 
     financial: t.Boolean,
-    financingSystems: t.Boolean,
+    financialSystems: t.Boolean,
     financialTaxation: t.Boolean,
     financialSocialHealthInsurance: t.Boolean,
     financialCommunityBasedHealthInsurance: t.Boolean,
@@ -177,11 +177,11 @@ const HSEFilter = Filter.extend(
     // Province focus
     territoryFederalNational: t.Boolean,
     territoryAlberta: t.Boolean,
-    territoryScopeOfPractice: t.Boolean,
     territoryBritishColumbia: t.Boolean,
     territoryManitoba: t.Boolean,
     territoryNewBrunswick: t.Boolean,
     territoryNewFoundlandAndLabrador: t.Boolean,
+    territoryNorthwestTerritories: t.Boolean,
     territoryNovaScotia: t.Boolean,
     territoryNunavut: t.Boolean,
     territoryOntario: t.Boolean,
@@ -215,6 +215,7 @@ const HSEFilter = Filter.extend(
     conditionOther: t.Boolean,
     conditionMaternalAndChildHealth: t.Boolean,
     conditionAccidents: t.Boolean,
+    conditionMentalHealthAddictions: t.Boolean,
 
     conditionTechnologies: t.Boolean,
     conditionTechnologyDrugs: t.Boolean,
@@ -268,11 +269,40 @@ const HSEFilter = Filter.extend(
     ontarioPriorityQualityImprovementAndSafety: t.Boolean,
     ontarioPrioritySeniorsCare: t.Boolean,
     ontarioPriorityVulnerableAndSpecialHealthNeedsPopulations: t.Boolean,
-    ontarioPriorityWomensHealth: t.Boolean
+    ontarioPriorityWomensHealth: t.Boolean,
+
+    healthSystemData: t.Boolean,
+    healthSystemExpenditureReview: t.Boolean,
+    healthSystemNationalAccount: t.maybe(t.Boolean),
+    healthSystemProvincialAccount: t.maybe(t.Boolean),
+    healthSystemResearchPriorities: t.Boolean,
+    healthSystemSituationAnalysis: t.Boolean,
+    healthSystemJurisdictionalReview: t.Boolean,
+    healthSystemPerformanceReview: t.Boolean,
+    healthSystemExternalEvaluation: t.Boolean,
+    healthSystemLiteratureReview: t.Boolean,
+    healthSystemFramework: t.Boolean,
+    healthSystemToolkit: t.boolean,
+    healthSystemOptionsFraming: t.Boolean,
+    healthSystemGuidance: t.Boolean,
+    healthSystemCitizenPatientInput: t.Boolean,
+    healthSystemStakeholderInput: t.Boolean,
+    healthSystemStakeholderPositionPaper: t.boolean,
+    healthSystemPoliticalPartyPlatform: t.maybe(t.Boolean),
+    healthSystemGovernmentDiscussionPaper: t.Boolean,
+    healthSystemGovernmentPositionPaper: t.Boolean,
+    healthSystemGovernmentStrategicPlan: t.Boolean,
+    healthSystemGovernmentPolicy: t.Boolean,
+    healthSystemGovernmentLegislation: t.Boolean,
+    healthSystemIntergovernmentalCommunique: t.Boolean,
+    healthSystemIntergovernmentalAccord: t.Boolean,
+    healthSystemGovernmentThirdPartyAccord: t.Boolean
   },
   {
     defaultProps: {
       type: "hse",
+      healthSystemNationalAccount: false,
+      healthSystemProvincialAccount: false,
       documentType:
         "NO. After reviewing the document types and eligibility criteria, this record is not eligible for inclusion in HSE."
     }
