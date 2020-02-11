@@ -33,6 +33,13 @@ const DOCUMENT_TYPES = [
   { value: 'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.', label: 'NO, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.' },
 ];
 
+const STATUSES = [
+  { value: 'New Article', label: 'New Article' },
+  { value: 'Data Entry Complete', label: 'Data Entry Complete' },
+  { value: 'Live', label: 'Live' },
+  { value: 'Delete', label: 'Delete' },
+]
+
 class EligibilityForm extends React.Component {
 
   constructor(props) {
@@ -263,6 +270,43 @@ class EligibilityForm extends React.Component {
                   this.state.selectedKeys,
                   false
                 )
+              }
+              
+              <div className="box-divider pt-2 mb-3"></div>
+              <h6>Assessment and Assignment Status</h6>
+
+              <div className="form-group row">
+                <label className="col-sm-2 col-form-label">Status</label>
+                <div className="col-sm-4">
+                  <Select
+                    value={this.state.selectedStatus}
+                    name="selectedStatus"
+                    onChange={(value) => this.handleChange('selectedStatus', value)}
+                    options={STATUSES}
+                    isSearchable
+                  />
+                </div>
+                <ul>
+                  <li><b>New article</b> = New, still having content added, not visible in searches</li>
+                  <li><b>Data entry complete</b> = All required content has been added, still not visible in searches</li>
+                  <li><b>Live</b> = Available for searching/alerting</li>
+                  <li><b>Deleted</b> = Removed from the system, not visible in searches</li>
+                </ul>
+              </div>
+              {
+                (this.state.selectedStatus && this.state.selectedStatus.value === 'Delete') &&
+                <div className="form-group row">
+                  <label className="col-sm-2 col-form-label">Please enter the reason for removal (in case its removal is questioned later):</label>
+                  <div className="col-sm-10">
+                    <textarea 
+                    className="form-control" 
+                    rows="5"
+                    name="deleteReason"
+                    value={this.state.deleteReason}
+                    onChange={this.handleChange} 
+                    ></textarea>
+                  </div>
+                </div>
               }
               <button
                 type="submit"
