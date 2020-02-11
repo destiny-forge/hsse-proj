@@ -1,10 +1,14 @@
 const container = require("src/container");
-const { create, list, assign } = require("src/app/article");
+const { create, get, list, assign } = require("src/app/article");
 
 module.exports = () => {
   const {
     repository: { articleRepository }
   } = container.cradle;
+
+  const getUseCase = get({
+    articleRepository
+  });
 
   const createUseCase = create({
     articleRepository
@@ -19,6 +23,7 @@ module.exports = () => {
   });
 
   return {
+    getUseCase,
     createUseCase,
     listUseCase,
     assignUseCase
