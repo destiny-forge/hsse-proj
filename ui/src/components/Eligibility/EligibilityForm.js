@@ -19,7 +19,7 @@ import {
   ontarioHealthSubtype,
   intergovernmentalOrganizationSubtype
 
-} from './utils/HSETreeData';
+} from './HSETreeData';
 
 const { TreeNode } = Tree;
 
