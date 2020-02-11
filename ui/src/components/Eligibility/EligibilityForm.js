@@ -3,6 +3,25 @@ import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import Select from 'react-select';
 import ArticleService from '../../services/ArticleService';
+import { Tree } from 'antd';
+import 'antd/dist/antd.css';
+
+import {
+  healthSystemTopicsTreeData,
+  canadianAreasTreeData,
+  domainsTreeData,
+  lmicFocusTreeData,
+  provinceFocusTreeData,
+  themeTreeData,
+  populationTreeData,
+  ontarioPriorityAreasTreeData,
+  canadaHealthSystemSubtype,
+  ontarioHealthSubtype,
+  intergovernmentalOrganizationSubtype
+
+} from './utils/HSETreeData';
+
+const { TreeNode } = Tree;
 
 const DOCUMENT_TYPES = [
   { value: 'Evidence briefs for policy', label: 'Evidence briefs for policy' },
@@ -65,6 +84,55 @@ class EligibilityForm extends React.Component {
       })  
   }
 
+  onExpand = (expandedKeys) => {
+    console.log('onExpand', expandedKeys);
+    // if not set autoExpandParent to false, if children expanded, parent can not collapse.
+    // or, you can remove all expanded children keys.
+    this.setState({
+      expandedKeys,
+      autoExpandParent: false,
+    });
+  }
+
+  renderTreeSection = (sectionTreeData, checkedEvent, checkedKeyState) => {
+    return (
+      <React.Fragment>
+          <label className="col-md-1 offset-md-1 col-form-label"></label>
+          <div className="col-md-10">
+            <Tree
+              checkable
+              showLine={true}
+              defaultExpandAll={true}
+              onExpand={this.onExpand}
+              autoExpandParent={true}
+              onCheck={checkedEvent}
+              checkedKeys={checkedKeyState}
+              onSelect={this.onSelect}
+            // selectedKeys={this.state.selectedKeys}
+            >
+              {this.renderTreeNodes(sectionTreeData)}
+            </Tree>
+          </div>
+      </React.Fragment>
+    );
+  }
+
+  renderTreeNodes = (data) => data.map((item) => {
+    if (item.children) {
+      return (
+        <TreeNode 
+          title={item.title} 
+          key={item.key} 
+          dataRef={item} 
+          disableCheckbox={false}
+        >
+          {this.renderTreeNodes(item.children, false)}
+        </TreeNode>
+      );
+    }
+    return <TreeNode {...item} disableCheckbox={false} />;
+  })
+
   render() {
     const { article } = this.state;
 
@@ -104,18 +172,26 @@ class EligibilityForm extends React.Component {
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">General focus?</label>
                 <div className="col-sm-10">
-                  <label class="form-check-label">
+                  <label className="form-check-label">
                     <input 
                       type="checkbox" 
-                      class="form-check-input"
+                      className="form-check-input"
                       name="generalFocus"
                       onChange={this.handleCheckbox}
                     /> Yes, this article has a general focus (review definition and code accordingly, nothing that the default is set to specific)
                   </label>
                 </div>
               </div>
-              <div class="box-divider pt-2 mb-3"></div>
+              <div className="box-divider pt-2 mb-3"></div>
               <h6>Health Systems Topic</h6>
+              {
+                this.renderTreeSection(
+                  healthSystemTopicsTreeData, 
+                  this.handleCheckbox, 
+                  this.handleChange, 
+                  false
+                )
+              }
               <button
                 type="submit"
                 className="btn primary">
