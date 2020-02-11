@@ -15,6 +15,7 @@ import {
   populationTreeData,
   ontarioPriorityAreasTreeData
 } from './HSETreeData';
+import EligibilityService from '../../services/EligibilityService';
 
 const { TreeNode } = Tree;
 
@@ -47,10 +48,12 @@ class EligibilityForm extends React.Component {
 
     this.state = {
       article: "",
-      generalFocus: false
+      generalFocus: false,
+      type: 'hse'
     }
 
     this.Article = ArticleService({ fetch: this.props.fetch });
+    this.Eligibility = EligibilityService({ fetch: this.props.fetch });
   }
 
   handleChange = (field, value) => {
@@ -71,10 +74,11 @@ class EligibilityForm extends React.Component {
   }
 
   handleTreeClick = (selectedKeys) => {
+    console.log("seklected ", selectedKeys);
     this.setState({
       ...this.state,
       selectedKeys
-    }, () => console.log(this.state))
+    })
   }
 
   componentDidMount() {
@@ -137,9 +141,21 @@ class EligibilityForm extends React.Component {
     return <TreeNode {...item} disableCheckbox={false} />;
   })
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    
+    this.Eligibility.save(this.state)
+      .then(res => {
+        console.log("res ", res);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
   render() {
     const { article } = this.state;
-
+    console.log(this.state.selectedKeys);
     return (
       <div className="padding">
         <div className="box">
@@ -310,6 +326,7 @@ class EligibilityForm extends React.Component {
               }
               <button
                 type="submit"
+                onClick={this.handleSubmit}
                 className="btn primary">
                 Save
               </button>
