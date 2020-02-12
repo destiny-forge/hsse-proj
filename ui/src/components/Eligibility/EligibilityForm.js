@@ -6,6 +6,7 @@ import Select from 'react-select';
 import ArticleService from '../../services/ArticleService';
 import { Tree } from 'antd';
 import 'antd/dist/antd.css';
+import EligibilityService from '../../services/EligibilityService';
 import { 
   healthSystemTopicsTreeData,
   canadianAreasTreeData,
@@ -16,7 +17,8 @@ import {
   populationTreeData,
   ontarioPriorityAreasTreeData
 } from './HSETreeData';
-import EligibilityService from '../../services/EligibilityService';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const { TreeNode } = Tree;
 
@@ -161,6 +163,8 @@ class EligibilityForm extends React.Component {
     return <TreeNode {...item} disableCheckbox={false} />;
   })
 
+  notifyDone = () => toast.success("Eligibility completed!");
+
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(this.state);
@@ -191,6 +195,7 @@ class EligibilityForm extends React.Component {
     this.Eligibility.save(formData)
       .then(res => {
         console.log("res ", res);
+        this.notifyChangesSaved();
       })
       .catch(err => {
         console.log(err);
