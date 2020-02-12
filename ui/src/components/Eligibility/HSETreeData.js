@@ -17,13 +17,11 @@ export const healthSystemTopicsTreeData = [
             key: 'governmentPolicyAccountability'
           },
           {
-            title:
-              "Stewardship of the non-state sector's role in financing & delivery",
+            title: "Stewardship of the non-state sector's role in financing & delivery",
             key: 'governmentPolicyStewardship'
           },
           {
-            title:
-              'Decision-making authority about who is covered and what can or must be provided to them',
+            title:'Decision-making authority about who is covered and what can or must be provided to them',
             key: 'governmentPolicyDecisionMaking'
           },
           {
