@@ -30,6 +30,11 @@ const ArticleService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
+  const get = async (shortId) => {
+    const res = await fetch(`/articles/${shortId}`)
+    return Promise.resolve(res);
+  };
+
   const assign = async assignment => {
     const res = await fetch('/articles/assign', {
       method: 'POST',
@@ -41,6 +46,7 @@ const ArticleService = ({ fetch }) => {
   return {
     create,
     list,
+    get,
     eligibilityFilters,
     assign
   };

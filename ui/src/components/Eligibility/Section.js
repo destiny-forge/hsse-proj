@@ -17,17 +17,19 @@ const withSection = (WrappedComponent) => {
     componentDidMount() {
       const type = this.props.history.location.pathname.replace(/\//g, "");
 
-      this.Article.list(type, 'eligibility', 'pending_assignment')
-        .then(res => {
-          if (res.success) {
-            this.setState({
-              articles: res.data,
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        })
+      if (type) {
+        this.Article.list(type, 'eligibility', 'pending_assignment')
+          .then(res => {
+            if (res.success) {
+              this.setState({
+                articles: res.data,
+              });
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          }) 
+      }
     }
 
     trackTab = (type, tab) => {

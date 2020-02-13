@@ -135,9 +135,11 @@ class AuthService {
       headers['Authorization'] = `Bearer ${this.getToken()}`;
     }
 
-    if (options.method === 'GET' || options.method === 'DELETE') {
-      const qs = '?' + this.getQueryString(options.data);
-      url = url + qs;
+    if (options) {
+      if (options.method === 'GET' || options.method === 'DELETE') {
+        const qs = '?' + this.getQueryString(options.data);
+        url = url + qs;
+      }  
     }
       
     return fetch(`${this.domain}${url}`, {
