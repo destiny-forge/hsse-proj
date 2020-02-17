@@ -12,14 +12,20 @@ module.exports = ({ eligibilityRepository }) => {
         };
       }
 
-      filter.published = filter.published
-        ? new Date(filter.published, 1, 1)
-        : new Date();
+      if (filter._id) {
+        const _id = filter._id;
+        delete filter._id;
+        return await eligibilityRepository.update(_id, filter);
+      } else {
+        filter.published = filter.published
+          ? new Date(filter.published, 1, 1)
+          : new Date();
 
-      const entity =
-        filter.type === "sse" ? sseFilter(filter) : hseFilter(filter);
+        const entity =
+          filter.type === "sse" ? sseFilter(filter) : hseFilter(filter);
 
-      return await eligibilityRepository.create(entity);
+        return await eligibilityRepository.create(entity);
+      }
     } catch (error) {
       throw new Error(error);
     }
