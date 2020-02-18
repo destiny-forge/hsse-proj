@@ -108,8 +108,10 @@ class EligibilityForm extends React.Component {
                     if (filters[k.key] === true) {
                       let newCurrentFilterState = Object.assign({}, this.state.currentFilterState);
                       newCurrentFilterState[key].push(k.key);
+                  
                       this.setState({
-                        currentFilterState: newCurrentFilterState
+                        selectedDocumentType: filterData.data.documentType,
+                        currentFilterState: newCurrentFilterState,
                       });
                     }
                   }
