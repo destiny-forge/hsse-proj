@@ -3,7 +3,7 @@
  */
 
 const EligibilityService = ({ fetch }) => {
-  const save = async eligibility => {
+  const create = async eligibility => {
     const res = await fetch('/eligibility', {
       method: 'POST',
       body: JSON.stringify(eligibility)
@@ -12,7 +12,7 @@ const EligibilityService = ({ fetch }) => {
   };
 
   return {
-    save,
+    create,
   };
 };
 

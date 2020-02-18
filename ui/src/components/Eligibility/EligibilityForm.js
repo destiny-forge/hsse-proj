@@ -167,7 +167,6 @@ class EligibilityForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
 
     const { 
       currentFilterState,
@@ -178,11 +177,16 @@ class EligibilityForm extends React.Component {
       selectedStatus
     } = this.state;
 
+    const { user } = this.props;
+
     let formData = {
       type: type,
+      userId: user.id,
+      articleId: article._id,
+      shortArticleId: article.shortId,
       generalFocus: generalFocus,
-      shortId: article.shortId,
-      selectedDocumentType: selectedDocumentType.value,
+      role: 'junior',
+      documentType: selectedDocumentType.value,
       selectedStatus: selectedStatus.value
     };
 
@@ -192,10 +196,10 @@ class EligibilityForm extends React.Component {
       });
     })
 
-    this.Eligibility.save(formData)
+    this.Eligibility.create(formData)
       .then(res => {
-        console.log("res ", res);
-        this.notifyChangesSaved();
+        this.props.history.replace(`/${type}`);
+        this.notifyDone();
       })
       .catch(err => {
         console.log(err);
