@@ -88,6 +88,8 @@ class BatchUpload extends Component {
       harvested: harvestDate
     }
 
+    console.log(upload);
+
     if (complete) {
       this.Batch.create(upload)
         .then(res => {

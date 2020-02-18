@@ -3,7 +3,7 @@
  */
 
 const EligibilityService = ({ fetch }) => {
-  const save = async eligibility => {
+  const create = async eligibility => {
     const res = await fetch('/eligibility', {
       method: 'POST',
       body: JSON.stringify(eligibility)
@@ -11,8 +11,22 @@ const EligibilityService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
+  const get = async (shortId, userId) => {
+    const params = {
+      method: 'GET',
+      data: {
+        userId,
+      }
+    };
+    
+    const res = await fetch(`/eligibility/${shortId}`, params)
+    return Promise.resolve(res);
+  };
+
+
   return {
-    save,
+    create,
+    get
   };
 };
 
