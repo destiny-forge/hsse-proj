@@ -7,15 +7,8 @@ import ArticleService from '../../services/ArticleService';
 import { Tree } from 'antd';
 import 'antd/dist/antd.css';
 import EligibilityService from '../../services/EligibilityService';
-import { 
-  healthSystemTopicsTreeData,
-  canadianAreasTreeData,
-  domainsTreeData,
-  lmicFocusTreeData,
-  provinceFocusTreeData,
-  themeTreeData,
-  populationTreeData,
-  ontarioPriorityAreasTreeData
+import {
+  treeData,
 } from './HSETreeData';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -62,9 +55,6 @@ class EligibilityForm extends React.Component {
         checkedTheme: [],
         checkedPopulation: [],
         checkedOPA: [],
-        checkedCHSDT: [],
-        checkedOHSDT: [],
-        checkedIOHSDT: []
       },
     }
 
@@ -99,13 +89,33 @@ class EligibilityForm extends React.Component {
 
   componentDidMount() {
     const { shortId } = this.props.match.params;
+    const { user } = this.props;
 
     this.Article.get(shortId)
       .then(res => {
         if (res.success) {
           this.setState({
             article: res.data
-          })
+          });
+          // grab any updated data for the filters if exists.
+          this.Eligibility.get(shortId, user.id)
+            .then(filterData => {
+              const filters = filterData.data;
+              const treeKeys = Object.keys(treeData);
+              for (const key of treeKeys) {
+                treeData[key].map(k => {
+                  if (!_.isNull(filters)) {
+                    if (filters[k.key] === true) {
+                      let newCurrentFilterState = Object.assign({}, this.state.currentFilterState);
+                      newCurrentFilterState[key].push(k.key);
+                      this.setState({
+                        currentFilterState: newCurrentFilterState
+                      });
+                    }
+                  }
+                })
+              }
+            })
         }
       })
       .catch(err => {
@@ -190,7 +200,9 @@ class EligibilityForm extends React.Component {
       selectedStatus: selectedStatus.value
     };
 
-    Object.keys(currentFilterState).forEach(function (key, idx) {
+    console.log(formData)
+
+    Object.keys(currentFilterState).forEach((key, idx) => {
       currentFilterState[key].map(k => {
         formData[k] = true;
       });
@@ -259,7 +271,7 @@ class EligibilityForm extends React.Component {
               <h6>Health Systems Topic</h6>
               {
                 this.renderTreeSection(
-                  healthSystemTopicsTreeData, 
+                  treeData.checkedKeysHST, 
                   this.handleTreeClick, 
                   this.state.currentFilterState.checkedKeysHST, 
                   'checkedKeysHST'
@@ -269,7 +281,7 @@ class EligibilityForm extends React.Component {
               <h6>Canadian Areas</h6>
               {
                 this.renderTreeSection(
-                  canadianAreasTreeData,
+                  treeData.checkedKeysCA,
                   this.handleTreeClick,
                   this.state.currentFilterState.checkedKeysCA, 
                   'checkedKeysCA'
@@ -279,7 +291,7 @@ class EligibilityForm extends React.Component {
               <h6>Domains</h6>
               {
                 this.renderTreeSection(
-                  domainsTreeData,
+                  treeData.checkedDomain,
                   this.handleTreeClick,
                   this.state.currentFilterState.checkedDomain,
                   'checkedDomain'
@@ -290,7 +302,7 @@ class EligibilityForm extends React.Component {
               <h6>LMIC Focus</h6>
               {
                 this.renderTreeSection(
-                  lmicFocusTreeData,
+                  treeData.checkedLMIC,
                   this.handleTreeClick,
                   this.state.currentFilterState.checkedLMIC,
                   'checkedLMIC'
@@ -301,7 +313,7 @@ class EligibilityForm extends React.Component {
               <h6>Province Focus</h6>
               {
                 this.renderTreeSection(
-                  provinceFocusTreeData,
+                  treeData.checkedProvince,
                   this.handleTreeClick,
                   this.state.currentFilterState.checkedProvince,
                   'checkedProvince',
@@ -312,7 +324,7 @@ class EligibilityForm extends React.Component {
               <h6>Theme</h6>
               {
                 this.renderTreeSection(
-                  themeTreeData,
+                  treeData.checkedTheme,
                   this.handleTreeClick,
                   this.state.currentFilterState.checkedTheme,
                   'checkedTheme'
@@ -323,7 +335,7 @@ class EligibilityForm extends React.Component {
               <h6>Population</h6>
               {
                 this.renderTreeSection(
-                  populationTreeData,
+                  treeData.checkedPopulation,
                   this.handleTreeClick,
                   this.state.currentFilterState.checkedPopulation,
                   'checkedPopulation',
@@ -334,7 +346,7 @@ class EligibilityForm extends React.Component {
               <h6>Ontario Priority Areas</h6>
               {
                 this.renderTreeSection(
-                  ontarioPriorityAreasTreeData,
+                  treeData.checkedOPA,
                   this.handleTreeClick,
                   this.state.currentFilterState.checkedOPA,
                   'checkedOPA'

@@ -11,8 +11,22 @@ const EligibilityService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
+  const get = async (shortId, userId) => {
+    const params = {
+      method: 'GET',
+      data: {
+        userId,
+      }
+    };
+    
+    const res = await fetch(`/eligibility/${shortId}`, params)
+    return Promise.resolve(res);
+  };
+
+
   return {
     create,
+    get
   };
 };
 
