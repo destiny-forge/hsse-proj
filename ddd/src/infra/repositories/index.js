@@ -9,7 +9,7 @@ module.exports = ({ database }) => {
   const articleModel = database.mongo.models.articles;
   const batchModel = database.mongo.models.batches;
   const eligibilityModel = database.mongo.models.eligibility;
-  const appraisalModel = database.mongo.models.appraisal;
+  const appraisalModel = database.mongo.models.appraisals;
   return {
     userRepository: User({ model: userModel({ database }) }),
     articleRepository: Article({ model: articleModel({ database }) }),

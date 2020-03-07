@@ -26,15 +26,7 @@ module.exports = ({ appraisalRepository }) => {
       const target = appraisals[1];
 
       const filter = (path, key) =>
-        path.length === 0 &&
-        [
-          "_id",
-          "shortId",
-          "userId",
-          "relevance",
-          "completed",
-          "complicated"
-        ].indexOf(key) < 0;
+        path.length === 0 && ["_id", "shortId", "userId"].indexOf(key) < 0;
 
       const differences = diff(source, target, filter);
       return differences.length;

@@ -1,30 +1,28 @@
-const { hseFilter, sseFilter } = require("src/domain/eligibility");
+const Appraisal = require("src/domain/appraisal");
 
 /**
- * Eligibility filter creation
+ * Appraisal creation
  */
-module.exports = ({ eligibilityRepository }) => {
-  const create = async filter => {
+module.exports = ({ appraisalRepository }) => {
+  const create = async appraisal => {
     try {
-      if (!filter.type || (filter.type !== "sse" && filter.type !== "hse")) {
+      if (
+        !appraisal.type ||
+        (appraisal.type !== "sse" && appraisal.type !== "hse")
+      ) {
         return {
-          error: "A valid filter type is required"
+          error: "A valid appraisal type is required"
         };
       }
 
-      if (filter._id) {
-        const _id = filter._id;
-        delete filter._id;
-        return await eligibilityRepository.update(_id, filter);
+      // @TODO - ensure we are the owner of said appraisal
+      if (appraisal._id) {
+        const _id = appraisal._id;
+        delete appraisal._id;
+        return await appraisalRepository.update(_id, appraisal);
       } else {
-        filter.published = filter.published
-          ? new Date(filter.published, 1, 1)
-          : new Date();
-
-        const entity =
-          filter.type === "sse" ? sseFilter(filter) : hseFilter(filter);
-
-        return await eligibilityRepository.create(entity);
+        const entity = Appraisal(appraisal);
+        return await appraisalRepository.create(entity);
       }
     } catch (error) {
       throw new Error(error);
