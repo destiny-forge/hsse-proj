@@ -1,5 +1,6 @@
 const Batch = require("src/domain/batch");
 const { hseArticle, sseArticle } = require("src/domain/article");
+const ObjectID = require("mongodb").ObjectID;
 
 const { parse } = require("./parse");
 const file = require("./file");
@@ -26,11 +27,12 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
       const { getFile } = file({ config, type: batch.type });
       const csv = await getFile(batch.fileUrl);
       const articles = await parse(csv);
-      
+
       const result = articles.map(async article => {
-        article.batchId = newBatch._id;
+        article.batchId = new ObjectID(newBatch._id);
         article.published = new Date(batch.uploaded);
         article.harvested = new Date(batch.harvested);
+        article.status = "created";
 
         const entity =
           batch.type === "sse" ? sseArticle(article) : hseArticle(article);
