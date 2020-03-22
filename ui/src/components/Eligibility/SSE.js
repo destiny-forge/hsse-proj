@@ -3,7 +3,7 @@ import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import withSection from './Section';
 import Header from './Header';
-import ArticlesTable from './ArticlesTable';
+import BatchesTable from './BatchesTable';
 import Tabs from './Tabs';
 import Sidebar from './Sidebar';
 
@@ -12,7 +12,7 @@ class SSE extends Component {
   render() {
     const { 
       trackTab,
-      articles
+      batches
     } = this.props;
 
     return (
@@ -35,11 +35,11 @@ class SSE extends Component {
             <div className="col-sm-8 col-lg-9">
               <div className="tab-content">
                 <div className="tab-pane fade show active" id="tab_1">
-                  <ArticlesTable articles={articles} />
+                  <BatchesTable batches={batches} />
                 </div>
               
                 <div className="tab-pane fade" id="tab_2">
-                  <ArticlesTable articles={articles} />
+                  <BatchesTable batches={batches} />
                 </div>
                 
                 <div className="tab-pane fade" id="tab_3">
