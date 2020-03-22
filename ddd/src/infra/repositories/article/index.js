@@ -34,6 +34,28 @@ module.exports = ({ model }) => {
     }
   };
 
+  const findByBatch = async batchId => {
+    try {
+      const articles = await model.findByBatch(batchId);
+      return articles.map(article => {
+        return toEntity(article);
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
+  const aggregate = async (type, stage, status) => {
+    try {
+      const articles = await model.aggregate(type, stage, status);
+      return articles.map(article => {
+        return article;
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const create = async (...args) => {
     try {
       const article = await model.create(...args);
@@ -83,6 +105,8 @@ module.exports = ({ model }) => {
     update,
     findById,
     findByType,
+    findByBatch,
+    aggregate,
     find,
     assign,
     findOne

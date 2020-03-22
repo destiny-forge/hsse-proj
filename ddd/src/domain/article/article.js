@@ -9,7 +9,7 @@ const Article = t.struct(
   {
     _id: t.maybe(t.String),
     legacyId: t.maybe(t.String),
-    batchId: t.maybe(tx.String.MongoId),
+    batchId: t.maybe(t.Object),
     shortId: t.String,
 
     title: t.String,
@@ -64,7 +64,8 @@ const Article = t.struct(
     translatedTitle: t.maybe(t.String),
     nameOfDatabase: t.maybe(t.String),
     databaseProvider: t.maybe(t.String),
-    stages: t.maybe(t.Object)
+    stages: t.maybe(t.Object),
+    status: t.maybe(t.String)
   },
   {
     defaultProps: {
@@ -73,6 +74,7 @@ const Article = t.struct(
       language: "English",
       complicated: false,
       lost: false,
+      status: "created",
       stages: {
         eligibility: { status: "pending_assignment" },
         studies: { status: "pending_assignment" },
