@@ -8,6 +8,7 @@ const Batch = t.struct(
     _id: t.maybe(t.String),
     // legacyId: t.String,
     shortId: t.String,
+    name: t.maybe(t.String),
 
     referenceType: t.maybe(t.String),
     fileName: t.maybe(t.String),
