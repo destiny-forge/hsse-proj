@@ -51,6 +51,62 @@ module.exports = ({ database }) => {
     }
   };
 
+  const findByBatch = async batchId => {
+    try {
+      return await database
+        .get()
+        .collection("articles")
+        .find({
+          batchId: { $eq: ObjectID(batchId) }
+        })
+        .toArray();
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const aggregate = async (type, stage, status) => {
+    const filters = Array.isArray(status) ? { $in: status } : status;
+    try {
+      return await database
+        .get()
+        .collection("articles")
+        .aggregate([
+          {
+            $match: {
+              batchId: { $ne: null },
+              type: { $eq: type },
+              [`stages.${stage}.status`]: filters
+            }
+          },
+          {
+            $group: {
+              _id: "$batchId",
+              total: { $sum: 1 },
+              in_progress: {
+                $sum: {
+                  $cond: [{ $eq: ["$status", "in_progress"] }, 1, 0]
+                }
+              },
+              complete: {
+                $sum: {
+                  $cond: [{ $eq: ["$status", "complete"] }, 1, 0]
+                }
+              },
+              created: {
+                $sum: {
+                  $cond: [{ $eq: ["$status", "created"] }, 1, 0]
+                }
+              }
+            }
+          }
+        ])
+        .toArray();
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const findById = async id => {
     try {
       if (!ObjectID.isValid(id)) throw "Invalid MongoDB ID.";
@@ -115,6 +171,8 @@ module.exports = ({ database }) => {
     collection.createIndex("stages.appraisals.status");
     collection.createIndex("stages.prioritizing.status");
     collection.createIndex("stages.translations.status");
+    collection.createIndex("status");
+    collection.createIndex("batchId");
   };
 
   const migrate = () => {
@@ -134,6 +192,15 @@ module.exports = ({ database }) => {
       },
       { multi: true, upsert: true }
     );
+    collection.updateMany(
+      { status: { $exists: false } },
+      {
+        $set: {
+          status: "created"
+        }
+      },
+      { multi: true, upsert: true }
+    );
   };
 
   return {
@@ -145,6 +212,8 @@ module.exports = ({ database }) => {
     find,
     assign,
     update,
+    findByBatch,
+    aggregate,
     createIndexes,
     migrate
   };
