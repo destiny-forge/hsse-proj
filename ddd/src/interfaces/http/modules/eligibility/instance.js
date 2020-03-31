@@ -16,8 +16,7 @@ module.exports = () => {
   });
 
   const compareUseCase = compare({
-    eligibilityRepository,
-    articleRepository
+    eligibilityRepository
   });
 
   return {

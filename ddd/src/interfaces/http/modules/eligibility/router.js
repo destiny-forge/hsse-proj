@@ -73,7 +73,7 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.get("/:shortArticleId", (req, res) => {
-    const { userId } = req.query; 
+    const { userId } = req.query;
     const { shortArticleId } = req.params;
     getUseCase
       .get(shortArticleId, userId)
@@ -114,7 +114,7 @@ module.exports = ({
   router.get("/compare/:shortArticleId", (req, res) => {
     const { shortArticleId } = req.params;
     compareUseCase
-      .get(shortArticleId)
+      .compare(shortArticleId)
       .then(data => {
         res.status(Status.OK).json(Success(data));
       })

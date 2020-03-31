@@ -16,6 +16,13 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
           error: "A valid batch type is required"
         };
       }
+
+      if (!batch.name) {
+        return {
+          error: "A valid batch name is required"
+        };
+      }
+
       // Create batch
       batch.uploaded = new Date();
       batch.harvested = new Date(batch.harvested);
@@ -30,6 +37,7 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
 
       const result = articles.map(async article => {
         article.batchId = new ObjectID(newBatch._id);
+        article.batchName = batch.name;
         article.published = new Date(batch.uploaded);
         article.harvested = new Date(batch.harvested);
         article.status = "created";
