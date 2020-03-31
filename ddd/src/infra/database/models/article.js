@@ -97,7 +97,18 @@ module.exports = ({ database }) => {
                 $sum: {
                   $cond: [{ $eq: ["$status", "created"] }, 1, 0]
                 }
-              }
+              },
+              batchName: { $first: "$batchName" }
+            }
+          },
+          {
+            $project: {
+              _id: "$_id",
+              total: "$total",
+              in_progress: "$in_progress",
+              complete: "$complete",
+              created: "$created",
+              name: "$batchName"
             }
           }
         ])
@@ -197,6 +208,15 @@ module.exports = ({ database }) => {
       {
         $set: {
           status: "created"
+        }
+      },
+      { multi: true, upsert: true }
+    );
+    collection.updateMany(
+      { batchName: { $exists: false } },
+      {
+        $set: {
+          batchName: ""
         }
       },
       { multi: true, upsert: true }

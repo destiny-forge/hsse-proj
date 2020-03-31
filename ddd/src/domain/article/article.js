@@ -10,6 +10,7 @@ const Article = t.struct(
     _id: t.maybe(t.String),
     legacyId: t.maybe(t.String),
     batchId: t.maybe(t.Object),
+    batchName: t.maybe(t.String),
     shortId: t.String,
 
     title: t.String,
