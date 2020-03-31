@@ -25,6 +25,7 @@ module.exports = ({ eligibilityRepository, articleRepository }) => {
           error: "Article with shortArticleId not found"
         };
       }
+
       return await eligibilityRepository.findOne(article._id, userId);
     } catch (error) {
       throw new Error(error);

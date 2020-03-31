@@ -1,5 +1,4 @@
 const t = require("tcomb");
-const tx = require("tcomb-additional-types");
 const shortid = require("shortid");
 const { compose } = require("ramda");
 const { cleanData, cleanMongoId } = require("../helper");
@@ -8,8 +7,8 @@ const Appraisal = t.struct(
   {
     _id: t.maybe(t.String),
     shortId: t.String,
-    articleId: tx.String.MongoId,
-    userId: tx.String.MongoId,
+    articleId: t.maybe(t.Object),
+    userId: t.maybe(t.Object),
     role: t.String,
 
     questionOne: t.String,

@@ -12,9 +12,7 @@ module.exports = ({ appraisalRepository }) => {
     }
 
     try {
-      const appraisals = await appraisalRepository.find({
-        articleId
-      });
+      const appraisals = await appraisalRepository.findByArticleId(articleId);
 
       if (appraisals.length < 2) {
         return {
@@ -26,10 +24,10 @@ module.exports = ({ appraisalRepository }) => {
       const target = appraisals[1];
 
       const filter = (path, key) =>
-        path.length === 0 && ["_id", "shortId", "userId"].indexOf(key) < 0;
+        path.length === 0 && ~["_id", "shortId", "userId"].indexOf(key) < 0;
 
       const differences = diff(source, target, filter);
-      return differences.length;
+      return differences || [];
     } catch (error) {
       throw new Error(error);
     }

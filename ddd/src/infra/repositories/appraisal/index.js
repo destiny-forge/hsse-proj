@@ -12,6 +12,17 @@ module.exports = ({ model }) => {
     }
   };
 
+  const findByArticleId = async articleId => {
+    try {
+      const appraisals = await model.findByArticleId(articleId);
+      return appraisals.map(appraisal => {
+        return toEntity(appraisal);
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const findByType = async type => {
     try {
       const appraisals = await model.findByType(type);
@@ -23,9 +34,9 @@ module.exports = ({ model }) => {
     }
   };
 
-  const find = async (type, stage, status) => {
+  const find = async (...args) => {
     try {
-      const appraisals = await model.find(type, stage, status);
+      const appraisals = await model.find(...args);
       return appraisals.map(appraisal => {
         return toEntity(appraisal);
       });
@@ -82,6 +93,7 @@ module.exports = ({ model }) => {
     create,
     update,
     findById,
+    findByArticleId,
     findByType,
     find,
     assign,
