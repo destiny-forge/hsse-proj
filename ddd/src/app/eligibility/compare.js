@@ -27,7 +27,7 @@ module.exports = ({ eligibilityRepository }) => {
 
       const filter = (path, key) =>
         path.length === 0 &&
-        [
+        ~[
           "_id",
           "shortId",
           "userId",
@@ -37,7 +37,7 @@ module.exports = ({ eligibilityRepository }) => {
         ].indexOf(key) < 0;
 
       const differences = diff(source, target, filter);
-      return differences.length;
+      return differences;
     } catch (error) {
       throw new Error(error);
     }

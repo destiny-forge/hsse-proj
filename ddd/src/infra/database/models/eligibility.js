@@ -45,7 +45,7 @@ module.exports = ({ database }) => {
       return await database
         .get()
         .collection(COLLECTION)
-        .findOne(query)
+        .find(query)
         .toArray();
     } catch (e) {
       throw e;
@@ -91,10 +91,10 @@ module.exports = ({ database }) => {
   };
 
   const createIndexes = () => {
-    database
-      .get()
-      .collection(COLLECTION)
-      .createIndex("type");
+    const collection = database.get().collection(COLLECTION);
+    collection.createIndex("type");
+    collection.createIndex("articleId");
+    collection.createIndex("userId");
   };
 
   return {
