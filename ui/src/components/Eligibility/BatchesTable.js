@@ -48,10 +48,10 @@ class BatchesTable extends React.Component {
                         <i className="dark-white"></i>
                       </label>
                     </td>
-                    <td>Batch type</td>
+                    <td>{batch.referenceType || 'N/A'}</td>
                     <td>
                       <Link to={`/batch/${batch.shortId}`}>
-                        Batch Name
+                        {batch.name}
                       </Link>
                     </td>
                     <td>100</td>
