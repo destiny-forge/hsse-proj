@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone-uploader';
 import withAuth from '../withAuth';
@@ -48,13 +49,30 @@ const LANGUAGES = [
   { value: 'other', label: 'Other' }
 ];
 
+const HSE_DOCUMENT_TYPES = [
+  { value: "Canada's health systems documents", label: "Canada's health systems documents" },
+  { value: "Systematic reviews and other types of syntheses", label: "Systematic reviews and other types of syntheses" },
+  { value: "Economic evaluations and costing studies", label: "Economic evaluations and costing studies" },
+  { value: "Health reform descriptions", label: "Health reform descriptions" },
+  { value: "Health system descriptions", label: "Health system descriptions" },
+  { value: "Ontario's health system documents", label: "Ontario's health system documents" },
+  { value: "Intergovernmental organizations' health systems documents", label: "Intergovernmental organizations' health systems documents" },
+];
+
+const SSE_DOCUMENT_TYPES = [
+  { value: "Systematic reviews and other types of syntheses", label: "Systematic reviews and other types of syntheses" },
+  { value: "Economic evaluations and costing studies", label: "Economic evaluations and costing studies" },
+];
+
 class BatchUpload extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      batchName: '',
       harvestDate: Date.now(),
       selectedArticleSource: null,
       selectedLanguage: null,
+      documentType: null,
       complete: false,
       redirect: false,
       path: null,
@@ -75,20 +93,22 @@ class BatchUpload extends Component {
     const {
       fileUrl,
       selectedArticleSource,
+      documentType,
       selectedLanguage,
       harvestDate,
-      complete
+      complete,
+      batchName
     } = this.state;
     
     const upload = {
       type: this.state.article.type,
       fileUrl: fileUrl,
       source: selectedArticleSource.value,
+      referenceType: documentType.value,
       language: selectedLanguage.value,
-      harvested: harvestDate
+      harvested: harvestDate,
+      name: batchName
     }
-
-    console.log(upload);
 
     if (complete) {
       this.Batch.create(upload)
@@ -154,14 +174,26 @@ class BatchUpload extends Component {
   };
 
   handleChange = (field, value) => {
-    this.setState({
-      [field]: value,
-    });
+    if (!_.isUndefined(field.target) && field.target.name === 'batchName') {
+      const {
+        name,
+        value
+      } = field.target;
+
+      this.setState({
+        [name]: value
+      })
+    } else {
+      this.setState({
+        [field]: value,
+      });
+    }
   }
 
   render() {
     const {
       selectedArticleSource,
+      documentType,
       selectedLanguage,
       redirect,
       path,
@@ -201,6 +233,37 @@ class BatchUpload extends Component {
                         SSE
                     </option>
                     </select>
+                  </div>
+                </div>
+                <div className="form-group form-row">
+                  <div className="col-md-6">
+                    <label htmlFor="published">Batch Name</label>
+                    <input 
+                      type="text"
+                      value={this.state.batchName}
+                      name="batchName"
+                      className="form-control"
+                      placeholder='Batch name'
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="form-group form-row">
+                  <div className="col-md-6">
+                    <label htmlFor="inputState" className="d-block">
+                      Please choose a document type for the batch you want to upload.
+                    </label>
+                    <Select
+                      value={documentType}
+                      onChange={(value) => this.handleChange('documentType', value)}
+                      options={
+                        this.state.article &&
+                          this.state.article.type === 'sse'
+                          ? SSE_DOCUMENT_TYPES
+                          : HSE_DOCUMENT_TYPES
+                      }
+                      isSearchable
+                    />
                   </div>
                 </div>
                 <div className="form-group form-row">

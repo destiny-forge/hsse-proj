@@ -15,6 +15,7 @@ class BatchesTable extends React.Component {
   }
 
   render() {
+    console.log(this.props.batches);
     return (
       <div className="box">
         <div className="table-responsive">
