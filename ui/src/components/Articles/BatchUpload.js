@@ -8,61 +8,13 @@ import BatchService from '../../services/BatchService';
 import Select from 'react-select';
 import "react-datepicker/dist/react-datepicker.css";
 import { Redirect } from 'react-router';
-
-const HSE_ARTICLE_SOURCES = [
-  { value: 'Referrals', label: 'Referrals' },
-  { value: 'Hand Searches', label: 'Hand Searches' },
-  { value: 'Cochrane', label: 'Cochrane' },
-  { value: 'PLUS SR', label: 'PLUS SR' },
-  { value: 'PubMed SR', label: 'PubMed SR' },
-  { value: 'LILACS SR & EE', label: 'LILACS SR & EE' },
-  { value: 'PLUS EE', label: 'PLUS EE' },
-  { value: 'PubMed EE', label: 'PubMed EE' },
-  { value: 'Health System and Health Reform Descriptions', label: 'Health System and Health Reform Descriptions'},
-  { value: 'Other', label: 'Other' }
-];
-
-const SSE_ARTICLE_SOURCES = [
-  { value: 'Referrals', label: 'Referrals' },
-  { value: 'Hand Searches', label: 'Hand Searches' },
-  { value: 'Campbell', label: 'Campbell' },
-  { value: 'EPPI - Centre', label: 'EPPI - Centre' },
-  { value: '3iE', label: '3iE' },
-  { value: 'WoS SR', label: 'WoS SR' },
-  { value: 'EBSCO SR', label: 'EBSCO SR' },
-  { value: 'Proquest SR', label: 'Proquest SR' },
-  { value: 'WoS EE', label: 'WoS EE' },
-  { value: 'EBSCO EE', label: 'EBSCO EE' },
-  { value: 'Proquest EE', label: 'Proquest EE' },
-  { value: 'SafetyLit', label: 'SafetyLit' },
-  { value: 'Other', label: 'Other' },
-]
-
-const LANGUAGES = [
-  { value: 'english', label: 'English' },
-  { value: 'arabic', label: 'Arabic' },
-  { value: 'chinese', label: 'Chinese' },
-  { value: 'french', label: 'French' },
-  { value: 'portuguese', label: 'Portuguese' },
-  { value: 'russian', label: 'Russian' },
-  { value: 'spanish', label: 'Spanish' },
-  { value: 'other', label: 'Other' }
-];
-
-const HSE_DOCUMENT_TYPES = [
-  { value: "Canada's health systems documents", label: "Canada's health systems documents" },
-  { value: "Systematic reviews and other types of syntheses", label: "Systematic reviews and other types of syntheses" },
-  { value: "Economic evaluations and costing studies", label: "Economic evaluations and costing studies" },
-  { value: "Health reform descriptions", label: "Health reform descriptions" },
-  { value: "Health system descriptions", label: "Health system descriptions" },
-  { value: "Ontario's health system documents", label: "Ontario's health system documents" },
-  { value: "Intergovernmental organizations' health systems documents", label: "Intergovernmental organizations' health systems documents" },
-];
-
-const SSE_DOCUMENT_TYPES = [
-  { value: "Systematic reviews and other types of syntheses", label: "Systematic reviews and other types of syntheses" },
-  { value: "Economic evaluations and costing studies", label: "Economic evaluations and costing studies" },
-];
+import {
+  HSE_ARTICLE_SOURCES,
+  SSE_ARTICLE_SOURCES,
+  HSE_DOCUMENT_TYPES,
+  SSE_DOCUMENT_TYPES,
+  LANGUAGES
+} from "./lib/options";
 
 class BatchUpload extends Component {
   constructor(props) {
@@ -175,11 +127,7 @@ class BatchUpload extends Component {
 
   handleChange = (field, value) => {
     if (!_.isUndefined(field.target) && field.target.name === 'batchName') {
-      const {
-        name,
-        value
-      } = field.target;
-
+      const { name, value } = field.target;
       this.setState({
         [name]: value
       })
