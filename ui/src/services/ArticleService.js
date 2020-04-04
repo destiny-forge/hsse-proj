@@ -43,12 +43,18 @@ const ArticleService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
+  const getArticlesByBatch = async (id) => {
+    const res = await fetch(`/articles/batch/${id}`)
+    return Promise.resolve(res);
+  }
+
   return {
     create,
     list,
     get,
     eligibilityFilters,
-    assign
+    assign,
+    getArticlesByBatch
   };
 };
 

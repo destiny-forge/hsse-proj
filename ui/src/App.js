@@ -16,6 +16,7 @@ import EligibilityFilters from './components/Articles/EligibilityFilters';
 import SSE from './components/Eligibility/SSE';
 import HSE from './components/Eligibility/HSE';
 import EligibilityForm from './components/Eligibility/EligibilityForm';
+import Articles from './components/Articles/Articles';
 
 class App extends Component {
   render() {
@@ -46,6 +47,7 @@ class App extends Component {
           <Route path="/sse" component={SSE} />
           <Route path="/sse/eligibility-filters" component={EligibilityFilters} />
           <Route path="/eligibility/:shortId" component={EligibilityForm} />
+          <Route path="/batch/articles/:shortId" component={Articles} />
           <Route path="/upload" component={BatchUpload} />
           <Route path="/notes" component={Notes} />
         </Router>

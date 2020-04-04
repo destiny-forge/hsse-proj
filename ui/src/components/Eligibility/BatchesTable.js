@@ -15,7 +15,6 @@ class BatchesTable extends React.Component {
   }
 
   render() {
-    console.log(this.props.batches);
     return (
       <div className="box">
         <div className="table-responsive">
@@ -50,7 +49,7 @@ class BatchesTable extends React.Component {
                     </td>
                     <td>{batch.referenceType || 'N/A'}</td>
                     <td>
-                      <Link to={`/batch/${batch.shortId}`}>
+                      <Link to={`/batch/articles/${batch._id}`}>
                         {batch.name}
                       </Link>
                     </td>
