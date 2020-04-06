@@ -34,7 +34,6 @@ class BatchesTable extends React.Component {
                 <th># coding in progress(%)</th>
                 <th># coding complete(%)</th>
                 <th>Coders Assigned</th>
-                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -60,11 +59,6 @@ class BatchesTable extends React.Component {
                     <td>
                       Coder 1: tdelam@gmail.com <small><a href="">Remove</a></small><br/>
                       Coder 2: N/A
-                    </td>
-                    <td>
-                      <Link to={`/eligibility/${batch.shortId}`}>
-                        Delete <i className="fa fa-delete"></i>
-                      </Link>
                     </td>
                   </tr>
                 ))

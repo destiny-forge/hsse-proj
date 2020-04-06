@@ -47,6 +47,7 @@ class Articles extends React.Component {
                 <th>Authors</th>
                 <th>My Status</th>
                 <th>Article Status</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -58,6 +59,11 @@ class Articles extends React.Component {
                     <td>{article.authors}</td>
                     <td>TBD</td>
                     <td>TBD</td>
+                    <td>
+                      <Link to={`/eligibility/${article.shortId}`}>
+                        Code
+                      </Link>
+                    </td>
                   </tr>
                 ))
               }
