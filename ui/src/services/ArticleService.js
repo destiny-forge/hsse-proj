@@ -35,6 +35,11 @@ const ArticleService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
+  const compare = async (id) => {
+    const res = await fetch(`/eligibility/compare/${id}`)
+    return Promise.resolve(res);
+  };
+
   const assign = async assignment => {
     const res = await fetch('/articles/assign', {
       method: 'POST',
@@ -54,7 +59,8 @@ const ArticleService = ({ fetch }) => {
     get,
     eligibilityFilters,
     assign,
-    getArticlesByBatch
+    getArticlesByBatch,
+    compare
   };
 };
 

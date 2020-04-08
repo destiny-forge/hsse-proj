@@ -58,7 +58,11 @@ class Articles extends React.Component {
                     <td>{article.title}</td>
                     <td>{article.authors}</td>
                     <td>TBD</td>
-                    <td>TBD</td>
+                    <td>
+                      <Link to={`/conflicts/${article._id}/${article.shortId}`}>
+                        Resolve Conflicts
+                      </Link>
+                    </td>
                     <td>
                       <Link to={`/eligibility/${article.shortId}`}>
                         Code
