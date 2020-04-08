@@ -5,8 +5,12 @@ const ObjectID = require("mongodb").ObjectID;
  * Appraisal creation
  */
 module.exports = ({ appraisalRepository }) => {
-  const create = async appraisal => {
+  const create = async (appraisal) => {
     try {
+      const { numerator, denominator } = calculateAMStarRating(appraisal);
+      appraisal.amstarNumerator = numerator;
+      appraisal.amstarDenominator = denominator;
+
       // @TODO - ensure we are the owner of said appraisal
       if (appraisal._id) {
         const _id = appraisal._id;
@@ -23,7 +27,23 @@ module.exports = ({ appraisalRepository }) => {
     }
   };
 
+  const calculateAMStarRating = (appraisal) => {
+    const questions = Object.entries(appraisal)
+      .filter(([key, _value]) => key.indexOf("question") !== -1)
+      .map(([_key, value]) => value);
+
+    let numerator = questions.reduce(
+      (acc, question) => acc + (question === "Yes" ? 1 : 0),
+      0
+    );
+    let denominator = questions.reduce(
+      (acc, question) => acc + (question !== "Not applicable" ? 1 : 0),
+      0
+    );
+    return { numerator, denominator };
+  };
+
   return {
-    create
+    create,
   };
 };
