@@ -12,9 +12,7 @@ module.exports = ({ eligibilityRepository }) => {
     }
 
     try {
-      const filters = await eligibilityRepository.find({
-        articleId
-      });
+      const filters = await eligibilityRepository.findByArticleId(articleId);
 
       if (filters.length < 2) {
         return {
@@ -37,7 +35,7 @@ module.exports = ({ eligibilityRepository }) => {
         ].indexOf(key) < 0;
 
       const differences = diff(source, target, filter);
-      return differences;
+      return differences || [];
     } catch (error) {
       throw new Error(error);
     }

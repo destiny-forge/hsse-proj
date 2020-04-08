@@ -1,7 +1,7 @@
 /**
- * Eligibility get
+ * Appraisal get
  */
-module.exports = ({ eligibilityRepository, articleRepository }) => {
+module.exports = ({ appraisalRepository, articleRepository }) => {
   const get = async (shortArticleId, userId) => {
     if (!shortArticleId) {
       return {
@@ -25,8 +25,7 @@ module.exports = ({ eligibilityRepository, articleRepository }) => {
           error: "Article with shortArticleId not found"
         };
       }
-
-      return await eligibilityRepository.findOne(article._id, userId);
+      return await appraisalRepository.findOne(article._id, userId);
     } catch (error) {
       throw new Error(error);
     }

@@ -1,5 +1,4 @@
 const t = require("tcomb");
-const tx = require("tcomb-additional-types");
 const shortid = require("shortid");
 
 /* Not to be instantiated directly, used as the base Article
