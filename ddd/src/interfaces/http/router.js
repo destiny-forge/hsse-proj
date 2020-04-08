@@ -30,7 +30,7 @@ module.exports = ({ config, logger }) => {
       cors({
         origin: ["http://localhost:3000"],
         methods: ["GET", "POST", "PUT", "DELETE"],
-        allowedHeaders: ["Content-Type", "Authorization"]
+        allowedHeaders: ["Content-Type", "Authorization"],
       })
     )
     .use(bodyParser.json())
@@ -54,6 +54,7 @@ module.exports = ({ config, logger }) => {
   apiRouter.use("/notes", controller("note").router);
   apiRouter.use("/eligibility", controller("eligibility").router);
   apiRouter.use("/appraisal", controller("appraisal").router);
+  apiRouter.use("/studies", controller("study").router);
 
   router.use("", apiRouter);
 
