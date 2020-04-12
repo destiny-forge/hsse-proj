@@ -52,7 +52,7 @@ module.exports = ({ appraisalRepository }) => {
     delete resolution._id;
     delete resolution.userId;
     delete resolution.shortId;
-    resolution.amstartStatus = "complete";
+    resolution.amstarStatus = "complete";
     resolution.role = "system";
   };
 
