@@ -1,13 +1,14 @@
 const diff = require("deep-diff");
+const _ = require("underscore");
 
 /**
  * Eligibility compare
  */
 module.exports = ({ eligibilityRepository }) => {
-  const compare = async articleId => {
+  const compare = async (articleId) => {
     if (!articleId) {
       return {
-        error: "A valid articleId is required"
+        error: "A valid articleId is required",
       };
     }
 
@@ -16,7 +17,7 @@ module.exports = ({ eligibilityRepository }) => {
 
       if (filters.length < 2) {
         return {
-          error: "Two filters are required in order to compare"
+          error: "Two filters are required in order to compare",
         };
       }
 
@@ -31,17 +32,39 @@ module.exports = ({ eligibilityRepository }) => {
           "userId",
           "relevance",
           "completed",
-          "complicated"
+          "complicated",
         ].indexOf(key) < 0;
 
-      const differences = diff(source, target, filter);
-      return differences || [];
+      const diffs = diff(source, target, filter);
+      const differences = diffs || [];
+
+      if (differences.length === 0) {
+        completeResolution(source, target);
+      }
+
+      return differences;
     } catch (error) {
       throw new Error(error);
     }
   };
 
+  const completeResolution = (source, target) => {
+    const resolution = createResolution(source);
+    eligibilityRepository.update(source._id, { completed: true });
+    eligibilityRepository.update(target._id, { completed: true });
+    eligibilityRepository.create(resolution);
+  };
+
+  const createResolution = (filter) => {
+    const resolution = _.clone(filter);
+    delete filter._id;
+    delete filter.userId;
+    delete filter.shortId;
+    filter.completed = true;
+    resolution.role = "system";
+  };
+
   return {
-    compare
+    compare,
   };
 };
