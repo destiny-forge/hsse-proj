@@ -1,5 +1,7 @@
 const diff = require("deep-diff");
 const _ = require("underscore");
+const Appraisal = require("src/domain/appraisal");
+const ObjectID = require("mongodb").ObjectID;
 
 /**
  * Eligibility compare
@@ -25,7 +27,8 @@ module.exports = ({ appraisalRepository }) => {
       const target = appraisals[1];
 
       const filter = (path, key) =>
-        path.length === 0 && ~["_id", "shortId", "userId"].indexOf(key) < 0;
+        path.length === 0 &&
+        ~["_id", "shortId", "userId", "role"].indexOf(key) < 0;
 
       const diffs = diff(source, target, filter);
       const differences = diffs || [];
@@ -54,6 +57,10 @@ module.exports = ({ appraisalRepository }) => {
     delete resolution.shortId;
     resolution.amstarStatus = "complete";
     resolution.role = "system";
+
+    resolution.articleId = new ObjectID(resolution.articleId);
+    const entity = Appraisal(resolution);
+    return entity;
   };
 
   return {

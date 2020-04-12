@@ -1,5 +1,7 @@
 const diff = require("deep-diff");
 const _ = require("underscore");
+const { hseFilter, sseFilter } = require("src/domain/eligibility");
+const ObjectID = require("mongodb").ObjectID;
 
 /**
  * Eligibility compare
@@ -57,11 +59,18 @@ module.exports = ({ eligibilityRepository }) => {
 
   const createResolution = (filter) => {
     const resolution = _.clone(filter);
-    delete filter._id;
-    delete filter.userId;
-    delete filter.shortId;
-    filter.completed = true;
+    delete resolution._id;
+    delete resolution.userId;
+    delete resolution.shortId;
+    resolution.completed = true;
     resolution.role = "system";
+
+    resolution.articleId = new ObjectID(resolution.articleId);
+
+    const entity =
+      filter.type === "sse" ? sseFilter(resolution) : hseFilter(resolution);
+
+    return entity;
   };
 
   return {
