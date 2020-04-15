@@ -22,7 +22,7 @@ class Articles extends React.Component {
 
     this.Article.getArticlesByBatch(shortId)
       .then(res => {
-        console.log("res ", res);
+       // console.log("res ", res);
         if (res.success) {
           this.setState({
             articles: res.data

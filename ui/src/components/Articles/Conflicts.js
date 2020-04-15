@@ -30,13 +30,6 @@ const DOCUMENT_TYPES = [
   { value: 'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.', label: 'NO, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.' },
 ];
 
-const STATUSES = [
-  { value: 'New Article', label: 'New Article' },
-  { value: 'Data Entry Complete', label: 'Data Entry Complete' },
-  { value: 'Live', label: 'Live' },
-  { value: 'Delete', label: 'Delete' },
-]
-
 class Conflicts extends React.Component {
 
   constructor(props) {
@@ -46,7 +39,17 @@ class Conflicts extends React.Component {
       article: "",
       generalFocus: false,
       type: 'hse',
-      currentFilterState: {
+      currentFilterState1: {
+        checkedKeysHST: [],
+        checkedKeysCA: [],
+        checkedDomain: [],
+        checkedLMIC: [],
+        checkedProvince: [],
+        checkedTheme: [],
+        checkedPopulation: [],
+        checkedOPA: [],
+      },
+      currentFilterState2: {
         checkedKeysHST: [],
         checkedKeysCA: [],
         checkedDomain: [],
@@ -80,10 +83,10 @@ class Conflicts extends React.Component {
   }
 
   handleTreeClick = (selectedKeys, evt) => {
-    let newCurrentFilterState = Object.assign({}, this.state.currentFilterState);
+    let newCurrentFilterState = Object.assign({}, this.state.currentFilterState1);
     newCurrentFilterState[evt.node.props.name] = selectedKeys;
     this.setState({
-      currentFilterState: newCurrentFilterState
+      currentFilterState1: newCurrentFilterState
     });
   }
 
@@ -98,29 +101,50 @@ class Conflicts extends React.Component {
           this.setState({
             article: res.data
           });
-          // grab any updated data for the filters if exists.
-          this.Eligibility.get(shortId, user.id)
+
+          // hexbits@live.com 
+          this.Eligibility.get(shortId, '5e8bd56fac47c9161ff76131')
             .then(filterData => {
               const filters = filterData.data;
               const treeKeys = Object.keys(treeData);
-              console.log(filters);
-              console.log(treeKeys);
               for (const key of treeKeys) {
                 treeData[key].map(k => {
                   if (!_.isNull(filters)) {
                     if (filters[k.key] === true) {
-                      let newCurrentFilterState = Object.assign({}, this.state.currentFilterState);
+                      let newCurrentFilterState = Object.assign({}, this.state.currentFilterState1);
                       newCurrentFilterState[key].push(k.key);
 
                       this.setState({
                         selectedDocumentType: filterData.data.documentType,
-                        currentFilterState: newCurrentFilterState,
+                        currentFilterState1: newCurrentFilterState,
                       });
                     }
                   }
                 })
               }
             })
+
+          // tdelam@gmail.com
+          this.Eligibility.get(shortId, '5dedc6aaca103bd41aa177bd')
+              .then(filterData => {
+                const filters = filterData.data;
+                const treeKeys = Object.keys(treeData);
+                for (const key of treeKeys) {
+                  treeData[key].map(k => {
+                    if (!_.isNull(filters)) {
+                      if (filters[k.key] === true) {
+                        let newCurrentFilterState = Object.assign({}, this.state.currentFilterState2);
+                        newCurrentFilterState[key].push(k.key);
+
+                        this.setState({
+                          selectedDocumentType: filterData.data.documentType,
+                          currentFilterState2: newCurrentFilterState,
+                        });
+                      }
+                    }
+                  })
+                }
+              })
         }
       })
       .catch(err => {
@@ -184,7 +208,8 @@ class Conflicts extends React.Component {
     e.preventDefault();
 
     const {
-      currentFilterState,
+      currentFilterState1,
+      currentFilterState2,
       article,
       type,
       generalFocus,
@@ -205,10 +230,16 @@ class Conflicts extends React.Component {
       selectedStatus: selectedStatus.value
     };
 
-    console.log(formData)
+    //console.log(formData)
 
-    Object.keys(currentFilterState).forEach((key, idx) => {
-      currentFilterState[key].map(k => {
+    Object.keys(currentFilterState1).forEach((key, idx) => {
+      currentFilterState1[key].map(k => {
+        formData[k] = true;
+      });
+    })
+
+    Object.keys(currentFilterState2).forEach((key, idx) => {
+      currentFilterState2[key].map(k => {
         formData[k] = true;
       });
     })
@@ -281,7 +312,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedKeysHST,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedKeysHST,
+                    this.state.currentFilterState1.checkedKeysHST,
                     'checkedKeysHST'
                   )
                 }
@@ -291,7 +322,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedKeysCA,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedKeysCA,
+                    this.state.currentFilterState1.checkedKeysCA,
                     'checkedKeysCA'
                   )
                 }
@@ -301,7 +332,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedDomain,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedDomain,
+                    this.state.currentFilterState1.checkedDomain,
                     'checkedDomain'
                   )
                 }
@@ -312,7 +343,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedLMIC,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedLMIC,
+                    this.state.currentFilterState1.checkedLMIC,
                     'checkedLMIC'
                   )
                 }
@@ -323,7 +354,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedProvince,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedProvince,
+                    this.state.currentFilterState1.checkedProvince,
                     'checkedProvince',
                   )
                 }
@@ -334,7 +365,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedTheme,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedTheme,
+                    this.state.currentFilterState1.checkedTheme,
                     'checkedTheme'
                   )
                 }
@@ -345,7 +376,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedPopulation,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedPopulation,
+                    this.state.currentFilterState1.checkedPopulation,
                     'checkedPopulation',
                   )
                 }
@@ -356,7 +387,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedOPA,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedOPA,
+                    this.state.currentFilterState1.checkedOPA,
                     'checkedOPA'
                   )
                 }
@@ -368,7 +399,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedKeysHST,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedKeysHST,
+                    this.state.currentFilterState2.checkedKeysHST,
                     'checkedKeysHST'
                   )
                 }
@@ -378,7 +409,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedKeysCA,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedKeysCA,
+                    this.state.currentFilterState2.checkedKeysCA,
                     'checkedKeysCA'
                   )
                 }
@@ -388,7 +419,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedDomain,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedDomain,
+                    this.state.currentFilterState2.checkedDomain,
                     'checkedDomain'
                   )
                 }
@@ -399,7 +430,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedLMIC,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedLMIC,
+                    this.state.currentFilterState2.checkedLMIC,
                     'checkedLMIC'
                   )
                 }
@@ -410,7 +441,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedProvince,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedProvince,
+                    this.state.currentFilterState2.checkedProvince,
                     'checkedProvince',
                   )
                 }
@@ -421,7 +452,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedTheme,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedTheme,
+                    this.state.currentFilterState2.checkedTheme,
                     'checkedTheme'
                   )
                 }
@@ -432,7 +463,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedPopulation,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedPopulation,
+                    this.state.currentFilterState2.checkedPopulation,
                     'checkedPopulation',
                   )
                 }
@@ -443,7 +474,7 @@ class Conflicts extends React.Component {
                   this.renderTreeSection(
                     treeData.checkedOPA,
                     this.handleTreeClick,
-                    this.state.currentFilterState.checkedOPA,
+                    this.state.currentFilterState2.checkedOPA,
                     'checkedOPA'
                   )
                 }
