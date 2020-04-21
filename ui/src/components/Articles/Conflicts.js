@@ -98,12 +98,8 @@ class Conflicts extends React.Component {
       .then(res => {
         if (res.success) {
           console.log(res.data);
-          this.setState({
-            article: res.data
-          });
-
-          // hexbits@live.com 
-          this.Eligibility.get(shortId, '5e8bd56fac47c9161ff76131')
+          // me, left side
+          this.Eligibility.get(shortId, user.id)
             .then(filterData => {
               const filters = filterData.data;
               const treeKeys = Object.keys(treeData);
@@ -126,25 +122,25 @@ class Conflicts extends React.Component {
 
           // tdelam@gmail.com
           this.Eligibility.get(shortId, '5dedc6aaca103bd41aa177bd')
-              .then(filterData => {
-                const filters = filterData.data;
-                const treeKeys = Object.keys(treeData);
-                for (const key of treeKeys) {
-                  treeData[key].map(k => {
-                    if (!_.isNull(filters)) {
-                      if (filters[k.key] === true) {
-                        let newCurrentFilterState = Object.assign({}, this.state.currentFilterState2);
-                        newCurrentFilterState[key].push(k.key);
+            .then(filterData => {
+              const filters = filterData.data;
+              const treeKeys = Object.keys(treeData);
+              for (const key of treeKeys) {
+                treeData[key].map(k => {
+                  if (!_.isNull(filters)) {
+                    if (filters[k.key] === true) {
+                      let newCurrentFilterState = Object.assign({}, this.state.currentFilterState2);
+                      newCurrentFilterState[key].push(k.key);
 
-                        this.setState({
-                          selectedDocumentType: filterData.data.documentType,
-                          currentFilterState2: newCurrentFilterState,
-                        });
-                      }
+                      this.setState({
+                        selectedDocumentType: filterData.data.documentType,
+                        currentFilterState2: newCurrentFilterState,
+                      });
                     }
-                  })
-                }
-              })
+                  }
+                })
+              }
+            })
         }
       })
       .catch(err => {
