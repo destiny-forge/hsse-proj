@@ -18,11 +18,11 @@ class Articles extends React.Component {
   componentDidMount() {
     const {
       shortId
-    } = this.props.match.params; 
+    } = this.props.match.params;
 
     this.Article.getArticlesByBatch(shortId)
       .then(res => {
-       // console.log("res ", res);
+        // console.log("res ", res);
         if (res.success) {
           this.setState({
             articles: res.data
@@ -31,7 +31,7 @@ class Articles extends React.Component {
       })
       .catch(err => {
         console.log(err);
-      }) 
+      })
   }
 
   render() {
