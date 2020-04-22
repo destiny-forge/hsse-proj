@@ -91,13 +91,12 @@ class Conflicts extends React.Component {
   }
 
   componentDidMount() {
-    const { id, shortId } = this.props.match.params;
-    const { user } = this.props;
+    const { id, shortId, coder } = this.props.match.params;
+    const { user } = this.props; // logged in user
 
     this.Article.compare(id)
       .then(res => {
         if (res.success) {
-          console.log(res.data);
           // me, left side
           this.Eligibility.get(shortId, user.id)
             .then(filterData => {
