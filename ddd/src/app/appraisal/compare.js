@@ -28,8 +28,10 @@ module.exports = ({ appraisalRepository }) => {
         };
       }
 
-      const source = appraisals[0];
-      const target = appraisals[1];
+      const source =
+        appraisals[0].userId === userId ? appraisals[0] : appraisals[1];
+      const target =
+        appraisals[1].userId === userId ? appraisals[1] : appraisals[0];
 
       const filter = (path, key) =>
         path.length === 0 &&

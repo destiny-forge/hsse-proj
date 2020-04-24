@@ -28,8 +28,8 @@ module.exports = ({ eligibilityRepository }) => {
         };
       }
 
-      const source = filters[0];
-      const target = filters[1];
+      const source = filters[0].userId === userId ? filters[0] : filters[1];
+      const target = filters[1].userId === userId ? filters[1] : filters[0];
 
       const filter = (path, key) =>
         path.length === 0 &&
