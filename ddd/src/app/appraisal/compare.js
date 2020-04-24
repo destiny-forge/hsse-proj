@@ -7,10 +7,15 @@ const ObjectID = require("mongodb").ObjectID;
  * Eligibility compare
  */
 module.exports = ({ appraisalRepository }) => {
-  const compare = async (articleId) => {
+  const compare = async (articleId, userId) => {
     if (!articleId) {
       return {
         error: "A valid articleId is required",
+      };
+    }
+    if (!userId) {
+      return {
+        error: "A valid userId is required",
       };
     }
 

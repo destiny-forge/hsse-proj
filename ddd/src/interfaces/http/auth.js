@@ -1,5 +1,7 @@
-const passport = require('passport');
-const { ExtractJwt, Strategy } = require('passport-jwt');
+const passport = require("passport");
+const { ExtractJwt, Strategy } = require("passport-jwt");
+const _ = require("underscore");
+
 /**
  * middleware to check if auth vaid
  */
@@ -7,25 +9,25 @@ const { ExtractJwt, Strategy } = require('passport-jwt');
 module.exports = ({ config, repository: { userRepository } }) => {
   const params = {
     secretOrKey: config.authSecret,
-    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt')
+    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("bearer"),
   };
 
   const strategy = new Strategy(params, (payload, done) => {
     userRepository
       .findById(payload.id)
-      .then(user => {
-        done(null, user);
+      .then((user) => {
+        done(null, _.pick(user, "_id", "email", "roles"));
       })
-      .catch(error => done(error, null));
+      .catch((error) => done(error, null));
   });
 
   passport.use(strategy);
 
-  passport.serializeUser(function(user, done) {
+  passport.serializeUser(function (user, done) {
     done(null, user);
   });
 
-  passport.deserializeUser(function(user, done) {
+  passport.deserializeUser(function (user, done) {
     done(null, user);
   });
 
@@ -34,7 +36,7 @@ module.exports = ({ config, repository: { userRepository } }) => {
       return passport.initialize();
     },
     authenticate: () => {
-      return passport.authenticate('jwt');
-    }
+      return passport.authenticate("jwt");
+    },
   };
 };

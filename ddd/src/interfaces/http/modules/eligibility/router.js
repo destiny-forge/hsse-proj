@@ -6,9 +6,12 @@ module.exports = ({
   getUseCase,
   compareUseCase,
   logger,
-  response: { Success, Fail }
+  auth,
+  response: { Success, Fail },
 }) => {
   const router = Router();
+
+  router.use(auth.authenticate());
 
   /**
    * @swagger
@@ -36,12 +39,17 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.post("/", (req, res) => {
+    const { body, user } = req;
+    const filter = {
+      ...body,
+      userId: user._id,
+    };
     createUseCase
-      .create(req.body)
-      .then(data => {
+      .create(filter)
+      .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
-      .catch(error => {
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });
@@ -73,14 +81,14 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.get("/:shortArticleId", (req, res) => {
-    const { userId } = req.body;
     const { shortArticleId } = req.params;
+    const { user } = req;
     getUseCase
-      .get(shortArticleId, userId)
-      .then(data => {
+      .get(shortArticleId, user._id)
+      .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
-      .catch(error => {
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });
@@ -113,12 +121,13 @@ module.exports = ({
    */
   router.get("/compare/:shortArticleId", (req, res) => {
     const { shortArticleId } = req.params;
+    const { user } = req;
     compareUseCase
-      .compare(shortArticleId)
-      .then(data => {
+      .compare(shortArticleId, user._id)
+      .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
-      .catch(error => {
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });
