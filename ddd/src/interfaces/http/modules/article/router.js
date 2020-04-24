@@ -7,9 +7,11 @@ module.exports = ({
   listUseCase,
   assignUseCase,
   logger,
-  response: { Success, Fail }
+  auth,
+  response: { Success, Fail },
 }) => {
   const router = Router();
+  router.use(auth.authenticate());
 
   /**
    * @swagger
@@ -39,10 +41,10 @@ module.exports = ({
   router.post("/", (req, res) => {
     createUseCase
       .create(req.body)
-      .then(data => {
+      .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
-      .catch(error => {
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });
@@ -76,10 +78,10 @@ module.exports = ({
   router.post("/assign", (req, res) => {
     assignUseCase
       .assign(req.body)
-      .then(data => {
+      .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
-      .catch(error => {
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });
@@ -114,10 +116,10 @@ module.exports = ({
     const { shortArticleId } = req.params;
     getUseCase
       .get(shortArticleId)
-      .then(data => {
+      .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
-      .catch(error => {
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });
@@ -152,10 +154,10 @@ module.exports = ({
     const { type, stage, status } = req.body;
     listUseCase
       .list(type, stage, status)
-      .then(data => {
+      .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
-      .catch(error => {
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });
@@ -190,10 +192,10 @@ module.exports = ({
     const { batchId } = req.params;
     listUseCase
       .listByBatch(batchId)
-      .then(data => {
+      .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
-      .catch(error => {
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });

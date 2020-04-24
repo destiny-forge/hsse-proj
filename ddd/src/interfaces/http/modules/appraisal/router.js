@@ -10,7 +10,6 @@ module.exports = ({
   response: { Success, Fail },
 }) => {
   const router = Router();
-
   router.use(auth.authenticate());
 
   /**
@@ -18,20 +17,20 @@ module.exports = ({
    * /:
    *   post:
    *     tags:
-   *       - Eligibility
-   *     description: Eligibility creation
+   *       - Appraisal
+   *     description: Appraisal creation
    *     consumes:
    *       - application/json
    *     produces:
    *       - application/json
    *     parameters:
    *       - name: body
-   *         description: Eligibility fields
+   *         description: Appraisal fields
    *         in: body
    *         required: true
    *         type: string
    *         schema:
-   *           $ref: '#/definitions/eligibility'
+   *           $ref: '#/definitions/appraisal'
    *     responses:
    *       200:
    *         description: Successfully created
@@ -40,12 +39,12 @@ module.exports = ({
    */
   router.post("/", (req, res) => {
     const { body, user } = req;
-    const filter = {
+    const appraisal = {
       ...body,
       userId: user._id,
     };
     createUseCase
-      .create(filter)
+      .create(appraisal)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
@@ -60,20 +59,20 @@ module.exports = ({
    * /:
    *   get:
    *     tags:
-   *       - Eligibility
-   *     description: Eligibility filter by shortArticleId and userId
+   *       - Appraisal
+   *     description: Appraisal filter by shortArticleId and userId
    *     consumes:
    *       - application/json
    *     produces:
    *       - application/json
    *     parameters:
    *       - name: body
-   *         description: Eligibility filter
+   *         description: Appraisal filter
    *         in: body
    *         required: true
    *         type: string
    *         schema:
-   *           $ref: '#/definitions/eligibility'
+   *           $ref: '#/definitions/appraisal'
    *     responses:
    *       200:
    *         description: Successfully created
@@ -99,20 +98,20 @@ module.exports = ({
    * /:
    *   get:
    *     tags:
-   *       - Eligibility
-   *     description: Eligibility filter by shortArticleId and userId
+   *       - Appraisal
+   *     description: Appraisal filter by shortArticleId and userId
    *     consumes:
    *       - application/json
    *     produces:
    *       - application/json
    *     parameters:
    *       - name: body
-   *         description: Eligibility filter
+   *         description: Appraisal filter
    *         in: body
    *         required: true
    *         type: string
    *         schema:
-   *           $ref: '#/definitions/eligibility'
+   *           $ref: '#/definitions/appraisal'
    *     responses:
    *       200:
    *         description: Successfully created

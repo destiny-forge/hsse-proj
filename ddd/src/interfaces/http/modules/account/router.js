@@ -6,7 +6,7 @@ module.exports = ({
   resetUseCase,
   confirmUseCase,
   logger,
-  response: { Success, Fail }
+  response: { Success, Fail },
 }) => {
   const router = Router();
 
@@ -50,10 +50,10 @@ module.exports = ({
     const { email, password } = req.body;
     registerUseCase
       .register(email, password)
-      .then(data => {
+      .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
-      .catch(error => {
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });
@@ -88,10 +88,10 @@ module.exports = ({
     const { email } = req.body;
     resetUseCase
       .send(email)
-      .then(data => {
+      .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
-      .catch(error => {
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });
@@ -134,10 +134,10 @@ module.exports = ({
     const { password } = req.body;
     resetUseCase
       .reset(token, password)
-      .then(data => {
+      .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
-      .catch(error => {
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });
@@ -171,10 +171,10 @@ module.exports = ({
   router.post("/confirm/:token", (req, res) => {
     confirmUseCase
       .confirm({ token: req.params.token })
-      .then(data => {
+      .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
-      .catch(error => {
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });

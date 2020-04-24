@@ -1,13 +1,12 @@
 const ObjectID = require("mongodb").ObjectID;
-const COLLECTION = "eligibility";
 
 module.exports = ({ database }) => {
-  const create = async article => {
+  const create = async appraisal => {
     try {
       const results = await database
         .get()
-        .collection(COLLECTION)
-        .insertOne(article);
+        .collection("appraisals")
+        .insertOne(appraisal);
       return results.ops[0];
     } catch (e) {
       throw e;
@@ -18,7 +17,7 @@ module.exports = ({ database }) => {
     try {
       const results = await database
         .get()
-        .collection(COLLECTION)
+        .collection("appraisals")
         .find()
         .toArray();
       return results;
@@ -31,7 +30,7 @@ module.exports = ({ database }) => {
     try {
       return await database
         .get()
-        .collection(COLLECTION)
+        .collection("appraisals")
         .find({ type: { $eq: type } })
         .toArray();
     } catch (e) {
@@ -39,12 +38,13 @@ module.exports = ({ database }) => {
     }
   };
 
-  const find = async query => {
+  const find = async (type, stage, status) => {
+    const filters = Array.isArray(status) ? { $in: status } : status;
     try {
       return await database
         .get()
-        .collection(COLLECTION)
-        .find(query)
+        .collection("appraisals")
+        .find({ type: { $eq: type }, [`stages.${stage}.status`]: filters })
         .toArray();
     } catch (e) {
       throw e;
@@ -56,7 +56,7 @@ module.exports = ({ database }) => {
       if (!ObjectID.isValid(id)) throw "Invalid MongoDB ID.";
       const results = await database
         .get()
-        .collection(COLLECTION)
+        .collection("appraisals")
         .findOne(ObjectID(id));
       return results;
     } catch (e) {
@@ -69,7 +69,7 @@ module.exports = ({ database }) => {
       if (!ObjectID.isValid(articleId)) throw "Invalid MongoDB ID.";
       const results = await database
         .get()
-        .collection(COLLECTION)
+        .collection("appraisals")
         .find({ articleId: { $eq: ObjectID(articleId) } })
         .toArray();
       return results;
@@ -82,7 +82,7 @@ module.exports = ({ database }) => {
     try {
       const results = await database
         .get()
-        .collection(COLLECTION)
+        .collection("appraisals")
         .findOne({
           articleId: { $eq: ObjectID(articleId) },
           userId: { $eq: ObjectID(userId) }
@@ -93,11 +93,29 @@ module.exports = ({ database }) => {
     }
   };
 
+  const assign = async assignment => {
+    const { appraisalId, stage, type, user, status } = assignment;
+    try {
+      const fields = {
+        [`stages.${stage}.${type}`]: user,
+        [`stages.${stage}.status`]: status
+      };
+      const cmdResult = await database
+        .get()
+        .collection("appraisals")
+        .updateOne({ _id: { $eq: ObjectID(appraisalId) } }, { $set: fields });
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const update = async (id, fields) => {
     try {
       const cmdResult = await database
         .get()
-        .collection(COLLECTION)
+        .collection("appraisals")
         .updateOne({ _id: { $eq: ObjectID(id) } }, { $set: fields });
       const { result } = cmdResult.toJSON();
       return result;
@@ -107,10 +125,8 @@ module.exports = ({ database }) => {
   };
 
   const createIndexes = () => {
-    const collection = database.get().collection(COLLECTION);
+    const collection = database.get().collection("appraisals");
     collection.createIndex("type");
-    collection.createIndex("articleId");
-    collection.createIndex("userId");
   };
 
   return {
@@ -121,6 +137,7 @@ module.exports = ({ database }) => {
     findByType,
     findOne,
     find,
+    assign,
     update,
     createIndexes
   };

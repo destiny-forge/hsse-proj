@@ -1,12 +1,12 @@
 const diff = require("deep-diff");
 const _ = require("underscore");
-const { hseFilter, sseFilter } = require("src/domain/eligibility");
+const Appraisal = require("src/domain/appraisal");
 const ObjectID = require("mongodb").ObjectID;
 
 /**
  * Eligibility compare
  */
-module.exports = ({ eligibilityRepository }) => {
+module.exports = ({ appraisalRepository }) => {
   const compare = async (articleId, userId) => {
     if (!articleId) {
       return {
@@ -18,28 +18,24 @@ module.exports = ({ eligibilityRepository }) => {
         error: "A valid userId is required",
       };
     }
-    try {
-      const filters = await eligibilityRepository.findByArticleId(articleId);
 
-      if (filters.length < 2) {
+    try {
+      const appraisals = await appraisalRepository.findByArticleId(articleId);
+
+      if (appraisals.length < 2) {
         return {
-          error: "Two filters are required in order to compare",
+          error: "Two appraisals are required in order to compare",
         };
       }
 
-      const source = filters[0].userId === userId ? filters[0] : filters[1];
-      const target = filters[1].userId === userId ? filters[1] : filters[0];
+      const source =
+        appraisals[0].userId === userId ? appraisals[0] : appraisals[1];
+      const target =
+        appraisals[1].userId === userId ? appraisals[1] : appraisals[0];
 
       const filter = (path, key) =>
         path.length === 0 &&
-        ~[
-          "_id",
-          "shortId",
-          "userId",
-          "relevance",
-          "completed",
-          "complicated",
-        ].indexOf(key) < 0;
+        ~["_id", "shortId", "userId", "role"].indexOf(key) < 0;
 
       const diffs = diff(source, target, filter);
       const differences = diffs || [];
@@ -56,24 +52,21 @@ module.exports = ({ eligibilityRepository }) => {
 
   const completeResolution = (source, target) => {
     const resolution = createResolution(source);
-    eligibilityRepository.update(source._id, { completed: true });
-    eligibilityRepository.update(target._id, { completed: true });
-    eligibilityRepository.create(resolution);
+    appraisalRepository.update(source._id, { amstarStatus: "complete" });
+    appraisalRepository.update(target._id, { amstarStatus: "complete" });
+    appraisalRepository.create(resolution);
   };
 
-  const createResolution = (filter) => {
-    const resolution = _.clone(filter);
+  const createResolution = (appraisal) => {
+    const resolution = _.clone(appraisal);
     delete resolution._id;
     delete resolution.userId;
     delete resolution.shortId;
-    resolution.completed = true;
+    resolution.amstarStatus = "complete";
     resolution.role = "system";
 
     resolution.articleId = new ObjectID(resolution.articleId);
-
-    const entity =
-      filter.type === "sse" ? sseFilter(resolution) : hseFilter(resolution);
-
+    const entity = Appraisal(resolution);
     return entity;
   };
 

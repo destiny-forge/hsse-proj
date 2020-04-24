@@ -23,6 +23,17 @@ module.exports = ({ model }) => {
     }
   };
 
+  const findByArticleId = async articleId => {
+    try {
+      const filters = await model.findByArticleId(articleId);
+      return filters.map(filter => {
+        return toEntity(filter);
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const findByType = async type => {
     try {
       const filters = await model.findByType(type);
@@ -74,6 +85,7 @@ module.exports = ({ model }) => {
     create,
     update,
     findById,
+    findByArticleId,
     findByType,
     findOne,
     find
