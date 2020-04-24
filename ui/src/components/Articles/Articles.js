@@ -151,7 +151,7 @@ class Articles extends React.Component {
                       />
                     </td>
                     <td>
-                      <Link to={`/conflicts/${article._id}/${article.shortId}`}>
+                      <Link to={`/conflicts/${article.shortId}`}>
                         Resolve Conflicts
                       </Link>
                     </td>

@@ -4680,6 +4680,14 @@ textarea.md-input {
       -webkit-transition: all 0.2s;
       transition: all 0.2s; }
 
+  .error-color {
+    background-color: #ffcccb;
+    color: #fff;
+  }
+
+  .success-green {
+    background-color:#dcffdc;
+  }
 .red {
   background-color: #f44336;
   color: rgba(255, 255, 255, 0.85); }

@@ -91,59 +91,80 @@ class Conflicts extends React.Component {
   }
 
   componentDidMount() {
-    const { id, shortId, coder } = this.props.match.params;
+    const { shortId } = this.props.match.params;
     const { user } = this.props; // logged in user
+    this.Article.get(shortId) 
+      .then(article => {
+        if (article.success) {
+          this.Article.compare(article.data._id)
+            .then(res => {
+              console.log("res ", res);
+              if (res.success) {
+                // logged in user always on left side
+                const { eligibility } = article.data.stages;
+                let myId, theirId;
+                if (eligibility.status === 'assigned') {
+                  const { 
+                    junior, 
+                    senior 
+                  } = eligibility;
 
-    this.Article.compare(id)
-      .then(res => {
-        if (res.success) {
-          // me, left side
-          this.Eligibility.get(shortId, user.id)
-            .then(filterData => {
-              const filters = filterData.data;
-              const treeKeys = Object.keys(treeData);
-              for (const key of treeKeys) {
-                treeData[key].map(k => {
-                  if (!_.isNull(filters)) {
-                    if (filters[k.key] === true) {
-                      let newCurrentFilterState = Object.assign({}, this.state.currentFilterState1);
-                      newCurrentFilterState[key].push(k.key);
-
-                      this.setState({
-                        selectedDocumentType: filterData.data.documentType,
-                        currentFilterState1: newCurrentFilterState,
-                      });
-                    }
+                  if (junior._id === user.id) {
+                    myId = junior._id;
+                    theirId = senior._id;
+                  } else {
+                    myId = senior._id;
+                    theirId = junior._id;
                   }
-                })
+                }
+
+                // left side,
+                this.Eligibility.get(shortId, myId)
+                  .then(filterData => {
+                    const filters = filterData.data;
+                    const treeKeys = Object.keys(treeData);
+                    for (const key of treeKeys) {
+                      treeData[key].map(k => {
+                        if (!_.isNull(filters)) {
+                          if (filters[k.key] === true) {
+                            let newCurrentFilterState = Object.assign({}, this.state.currentFilterState1);
+                            newCurrentFilterState[key].push(k.key);
+                            this.setState({
+                              selectedDocumentType: filterData.data.documentType,
+                              currentFilterState1: newCurrentFilterState,
+                            });
+                          }
+                        }
+                      })
+                    }
+                  })
+
+                // tdelam@gmail.com
+                this.Eligibility.get(shortId, theirId)
+                  .then(filterData => {
+                    const filters = filterData.data;
+                    const treeKeys = Object.keys(treeData);
+                    for (const key of treeKeys) {
+                      treeData[key].map(k => {
+                        if (!_.isNull(filters)) {
+                          if (filters[k.key] === true) {
+                            let newCurrentFilterState = Object.assign({}, this.state.currentFilterState2);
+                            newCurrentFilterState[key].push(k.key);
+                            this.setState({
+                              selectedDocumentType: filterData.data.documentType,
+                              currentFilterState2: newCurrentFilterState,
+                            });
+                          }
+                        }
+                      })
+                    }
+                  })
               }
             })
-
-          // tdelam@gmail.com
-          this.Eligibility.get(shortId, '5dedc6aaca103bd41aa177bd')
-            .then(filterData => {
-              const filters = filterData.data;
-              const treeKeys = Object.keys(treeData);
-              for (const key of treeKeys) {
-                treeData[key].map(k => {
-                  if (!_.isNull(filters)) {
-                    if (filters[k.key] === true) {
-                      let newCurrentFilterState = Object.assign({}, this.state.currentFilterState2);
-                      newCurrentFilterState[key].push(k.key);
-
-                      this.setState({
-                        selectedDocumentType: filterData.data.documentType,
-                        currentFilterState2: newCurrentFilterState,
-                      });
-                    }
-                  }
-                })
-              }
+            .catch(err => {
+              console.log(err);
             })
         }
-      })
-      .catch(err => {
-        console.log(err);
       })
   }
 
@@ -155,7 +176,6 @@ class Conflicts extends React.Component {
   }
 
   renderTreeSection = (sectionTreeData, handleTreeClick, checkedKeyState, name) => {
-
     return (
       <React.Fragment>
         <label className="col-md-1 offset-md-1 col-form-label"></label>
@@ -225,8 +245,6 @@ class Conflicts extends React.Component {
       selectedStatus: selectedStatus.value
     };
 
-    //console.log(formData)
-
     Object.keys(currentFilterState1).forEach((key, idx) => {
       currentFilterState1[key].map(k => {
         formData[k] = true;
@@ -250,8 +268,12 @@ class Conflicts extends React.Component {
   }
 
   render() {
-    const { article } = this.state;
-
+    const { 
+      article,
+      currentFilterState1,
+      currentFilterState2 
+    } = this.state;
+  
     return (
       <div className="padding">
         <div className="box">

@@ -10,7 +10,6 @@ module.exports = ({ eligibilityRepository }) => {
         error: "A valid articleId is required"
       };
     }
-
     try {
       const filters = await eligibilityRepository.find({
         articleId
