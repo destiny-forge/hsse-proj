@@ -7,11 +7,16 @@ const ObjectID = require("mongodb").ObjectID;
 module.exports = ({ appraisalRepository }) => {
   const create = async (appraisal) => {
     try {
+      if (!appraisal.userId) {
+        return {
+          error: "A valid filter userId is required",
+        };
+      }
+
       const { numerator, denominator } = calculateAMStarRating(appraisal);
       appraisal.amstarNumerator = numerator;
       appraisal.amstarDenominator = denominator;
 
-      // @TODO - ensure we are the owner of said appraisal
       if (appraisal._id) {
         const _id = appraisal._id;
         delete appraisal._id;

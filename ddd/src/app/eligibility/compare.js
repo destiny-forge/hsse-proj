@@ -7,10 +7,15 @@ const ObjectID = require("mongodb").ObjectID;
  * Eligibility compare
  */
 module.exports = ({ eligibilityRepository }) => {
-  const compare = async (articleId) => {
+  const compare = async (articleId, userId) => {
     if (!articleId) {
       return {
         error: "A valid articleId is required",
+      };
+    }
+    if (!userId) {
+      return {
+        error: "A valid userId is required",
       };
     }
 
@@ -23,8 +28,8 @@ module.exports = ({ eligibilityRepository }) => {
         };
       }
 
-      const source = filters[0];
-      const target = filters[1];
+      const source = filters[0].userId === userId ? filters[0] : filters[1];
+      const target = filters[1].userId === userId ? filters[1] : filters[0];
 
       const filter = (path, key) =>
         path.length === 0 &&

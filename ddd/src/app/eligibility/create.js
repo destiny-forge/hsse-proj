@@ -5,11 +5,16 @@ const ObjectID = require("mongodb").ObjectID;
  * Eligibility filter creation
  */
 module.exports = ({ eligibilityRepository }) => {
-  const create = async filter => {
+  const create = async (filter) => {
     try {
       if (!filter.type || (filter.type !== "sse" && filter.type !== "hse")) {
         return {
-          error: "A valid filter type is required"
+          error: "A valid filter type is required",
+        };
+      }
+      if (!filter.userId) {
+        return {
+          error: "A valid filter userId is required",
         };
       }
 
@@ -36,6 +41,6 @@ module.exports = ({ eligibilityRepository }) => {
   };
 
   return {
-    create
+    create,
   };
 };
