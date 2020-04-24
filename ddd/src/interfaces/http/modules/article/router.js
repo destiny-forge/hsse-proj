@@ -76,8 +76,13 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.post("/assign", (req, res) => {
+    const { body, user } = req;
+    const assignment = {
+      ...body,
+      userId: user._id,
+    };
     assignUseCase
-      .assign(req.body)
+      .assign(assignment)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

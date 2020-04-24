@@ -82,9 +82,9 @@ module.exports = ({
    */
   router.get("/:shortArticleId", (req, res) => {
     const { shortArticleId } = req.params;
-    const { user } = req;
+    const { userId } = req.body;
     getUseCase
-      .get(shortArticleId, user._id)
+      .get(shortArticleId, userId)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
