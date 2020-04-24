@@ -61,7 +61,7 @@ module.exports = ({
    *   get:
    *     tags:
    *       - Eligibility
-   *     description: Eligibility filter by shortArticleId and userId
+   *     description: Eligibility filter by articleId and userId
    *     consumes:
    *       - application/json
    *     produces:
@@ -80,10 +80,11 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/:shortArticleId/:userId", (req, res) => {
-    const { shortArticleId, userId } = req.params;
-    getUseCase
-      .get(shortArticleId, userId)
+  router.get("/compare/:articleId", (req, res) => {
+    const { articleId } = req.params;
+    const { user } = req;
+    compareUseCase
+      .compare(articleId, user._id)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
@@ -99,7 +100,7 @@ module.exports = ({
    *   get:
    *     tags:
    *       - Eligibility
-   *     description: Eligibility filter by shortArticleId and userId
+   *     description: Eligibility filter by articleId and userId
    *     consumes:
    *       - application/json
    *     produces:
@@ -118,11 +119,10 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/compare/:shortArticleId", (req, res) => {
-    const { shortArticleId } = req.params;
-    const { user } = req;
-    compareUseCase
-      .compare(shortArticleId, user._id)
+  router.get("/:articleId/:userId", (req, res) => {
+    const { articleId, userId } = req.params;
+    getUseCase
+      .get(articleId, userId)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
