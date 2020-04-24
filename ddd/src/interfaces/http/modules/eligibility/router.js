@@ -80,9 +80,8 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/:shortArticleId", (req, res) => {
-    const { shortArticleId } = req.params;
-    const { userId } = req.body;
+  router.get("/:shortArticleId/:userId", (req, res) => {
+    const { shortArticleId, userId } = req.params;
     getUseCase
       .get(shortArticleId, userId)
       .then((data) => {
