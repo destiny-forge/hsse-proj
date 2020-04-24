@@ -93,18 +93,26 @@ class Conflicts extends React.Component {
   componentDidMount() {
     const { shortId } = this.props.match.params;
     const { user } = this.props; // logged in user
-    this.Article.get(shortId) 
+  
+    let conflicts = [];
+    this.Article.get(shortId)
       .then(article => {
         if (article.success) {
-          console.log("article ", article);
           this.Article.compare(article.data._id)
             .then(res => {
+              console.log("sdafasdfasdfas: ", res);
               if (res.success) {
                 // me, left side
-                this.Eligibility.get(shortId, '5e8bd56fac47c9161ff76131')
+                const {
+                  junior, senior
+                } = article.data.stages.eligibility;
+
+                const theirId = junior._id === user.id ? senior._id : junior._id;
+                // left side is always logged in user
+                this.Eligibility.get(shortId, user.id)
+                  
                   .then(filterData => {
                     const filters = filterData.data;
-                    console.log("filter1 ", filters)
                     const treeKeys = Object.keys(treeData);
                     for (const key of treeKeys) {
                       treeData[key].map(k => {
@@ -123,19 +131,17 @@ class Conflicts extends React.Component {
                     }
                   })
 
-                // tdelam@gmail.com
-                this.Eligibility.get(shortId, '5dedc6aaca103bd41aa177bd')
+                // right side is always "theirs"
+                this.Eligibility.get(shortId, theirId)
                   .then(filterData => {
                     const filters = filterData.data;
                     const treeKeys = Object.keys(treeData);
-                    console.log("filter2 ", filters)
                     for (const key of treeKeys) {
                       treeData[key].map(k => {
                         if (!_.isNull(filters)) {
                           if (filters[k.key] === true) {
                             let newCurrentFilterState = Object.assign({}, this.state.currentFilterState2);
                             newCurrentFilterState[key].push(k.key);
-
                             this.setState({
                               selectedDocumentType: filterData.data.documentType,
                               currentFilterState2: newCurrentFilterState,
@@ -162,7 +168,6 @@ class Conflicts extends React.Component {
   }
 
   renderTreeSection = (sectionTreeData, handleTreeClick, checkedKeyState, name) => {
-
     return (
       <React.Fragment>
         <label className="col-md-1 offset-md-1 col-form-label"></label>
@@ -192,7 +197,7 @@ class Conflicts extends React.Component {
       return (
         <TreeNode
           name={item.name}
-          title={item.title}
+          title={<span className="green">{item.title}</span>}
           key={item.key}
           dataRef={item}
           disableCheckbox={false}

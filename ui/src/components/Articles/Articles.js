@@ -91,7 +91,7 @@ class Articles extends React.Component {
   }
 
   render() {
-    console.log("articles", this.state.articles[0]);
+    console.log("articles", this.state.articles);
     const { user } = this.props;
     
     return (

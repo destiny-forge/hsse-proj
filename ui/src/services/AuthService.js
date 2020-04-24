@@ -117,12 +117,12 @@ class AuthService {
     return decode(this.getToken());
   }
 
-  getQueryString(params) {
-    const esc = encodeURIComponent;
-    return Object.keys(params)
-      .map(k => esc(k) + '=' + esc(params[k]))
-      .join('&');
-  }
+  // getQueryString(params) {
+  //   const esc = encodeURIComponent;
+  //   return Object.keys(params)
+  //     .map(k => esc(k) + '=' + esc(params[k]))
+  //     .join('&');
+  // }
 
   fetch(url, options) {
     // performs api calls sending the required authentication headers
@@ -135,12 +135,12 @@ class AuthService {
       headers['Authorization'] = `Bearer ${this.getToken()}`;
     }
 
-    if (options) {
-      if (options.method === 'GET' || options.method === 'DELETE') {
-        const qs = '?' + this.getQueryString(options.data);
-        url = url + qs;
-      }  
-    }
+    // if (options) {
+    //   if (options.method === 'GET' || options.method === 'DELETE') {
+    //     const qs = '?' + this.getQueryString(options.data);
+    //     url = url + qs;
+    //   }  
+    // }
       
     return fetch(`${this.domain}${url}`, {
       headers,
