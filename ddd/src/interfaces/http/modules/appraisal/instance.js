@@ -1,28 +1,32 @@
 const container = require("src/container");
-const { create, get, compare } = require("src/app/appraisal");
+const { create, get, compare, resolve } = require("src/app/appraisal");
 
 module.exports = () => {
   const {
-    repository: { appraisalRepository, articleRepository }
+    repository: { appraisalRepository, articleRepository },
   } = container.cradle;
 
   const createUseCase = create({
-    appraisalRepository
+    appraisalRepository,
   });
 
   const getUseCase = get({
     appraisalRepository,
-    articleRepository
+    articleRepository,
   });
 
   const compareUseCase = compare({
     appraisalRepository,
-    articleRepository
+  });
+
+  const resolveUseCase = resolve({
+    appraisalRepository,
   });
 
   return {
     createUseCase,
     getUseCase,
-    compareUseCase
+    compareUseCase,
+    resolveUseCase,
   };
 };

@@ -7,8 +7,8 @@ const SSEArticle = Article.extend(
   {},
   {
     defaultProps: {
-      type: "sse"
-    }
+      type: "sse",
+    },
   }
 );
 

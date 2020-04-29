@@ -6,8 +6,8 @@ const HSEArticle = Article.extend(
   {},
   {
     defaultProps: {
-      type: "hse"
-    }
+      type: "hse",
+    },
   }
 );
 
