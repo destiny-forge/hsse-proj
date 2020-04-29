@@ -210,7 +210,7 @@ class Conflicts extends React.Component {
           title={<span style={style}>{item.title}</span>}
           key={item.key}
           dataRef={item}
-          disableCheckbox={false}
+          disableCheckbox={rhs}
         >
           {this.renderTreeNodes(item.children, name, rhs)}
         </TreeNode>
@@ -219,7 +219,7 @@ class Conflicts extends React.Component {
     return <TreeNode 
       {...item} 
       title={<span style={style}>{item.title}</span>}
-      disableCheckbox={false} 
+      disableCheckbox={rhs} 
     />;
   })
 
