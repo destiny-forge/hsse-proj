@@ -5,6 +5,7 @@ module.exports = ({
   createUseCase,
   getUseCase,
   compareUseCase,
+  resolveUseCase,
   logger,
   auth,
   response: { Success, Fail },
@@ -85,6 +86,45 @@ module.exports = ({
     const { user } = req;
     compareUseCase
       .compare(articleId, user._id)
+      .then((data) => {
+        res.status(Status.OK).json(Success(data));
+      })
+      .catch((error) => {
+        logger.error(error); // we still need to log every error for debugging
+        res.status(Status.BAD_REQUEST).json(Fail(error.message));
+      });
+  });
+
+  /**
+   * @swagger
+   * /:
+   *   get:
+   *     tags:
+   *       - Eligibility
+   *     description: Eligibility resolution by articleId and userId
+   *     consumes:
+   *       - application/json
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: body
+   *         description: Eligibility resolution
+   *         in: body
+   *         required: true
+   *         type: string
+   *         schema:
+   *           $ref: '#/definitions/eligibility'
+   *     responses:
+   *       200:
+   *         description: Successfully created
+   *       400:
+   *         $ref: '#/responses/BadRequest'
+   */
+  router.get("/resolve/:articleId", (req, res) => {
+    const { articleId } = req.params;
+    const { user } = req;
+    resolveUseCase
+      .resolve(articleId, user._id)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

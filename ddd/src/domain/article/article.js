@@ -65,7 +65,7 @@ const Article = t.struct(
     nameOfDatabase: t.maybe(t.String),
     databaseProvider: t.maybe(t.String),
     stages: t.maybe(t.Object),
-    status: t.maybe(t.String)
+    status: t.maybe(t.String),
   },
   {
     defaultProps: {
@@ -80,9 +80,9 @@ const Article = t.struct(
         studies: { status: "pending_assignment" },
         appraisals: { status: "pending_assignment" },
         prioritizing: { status: "pending_assignment" },
-        translations: { status: "pending_assignment" }
-      }
-    }
+        translations: { status: "pending_assignment" },
+      },
+    },
   }
 );
 

@@ -5,6 +5,7 @@ module.exports = ({
   createUseCase,
   getUseCase,
   compareUseCase,
+  resolveUseCase,
   logger,
   auth,
   response: { Success, Fail },
@@ -60,14 +61,14 @@ module.exports = ({
    *   get:
    *     tags:
    *       - Appraisal
-   *     description: Appraisal filter by shortArticleId and userId
+   *     description: Appraisal compare by shortArticleId and userId
    *     consumes:
    *       - application/json
    *     produces:
    *       - application/json
    *     parameters:
    *       - name: body
-   *         description: Appraisal filter
+   *         description: Appraisal compare
    *         in: body
    *         required: true
    *         type: string
@@ -79,11 +80,50 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/:shortArticleId", (req, res) => {
+  router.get("/compare/:shortArticleId", (req, res) => {
     const { shortArticleId } = req.params;
     const { user } = req;
-    getUseCase
-      .get(shortArticleId, user._id)
+    compareUseCase
+      .compare(shortArticleId, user._id)
+      .then((data) => {
+        res.status(Status.OK).json(Success(data));
+      })
+      .catch((error) => {
+        logger.error(error); // we still need to log every error for debugging
+        res.status(Status.BAD_REQUEST).json(Fail(error.message));
+      });
+  });
+
+  /**
+   * @swagger
+   * /:
+   *   get:
+   *     tags:
+   *       - Appraisal
+   *     description: Appraisal resolution by shortArticleId and userId
+   *     consumes:
+   *       - application/json
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: body
+   *         description: Appraisal resolution
+   *         in: body
+   *         required: true
+   *         type: string
+   *         schema:
+   *           $ref: '#/definitions/appraisal'
+   *     responses:
+   *       200:
+   *         description: Successfully created
+   *       400:
+   *         $ref: '#/responses/BadRequest'
+   */
+  router.get("/resolve/:shortArticleId", (req, res) => {
+    const { shortArticleId } = req.params;
+    const { user } = req;
+    resolveUseCase
+      .resolve(shortArticleId, user._id)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
@@ -118,11 +158,11 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/compare/:shortArticleId", (req, res) => {
+  router.get("/:shortArticleId", (req, res) => {
     const { shortArticleId } = req.params;
     const { user } = req;
-    compareUseCase
-      .compare(shortArticleId, user._id)
+    getUseCase
+      .get(shortArticleId, user._id)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

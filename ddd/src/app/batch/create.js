@@ -1,6 +1,7 @@
 const Batch = require("src/domain/batch");
 const { hseArticle, sseArticle } = require("src/domain/article");
 const ObjectID = require("mongodb").ObjectID;
+const shortid = require("shortid");
 
 const { parse } = require("./parse");
 const file = require("./file");
@@ -9,17 +10,17 @@ const file = require("./file");
  * Batch creation
  */
 module.exports = ({ batchRepository, articleRepository, config }) => {
-  const create = async batch => {
+  const create = async (batch) => {
     try {
       if (!batch.type || (batch.type !== "sse" && batch.type !== "hse")) {
         return {
-          error: "A valid batch type is required"
+          error: "A valid batch type is required",
         };
       }
 
       if (!batch.name) {
         return {
-          error: "A valid batch name is required"
+          error: "A valid batch name is required",
         };
       }
 
@@ -35,15 +36,21 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
       const csv = await getFile(batch.fileUrl);
       const articles = await parse(csv);
 
-      const result = articles.map(async article => {
+      const shortids = articles.map((_article) => {
+        return shortid.generate();
+      });
+
+      const result = articles.map(async (article, index) => {
         article.batchId = new ObjectID(newBatch._id);
         article.batchName = batch.name;
         article.published = new Date(batch.uploaded);
         article.harvested = new Date(batch.harvested);
         article.status = "created";
 
-        const entity =
+        let entity =
           batch.type === "sse" ? sseArticle(article) : hseArticle(article);
+
+        entity.shortId = shortids[index];
 
         return await articleRepository.create(entity);
       });
@@ -55,6 +62,6 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
   };
 
   return {
-    create
+    create,
   };
 };
