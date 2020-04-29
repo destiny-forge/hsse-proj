@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone-uploader';
 import withAuth from '../withAuth';
@@ -7,54 +8,23 @@ import BatchService from '../../services/BatchService';
 import Select from 'react-select';
 import "react-datepicker/dist/react-datepicker.css";
 import { Redirect } from 'react-router';
-
-const HSE_ARTICLE_SOURCES = [
-  { value: 'Referrals', label: 'Referrals' },
-  { value: 'Hand Searches', label: 'Hand Searches' },
-  { value: 'Cochrane', label: 'Cochrane' },
-  { value: 'PLUS SR', label: 'PLUS SR' },
-  { value: 'PubMed SR', label: 'PubMed SR' },
-  { value: 'LILACS SR & EE', label: 'LILACS SR & EE' },
-  { value: 'PLUS EE', label: 'PLUS EE' },
-  { value: 'PubMed EE', label: 'PubMed EE' },
-  { value: 'Health System and Health Reform Descriptions', label: 'Health System and Health Reform Descriptions'},
-  { value: 'Other', label: 'Other' }
-];
-
-const SSE_ARTICLE_SOURCES = [
-  { value: 'Referrals', label: 'Referrals' },
-  { value: 'Hand Searches', label: 'Hand Searches' },
-  { value: 'Campbell', label: 'Campbell' },
-  { value: 'EPPI - Centre', label: 'EPPI - Centre' },
-  { value: '3iE', label: '3iE' },
-  { value: 'WoS SR', label: 'WoS SR' },
-  { value: 'EBSCO SR', label: 'EBSCO SR' },
-  { value: 'Proquest SR', label: 'Proquest SR' },
-  { value: 'WoS EE', label: 'WoS EE' },
-  { value: 'EBSCO EE', label: 'EBSCO EE' },
-  { value: 'Proquest EE', label: 'Proquest EE' },
-  { value: 'SafetyLit', label: 'SafetyLit' },
-  { value: 'Other', label: 'Other' },
-]
-
-const LANGUAGES = [
-  { value: 'english', label: 'English' },
-  { value: 'arabic', label: 'Arabic' },
-  { value: 'chinese', label: 'Chinese' },
-  { value: 'french', label: 'French' },
-  { value: 'portuguese', label: 'Portuguese' },
-  { value: 'russian', label: 'Russian' },
-  { value: 'spanish', label: 'Spanish' },
-  { value: 'other', label: 'Other' }
-];
+import {
+  HSE_ARTICLE_SOURCES,
+  SSE_ARTICLE_SOURCES,
+  HSE_DOCUMENT_TYPES,
+  SSE_DOCUMENT_TYPES,
+  LANGUAGES
+} from "./lib/options";
 
 class BatchUpload extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      batchName: '',
       harvestDate: Date.now(),
       selectedArticleSource: null,
       selectedLanguage: null,
+      documentType: null,
       complete: false,
       redirect: false,
       path: null,
@@ -75,20 +45,22 @@ class BatchUpload extends Component {
     const {
       fileUrl,
       selectedArticleSource,
+      documentType,
       selectedLanguage,
       harvestDate,
-      complete
+      complete,
+      batchName
     } = this.state;
     
     const upload = {
       type: this.state.article.type,
       fileUrl: fileUrl,
       source: selectedArticleSource.value,
+      referenceType: documentType.value,
       language: selectedLanguage.value,
-      harvested: harvestDate
+      harvested: harvestDate,
+      name: batchName
     }
-
-    console.log(upload);
 
     if (complete) {
       this.Batch.create(upload)
@@ -154,14 +126,22 @@ class BatchUpload extends Component {
   };
 
   handleChange = (field, value) => {
-    this.setState({
-      [field]: value,
-    });
+    if (!_.isUndefined(field.target) && field.target.name === 'batchName') {
+      const { name, value } = field.target;
+      this.setState({
+        [name]: value
+      })
+    } else {
+      this.setState({
+        [field]: value,
+      });
+    }
   }
 
   render() {
     const {
       selectedArticleSource,
+      documentType,
       selectedLanguage,
       redirect,
       path,
@@ -201,6 +181,37 @@ class BatchUpload extends Component {
                         SSE
                     </option>
                     </select>
+                  </div>
+                </div>
+                <div className="form-group form-row">
+                  <div className="col-md-6">
+                    <label htmlFor="published">Batch Name</label>
+                    <input 
+                      type="text"
+                      value={this.state.batchName}
+                      name="batchName"
+                      className="form-control"
+                      placeholder='Batch name'
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="form-group form-row">
+                  <div className="col-md-6">
+                    <label htmlFor="inputState" className="d-block">
+                      Please choose a document type for the batch you want to upload.
+                    </label>
+                    <Select
+                      value={documentType}
+                      onChange={(value) => this.handleChange('documentType', value)}
+                      options={
+                        this.state.article &&
+                          this.state.article.type === 'sse'
+                          ? SSE_DOCUMENT_TYPES
+                          : HSE_DOCUMENT_TYPES
+                      }
+                      isSearchable
+                    />
                   </div>
                 </div>
                 <div className="form-group form-row">

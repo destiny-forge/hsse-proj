@@ -19,9 +19,24 @@ const BatchService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
+  const list = async (type, stage, status) => {
+    const params = {
+      method: 'GET',
+      data: {
+        type,
+        stage,
+        status,
+      }
+    };
+
+    const res = await fetch('/batches', params)
+    return Promise.resolve(res);
+  };
+
   return {
     signedUrl,
-    create
+    create,
+    list
   };
 };
 

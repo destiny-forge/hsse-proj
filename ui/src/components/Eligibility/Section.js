@@ -1,5 +1,5 @@
 import React from 'react';
-import ArticleService from '../../services/ArticleService';
+import BatchService from '../../services/BatchService';
 
 const withSection = (WrappedComponent) => {
   class Section extends React.Component {
@@ -8,21 +8,21 @@ const withSection = (WrappedComponent) => {
       super(props);
 
       this.state = {
-        articles: []
+        batches: []
       }
 
-      this.Article = ArticleService({ fetch: this.props.fetch });
+      this.Batch = BatchService({ fetch: this.props.fetch });
     }
 
     componentDidMount() {
       const type = this.props.history.location.pathname.replace(/\//g, "");
 
       if (type) {
-        this.Article.list(type, 'eligibility', 'pending_assignment')
+        this.Batch.list(type, 'eligibility', 'pending_assignment')
           .then(res => {
             if (res.success) {
               this.setState({
-                articles: res.data,
+                batches: res.data,
               });
             }
           })
@@ -34,11 +34,11 @@ const withSection = (WrappedComponent) => {
 
     trackTab = (type, tab) => {
       if (type && tab) {
-        this.Article.list(type, 'eligibility', tab)
+        this.Batch.list(type, 'eligibility', tab)
           .then(res => {
             if (res.success) {
               this.setState({
-                articles: res.data,
+                batches: res.data,
               });
             }
           })
@@ -49,10 +49,11 @@ const withSection = (WrappedComponent) => {
     }
 
     render() {
+      console.log(this.state.batches);
       return (
         <WrappedComponent
           trackTab={this.trackTab}
-          articles={this.state.articles}
+          batches={this.state.batches}
           {...this.props}
         />
       );

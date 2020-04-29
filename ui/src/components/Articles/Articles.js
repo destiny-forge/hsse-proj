@@ -1,17 +1,20 @@
 import React from 'react';
-import Modal from './Modal';
+import Modal from '../Eligibility/Modal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import ArticleService from '../../services/ArticleService';
-import Assignment from './Assignment';
+import withAuth from '../withAuth';
+import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
+import Assignment from './Assignment';
 
-class ArticlesTable extends React.Component {
+class Articles extends React.Component {
 
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
+      articles: [],
       showJunior: false,
       showSenior: false 
     }
@@ -19,8 +22,8 @@ class ArticlesTable extends React.Component {
   }
 
   showModal = (type) => {
-    this.setState({ 
-      [`show${type}`]: true 
+    this.setState({
+      [`show${type}`]: true
     });
   }
 
@@ -48,6 +51,8 @@ class ArticlesTable extends React.Component {
         email: user.email
       }
       this.Article.assign(assignment).then(res => {
+        console.log("res ", res);
+      
         this.notifyDone();
 
         // TODO: component did mount hook is grabbing the articles and setting articles in state. 
@@ -57,62 +62,72 @@ class ArticlesTable extends React.Component {
         setTimeout(function () { window.location.reload(); }, 1500);
 
       })
-      .catch(err => {
-        console.log(err);
-      });
+        .catch(err => {
+          console.log(err);
+        });
     };
-    this.setState({ 
-      [`show${this.toTitleCase(type)}`]: false 
+    this.setState({
+      [`show${this.toTitleCase(type)}`]: false
     });
   }
 
-  render() {
-    const { user } = this.props;
+  componentDidMount() {
+    const {
+      shortId
+    } = this.props.match.params;
 
+    this.Article.getArticlesByBatch(shortId)
+      .then(res => {
+        // console.log("res ", res);
+        if (res.success) {
+          this.setState({
+            articles: res.data
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  render() {
+    console.log("articles", this.state.articles);
+    const { user } = this.props;
+    
     return (
       <div className="box">
         <div className="table-responsive">
           <table className="table table-striped b-t">
             <thead>
               <tr>
-                <th style={{ width: "20px" }}>
-                  <label className="ui-check m-0">
-                    <input type="checkbox" />
-                    <i></i>
-                  </label>
-                </th>
+                <th>Article Id</th>
                 <th>Title</th>
-                <th>Journal</th>
+                <th>Authors</th>
+                <th>My Status</th>
                 <th>Junior Appraiser</th>
                 <th>Senior Appraiser</th>
-                <th>Authors</th>
-                <th>Source</th>
-                <th>Status</th>
-                <th>Edit</th>
+                <th>Article Status</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {
-                this.props.articles && this.props.articles.map(article => (
+                this.state.articles && this.state.articles.map(article => (
                   <tr key={Math.random()}>
-                    <td>
-                      <label className="ui-check m-0">
-                        <input type="checkbox" name="post[]" />
-                        <i className="dark-white"></i>
-                      </label>
-                    </td>
+                    <td>{article._id}</td>
                     <td>{article.title}</td>
-                    <td>{article.journal}</td>
+                    <td>{article.authors}</td>
+                    <td>TBD</td>
                     <td>
-                      <Modal 
-                        show={this.state.showJunior} 
+                      <Modal
+                        show={this.state.showJunior}
                         handleClose={this.hideModal}
                         user={user}
                         stage='eligibility'
                         articleId={article._id}
                         type={'junior'}
                       />
-                      <Assignment 
+                      <Assignment
                         type="junior"
                         showModal={this.showModal}
                         toTitleCase={this.toTitleCase}
@@ -135,18 +150,15 @@ class ArticlesTable extends React.Component {
                         article={article}
                       />
                     </td>
-                    <td>{article.authors}</td>
-                    <td>{article.source}</td>
-                    <td>Incomplete</td>
                     <td>
-                      {
-                        article.stages.eligibility.status === 'assigned'
-                        ?
-                          <Link to={`/eligibility/${article.shortId}`}>
-                            Edit <i className="fa fa-edit"></i>
-                          </Link>
-                        : "N/A"
-                      }
+                      <Link to={`/conflicts/${article.shortId}`}>
+                        Resolve Conflicts
+                      </Link>
+                    </td>
+                    <td>
+                      <Link to={`/eligibility/${article.shortId}`}>
+                        Code
+                      </Link>
                     </td>
                   </tr>
                 ))
@@ -159,4 +171,4 @@ class ArticlesTable extends React.Component {
   }
 }
 
-export default ArticlesTable;
+export default withRouter(withAuth(Articles));

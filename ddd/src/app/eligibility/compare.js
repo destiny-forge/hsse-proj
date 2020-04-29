@@ -15,7 +15,6 @@ module.exports = ({ eligibilityRepository }) => {
         error: "A valid userId is required",
       };
     }
-
     try {
       const filters = await eligibilityRepository.findByArticleId(articleId);
 

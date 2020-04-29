@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import withSection from './Section';
-import ArticlesTable from './ArticlesTable';
+import BatchesTable from './BatchesTable';
 import Tabs from './Tabs';
 import Sidebar from './Sidebar';
 import Header from './Header';
@@ -11,7 +11,7 @@ class HSE extends Component {
   render() {
     const { 
       trackTab,
-      articles,
+      batches,
       user,
       fetch
     } = this.props;
@@ -36,8 +36,8 @@ class HSE extends Component {
             <div className="col-sm-8 col-lg-9">
               <div className="tab-content">
                 <div className="tab-pane fade show active" id="tab_1">
-                  <ArticlesTable 
-                    articles={articles} 
+                  <BatchesTable 
+                    batches={batches} 
                     user={user}
                     fetch={fetch}
                     history={this.props.history}
@@ -45,8 +45,8 @@ class HSE extends Component {
                 </div>
 
                 <div className="tab-pane fade" id="tab_2">
-                  <ArticlesTable 
-                    articles={articles}
+                  <BatchesTable 
+                    batches={batches}
                     user={user}
                     fetch={fetch}
                     history={this.props.history}
