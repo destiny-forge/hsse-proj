@@ -95,13 +95,16 @@ class Conflicts extends React.Component {
     const { user } = this.props; // logged in user
   
     let conflicts = [];
+
     this.Article.get(shortId)
       .then(article => {
         if (article.success) {
           this.Article.compare(article.data._id)
-            .then(res => {
-              console.log("sdafasdfasdfas: ", res);
+            .then(res => { 
               if (res.success) {
+                conflicts = res.data.map((conflict) => {
+                  return conflict.path[0];
+                })
                 // me, left side
                 const {
                   junior, senior
@@ -124,6 +127,7 @@ class Conflicts extends React.Component {
                             this.setState({
                               selectedDocumentType: filterData.data.documentType,
                               currentFilterState1: newCurrentFilterState,
+                              conflicts
                             });
                           }
                         }
@@ -167,7 +171,7 @@ class Conflicts extends React.Component {
     });
   }
 
-  renderTreeSection = (sectionTreeData, handleTreeClick, checkedKeyState, name) => {
+  renderTreeSection = (sectionTreeData, handleTreeClick, checkedKeyState, name, rhs) => {
     return (
       <React.Fragment>
         <label className="col-md-1 offset-md-1 col-form-label"></label>
@@ -181,32 +185,42 @@ class Conflicts extends React.Component {
             onCheck={handleTreeClick}
             checkedKeys={checkedKeyState}
           >
-            {this.renderTreeNodes(sectionTreeData, name)}
+            {this.renderTreeNodes(sectionTreeData, name, rhs)}
           </Tree>
         </div>
       </React.Fragment>
     );
   }
 
-  renderTreeNodes = (data, name) => data.map((item) => {
+  renderTreeNodes = (data, name, rhs = false) => data.map((item) => {
     // Adds name to the object to be used int he handle click
     // so that we can set state properly.
     item.name = name;
+    let style;
+    if (rhs) {
+      style = (_.includes(this.state.conflicts, item.key) && rhs === true) 
+        ? { background: "#FFBABA" } 
+        : { background: "#90ee90" }; 
+    }
 
     if (item.children) {
       return (
         <TreeNode
           name={item.name}
-          title={<span className="green">{item.title}</span>}
+          title={<span style={style}>{item.title}</span>}
           key={item.key}
           dataRef={item}
           disableCheckbox={false}
         >
-          {this.renderTreeNodes(item.children, name)}
+          {this.renderTreeNodes(item.children, name, rhs)}
         </TreeNode>
       );
     }
-    return <TreeNode {...item} disableCheckbox={false} />;
+    return <TreeNode 
+      {...item} 
+      title={<span style={style}>{item.title}</span>}
+      disableCheckbox={false} 
+    />;
   })
 
   notifyDone = () => toast.success("Eligibility completed!");
@@ -236,8 +250,6 @@ class Conflicts extends React.Component {
       documentType: selectedDocumentType.value,
       selectedStatus: selectedStatus.value
     };
-
-    //console.log(formData)
 
     Object.keys(currentFilterState1).forEach((key, idx) => {
       currentFilterState1[key].map(k => {
@@ -320,7 +332,7 @@ class Conflicts extends React.Component {
                     treeData.checkedKeysHST,
                     this.handleTreeClick,
                     this.state.currentFilterState1.checkedKeysHST,
-                    'checkedKeysHST'
+                    'checkedKeysHST',
                   )
                 }
                 <div className="box-divider pt-2 mb-3"></div>
@@ -330,7 +342,7 @@ class Conflicts extends React.Component {
                     treeData.checkedKeysCA,
                     this.handleTreeClick,
                     this.state.currentFilterState1.checkedKeysCA,
-                    'checkedKeysCA'
+                    'checkedKeysCA',
                   )
                 }
                 <div className="box-divider pt-2 mb-3"></div>
@@ -340,7 +352,7 @@ class Conflicts extends React.Component {
                     treeData.checkedDomain,
                     this.handleTreeClick,
                     this.state.currentFilterState1.checkedDomain,
-                    'checkedDomain'
+                    'checkedDomain',
                   )
                 }
 
@@ -351,7 +363,7 @@ class Conflicts extends React.Component {
                     treeData.checkedLMIC,
                     this.handleTreeClick,
                     this.state.currentFilterState1.checkedLMIC,
-                    'checkedLMIC'
+                    'checkedLMIC',
                   )
                 }
 
@@ -373,7 +385,7 @@ class Conflicts extends React.Component {
                     treeData.checkedTheme,
                     this.handleTreeClick,
                     this.state.currentFilterState1.checkedTheme,
-                    'checkedTheme'
+                    'checkedTheme',
                   )
                 }
 
@@ -395,7 +407,7 @@ class Conflicts extends React.Component {
                     treeData.checkedOPA,
                     this.handleTreeClick,
                     this.state.currentFilterState1.checkedOPA,
-                    'checkedOPA'
+                    'checkedOPA',
                   )
                 }
               </div>
@@ -407,7 +419,8 @@ class Conflicts extends React.Component {
                     treeData.checkedKeysHST,
                     this.handleTreeClick,
                     this.state.currentFilterState2.checkedKeysHST,
-                    'checkedKeysHST'
+                    'checkedKeysHST',
+                    true
                   )
                 }
                 <div className="box-divider pt-2 mb-3"></div>
@@ -417,7 +430,8 @@ class Conflicts extends React.Component {
                     treeData.checkedKeysCA,
                     this.handleTreeClick,
                     this.state.currentFilterState2.checkedKeysCA,
-                    'checkedKeysCA'
+                    'checkedKeysCA',
+                    true
                   )
                 }
                 <div className="box-divider pt-2 mb-3"></div>
@@ -427,7 +441,8 @@ class Conflicts extends React.Component {
                     treeData.checkedDomain,
                     this.handleTreeClick,
                     this.state.currentFilterState2.checkedDomain,
-                    'checkedDomain'
+                    'checkedDomain',
+                    true
                   )
                 }
 
@@ -438,7 +453,8 @@ class Conflicts extends React.Component {
                     treeData.checkedLMIC,
                     this.handleTreeClick,
                     this.state.currentFilterState2.checkedLMIC,
-                    'checkedLMIC'
+                    'checkedLMIC',
+                    true
                   )
                 }
 
@@ -450,6 +466,7 @@ class Conflicts extends React.Component {
                     this.handleTreeClick,
                     this.state.currentFilterState2.checkedProvince,
                     'checkedProvince',
+                    true
                   )
                 }
 
@@ -460,7 +477,8 @@ class Conflicts extends React.Component {
                     treeData.checkedTheme,
                     this.handleTreeClick,
                     this.state.currentFilterState2.checkedTheme,
-                    'checkedTheme'
+                    'checkedTheme',
+                    true
                   )
                 }
 
@@ -472,6 +490,7 @@ class Conflicts extends React.Component {
                     this.handleTreeClick,
                     this.state.currentFilterState2.checkedPopulation,
                     'checkedPopulation',
+                    true
                   )
                 }
 
@@ -482,7 +501,8 @@ class Conflicts extends React.Component {
                     treeData.checkedOPA,
                     this.handleTreeClick,
                     this.state.currentFilterState2.checkedOPA,
-                    'checkedOPA'
+                    'checkedOPA',
+                    true
                   )
                 }
               </div>
