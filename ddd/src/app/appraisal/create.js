@@ -20,6 +20,8 @@ module.exports = ({ appraisalRepository }) => {
       if (appraisal._id) {
         const _id = appraisal._id;
         delete appraisal._id;
+        appraisal.articleId = new ObjectID(appraisal.articleId);
+        appraisal.userId = new ObjectID(appraisal.userId);
         return await appraisalRepository.update(_id, appraisal);
       } else {
         appraisal.articleId = new ObjectID(appraisal.articleId);
