@@ -94,40 +94,19 @@ class Conflicts extends React.Component {
 
     let newCurrentFilterState = Object.assign({}, currentFilterState1);
     newCurrentFilterState[evt.node.props.name] = selectedKeys;
-
+  
     console.log("selected Keys", selectedKeys);
+    console.log("newCurrentFilterState", newCurrentFilterState);
     
     let formData = {
       _id: eligibilityId,
       articleId: articleId,
       userId: user.id,
       type: type,
-      conditions: true, 
-      conditionInfectiousDiseases: true, 
-      conditionHIVAIDS: true, 
-      conditionTuberculosis: true, 
-      conditionMalaria: true, 
-      conditionDiarrhoealDisease: true, 
-      conditionLowerRespiratoryInfections: true, 
-      conditionNonCommunicableDiseases: true, 
-      conditionCancer: true, 
-      conditionCardiovascularDisease: true, 
-      conditionDiabetes: true, 
-      conditionAlzheimerAndOtherDementias: true, 
-      conditionsChronicObstructivePulmonaryDisease: true, 
-      conditionOther: true, 
-      conditionMaternalAndChildHealth: true, 
-      conditionAccidents: true, 
-      conditionMentalHealthAddictions: true
     };
-
-    console.log("newCurrentFilterState ", newCurrentFilterState);
-    this.setState({
-      ...formData,
-      currentFilterState1: newCurrentFilterState
+    selectedKeys.forEach(key => {
+      formData[key] = true
     });
-
-    console.log("formData: ", formData);
     
     this.Eligibility.create(formData)
       .then(res => {
@@ -143,24 +122,17 @@ class Conflicts extends React.Component {
       })
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    console.log("updated...");
-  }
-
-  componentDidMount() {
+  compare() {
     const { shortId } = this.props.match.params;
     const { user } = this.props; // logged in user
-  
-    let conflicts = [];
-    console.log("short id ", shortId);
 
+    let conflicts = [];
     this.Article.get(shortId)
       .then(article => {
         if (article.success) {
           this.Article.compare(article.data._id)
-            .then(res => { 
+            .then(res => {
               if (res.success) {
-                console.log("res.data ", res.data);
                 conflicts = res.data.map((conflict) => {
                   return conflict.path[0];
                 })
@@ -174,7 +146,6 @@ class Conflicts extends React.Component {
                 this.Eligibility.get(shortId, user.id)
                   .then(filterData => {
                     const filters = filterData.data;
-                    console.log(filters);
                     const treeKeys = Object.keys(treeData);
                     for (const key of treeKeys) {
                       treeData[key].map(k => {
@@ -223,6 +194,16 @@ class Conflicts extends React.Component {
             })
         }
       })
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (JSON.stringify(this.state.currentFilterState1) !== JSON.stringify(prevState.currentFilterState1)) {
+      this.compare()
+    }
+  }
+
+  componentDidMount() {
+    this.compare();
   }
 
   onExpand = (expandedKeys) => {
