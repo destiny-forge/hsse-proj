@@ -49,7 +49,6 @@ const withSection = (WrappedComponent) => {
     }
 
     render() {
-      console.log(this.state.batches);
       return (
         <WrappedComponent
           trackTab={this.trackTab}

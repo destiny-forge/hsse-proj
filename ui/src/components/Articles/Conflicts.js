@@ -76,18 +76,75 @@ class Conflicts extends React.Component {
       checked,
       name
     } = e.target;
-
+    
     this.setState({
       [name]: checked
     })
   }
 
   handleTreeClick = (selectedKeys, evt) => {
-    let newCurrentFilterState = Object.assign({}, this.state.currentFilterState1);
+    const { user } = this.props;
+
+    const {
+      articleId,
+      eligibilityId,
+      currentFilterState1,
+      type
+    } = this.state;
+
+    let newCurrentFilterState = Object.assign({}, currentFilterState1);
     newCurrentFilterState[evt.node.props.name] = selectedKeys;
+
+    console.log("selected Keys", selectedKeys);
+    
+    let formData = {
+      _id: eligibilityId,
+      articleId: articleId,
+      userId: user.id,
+      type: type,
+      conditions: true, 
+      conditionInfectiousDiseases: true, 
+      conditionHIVAIDS: true, 
+      conditionTuberculosis: true, 
+      conditionMalaria: true, 
+      conditionDiarrhoealDisease: true, 
+      conditionLowerRespiratoryInfections: true, 
+      conditionNonCommunicableDiseases: true, 
+      conditionCancer: true, 
+      conditionCardiovascularDisease: true, 
+      conditionDiabetes: true, 
+      conditionAlzheimerAndOtherDementias: true, 
+      conditionsChronicObstructivePulmonaryDisease: true, 
+      conditionOther: true, 
+      conditionMaternalAndChildHealth: true, 
+      conditionAccidents: true, 
+      conditionMentalHealthAddictions: true
+    };
+
+    console.log("newCurrentFilterState ", newCurrentFilterState);
     this.setState({
+      ...formData,
       currentFilterState1: newCurrentFilterState
     });
+
+    console.log("formData: ", formData);
+    
+    this.Eligibility.create(formData)
+      .then(res => {
+        console.log("res ", res);
+        this.setState({
+          ...formData,
+          currentFilterState1: newCurrentFilterState
+        });
+        this.notifySuccess();
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("updated...");
   }
 
   componentDidMount() {
@@ -95,6 +152,7 @@ class Conflicts extends React.Component {
     const { user } = this.props; // logged in user
   
     let conflicts = [];
+    console.log("short id ", shortId);
 
     this.Article.get(shortId)
       .then(article => {
@@ -102,6 +160,7 @@ class Conflicts extends React.Component {
           this.Article.compare(article.data._id)
             .then(res => { 
               if (res.success) {
+                console.log("res.data ", res.data);
                 conflicts = res.data.map((conflict) => {
                   return conflict.path[0];
                 })
@@ -113,9 +172,9 @@ class Conflicts extends React.Component {
                 const theirId = junior._id === user.id ? senior._id : junior._id;
                 // left side is always logged in user
                 this.Eligibility.get(shortId, user.id)
-                  
                   .then(filterData => {
                     const filters = filterData.data;
+                    console.log(filters);
                     const treeKeys = Object.keys(treeData);
                     for (const key of treeKeys) {
                       treeData[key].map(k => {
@@ -123,10 +182,12 @@ class Conflicts extends React.Component {
                           if (filters[k.key] === true) {
                             let newCurrentFilterState = Object.assign({}, this.state.currentFilterState1);
                             newCurrentFilterState[key].push(k.key);
-
                             this.setState({
                               selectedDocumentType: filterData.data.documentType,
                               currentFilterState1: newCurrentFilterState,
+                              eligibilityId: filterData.data._id,
+                              articleId: article.data._id,
+                              type: article.data.type,
                               conflicts
                             });
                           }
@@ -224,6 +285,7 @@ class Conflicts extends React.Component {
   })
 
   notifyDone = () => toast.success("Eligibility completed!");
+  notifySuccess = () => toast.success("Successfully saved!");
 
   handleSubmit = (e) => {
     e.preventDefault();

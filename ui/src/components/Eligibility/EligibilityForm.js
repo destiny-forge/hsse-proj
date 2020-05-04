@@ -202,8 +202,6 @@ class EligibilityForm extends React.Component {
       selectedStatus: selectedStatus.value
     };
 
-    console.log(formData)
-
     Object.keys(currentFilterState).forEach((key, idx) => {
       currentFilterState[key].map(k => {
         formData[k] = true;

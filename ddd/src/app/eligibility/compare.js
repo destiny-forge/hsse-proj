@@ -17,7 +17,7 @@ module.exports = ({ eligibilityRepository }) => {
     }
     try {
       const filters = await eligibilityRepository.findByArticleId(articleId);
-
+      
       if (filters.length < 2) {
         return {
           error: "Two filters are required in order to compare",
