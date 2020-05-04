@@ -21,6 +21,10 @@ module.exports = ({ eligibilityRepository }) => {
       if (filter._id) {
         const _id = filter._id;
         delete filter._id;
+
+        filter.articleId = new ObjectID(filter.articleId);
+        filter.userId = new ObjectID(filter.userId);
+
         return await eligibilityRepository.update(_id, filter);
       } else {
         filter.published = filter.published
