@@ -77,4 +77,6 @@ label {
 .cap {
   font-weight: normal;
   color: #666;
+  font-style: normal;
+  font-size: .8rem;
 }
