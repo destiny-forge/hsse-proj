@@ -46,7 +46,7 @@ export default function withAuth(AuthComponent) {
 
       if (this.state.user) {
         return (
-          <div className="app" id="app">
+          <div className="app">
             <div
               id="aside"
               className="app-aside fade box-shadow-x nav-expand white"
