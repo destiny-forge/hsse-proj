@@ -32,22 +32,7 @@ module.exports = ({ articleRepository }) => {
     }
   };
 
-  const listByBatch = async (batchId) => {
-    try {
-      if (!batchId) {
-        return {
-          error: "A valid batchId is required",
-        };
-      }
-
-      return await articleRepository.findByBatch(batchId);
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
-
   return {
     list,
-    listByBatch,
   };
 };
