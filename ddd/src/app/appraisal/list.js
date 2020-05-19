@@ -1,5 +1,5 @@
 /**
- * Article list
+ * Appraisal list
  */
 module.exports = ({ articleRepository }) => {
   const list = async (type, status) => {
