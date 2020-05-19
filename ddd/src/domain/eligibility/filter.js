@@ -7,6 +7,7 @@ const shortid = require("shortid");
 const Filter = t.struct(
   {
     _id: t.maybe(t.String),
+    legacyId: t.maybe(t.String),
     shortId: t.String,
     articleId: t.maybe(t.Object),
     userId: t.maybe(t.Object),
@@ -16,15 +17,15 @@ const Filter = t.struct(
 
     relevance: t.Boolean,
     completed: t.Boolean,
-    complicated: t.Boolean
+    complicated: t.Boolean,
   },
   {
     defaultProps: {
       shortId: shortid.generate(),
       relevance: false,
       completed: false,
-      complicated: false
-    }
+      complicated: false,
+    },
   }
 );
 

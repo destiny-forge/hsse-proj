@@ -4,7 +4,7 @@ module.exports = ({ model }) => {
   const getAll = async (...args) => {
     try {
       const articles = await model.getAll(...args);
-      return articles.map(article => {
+      return articles.map((article) => {
         return toEntity(article);
       });
     } catch (err) {
@@ -12,10 +12,10 @@ module.exports = ({ model }) => {
     }
   };
 
-  const findByType = async type => {
+  const findByType = async (type) => {
     try {
       const articles = await model.findByType(type);
-      return articles.map(article => {
+      return articles.map((article) => {
         return toEntity(article);
       });
     } catch (err) {
@@ -26,7 +26,7 @@ module.exports = ({ model }) => {
   const find = async (type, stage, status) => {
     try {
       const articles = await model.find(type, stage, status);
-      return articles.map(article => {
+      return articles.map((article) => {
         return toEntity(article);
       });
     } catch (err) {
@@ -34,10 +34,10 @@ module.exports = ({ model }) => {
     }
   };
 
-  const findByBatch = async batchId => {
+  const findByBatch = async (batchId) => {
     try {
       const articles = await model.findByBatch(batchId);
-      return articles.map(article => {
+      return articles.map((article) => {
         return toEntity(article);
       });
     } catch (err) {
@@ -45,10 +45,10 @@ module.exports = ({ model }) => {
     }
   };
 
-  const aggregate = async (type, stage, status) => {
+  const aggregate = async (type, stage, status, refTypes) => {
     try {
-      const articles = await model.aggregate(type, stage, status);
-      return articles.map(article => {
+      const articles = await model.aggregate(type, stage, status, refTypes);
+      return articles.map((article) => {
         return article;
       });
     } catch (err) {
@@ -109,6 +109,6 @@ module.exports = ({ model }) => {
     aggregate,
     find,
     assign,
-    findOne
+    findOne,
   };
 };
