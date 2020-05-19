@@ -6,11 +6,11 @@ const shortid = require("shortid");
 const Batch = t.struct(
   {
     _id: t.maybe(t.String),
-    // legacyId: t.String,
+    legacyId: t.maybe(t.String),
     shortId: t.String,
     name: t.maybe(t.String),
 
-    referenceType: t.maybe(t.String),
+    referenceType: t.String,
     fileName: t.maybe(t.String),
     fileUrl: t.String,
 
@@ -20,7 +20,7 @@ const Batch = t.struct(
     language: t.String,
 
     uploaded: t.Date,
-    harvested: t.Date
+    harvested: t.Date,
   },
   {
     defaultProps: {
@@ -28,8 +28,8 @@ const Batch = t.struct(
       language: "English",
       uploaded: new Date(),
       harvested: new Date(),
-      priority: "LOW"
-    }
+      priority: "LOW",
+    },
   }
 );
 

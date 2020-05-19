@@ -6,6 +6,7 @@ const { cleanData, cleanMongoId } = require("../helper");
 const Appraisal = t.struct(
   {
     _id: t.maybe(t.String),
+    legacyId: t.maybe(t.String),
     shortId: t.String,
     articleId: t.maybe(t.Object),
     userId: t.maybe(t.Object),
@@ -25,13 +26,13 @@ const Appraisal = t.struct(
 
     amstarStatus: t.String,
     amstarNumerator: t.Number,
-    amstarDenominator: t.Number
+    amstarDenominator: t.Number,
   },
   {
     defaultProps: {
       shortId: shortid.generate(),
-      amstarStatus: "In progress"
-    }
+      amstarStatus: "In progress",
+    },
   }
 );
 

@@ -1,5 +1,5 @@
 const container = require("src/container");
-const { create, get, compare, resolve } = require("src/app/appraisal");
+const { create, get, list, compare, resolve } = require("src/app/appraisal");
 
 module.exports = () => {
   const {
@@ -15,6 +15,10 @@ module.exports = () => {
     articleRepository,
   });
 
+  const listUseCase = list({
+    articleRepository,
+  });
+
   const compareUseCase = compare({
     appraisalRepository,
   });
@@ -26,6 +30,7 @@ module.exports = () => {
   return {
     createUseCase,
     getUseCase,
+    listUseCase,
     compareUseCase,
     resolveUseCase,
   };

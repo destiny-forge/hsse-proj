@@ -1,7 +1,7 @@
 const ObjectID = require("mongodb").ObjectID;
 
 module.exports = ({ database }) => {
-  const create = async article => {
+  const create = async (article) => {
     try {
       const results = await database
         .get()
@@ -26,7 +26,7 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findByType = async type => {
+  const findByType = async (type) => {
     try {
       return await database
         .get()
@@ -51,13 +51,13 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findByBatch = async batchId => {
+  const findByBatch = async (batchId) => {
     try {
       return await database
         .get()
         .collection("articles")
         .find({
-          batchId: { $eq: ObjectID(batchId) }
+          batchId: { $eq: ObjectID(batchId) },
         })
         .toArray();
     } catch (e) {
@@ -65,60 +65,83 @@ module.exports = ({ database }) => {
     }
   };
 
-  const aggregate = async (type, stage, status) => {
+  const aggregate = async (type, stage, status, refTypes) => {
     const filters = Array.isArray(status) ? { $in: status } : status;
+
+    const lookup = {
+      $lookup: {
+        from: "batches",
+        localField: "batchId",
+        foreignField: "_id",
+        as: "batches",
+      },
+    };
+
+    const match = {
+      $match: {
+        batchId: { $ne: null },
+        type: { $eq: type },
+        [`stages.${stage}.status`]: filters,
+      },
+    };
+
+    const group = {
+      $group: {
+        _id: "$batchId",
+        total: { $sum: 1 },
+        in_progress: {
+          $sum: {
+            $cond: [{ $eq: ["$status", "in_progress"] }, 1, 0],
+          },
+        },
+        complete: {
+          $sum: {
+            $cond: [{ $eq: ["$status", "complete"] }, 1, 0],
+          },
+        },
+        created: {
+          $sum: {
+            $cond: [{ $eq: ["$status", "created"] }, 1, 0],
+          },
+        },
+        batchName: { $first: "$batchName" },
+      },
+    };
+
+    const project = {
+      $project: {
+        _id: "$_id",
+        total: "$total",
+        in_progress: "$in_progress",
+        complete: "$complete",
+        created: "$created",
+        name: "$batchName",
+      },
+    };
+
+    let aggregates = [match, group, project];
+
+    if (refTypes) {
+      const refMatch = {
+        $match: {
+          ["batches.0.referenceType"]: { $in: refTypes },
+        },
+      };
+      aggregates = [match, lookup, refMatch, group, project];
+    }
+
     try {
       return await database
         .get()
         .collection("articles")
-        .aggregate([
-          {
-            $match: {
-              batchId: { $ne: null },
-              type: { $eq: type },
-              [`stages.${stage}.status`]: filters
-            }
-          },
-          {
-            $group: {
-              _id: "$batchId",
-              total: { $sum: 1 },
-              in_progress: {
-                $sum: {
-                  $cond: [{ $eq: ["$status", "in_progress"] }, 1, 0]
-                }
-              },
-              complete: {
-                $sum: {
-                  $cond: [{ $eq: ["$status", "complete"] }, 1, 0]
-                }
-              },
-              created: {
-                $sum: {
-                  $cond: [{ $eq: ["$status", "created"] }, 1, 0]
-                }
-              },
-              batchName: { $first: "$batchName" }
-            }
-          },
-          {
-            $project: {
-              _id: "$_id",
-              total: "$total",
-              in_progress: "$in_progress",
-              complete: "$complete",
-              created: "$created",
-              name: "$batchName"
-            }
-          }
-        ])
+        .aggregate(aggregates)
         .toArray();
     } catch (e) {
       throw e;
     }
   };
 
-  const findById = async id => {
+  const findById = async (id) => {
     try {
       if (!ObjectID.isValid(id)) throw "Invalid MongoDB ID.";
       const results = await database
@@ -131,7 +154,7 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findOne = async query => {
+  const findOne = async (query) => {
     try {
       const results = await database
         .get()
@@ -143,12 +166,12 @@ module.exports = ({ database }) => {
     }
   };
 
-  const assign = async assignment => {
+  const assign = async (assignment) => {
     const { articleId, stage, type, user, status } = assignment;
     try {
       const fields = {
         [`stages.${stage}.${type}`]: user,
-        [`stages.${stage}.status`]: status
+        [`stages.${stage}.status`]: status,
       };
       const cmdResult = await database
         .get()
@@ -197,9 +220,9 @@ module.exports = ({ database }) => {
             studies: { status: "pending_assignment" },
             appraisals: { status: "pending_assignment" },
             prioritizing: { status: "pending_assignment" },
-            translations: { status: "pending_assignment" }
-          }
-        }
+            translations: { status: "pending_assignment" },
+          },
+        },
       },
       { multi: true, upsert: true }
     );
@@ -207,8 +230,8 @@ module.exports = ({ database }) => {
       { status: { $exists: false } },
       {
         $set: {
-          status: "created"
-        }
+          status: "created",
+        },
       },
       { multi: true, upsert: true }
     );
@@ -216,8 +239,8 @@ module.exports = ({ database }) => {
       { batchName: { $exists: false } },
       {
         $set: {
-          batchName: ""
-        }
+          batchName: "",
+        },
       },
       { multi: true, upsert: true }
     );
@@ -235,6 +258,6 @@ module.exports = ({ database }) => {
     findByBatch,
     aggregate,
     createIndexes,
-    migrate
+    migrate,
   };
 };
