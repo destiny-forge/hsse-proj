@@ -10,7 +10,7 @@ const Batch = t.struct(
     shortId: t.String,
     name: t.maybe(t.String),
 
-    referenceType: t.maybe(t.String),
+    referenceType: t.String,
     fileName: t.maybe(t.String),
     fileUrl: t.String,
 
