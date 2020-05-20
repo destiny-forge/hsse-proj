@@ -6,12 +6,12 @@ module.exports = () => {
   const {
     logger,
     response: { Success, Fail },
-    jwt,
+    auth,
   } = container.cradle;
   const app = instance();
 
   return {
     app,
-    router: router({ logger, jwt, response: { Success, Fail }, ...app }),
+    router: router({ logger, auth, response: { Success, Fail }, ...app }),
   };
 };

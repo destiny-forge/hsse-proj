@@ -1,8 +1,14 @@
 const Status = require("http-status");
 const { Router } = require("express");
 
-module.exports = ({ createUseCase, logger, response: { Success, Fail } }) => {
+module.exports = ({
+  createUseCase,
+  logger,
+  auth,
+  response: { Success, Fail },
+}) => {
   const router = Router();
+  router.use(auth.authenticate());
 
   /**
    * @swagger

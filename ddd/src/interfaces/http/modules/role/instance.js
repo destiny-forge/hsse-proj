@@ -1,30 +1,30 @@
-const container = require('src/container');
-const { add, remove, update } = require('src/app/role');
+const container = require("src/container");
+const { add, remove, update } = require("src/app/role");
 
 module.exports = () => {
   const {
     repository: { userRepository },
-    jwt
+    jwt,
   } = container.cradle;
 
   const addUseCase = add({
     userRepository,
-    webToken: jwt
+    webToken: jwt,
   });
 
   const removeUseCase = remove({
     userRepository,
-    webToken: jwt
+    webToken: jwt,
   });
 
   const updateUseCase = update({
     userRepository,
-    webToken: jwt
+    webToken: jwt,
   });
 
   return {
     addUseCase,
     removeUseCase,
-    updateUseCase
+    updateUseCase,
   };
 };
