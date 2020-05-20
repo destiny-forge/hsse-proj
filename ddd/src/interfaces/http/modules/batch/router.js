@@ -76,7 +76,7 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.get("/", (req, res) => {
-    const { type } = req.body;
+    const { type } = req.query;
     listUseCase
       .list(type)
       .then((data) => {

@@ -30,13 +30,12 @@ module.exports = ({ createUseCase, logger, response: { Success, Fail } }) => {
    *         $ref: '#/responses/BadRequest'
    */
   router.post("/", (req, res) => {
-    console.log(req.body);
     createUseCase
       .create(req.body)
-      .then(data => {
+      .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
-      .catch(error => {
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });
