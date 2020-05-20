@@ -65,6 +65,41 @@ module.exports = ({ database }) => {
     }
   };
 
+  const findByBatchAndRefTypes = async (batchId, refTypes) => {
+    const join = {
+      $lookup: {
+        from: "batches",
+        localField: "batchId",
+        foreignField: "_id",
+        as: "batches",
+      },
+    };
+
+    const matchBatch = {
+      $match: {
+        batchId: { $eq: ObjectID(batchId) },
+      },
+    };
+
+    const matchRefType = {
+      $match: {
+        ["batches.0.referenceType"]: { $in: refTypes },
+      },
+    };
+
+    const aggregates = [matchBatch, join, matchRefType];
+
+    try {
+      return await database
+        .get()
+        .collection("articles")
+        .aggregate(aggregates)
+        .toArray();
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const aggregate = async (type, stage, status, refTypes) => {
     const filters = Array.isArray(status) ? { $in: status } : status;
 
@@ -256,6 +291,7 @@ module.exports = ({ database }) => {
     assign,
     update,
     findByBatch,
+    findByBatchAndRefTypes,
     aggregate,
     createIndexes,
     migrate,

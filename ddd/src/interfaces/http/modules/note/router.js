@@ -1,8 +1,14 @@
 const Status = require("http-status");
 const { Router } = require("express");
 
-module.exports = ({ createUseCase, logger, response: { Success, Fail } }) => {
+module.exports = ({
+  createUseCase,
+  logger,
+  auth,
+  response: { Success, Fail },
+}) => {
   const router = Router();
+  router.use(auth.authenticate());
 
   /**
    * @swagger
@@ -30,13 +36,12 @@ module.exports = ({ createUseCase, logger, response: { Success, Fail } }) => {
    *         $ref: '#/responses/BadRequest'
    */
   router.post("/", (req, res) => {
-    console.log(req.body);
     createUseCase
       .create(req.body)
-      .then(data => {
+      .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
-      .catch(error => {
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });

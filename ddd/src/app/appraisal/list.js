@@ -32,7 +32,22 @@ module.exports = ({ articleRepository }) => {
     }
   };
 
+  const listByBatch = async (batchId) => {
+    try {
+      if (!batchId) {
+        return {
+          error: "A valid batchId is required",
+        };
+      }
+      const refTypes = ["Systematic reviews and other types of syntheses"];
+      return await articleRepository.findByBatchAndRefTypes(batchId, refTypes);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
   return {
     list,
+    listByBatch,
   };
 };

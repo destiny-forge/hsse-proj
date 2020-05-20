@@ -5,9 +5,11 @@ module.exports = ({
   createUseCase,
   getUseCase,
   logger,
+  auth,
   response: { Success, Fail },
 }) => {
   const router = Router();
+  router.use(auth.authenticate());
 
   /**
    * @swagger
@@ -72,10 +74,10 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.get("/:shortArticleId", (req, res) => {
-    const { userId } = req.body;
+    const { user } = req;
     const { shortArticleId } = req.params;
     getUseCase
-      .get(shortArticleId, userId)
+      .get(shortArticleId, user._id)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
