@@ -22,7 +22,6 @@ class Appraisals extends React.Component {
     this.Appraisal.list(type, 'pending_assignment')
       .then(res => {
         if (res.success) {
-          console.log("res data ", res.data);
           this.setState({
             appraisals: res.data,
           });
@@ -33,6 +32,10 @@ class Appraisals extends React.Component {
       }) 
   }
 
+  percentNeeding(total, complete) {
+    return Math.round(100 * complete) / total;
+  }
+
   render() {
     return (
       <div className="box">
@@ -40,33 +43,23 @@ class Appraisals extends React.Component {
           <table className="table table-striped b-t">
             <thead>
               <tr>
-                <th>Appraisal Id</th>
-                <th>Title</th>
-                <th>Authors</th>
-                <th>My Status</th>
-                <th>Junior Appraiser</th>
-                <th>Senior Appraiser</th>
-                <th>Appraisal Status</th>
-                <th>Actions</th>
+                <th>Batch name</th>
+                <th># in batch</th>
+                <th># needing AMSTAR(%)</th>
+                <th># AMSTAR in progress(%)</th>
+                <th># AMSTAR complete(%)</th>
+                <th>Coders assigned to batch</th>
               </tr>
             </thead>
             <tbody>
               {
                 this.state.appraisals && this.state.appraisals.map(appraisal => (
                   <tr key={Math.random()}>
-                    <td>{appraisal._id}</td>
-                    <td>{appraisal.title}</td>
-                    <td>{appraisal.authors}</td>
-                    <td>TBD</td>
-                    <td>
-                      TODO
-                    </td>
-                    <td>
-                      TODO
-                    </td>
-                    <td>
-                      TODO
-                    </td>
+                    <td>{appraisal.name}</td>
+                    <td>{appraisal.total}%</td>
+                    <td>{Math.round(this.percentNeeding(appraisal.total, appraisal.complete))}%</td>
+                    <td>{appraisal.in_progress}%</td>
+                    <td>{appraisal.complete}%</td>
                     <td>
                       TODO
                     </td>
