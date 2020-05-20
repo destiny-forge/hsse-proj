@@ -45,6 +45,17 @@ module.exports = ({ model }) => {
     }
   };
 
+  const findByBatchAndRefTypes = async (batchId, refTypes) => {
+    try {
+      const articles = await model.findByBatchAndRefTypes(batchId, refTypes);
+      return articles.map((article) => {
+        return toEntity(article);
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const aggregate = async (type, stage, status, refTypes) => {
     try {
       const articles = await model.aggregate(type, stage, status, refTypes);
@@ -106,6 +117,7 @@ module.exports = ({ model }) => {
     findById,
     findByType,
     findByBatch,
+    findByBatchAndRefTypes,
     aggregate,
     find,
     assign,
