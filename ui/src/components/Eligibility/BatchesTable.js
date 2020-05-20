@@ -15,6 +15,7 @@ class BatchesTable extends React.Component {
   }
 
   render() {
+    console.log(this.props.batches);
     return (
       <div className="box">
         <div className="table-responsive">
@@ -30,7 +31,6 @@ class BatchesTable extends React.Component {
                 <th>Batch Type</th>
                 <th>Batch Name</th>
                 <th># in Batches</th>
-                <th># coding not in progress(%)</th>
                 <th># coding in progress(%)</th>
                 <th># coding complete(%)</th>
                 <th>Coders Assigned</th>
@@ -52,10 +52,9 @@ class BatchesTable extends React.Component {
                         {batch.name}
                       </Link>
                     </td>
-                    <td>100</td>
-                    <td>98.35%</td>
-                    <td>30%</td>
-                    <td>20%</td>
+                    <td>{batch.total}</td>
+                    <td>{batch.in_progress}%</td>
+                    <td>{batch.complete}%</td>
                     <td>
                       Coder 1: tdelam@gmail.com <small><a href="">Remove</a></small><br/>
                       Coder 2: N/A

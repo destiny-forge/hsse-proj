@@ -11,20 +11,6 @@ const ArticleService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
-  const list = async (type, stage, status) => {
-    const params = {
-      method: 'GET',
-      data: {
-        type,
-        stage,
-        status,
-      }
-    };
-
-    const res = await fetch('/articles', params)
-    return Promise.resolve(res);
-  };
-
   const eligibilityFilters = async () => {
     const res = await fetch('/eligibility-filters')
     return Promise.resolve(res);
@@ -55,7 +41,6 @@ const ArticleService = ({ fetch }) => {
 
   return {
     create,
-    list,
     get,
     eligibilityFilters,
     assign,

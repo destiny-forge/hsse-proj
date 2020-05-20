@@ -11,7 +11,6 @@ const AppraisalService = ({ fetch }) => {
         status,
       }
     };
-
     const res = await fetch('/appraisal', params)
     return Promise.resolve(res);
   };

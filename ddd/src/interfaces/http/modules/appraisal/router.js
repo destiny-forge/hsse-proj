@@ -199,7 +199,7 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.get("/", (req, res) => {
-    const { type, status } = req.body;
+    const { type, status } = req.query;
     listUseCase
       .list(type, status)
       .then((data) => {
