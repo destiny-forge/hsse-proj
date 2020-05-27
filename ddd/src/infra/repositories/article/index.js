@@ -12,6 +12,21 @@ module.exports = ({ model }) => {
     }
   };
 
+  const getTranslationQueue = async (language, field, priority) => {
+    try {
+      const articles = await model.getTranslationQueue(
+        language,
+        field,
+        priority
+      );
+      return articles.map((article) => {
+        return toEntity(article);
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const findByType = async (type) => {
     try {
       const articles = await model.findByType(type);
@@ -76,6 +91,14 @@ module.exports = ({ model }) => {
     }
   };
 
+  const createTranslation = async (...args) => {
+    try {
+      return await model.createTranslation(...args);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const update = async (...args) => {
     try {
       return model.update(...args);
@@ -113,11 +136,13 @@ module.exports = ({ model }) => {
   return {
     getAll,
     create,
+    createTranslation,
     update,
     findById,
     findByType,
     findByBatch,
     findByBatchAndRefTypes,
+    getTranslationQueue,
     aggregate,
     find,
     assign,

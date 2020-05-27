@@ -176,6 +176,54 @@ module.exports = ({ database }) => {
     }
   };
 
+  const getTranslationQueue = async (language, field, priority) => {
+    const query = {
+      $or: [
+        { [`stages.translations.${field}.${language}`]: { $exists: false } },
+        {
+          [`stages.translations.${field}.${language}.isApproved`]: {
+            $eq: false,
+          },
+        },
+      ],
+    };
+
+    // high priority vs low priority - we need logic to determine which articles
+    // are marked as high vs low priority for the priority arg.
+
+    try {
+      return await database.get().collection("articles").find(query).toArray();
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const createTranslation = async (translation, field) => {
+    const { articleId, language, text, isApproved } = translation;
+    const fields = {
+      [`stages.translations.${field}.${language}`]: {
+        text,
+        isApproved,
+      },
+    };
+
+    try {
+      const cmdResult = await database
+        .get()
+        .collection("articles")
+        .updateOne(
+          { _id: { $eq: ObjectID(articleId) } },
+          {
+            $set: fields,
+          }
+        );
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const findById = async (id) => {
     try {
       if (!ObjectID.isValid(id)) throw "Invalid MongoDB ID.";
@@ -282,17 +330,20 @@ module.exports = ({ database }) => {
   };
 
   return {
+    aggregate,
+    assign,
     create,
-    getAll,
+    createTranslation,
+    findByBatch,
+    findByBatchAndRefTypes,
     findById,
     findByType,
     findOne,
     find,
-    assign,
+    getAll,
+    getTranslationQueue,
     update,
-    findByBatch,
-    findByBatchAndRefTypes,
-    aggregate,
+
     createIndexes,
     migrate,
   };
