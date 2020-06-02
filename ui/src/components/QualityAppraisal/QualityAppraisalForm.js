@@ -81,8 +81,6 @@ class QualityAppraisalForm extends React.Component {
       articleId: article._id,
       shortArticleId: article.shortId,
     };
-
-    console.log(formData);
   }
 
   render() {

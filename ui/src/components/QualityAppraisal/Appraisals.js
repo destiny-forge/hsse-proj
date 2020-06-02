@@ -37,6 +37,7 @@ class Appraisals extends React.Component {
   }
 
   render() {
+    console.log(this.state.appraisals)
     return (
       <div className="box">
         <div className="table-responsive">
@@ -61,7 +62,9 @@ class Appraisals extends React.Component {
                     <td>{appraisal.in_progress}%</td>
                     <td>{appraisal.complete}%</td>
                     <td>
-                      TODO
+                      <Link to={`/quality-appraisal/${appraisal.shortId}`}>
+                        Code
+                      </Link>
                     </td>
                   </tr>
                 ))
