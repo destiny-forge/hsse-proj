@@ -1,7 +1,6 @@
 const { hseArticle, sseArticle } = require("src/domain/article");
 const Batch = require("src/domain/batch");
 const ObjectID = require("mongodb").ObjectID;
-const shortid = require("shortid");
 
 /**
  * Article creation
