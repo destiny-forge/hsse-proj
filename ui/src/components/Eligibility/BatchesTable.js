@@ -3,14 +3,13 @@ import BatchService from '../../services/BatchService';
 import { Link } from 'react-router-dom';
 
 class BatchesTable extends React.Component {
-
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
       showJunior: false,
-      showSenior: false 
-    }
+      showSenior: false,
+    };
     this.Batch = BatchService({ fetch: this.props.fetch });
   }
 
@@ -21,7 +20,7 @@ class BatchesTable extends React.Component {
           <table className="table table-striped b-t">
             <thead>
               <tr>
-                <th style={{ width: "20px" }}>
+                <th style={{ width: '20px' }}>
                   <label className="ui-check m-0">
                     <input type="checkbox" />
                     <i></i>
@@ -29,15 +28,14 @@ class BatchesTable extends React.Component {
                 </th>
                 <th>Batch Type</th>
                 <th>Batch Name</th>
-                <th># in Batches</th>
+                <th># in Batch</th>
                 <th># coding in progress(%)</th>
                 <th># coding complete(%)</th>
-                <th>Coders Assigned</th>
               </tr>
             </thead>
             <tbody>
-              {
-                this.props.batches && this.props.batches.map(batch => (
+              {this.props.batches &&
+                this.props.batches.map((batch) => (
                   <tr key={Math.random()}>
                     <td>
                       <label className="ui-check m-0">
@@ -54,18 +52,13 @@ class BatchesTable extends React.Component {
                     <td>{batch.total}</td>
                     <td>{batch.in_progress}%</td>
                     <td>{batch.complete}%</td>
-                    <td>
-                      Coder 1: tdelam@gmail.com <small><a href="">Remove</a></small><br/>
-                      Coder 2: N/A
-                    </td>
                   </tr>
-                ))
-              }
+                ))}
             </tbody>
           </table>
         </div>
       </div>
-    )
+    );
   }
 }
 

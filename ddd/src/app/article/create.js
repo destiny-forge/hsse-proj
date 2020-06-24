@@ -17,8 +17,8 @@ module.exports = ({ articleRepository, batchRepository }) => {
       const batch = {
         type: article.type,
         fileUrl: "",
-        referenceType: "system-generated",
-        source: "single-article-upload",
+        referenceType: "single article upload",
+        source: article.source,
         language: article.language,
         uploaded: new Date(),
         harvested: new Date(),
