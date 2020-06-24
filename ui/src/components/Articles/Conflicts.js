@@ -94,9 +94,6 @@ class Conflicts extends React.Component {
 
     let newCurrentFilterState = Object.assign({}, currentFilterState1);
     newCurrentFilterState[evt.node.props.name] = selectedKeys;
-  
-    console.log("selected Keys", selectedKeys);
-    console.log("newCurrentFilterState", newCurrentFilterState);
     
     let formData = {
       _id: eligibilityId,
@@ -110,7 +107,6 @@ class Conflicts extends React.Component {
     
     this.Eligibility.create(formData)
       .then(res => {
-        console.log("res ", res);
         this.setState({
           ...formData,
           currentFilterState1: newCurrentFilterState

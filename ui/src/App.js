@@ -18,6 +18,8 @@ import HSE from './components/Eligibility/HSE';
 import EligibilityForm from './components/Eligibility/EligibilityForm';
 import Articles from './components/Articles/Articles';
 import Conflicts from './components/Articles/Conflicts';
+import QualityAppraisalForm from './components/QualityAppraisal/QualityAppraisalForm';
+import Appraisals from './components/QualityAppraisal/Appraisals';
 
 class App extends Component {
   render() {
@@ -48,6 +50,8 @@ class App extends Component {
           <Route path="/sse" component={SSE} />
           <Route path="/sse/eligibility-filters" component={EligibilityFilters} />
           <Route path="/eligibility/:shortId" component={EligibilityForm} />
+          <Route path="/quality-appraisal/:shortId" component={QualityAppraisalForm} />
+          <Route path="/appraisals/:type" component={Appraisals} />
           <Route path="/batch/articles/:shortId" component={Articles} />
           <Route path="/conflicts/:shortId" component={Conflicts} />
           <Route path="/upload" component={BatchUpload} />

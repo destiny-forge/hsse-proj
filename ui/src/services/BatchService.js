@@ -29,7 +29,7 @@ const BatchService = ({ fetch }) => {
       }
     };
 
-    const res = await fetch('/batches', params)
+    const res = await fetch('/articles', params)
     return Promise.resolve(res);
   };
 

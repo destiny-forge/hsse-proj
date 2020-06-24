@@ -46,3 +46,37 @@ div.react-datepicker-wrapper {
 .display-none {
   display: none;
 }
+
+label {
+	color: #282A25;
+	font-weight: bold;
+}
+
+.btn-radio {
+  color: #4A4A4A;
+  background-color: #fff;
+	padding: 5px 15px 5px 15px;
+	border: 1px solid #D4D4D3;
+	border-radius: 4px;
+}
+
+.btn-radio:hover {
+	border: 1px solid #888;
+	border-radius: 4px;
+	background-color: #FFFFFF;
+	color: #96C61A;
+}
+
+.btn-radio.active {
+	border: 1px solid #888;
+	border-radius: 4px;
+	background-color: #D4D4D3;
+	color: #fff;
+}
+
+.cap {
+  font-weight: normal;
+  color: #666;
+  font-style: normal;
+  font-size: .8rem;
+}

@@ -47,7 +47,7 @@ class SSE extends Component {
                 </div>
               </div>
             </div>
-            <Sidebar />
+            <Sidebar type="sse" />
           </div>
         </div>
       </React.Fragment>

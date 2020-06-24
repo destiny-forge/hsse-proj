@@ -58,7 +58,7 @@ class HSE extends Component {
                 </div>
               </div>
             </div>
-            <Sidebar />
+            <Sidebar type="hse" />
           </div>
         </div>
       </React.Fragment>

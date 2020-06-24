@@ -1612,7 +1612,8 @@ body {
 .app {
   width: 100%;
   display: -ms-flexbox;
-  display: flex; }
+  display: flex; 
+}
 
 .app-header {
   position: fixed;
