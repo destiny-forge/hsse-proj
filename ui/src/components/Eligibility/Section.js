@@ -1,65 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import BatchService from '../../services/BatchService';
+import queryString from 'query-string';
 
 const withSection = (WrappedComponent) => {
-  class Section extends React.Component {
+  const Section = ({ history, fetch }) => {
+    const props = { history, fetch };
+    const [batches, setBatches] = useState([]);
+    const Batch = BatchService({ fetch });
+    const type = history.location.pathname.replace(/\//g, '');
 
-    constructor(props) {
-      super(props);
+    const parms = queryString.parse(history.location.search);
+    const uid = parms['t'] || false;
 
-      this.state = {
-        batches: []
-      }
-
-      this.Batch = BatchService({ fetch: this.props.fetch });
+    function fetchData(type, tab) {
+      Batch.list(type, 'eligibility', tab)
+        .then((res) => {
+          if (res.success) {
+            console.log(res.data);
+            setBatches(res.data);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
 
-    componentDidMount() {
-      const type = this.props.history.location.pathname.replace(/\//g, "");
+    useEffect(() => {
+      fetchData(type, 'pending_assignment');
+    }, [type, uid]);
 
-      if (type) {
-        this.Batch.list(type, 'eligibility', 'pending_assignment')
-          .then(res => {
-            if (res.success) {
-              this.setState({
-                batches: res.data,
-              });
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          }) 
-      }
-    }
-
-    trackTab = (type, tab) => {
+    const trackTab = (type, tab) => {
       if (type && tab) {
-        this.Batch.list(type, 'eligibility', tab)
-          .then(res => {
-            if (res.success) {
-              this.setState({
-                batches: res.data,
-              });
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          })
+        fetchData(type, tab);
       }
-    }
+    };
 
-    render() {
-      return (
-        <WrappedComponent
-          trackTab={this.trackTab}
-          batches={this.state.batches}
-          {...this.props}
-        />
-      );
-    }
-  }
+    return (
+      <WrappedComponent trackTab={trackTab} batches={batches} {...props} />
+    );
+  };
 
   return Section;
-}
+};
 
 export default withSection;

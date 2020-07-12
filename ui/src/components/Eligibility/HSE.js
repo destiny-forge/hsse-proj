@@ -9,12 +9,7 @@ import Header from './Header';
 
 class HSE extends Component {
   render() {
-    const { 
-      trackTab,
-      batches,
-      user,
-      fetch
-    } = this.props;
+    const { trackTab, batches } = this.props;
 
     return (
       <React.Fragment>
@@ -23,10 +18,7 @@ class HSE extends Component {
           <div className="row">
             <div className="col-sm-12 order-sm-1">
               <div className="py-4 clearfix nav-active-theme">
-                <Tabs 
-                  trackTab={trackTab} 
-                  type={'hse'}
-                />
+                <Tabs trackTab={trackTab} type={'hse'} />
               </div>
             </div>
           </div>
@@ -36,21 +28,11 @@ class HSE extends Component {
             <div className="col-sm-8 col-lg-9">
               <div className="tab-content">
                 <div className="tab-pane fade show active" id="tab_1">
-                  <BatchesTable 
-                    batches={batches} 
-                    user={user}
-                    fetch={fetch}
-                    history={this.props.history}
-                  />
+                  <BatchesTable batches={batches} />
                 </div>
 
                 <div className="tab-pane fade" id="tab_2">
-                  <BatchesTable 
-                    batches={batches}
-                    user={user}
-                    fetch={fetch}
-                    history={this.props.history}
-                  />
+                  <BatchesTable batches={batches} />
                 </div>
 
                 <div className="tab-pane fade" id="tab_3">
@@ -62,7 +44,7 @@ class HSE extends Component {
           </div>
         </div>
       </React.Fragment>
-    )
+    );
   }
 }
 

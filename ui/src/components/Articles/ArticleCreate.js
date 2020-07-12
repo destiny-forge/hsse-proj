@@ -18,9 +18,9 @@ class ArticleCreate extends Component {
         journal: '',
         type: '',
         source: 'Single article from referrals',
-        published: new Date().getFullYear()
+        published: new Date().getFullYear(),
       },
-      errors: []
+      errors: [],
     };
 
     this.change = this.change.bind(this);
@@ -31,32 +31,35 @@ class ArticleCreate extends Component {
     this.Article = ArticleService({ fetch: this.props.fetch });
   }
 
-  change = e => {
+  change = (e) => {
     const { name, value } = e.target;
 
     this.setState({
-      article: { ...this.state.article, [name]: value }
+      article: { ...this.state.article, [name]: value },
     });
   };
 
-  handlePublished = year => {
+  handlePublished = (year) => {
     this.setState({
-      article: { ...this.state.article, published: year }
+      article: { ...this.state.article, published: year },
     });
   };
 
-  notifyDone = () => toast.success("Article created successfully.");
+  notifyDone = () => toast.success('Article created successfully.');
 
-  submit = e => {
+  submit = (e) => {
     e.preventDefault();
     const { article } = this.state;
     const { ok, errors } = validate(article);
 
     if (ok) {
-      this.Article.create(article);
-      this.setState({ errors: [] });
-      this.props.history.replace(`/${this.state.article.type}`);
-      this.notifyDone();
+      this.Article.create(article).then((res) => {
+        this.setState({ errors: [] });
+        this.props.history.replace(
+          `/${this.state.article.type}?t=${Date.now()}`
+        );
+        this.notifyDone();
+      });
     } else {
       console.log(errors);
       this.setState({ errors });
@@ -122,15 +125,9 @@ class ArticleCreate extends Component {
                     onChange={this.change}
                     required
                   >
-                    <option value="">
-                      Please select
-                    </option>
-                    <option value="hse">
-                      HSE
-                    </option>
-                    <option value="sse">
-                      SSE
-                    </option>
+                    <option value="">Please select</option>
+                    <option value="hse">HSE</option>
+                    <option value="sse">SSE</option>
                   </select>
                   {this.hasError('type', 'required') && (
                     <div className="alert alert-danger">Field is required</div>
@@ -182,19 +179,19 @@ class ArticleCreate extends Component {
                   )}
                 </div>
               </div>
-              {
-                source === 'Single article from referrals' &&
-                  <div className="form-group row">
-                    <label className="col-sm-2 col-form-label">Notes</label>
-                    <div className="col-sm-12">
-                      <textarea
-                        name="notes"
-                        className="form-control"
-                        onChange={this.change}
-                        rows="5" />
-                    </div>
+              {source === 'Single article from referrals' && (
+                <div className="form-group row">
+                  <label className="col-sm-2 col-form-label">Notes</label>
+                  <div className="col-sm-12">
+                    <textarea
+                      name="notes"
+                      className="form-control"
+                      onChange={this.change}
+                      rows="5"
+                    />
                   </div>
-              }
+                </div>
+              )}
               <button
                 type="submit"
                 className="btn primary"
