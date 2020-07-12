@@ -108,8 +108,12 @@ module.exports = ({ database }) => {
         from: "batches",
         localField: "batchId",
         foreignField: "_id",
-        as: "batches",
+        as: "batch",
       },
+    };
+
+    const unwind = {
+      $unwind: { path: "$batch", preserveNullAndEmptyArrays: true },
     };
 
     const match = {
@@ -123,6 +127,7 @@ module.exports = ({ database }) => {
     const group = {
       $group: {
         _id: "$batchId",
+        batch: { $first: "$batch" },
         total: { $sum: 1 },
         in_progress: {
           $sum: {
@@ -146,6 +151,7 @@ module.exports = ({ database }) => {
     const project = {
       $project: {
         _id: "$_id",
+        batch: 1,
         total: "$total",
         in_progress: "$in_progress",
         complete: "$complete",
@@ -154,7 +160,9 @@ module.exports = ({ database }) => {
       },
     };
 
-    let aggregates = [match, group, project];
+    const sort = { $sort: { "batch.uploaded": -1 } };
+
+    let aggregates = [lookup, match, group, project, sort];
 
     if (refTypes) {
       const refMatch = {
@@ -162,15 +170,16 @@ module.exports = ({ database }) => {
           ["batches.0.referenceType"]: { $in: refTypes },
         },
       };
-      aggregates = [match, lookup, refMatch, group, project];
+      aggregates = [match, lookup, unwind, refMatch, group, project, sort];
     }
 
     try {
-      return await database
+      const results = await database
         .get()
         .collection("articles")
         .aggregate(aggregates)
         .toArray();
+      return results;
     } catch (e) {
       throw e;
     }
