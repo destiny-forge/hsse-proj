@@ -31,7 +31,7 @@ const BatchesTable = ({ batches }) => {
                       <i className="dark-white"></i>
                     </label>
                   </td>
-                  <td>{batch.referenceType || 'N/A'}</td>
+                  <td>{batch.batch[0].referenceType || 'N/A'}</td>
                   <td>
                     <Link to={`/batch/articles/${batch._id}`}>
                       {batch.name}

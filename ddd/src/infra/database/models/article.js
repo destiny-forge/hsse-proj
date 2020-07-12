@@ -179,6 +179,7 @@ module.exports = ({ database }) => {
         .collection("articles")
         .aggregate(aggregates)
         .toArray();
+      //console.log(results);
       return results;
     } catch (e) {
       throw e;

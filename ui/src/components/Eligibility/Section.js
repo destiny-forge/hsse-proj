@@ -16,6 +16,7 @@ const withSection = (WrappedComponent) => {
       Batch.list(type, 'eligibility', tab)
         .then((res) => {
           if (res.success) {
+            console.log(res.data);
             setBatches(res.data);
           }
         })
