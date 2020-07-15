@@ -8,6 +8,7 @@ import BatchService from '../../services/BatchService';
 import Select from 'react-select';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Redirect } from 'react-router';
+import { toast } from 'react-toastify';
 import {
   HSE_ARTICLE_SOURCES,
   SSE_ARTICLE_SOURCES,
@@ -99,6 +100,7 @@ class BatchUpload extends Component {
     if (this.state.article && this.state.article.type) {
       return false;
     }
+    toast.error('Batch type is required');
     file.meta.status = 'error_validation';
     file.meta.validationError = true;
     file.remove();
