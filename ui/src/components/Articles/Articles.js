@@ -24,6 +24,20 @@ class Articles extends React.Component {
     }
   };
 
+  isAssigned = (article) => {
+    const { user } = this.props;
+    const { eligibility } = article.stages;
+    let juniorAssigned,
+      seniorAssigned = false;
+    if (!_.isUndefined(eligibility['junior'])) {
+      juniorAssigned = eligibility.junior.email === user.email;
+    }
+    if (!_.isUndefined(eligibility['senior'])) {
+      seniorAssigned = eligibility.senior.email === user.email;
+    }
+    return juniorAssigned || seniorAssigned;
+  };
+
   componentDidMount() {
     const { shortId } = this.props.match.params;
 
@@ -137,12 +151,16 @@ class Articles extends React.Component {
                       )}
                     </td>
                     <td>
-                      <Link to={`/conflicts/${article.shortId}`}>
-                        Resolve Conflicts
-                      </Link>
+                      {this.isAssigned(article) && (
+                        <Link to={`/conflicts/${article.shortId}`}>
+                          Resolve Conflicts
+                        </Link>
+                      )}
                     </td>
                     <td>
-                      <Link to={`/eligibility/${article.shortId}`}>Code</Link>
+                      {this.isAssigned(article) && (
+                        <Link to={`/eligibility/${article.shortId}`}>Code</Link>
+                      )}
                     </td>
                   </tr>
                 ))}
