@@ -267,7 +267,7 @@ class BatchUpload extends Component {
                 <div className="dropzone white b-a b-3x b-dashed b-primary p-a rounded p-5 text-center mb-3">
                   <Dropzone
                     maxFiles={1}
-                    accept={'text/csv'}
+                    accept={'text/csv,text/plain,application/vnd.ms-excel'}
                     onChangeStatus={this.handleChangeStatus}
                     validate={this.validateFileInput}
                     autoUpload={false}
