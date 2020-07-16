@@ -54,7 +54,7 @@ class Articles extends React.Component {
       });
   }
 
-  assignment = (type, articleId) => {
+  assign = (type, articleId) => {
     const { user } = this.props;
     const { shortId } = this.props.match.params;
 
@@ -126,7 +126,7 @@ class Articles extends React.Component {
                                 'Are you sure you want to assign this article to your assigned quality appraisals list?'
                               )
                             )
-                              this.assignment('junior', article._id);
+                              this.assign('junior', article._id);
                           }}
                         >
                           Assign
@@ -143,7 +143,7 @@ class Articles extends React.Component {
                                 'Are you sure you want to assign this article to your assigned quality appraisals list?'
                               )
                             )
-                              this.assignment('senior', article._id);
+                              this.assign('senior', article._id);
                           }}
                         >
                           Assign

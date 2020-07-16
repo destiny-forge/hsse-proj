@@ -7,9 +7,7 @@ import ArticleService from '../../services/ArticleService';
 import { Tree } from 'antd';
 import 'antd/dist/antd.css';
 import EligibilityService from '../../services/EligibilityService';
-import {
-  treeData,
-} from './HSETreeData';
+import { treeData } from './HSETreeData';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
@@ -17,17 +15,46 @@ const { TreeNode } = Tree;
 
 const DOCUMENT_TYPES = [
   { value: 'Evidence briefs for policy', label: 'Evidence briefs for policy' },
-  { value: 'Overviews of systematic reviews', label: 'Overviews of systematic reviews' },
-  { value: 'Systematic reviews addressing other questions', label: 'Systematic reviews addressing other questions' },
-  { value: 'Systematic reviews in progress', label: 'Systematic reviews in progress' },
-  { value: 'Systematic reviews being planned', label: 'Systematic reviews being planned' },
-  { value: 'Economic evaluations and costing studies', label: 'Economic evaluations and costing studies' },
+  {
+    value: 'Overviews of systematic reviews',
+    label: 'Overviews of systematic reviews',
+  },
+  {
+    value: 'Systematic reviews addressing other questions',
+    label: 'Systematic reviews addressing other questions',
+  },
+  {
+    value: 'Systematic reviews in progress',
+    label: 'Systematic reviews in progress',
+  },
+  {
+    value: 'Systematic reviews being planned',
+    label: 'Systematic reviews being planned',
+  },
+  {
+    value: 'Economic evaluations and costing studies',
+    label: 'Economic evaluations and costing studies',
+  },
   { value: 'Health reform descriptions', label: 'Health reform descriptions' },
   { value: 'Health system descriptions', label: 'Health system descriptions' },
-  { value: 'Intergovernmental organizations’ health systems documents', label: 'Intergovernmental organizations’ health systems documents' },
-  { value: 'Canada’s health systems documents', label: 'Canada’s health systems documents' },
-  { value: 'Ontario’s health system documents', label: 'Ontario’s health system documents' },
-  { value: 'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.', label: 'NO, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.' },
+  {
+    value: 'Intergovernmental organizations’ health systems documents',
+    label: 'Intergovernmental organizations’ health systems documents',
+  },
+  {
+    value: 'Canada’s health systems documents',
+    label: 'Canada’s health systems documents',
+  },
+  {
+    value: 'Ontario’s health system documents',
+    label: 'Ontario’s health system documents',
+  },
+  {
+    value:
+      'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.',
+    label:
+      'NO, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.',
+  },
 ];
 
 const STATUSES = [
@@ -35,15 +62,15 @@ const STATUSES = [
   { value: 'Data Entry Complete', label: 'Data Entry Complete' },
   { value: 'Live', label: 'Live' },
   { value: 'Delete', label: 'Delete' },
-]
+];
 
 class EligibilityForm extends React.Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
-      article: "",
+      _id: null,
+      article: '',
       generalFocus: false,
       type: 'hse',
       currentFilterState: {
@@ -56,7 +83,7 @@ class EligibilityForm extends React.Component {
         checkedPopulation: [],
         checkedOPA: [],
       },
-    }
+    };
 
     this.Article = ArticleService({ fetch: this.props.fetch });
     this.Eligibility = EligibilityService({ fetch: this.props.fetch });
@@ -64,65 +91,79 @@ class EligibilityForm extends React.Component {
 
   handleChange = (field, value) => {
     this.setState({
-      [field]: value
+      [field]: value,
     });
-  }
+  };
 
   handleCheckbox = (e) => {
-    const { 
-      checked,
-      name
-    } = e.target;
+    const { checked, name } = e.target;
 
     this.setState({
-      [name]: checked
-    })
-  }
-
-  handleTreeClick = (selectedKeys, evt)=> {
-    let newCurrentFilterState = Object.assign({}, this.state.currentFilterState);
-    newCurrentFilterState[evt.node.props.name] = selectedKeys;
-    this.setState({
-      currentFilterState: newCurrentFilterState
+      [name]: checked,
     });
+  };
+
+  handleTreeClick = (selectedKeys, evt) => {
+    let newState = Object.assign({}, this.state.currentFilterState);
+    newState[evt.node.props.name] = selectedKeys;
+    this.setState({
+      currentFilterState: newState,
+    });
+  };
+
+  flatten(tree) {
+    let keys = [];
+    tree.map((item) => {
+      //console.log(item);
+      keys.push(item.key);
+      if (item.hasOwnProperty('children')) {
+        keys = keys.concat(this.flatten(item.children));
+      }
+    });
+    return keys;
   }
 
   componentDidMount() {
     const { shortId } = this.props.match.params;
     const { user } = this.props;
 
+    let newState = Object.assign({}, this.state.currentFilterState);
+    const categories = Object.keys(treeData);
+
     this.Article.get(shortId)
-      .then(res => {
+      .then((res) => {
         if (res.success) {
           this.setState({
-            article: res.data
+            article: res.data,
           });
-          // grab any updated data for the filters if exists.
-          this.Eligibility.get(shortId, user.id)
-            .then(filterData => {
-              const filters = filterData.data;
-              const treeKeys = Object.keys(treeData);
-              for (const key of treeKeys) {
-                treeData[key].map(k => {
-                  if (!_.isNull(filters)) {
-                    if (filters[k.key] === true) {
-                      let newCurrentFilterState = Object.assign({}, this.state.currentFilterState);
-                      newCurrentFilterState[key].push(k.key);
-                  
-                      this.setState({
-                        selectedDocumentType: filterData.data.documentType,
-                        currentFilterState: newCurrentFilterState,
-                      });
-                    }
+
+          this.Eligibility.get(shortId, user.id).then((result) => {
+            const eligibility = result.data;
+            //console.log(eligibility);
+            if (!_.isNull(eligibility)) {
+              for (const category of categories) {
+                const keys = this.flatten(treeData[category]);
+                keys.forEach((key) => {
+                  if (eligibility.filters.indexOf(key) >= 0) {
+                    newState[category].push(key);
                   }
-                })
+                });
               }
-            })
+
+              this.setState({
+                _id: eligibility._id,
+                generalFocus: eligibility.generalFocus,
+                selectedStatus: eligibility.selectedStatus,
+                selectedDocumentType: eligibility.documentType,
+                currentFilterState: newState,
+              });
+            }
+          });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-      })  
+      });
   }
 
   onExpand = (expandedKeys) => {
@@ -130,10 +171,14 @@ class EligibilityForm extends React.Component {
       expandedKeys,
       autoExpandParent: false,
     });
-  }
+  };
 
-  renderTreeSection = (sectionTreeData, handleTreeClick, checkedKeyState, name) => {
-    
+  renderTreeSection = (
+    sectionTreeData,
+    handleTreeClick,
+    checkedKeyState,
+    name
+  ) => {
     return (
       <React.Fragment>
         <label className="col-md-1 offset-md-1 col-form-label"></label>
@@ -152,41 +197,51 @@ class EligibilityForm extends React.Component {
         </div>
       </React.Fragment>
     );
-  }
+  };
 
-  renderTreeNodes = (data, name) => data.map((item) => {
-    // Adds name to the object to be used int he handle click
-    // so that we can set state properly.
-    item.name = name;
+  renderTreeNodes = (data, name) =>
+    data.map((item) => {
+      // Adds name to the object to be used int he handle click
+      // so that we can set state properly.
+      item.name = name;
 
-    if (item.children) {
-      return (
-        <TreeNode 
-          name={item.name}
-          title={item.title} 
-          key={item.key} 
-          dataRef={item} 
-          disableCheckbox={false}
-        >
-          {this.renderTreeNodes(item.children, name)}
-        </TreeNode>
-      );
+      if (item.children) {
+        return (
+          <TreeNode
+            name={item.name}
+            title={item.title}
+            key={item.key}
+            dataRef={item}
+            disableCheckbox={false}
+          >
+            {this.renderTreeNodes(item.children, name)}
+          </TreeNode>
+        );
+      }
+      return <TreeNode {...item} disableCheckbox={false} />;
+    });
+
+  notifyDone = () => toast.success('Eligibility successfully saved!');
+
+  getAssignmentRole(user, article) {
+    const { eligibility } = article.stages;
+    let juniorAssigned = false;
+    if (!_.isUndefined(eligibility['junior'])) {
+      juniorAssigned = eligibility.junior.email === user.email;
     }
-    return <TreeNode {...item} disableCheckbox={false} />;
-  })
-
-  notifyDone = () => toast.success("Eligibility completed!");
+    return juniorAssigned ? 'junior' : 'senior';
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { 
+    const {
       currentFilterState,
       article,
       type,
       generalFocus,
       selectedDocumentType,
-      selectedStatus
+      selectedStatus,
     } = this.state;
 
     const { user } = this.props;
@@ -197,26 +252,31 @@ class EligibilityForm extends React.Component {
       articleId: article._id,
       shortArticleId: article.shortId,
       generalFocus: generalFocus,
-      role: 'junior',
-      documentType: selectedDocumentType.value,
-      selectedStatus: selectedStatus.value
+      role: this.getAssignmentRole(user, article),
+      documentType: selectedDocumentType,
+      selectedStatus: selectedStatus,
+      filters: [],
     };
 
+    if (this.state._id != null) {
+      formData._id = this.state._id;
+    }
+
     Object.keys(currentFilterState).forEach((key, idx) => {
-      currentFilterState[key].map(k => {
-        formData[k] = true;
+      currentFilterState[key].map((k) => {
+        formData.filters.push(k);
       });
-    })
+    });
 
     this.Eligibility.create(formData)
-      .then(res => {
+      .then((res) => {
         this.props.history.replace(`/${type}`);
         this.notifyDone();
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-      })
-  }
+      });
+  };
 
   render() {
     const { article } = this.state;
@@ -232,127 +292,117 @@ class EligibilityForm extends React.Component {
             <form>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Ref id</label>
-                <div className="col-sm-10">
-                  {article.shortId}
-                </div>
+                <div className="col-sm-10">{article.shortId}</div>
               </div>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Live date</label>
-                <div className="col-sm-10">
-                  N/A
-                </div>
+                <div className="col-sm-10">N/A</div>
               </div>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Document type</label>
                 <div className="col-sm-4">
                   <Select
-                    value={this.state.selectedDocumentType}
+                    value={DOCUMENT_TYPES.filter(
+                      (opt) => opt.value === this.state.selectedDocumentType
+                    )}
                     name="selectedDocumentType"
-                    onChange={(value) => this.handleChange('selectedDocumentType', value)}
+                    onChange={(opt) =>
+                      this.handleChange('selectedDocumentType', opt.value)
+                    }
                     options={DOCUMENT_TYPES}
                     isSearchable
                   />
                 </div>
               </div>
               <div className="form-group row">
-                <label className="col-sm-2 col-form-label">General focus?</label>
+                <label className="col-sm-2 col-form-label">
+                  General focus?
+                </label>
                 <div className="col-sm-10">
                   <label className="form-check-label">
-                    <input 
-                      type="checkbox" 
+                    <input
+                      checked={this.state.generalFocus}
+                      type="checkbox"
                       className="form-check-input"
                       name="generalFocus"
                       onChange={this.handleCheckbox}
-                    /> Yes, this article has a general focus (review definition and code accordingly, nothing that the default is set to specific)
+                    />{' '}
+                    Yes, this article has a general focus (review definition and
+                    code accordingly, nothing that the default is set to
+                    specific)
                   </label>
                 </div>
               </div>
               <div className="box-divider pt-2 mb-3"></div>
               <h6>Health Systems Topic</h6>
-              {
-                this.renderTreeSection(
-                  treeData.checkedKeysHST, 
-                  this.handleTreeClick, 
-                  this.state.currentFilterState.checkedKeysHST, 
-                  'checkedKeysHST'
-                )
-              }
+              {this.renderTreeSection(
+                treeData.checkedKeysHST,
+                this.handleTreeClick,
+                this.state.currentFilterState.checkedKeysHST,
+                'checkedKeysHST'
+              )}
               <div className="box-divider pt-2 mb-3"></div>
               <h6>Canadian Areas</h6>
-              {
-                this.renderTreeSection(
-                  treeData.checkedKeysCA,
-                  this.handleTreeClick,
-                  this.state.currentFilterState.checkedKeysCA, 
-                  'checkedKeysCA'
-                )
-              }
+              {this.renderTreeSection(
+                treeData.checkedKeysCA,
+                this.handleTreeClick,
+                this.state.currentFilterState.checkedKeysCA,
+                'checkedKeysCA'
+              )}
               <div className="box-divider pt-2 mb-3"></div>
               <h6>Domains</h6>
-              {
-                this.renderTreeSection(
-                  treeData.checkedDomain,
-                  this.handleTreeClick,
-                  this.state.currentFilterState.checkedDomain,
-                  'checkedDomain'
-                )
-              }
+              {this.renderTreeSection(
+                treeData.checkedDomain,
+                this.handleTreeClick,
+                this.state.currentFilterState.checkedDomain,
+                'checkedDomain'
+              )}
 
               <div className="box-divider pt-2 mb-3"></div>
               <h6>LMIC Focus</h6>
-              {
-                this.renderTreeSection(
-                  treeData.checkedLMIC,
-                  this.handleTreeClick,
-                  this.state.currentFilterState.checkedLMIC,
-                  'checkedLMIC'
-                )
-              }
+              {this.renderTreeSection(
+                treeData.checkedLMIC,
+                this.handleTreeClick,
+                this.state.currentFilterState.checkedLMIC,
+                'checkedLMIC'
+              )}
 
               <div className="box-divider pt-2 mb-3"></div>
               <h6>Province Focus</h6>
-              {
-                this.renderTreeSection(
-                  treeData.checkedProvince,
-                  this.handleTreeClick,
-                  this.state.currentFilterState.checkedProvince,
-                  'checkedProvince',
-                )
-              }
+              {this.renderTreeSection(
+                treeData.checkedProvince,
+                this.handleTreeClick,
+                this.state.currentFilterState.checkedProvince,
+                'checkedProvince'
+              )}
 
               <div className="box-divider pt-2 mb-3"></div>
               <h6>Theme</h6>
-              {
-                this.renderTreeSection(
-                  treeData.checkedTheme,
-                  this.handleTreeClick,
-                  this.state.currentFilterState.checkedTheme,
-                  'checkedTheme'
-                )
-              }
+              {this.renderTreeSection(
+                treeData.checkedTheme,
+                this.handleTreeClick,
+                this.state.currentFilterState.checkedTheme,
+                'checkedTheme'
+              )}
 
               <div className="box-divider pt-2 mb-3"></div>
               <h6>Population</h6>
-              {
-                this.renderTreeSection(
-                  treeData.checkedPopulation,
-                  this.handleTreeClick,
-                  this.state.currentFilterState.checkedPopulation,
-                  'checkedPopulation',
-                )
-              }
+              {this.renderTreeSection(
+                treeData.checkedPopulation,
+                this.handleTreeClick,
+                this.state.currentFilterState.checkedPopulation,
+                'checkedPopulation'
+              )}
 
               <div className="box-divider pt-2 mb-3"></div>
               <h6>Ontario Priority Areas</h6>
-              {
-                this.renderTreeSection(
-                  treeData.checkedOPA,
-                  this.handleTreeClick,
-                  this.state.currentFilterState.checkedOPA,
-                  'checkedOPA'
-                )
-              }
-              
+              {this.renderTreeSection(
+                treeData.checkedOPA,
+                this.handleTreeClick,
+                this.state.currentFilterState.checkedOPA,
+                'checkedOPA'
+              )}
+
               <div className="box-divider pt-2 mb-3"></div>
               <h6>Assessment and Assignment Status</h6>
 
@@ -360,46 +410,65 @@ class EligibilityForm extends React.Component {
                 <label className="col-sm-2 col-form-label">Status</label>
                 <div className="col-sm-4">
                   <Select
-                    value={this.state.selectedStatus}
+                    value={STATUSES.filter(
+                      (opt) => opt.value === this.state.selectedStatus
+                    )}
                     name="selectedStatus"
-                    onChange={(value) => this.handleChange('selectedStatus', value)}
+                    onChange={(opt) =>
+                      this.handleChange('selectedStatus', opt.value)
+                    }
                     options={STATUSES}
                     isSearchable
                   />
                 </div>
                 <ul>
-                  <li><b>New article</b> = New, still having content added, not visible in searches</li>
-                  <li><b>Data entry complete</b> = All required content has been added, still not visible in searches</li>
-                  <li><b>Live</b> = Available for searching/alerting</li>
-                  <li><b>Deleted</b> = Removed from the system, not visible in searches</li>
+                  <li>
+                    <b>New article</b> = New, still having content added, not
+                    visible in searches
+                  </li>
+                  <li>
+                    <b>Data entry complete</b> = All required content has been
+                    added, still not visible in searches
+                  </li>
+                  <li>
+                    <b>Live</b> = Available for searching/alerting
+                  </li>
+                  <li>
+                    <b>Deleted</b> = Removed from the system, not visible in
+                    searches
+                  </li>
                 </ul>
               </div>
-              {
-                (this.state.selectedStatus && this.state.selectedStatus.value === 'Delete') &&
-                <div className="form-group row">
-                  <label className="col-sm-2 col-form-label">Please enter the reason for removal (in case its removal is questioned later):</label>
-                  <div className="col-sm-10">
-                    <textarea 
-                    className="form-control" 
-                    rows="5"
-                    name="deleteReason"
-                    value={this.state.deleteReason}
-                    onChange={this.handleChange} 
-                    ></textarea>
+              {this.state.selectedStatus &&
+                this.state.selectedStatus.value === 'Delete' && (
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">
+                      Please enter the reason for removal (in case its removal
+                      is questioned later):
+                    </label>
+                    <div className="col-sm-10">
+                      <textarea
+                        className="form-control"
+                        rows="5"
+                        name="deleteReason"
+                        value={this.state.deleteReason}
+                        onChange={this.handleChange}
+                      ></textarea>
+                    </div>
                   </div>
-                </div>
-              }
+                )}
               <button
                 type="submit"
                 onClick={this.handleSubmit}
-                className="btn primary">
+                className="btn primary"
+              >
                 Save
               </button>
             </form>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
