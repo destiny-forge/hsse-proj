@@ -10,26 +10,28 @@ export const treeData = {
           children: [
             {
               title: 'Centralization/decentralization of policy authority',
-              key: 'governmentPolicyCentralization'
+              key: 'governmentPolicyCentralization',
             },
             {
               title:
                 "Accountability of the state sector's role in financing & delivery",
-              key: 'governmentPolicyAccountability'
+              key: 'governmentPolicyAccountability',
             },
             {
-              title: "Stewardship of the non-state sector's role in financing & delivery",
-              key: 'governmentPolicyStewardship'
+              title:
+                "Stewardship of the non-state sector's role in financing & delivery",
+              key: 'governmentPolicyStewardship',
             },
             {
-              title: 'Decision-making authority about who is covered and what can or must be provided to them',
-              key: 'governmentPolicyDecisionMaking'
+              title:
+                'Decision-making authority about who is covered and what can or must be provided to them',
+              key: 'governmentPolicyDecisionMaking',
             },
             {
               title: 'Corruption protections',
-              key: 'governmentPolicyCorruptionProtections'
-            }
-          ]
+              key: 'governmentPolicyCorruptionProtections',
+            },
+          ],
         },
         {
           title: 'Organizational authority',
@@ -38,14 +40,14 @@ export const treeData = {
             { title: 'Ownership', key: 'organizationOwnership' },
             {
               title: 'Management approaches',
-              key: 'organizationManagement'
+              key: 'organizationManagement',
             },
             { title: 'Accreditation', key: 'organizationAccreditation' },
             {
               title: 'Networks/multi-institutional arrangements',
-              key: 'organizationNetworks'
-            }
-          ]
+              key: 'organizationNetworks',
+            },
+          ],
         },
         {
           title: 'Commercial authority',
@@ -53,23 +55,23 @@ export const treeData = {
           children: [
             {
               title: 'Licensure & registration requirements',
-              key: 'commercialLicense'
+              key: 'commercialLicense',
             },
             {
               title: 'Patents & profits',
-              key: 'commercialPatentsAndProfits'
+              key: 'commercialPatentsAndProfits',
             },
             {
               title: 'Pricing & purchasing',
-              key: 'commercialPricingAndPurchasing'
+              key: 'commercialPricingAndPurchasing',
             },
             { title: 'Marketing', key: 'commercialMarketing' },
             {
               title: 'Sales & dispensing',
-              key: 'commercialSalesAndDispensing'
+              key: 'commercialSalesAndDispensing',
             },
-            { title: 'Commercial liability', key: 'commercialLiability' }
-          ]
+            { title: 'Commercial liability', key: 'commercialLiability' },
+          ],
         },
         {
           title: 'Professional authority',
@@ -77,30 +79,30 @@ export const treeData = {
           children: [
             {
               title: 'Training & licensure requirements',
-              key: 'professionalTrainingAndLicense'
+              key: 'professionalTrainingAndLicense',
             },
             {
               title: 'Scope of practice',
-              key: 'professionalScopeOfPractice'
+              key: 'professionalScopeOfPractice',
             },
             { title: 'Setting of practice', key: 'settingOfPractice' },
             {
               title: 'Continuing competence',
-              key: 'professionalContinuingCompetance'
+              key: 'professionalContinuingCompetance',
             },
             {
               title: 'Quality & safety',
-              key: 'professionalQualityAndSafety'
+              key: 'professionalQualityAndSafety',
             },
             {
               title: 'Professional liability',
-              key: 'professionalLiability'
+              key: 'professionalLiability',
             },
             {
               title: 'Strike/job action',
-              key: 'professionalStrikeJobAction'
-            }
-          ]
+              key: 'professionalStrikeJobAction',
+            },
+          ],
         },
         {
           title: 'Consumer & stakeholder involvement',
@@ -109,28 +111,28 @@ export const treeData = {
             {
               title:
                 'Consumer participation in policy & organizational decisions',
-              key: 'consumerPolicyDecisions'
+              key: 'consumerPolicyDecisions',
             },
             {
               title: 'Consumer participation in system monitoring',
-              key: 'consumerSystemMonitoring'
+              key: 'consumerSystemMonitoring',
             },
             {
               title: 'Consumer participation in service delivery',
-              key: 'consumerServiceDelivery'
+              key: 'consumerServiceDelivery',
             },
             {
               title: 'Consumer complaints management',
-              key: 'consumerComplaintsManagement'
+              key: 'consumerComplaintsManagement',
             },
             {
               title:
                 'Stakeholder participation in policy & organizational decisions (or monitoring)',
-              key: 'consumerStakeholder'
-            }
-          ]
-        }
-      ]
+              key: 'consumerStakeholder',
+            },
+          ],
+        },
+      ],
     },
     {
       title: 'Financial arrangements',
@@ -143,31 +145,31 @@ export const treeData = {
             { title: 'Taxation', key: 'financialTaxation' },
             {
               title: 'Social health insurance',
-              key: 'financialSocialHealthInsurance'
+              key: 'financialSocialHealthInsurance',
             },
             {
               title: 'Community-based health insurance',
-              key: 'financialCommunityBasedHealthInsurance'
+              key: 'financialCommunityBasedHealthInsurance',
             },
             {
               title: 'Community loan funds',
-              key: 'financialCommunityLoanFunds'
+              key: 'financialCommunityLoanFunds',
             },
             {
               title: 'Private insurance',
-              key: 'financialPrivateInsurance'
+              key: 'financialPrivateInsurance',
             },
             {
               title: 'Health savings accounts (Individually financed)',
-              key: 'financialHealthSavingsAccountsIndividuallyFinanced'
+              key: 'financialHealthSavingsAccountsIndividuallyFinanced',
             },
             { title: 'User fees', key: 'financialUserFees' },
             {
               title: 'Donor contributions',
-              key: 'financialDonorContributions'
+              key: 'financialDonorContributions',
             },
-            { title: 'Fundraising', key: 'financialFundraising' }
-          ]
+            { title: 'Fundraising', key: 'financialFundraising' },
+          ],
         },
         {
           title: 'Funding organizations',
@@ -175,29 +177,29 @@ export const treeData = {
           children: [
             {
               title: 'Fee-for-service (Funding)',
-              key: 'fundingOrganizationServiceFees'
+              key: 'fundingOrganizationServiceFees',
             },
             {
               title: 'Capitation (Funding)',
-              key: 'fundingOrganizationCapitation'
+              key: 'fundingOrganizationCapitation',
             },
             {
               title: 'Global budget',
-              key: 'fundingOrganizationGlobalBudget'
+              key: 'fundingOrganizationGlobalBudget',
             },
             {
               title: 'Prospective payment (Funding)',
-              key: 'fundingOrganizationProspectivePayment'
+              key: 'fundingOrganizationProspectivePayment',
             },
             {
               title: 'Indicative budgets (Funding)',
-              key: 'fundingOrganizationIndicativeBudgets'
+              key: 'fundingOrganizationIndicativeBudgets',
             },
             {
               title: 'Targeted payments/penalties (Funding)',
-              key: 'fundingOrganizationPaymentsPenalties'
-            }
-          ]
+              key: 'fundingOrganizationPaymentsPenalties',
+            },
+          ],
         },
         {
           title: 'Remunerating providers',
@@ -205,30 +207,30 @@ export const treeData = {
           children: [
             {
               title: 'Fee-for-service (Remuneration)',
-              key: 'remuneratingProviderServiceFees'
+              key: 'remuneratingProviderServiceFees',
             },
             {
               title: 'Capitation (Remuneration)',
-              key: 'remuneratingProviderCapitation'
+              key: 'remuneratingProviderCapitation',
             },
             { title: 'Salary', key: 'remuneratingProviderSalary' },
             {
               title: 'Prospective payment (Remuneration)',
-              key: 'remuneratingProviderProspectivePayment'
+              key: 'remuneratingProviderProspectivePayment',
             },
             {
               title: 'Fundholding',
-              key: 'remuneratingProviderFundholding'
+              key: 'remuneratingProviderFundholding',
             },
             {
               title: 'Indicative budgets (Remuneration)',
-              key: 'remuneratingProviderIndicativeBudgets'
+              key: 'remuneratingProviderIndicativeBudgets',
             },
             {
               title: 'Targeted payments/penalties (Remuneration)',
-              key: 'remuneratingProviderPaymentPenalties'
-            }
-          ]
+              key: 'remuneratingProviderPaymentPenalties',
+            },
+          ],
         },
         {
           title: 'Purchasing products & services',
@@ -236,33 +238,33 @@ export const treeData = {
           children: [
             {
               title: 'Scope & nature of insurance plans',
-              key: 'purchasingScope'
+              key: 'purchasingScope',
             },
             {
               title:
                 'Lists of covered/reimbursed organizations, providers, services & products',
-              key: 'purchasingCoveredReimbursedOrganizations'
+              key: 'purchasingCoveredReimbursedOrganizations',
             },
             {
               title:
                 'Restrictions in coverage/reimbursement rates for organizations, providers, services & products',
-              key: 'purchasingRestrictions'
+              key: 'purchasingRestrictions',
             },
             {
               title:
                 'Caps on coverage/reimbursement for organizations, providers, services & products',
-              key: 'purchasingCaps'
+              key: 'purchasingCaps',
             },
             {
               title:
                 'Prior approval requirements for organizations, providers, services & products',
-              key: 'purchasingApprovalRequirements'
+              key: 'purchasingApprovalRequirements',
             },
             {
               title: 'Lists of substitutable services & products',
-              key: 'purchasingSubstitutes'
-            }
-          ]
+              key: 'purchasingSubstitutes',
+            },
+          ],
         },
         {
           title: 'Incentivizing consumers',
@@ -270,23 +272,23 @@ export const treeData = {
           children: [
             {
               title: 'Premium (level & features)',
-              key: 'incentivizingConsumerPremium'
+              key: 'incentivizingConsumerPremium',
             },
             {
               title: 'Cost-sharing',
-              key: 'incentivizingConsumerCostSharing'
+              key: 'incentivizingConsumerCostSharing',
             },
             {
               title: 'Health savings accounts (Third party contributions)',
-              key: 'incentivizingConsumerSavingsThirdPartyContributions'
+              key: 'incentivizingConsumerSavingsThirdPartyContributions',
             },
             {
               title: 'Targeted payments/penalties (Incentivizing consumers)',
-              key: 'incentivizingConsumerSavingsTargetedPaymentsPenalties'
-            }
-          ]
-        }
-      ]
+              key: 'incentivizingConsumerSavingsTargetedPaymentsPenalties',
+            },
+          ],
+        },
+      ],
     },
     {
       title: 'Delivery arrangements',
@@ -298,26 +300,26 @@ export const treeData = {
           children: [
             {
               title: 'Availability of care',
-              key: 'deliveryArrangementCareAvailability'
+              key: 'deliveryArrangementCareAvailability',
             },
             {
               title: 'Timely access to care',
-              key: 'deliveryArrangementCareTimelyAcess'
+              key: 'deliveryArrangementCareTimelyAcess',
             },
             {
               title: 'Culturally appropriate care',
-              key: 'deliveryArrangementCareCulturallyAppropriate'
+              key: 'deliveryArrangementCareCulturallyAppropriate',
             },
             {
               title: 'Case management',
-              key: 'deliveryArrangementCareCaseManagement'
+              key: 'deliveryArrangementCareCaseManagement',
             },
             {
               title: 'Package of care/care pathways/disease management',
-              key: 'deliveryArrangementCareDiseaseManagement'
+              key: 'deliveryArrangementCareDiseaseManagement',
             },
-            { title: 'Group care', key: 'deliveryArrangementCareGroup' }
-          ]
+            { title: 'Group care', key: 'deliveryArrangementCareGroup' },
+          ],
         },
         {
           title: 'By whom care is provided',
@@ -325,68 +327,69 @@ export const treeData = {
           children: [
             {
               title: 'System - Need, demand & supply',
-              key: 'careProviderSystemDemandSupply'
+              key: 'careProviderSystemDemandSupply',
             },
             {
               title: 'System - Recruitment, retention & transitions',
-              key: 'careProviderSystemRecruitmentRetention'
+              key: 'careProviderSystemRecruitmentRetention',
             },
             {
               title: 'System - Performance management',
-              key: 'careProviderSystemPerformanceManagement'
+              key: 'careProviderSystemPerformanceManagement',
             },
             {
               title: 'Workplace conditions - Provider satisfaction',
-              key: 'careProviderWorkplaceConditionsProviderSatisfaction'
+              key: 'careProviderWorkplaceConditionsProviderSatisfaction',
             },
             {
               title: 'Workplace conditions - Health & safety',
-              key: 'careProviderWorkplaceConditionsHealthSafety'
+              key: 'careProviderWorkplaceConditionsHealthSafety',
             },
             {
               title: 'Skill mix - Role performance',
-              key: 'careProviderSkillMixRolePerformance'
+              key: 'careProviderSkillMixRolePerformance',
             },
             {
               title: 'Skill mix - Role expansion or extension',
-              key: 'careProviderSkillMixRoleExpansionOrExtension'
+              key: 'careProviderSkillMixRoleExpansionOrExtension',
             },
             {
               title: 'Skill mix - Task shifting / substitution',
-              key: 'careProviderSkillMixTaskShiftingSubstitution'
+              key: 'careProviderSkillMixTaskShiftingSubstitution',
             },
             {
               title: 'Skill mix - Multidisciplinary teams',
-              key: 'careProviderSkillMixMultidisciplinaryTeams'
+              key: 'careProviderSkillMixMultidisciplinaryTeams',
             },
             {
               title: 'Skill mix - Volunteers or informal/family caregivers',
-              key: 'careProviderSkillMixVolunteersOrInformalFamilyCaregivers'
+              key: 'careProviderSkillMixVolunteersOrInformalFamilyCaregivers',
             },
             {
               title:
                 'Skill mix - Communication & case discussion between distant health professionals',
-              key: 'careProviderSkillMixCommunicationDistantHealthProfessionals'
+              key:
+                'careProviderSkillMixCommunicationDistantHealthProfessionals',
             },
             {
               title: 'Staff - Training',
-              key: 'careProviderStaffTraining'
+              key: 'careProviderStaffTraining',
             },
             { title: 'Staff - Support', key: 'careProviderStaffSupport' },
             {
               title: 'Staff - Workload/workflow/intensity',
-              key: 'careProviderStaffWorkloadWorkflowIntensity'
+              key: 'careProviderStaffWorkloadWorkflowIntensity',
             },
             {
               title: 'Staff - Continuity of care',
-              key: 'careProviderStaffContinuityOfCare'
+              key: 'careProviderStaffContinuityOfCare',
             },
             {
               title: 'Staff/self - Shared decision-making',
-              key: 'careProviderStaffSelfSharedDecisionMaking'
+              key: 'careProviderStaffSelfSharedDecisionMaking',
             },
-            { title: 'Self-management', key: 'careProviderSelfManagement' }
-          ]
+            { title: 'Self-management', key: 'careProviderSelfManagement' },
+          ],
         },
         {
           title: 'Where care is provided',
@@ -394,26 +397,26 @@ export const treeData = {
           children: [
             {
               title: 'Site of service delivery',
-              key: 'careSourceSiteOfServiceDelivery'
+              key: 'careSourceSiteOfServiceDelivery',
             },
             {
               title: 'Physical structure, facilities & equipment',
-              key: 'careSourcePhysicalstructureFacilitiesEquipment'
+              key: 'careSourcePhysicalstructureFacilitiesEquipment',
             },
             {
               title: 'Organizational scale',
-              key: 'careSourceOrganizationalScale'
+              key: 'careSourceOrganizationalScale',
             },
             {
               title: 'Integration of services',
-              key: 'careSourceIntegrationOfServices'
+              key: 'careSourceIntegrationOfServices',
             },
             {
               title: 'Continuity of care',
-              key: 'careSourceContinuityOfCare'
+              key: 'careSourceContinuityOfCare',
             },
-            { title: 'Outreach', key: 'careSourceOutreach' }
-          ]
+            { title: 'Outreach', key: 'careSourceOutreach' },
+          ],
         },
         {
           title: 'With what supports is care provided',
@@ -421,31 +424,31 @@ export const treeData = {
           children: [
             {
               title: 'Health record systems',
-              key: 'careSupportHealthRecordSystems'
+              key: 'careSupportHealthRecordSystems',
             },
             {
               title: 'Electronic health record',
-              key: 'careSupportElectronicHealthRecord'
+              key: 'careSupportElectronicHealthRecord',
             },
             {
               title: 'Other ICT that support individuals who provide care',
-              key: 'careSupportOtherICTThatSupportIndividuals'
+              key: 'careSupportOtherICTThatSupportIndividuals',
             },
             {
               title: 'ICT that support individuals who receive care',
-              key: 'careSupportICTThatSupportIndividualsWhoReceiveCare'
+              key: 'careSupportICTThatSupportIndividualsWhoReceiveCare',
             },
             {
               title: 'Quality monitoring and improvement systems',
-              key: 'careSupportQualityMonitoringAndImprovementSystems'
+              key: 'careSupportQualityMonitoringAndImprovementSystems',
             },
             {
               title: 'Safety monitoring and improvement systems',
-              key: 'careSupportSafetyMonitoringAndImprovementSystems'
-            }
-          ]
-        }
-      ]
+              key: 'careSupportSafetyMonitoringAndImprovementSystems',
+            },
+          ],
+        },
+      ],
     },
     {
       title: 'Implementation strategies',
@@ -457,29 +460,29 @@ export const treeData = {
           children: [
             {
               title: 'Information or education provision',
-              key: 'implementationInformationOrEducationProvision'
+              key: 'implementationInformationOrEducationProvision',
             },
             {
               title: 'Behaviour change support',
-              key: 'implementationBehaviourChangeSupport'
+              key: 'implementationBehaviourChangeSupport',
             },
             {
               title: 'Skills and competencies development',
-              key: 'implementationSkillsAndCompetenciesDevelopment'
+              key: 'implementationSkillsAndCompetenciesDevelopment',
             },
             {
               title: '(Personal) Support',
-              key: 'implementationPersonalSupport'
+              key: 'implementationPersonalSupport',
             },
             {
               title: 'Communication and decision-making facilitation',
-              key: 'implementationCommunicationAndDecisionMakingFacilitation'
+              key: 'implementationCommunicationAndDecisionMakingFacilitation',
             },
             {
               title: 'System participation',
-              key: 'implementationSystemParticipation'
-            }
-          ]
+              key: 'implementationSystemParticipation',
+            },
+          ],
         },
         {
           title: 'Provider-targeted strategy',
@@ -487,68 +490,68 @@ export const treeData = {
           children: [
             {
               title: 'Educational material',
-              key: 'providerStrategyEducationalMaterial'
+              key: 'providerStrategyEducationalMaterial',
             },
             {
               title: 'Educational meeting',
-              key: 'providerStrategyEducationalMeeting'
+              key: 'providerStrategyEducationalMeeting',
             },
             {
               title: 'Educational outreach visit',
-              key: 'providerStrategyEducationalOutreachVisit'
+              key: 'providerStrategyEducationalOutreachVisit',
             },
             {
               title: 'Local opinion leader',
-              key: 'providerStrategyLocalOpinionLeader'
+              key: 'providerStrategyLocalOpinionLeader',
             },
             {
               title: 'Local consensus process',
-              key: 'providerStrategyLocalConsensusProcess'
+              key: 'providerStrategyLocalConsensusProcess',
             },
             { title: 'Peer review', key: 'providerStrategyPeerReview' },
             {
               title: 'Audit and feedback',
-              key: 'providerStrategyAuditAndFeedback'
+              key: 'providerStrategyAuditAndFeedback',
             },
             {
               title: 'Reminders and prompts',
-              key: 'providerStrategyRemindersAndPrompts'
+              key: 'providerStrategyRemindersAndPrompts',
             },
             {
               title: 'Tailored intervention',
-              key: 'providerStrategyTailoredIntervention'
+              key: 'providerStrategyTailoredIntervention',
             },
             {
               title: 'Patient-mediated intervention',
-              key: 'providerStrategyPatientMediatedIntervention'
+              key: 'providerStrategyPatientMediatedIntervention',
             },
             {
               title: 'Multi-faceted intervention',
-              key: 'providerStrategyMultiFacetedIntervention'
-            }
-          ]
+              key: 'providerStrategyMultiFacetedIntervention',
+            },
+          ],
         },
         {
           title: 'Organization-targeted strategy',
-          key: 'organizationStrategy'
-        }
-      ]
-    }
+          key: 'organizationStrategy',
+        },
+      ],
+    },
   ],
   checkedKeysCA: [
     {
       title: 'Home and community care',
-      key: 'canadianHomeAndCommunityCare'
+      key: 'canadianHomeAndCommunityCare',
     },
     {
       title: 'Mental health addiction services',
-      key: 'canadianMentalHealthAndAddictionServices'
+      key: 'canadianMentalHealthAndAddictionServices',
     },
     {
       title: 'Indigenous health (Fedral)',
-      key: 'canadianIndigenousHealthFederal'
+      key: 'canadianIndigenousHealthFederal',
     },
-    { title: 'Aging (emergent)', key: 'canadianAgingEmergent' }
+    { title: 'Aging (emergent)', key: 'canadianAgingEmergent' },
   ],
   checkedDomain: [
     {
@@ -564,13 +567,13 @@ export const treeData = {
             { title: 'Malaria', key: 'conditionMalaria' },
             {
               title: 'Diarrhoeal disease',
-              key: 'conditionDiarrhoealDisease'
+              key: 'conditionDiarrhoealDisease',
             },
             {
               title: 'Lower respiratory infections',
-              key: 'conditionLowerRespiratoryInfections'
-            }
-          ]
+              key: 'conditionLowerRespiratoryInfections',
+            },
+          ],
         },
         {
           title: 'Non-communicable diseases',
@@ -579,18 +582,18 @@ export const treeData = {
             { title: 'Cancer', key: 'conditionCancer' },
             {
               title: 'Cardiovascular disease',
-              key: 'conditionCardiovascularDisease'
+              key: 'conditionCardiovascularDisease',
             },
             { title: 'Diabetes', key: 'conditionDiabetes' },
             {
               title: 'Alzheimer and other dementias',
-              key: 'conditionAlzheimerAndOtherDementias'
+              key: 'conditionAlzheimerAndOtherDementias',
             },
             {
               title: 'Chronic obstructive pulmonary disease',
-              key: 'conditionsChronicObstructivePulmonaryDisease'
-            }
-          ]
+              key: 'conditionsChronicObstructivePulmonaryDisease',
+            },
+          ],
         },
         {
           title: 'Other',
@@ -598,16 +601,16 @@ export const treeData = {
           children: [
             {
               title: 'Maternal and child health',
-              key: 'conditionMaternalAndChildHealth'
+              key: 'conditionMaternalAndChildHealth',
             },
             { title: 'Accidents', key: 'conditionAccidents' },
             {
               title: 'Mental health and addictions',
-              key: 'conditionMentalHealthAddictions'
-            }
-          ]
-        }
-      ]
+              key: 'conditionMentalHealthAddictions',
+            },
+          ],
+        },
+      ],
     },
     {
       title: 'Technologies',
@@ -616,8 +619,8 @@ export const treeData = {
         { title: 'Drugs', key: 'conditionTechnologyDrugs' },
         { title: 'Devices', key: 'conditionTechnologyDevices' },
         { title: 'Diagnotics', key: 'conditionTechnologyDiagnostics' },
-        { title: 'Surgery', key: 'conditionTechnologySurgery' }
-      ]
+        { title: 'Surgery', key: 'conditionTechnologySurgery' },
+      ],
     },
     {
       title: 'Sectors',
@@ -625,20 +628,20 @@ export const treeData = {
       children: [
         {
           title: 'Home and community care',
-          key: 'conditionSectorPrimaryCare'
+          key: 'conditionSectorPrimaryCare',
         },
         { title: 'Primary care', key: 'primaryCare' },
         {
           title: 'Specialty (hospital) care',
-          key: 'conditionSectorSpecialHospitalCare'
+          key: 'conditionSectorSpecialHospitalCare',
         },
         {
           title: 'Rehabilitation care',
-          key: 'conditionSectorRehabilitationCare'
+          key: 'conditionSectorRehabilitationCare',
         },
         { title: 'Long-term care', key: 'conditionSectorLongTermCare' },
-        { title: 'Public health', key: 'conditionSectorPublicHealth' }
-      ]
+        { title: 'Public health', key: 'conditionSectorPublicHealth' },
+      ],
     },
     {
       title: 'Providers',
@@ -649,39 +652,39 @@ export const treeData = {
           key: 'conditionProviderPhysician',
           children: [
             { title: 'Generalist', key: 'conditionProviderGeneralist' },
-            { title: 'Specialist', key: 'conditionProviderSpecialist' }
-          ]
+            { title: 'Specialist', key: 'conditionProviderSpecialist' },
+          ],
         },
         {
           title: 'Nurse',
-          key: 'conditionProviderNurse'
+          key: 'conditionProviderNurse',
         },
         {
           title: 'Pharmacist',
-          key: 'conditionProviderPharmacist'
+          key: 'conditionProviderPharmacist',
         },
         {
           title: 'Allied health professional',
-          key: 'conditionProviderAlliedHealthProfessional'
+          key: 'conditionProviderAlliedHealthProfessional',
         },
         {
           title: 'Lay/community health worker',
-          key: 'conditionProviderLayCommunityCealthWorker'
+          key: 'conditionProviderLayCommunityCealthWorker',
         },
         {
           title: 'Informal/family caregivers',
-          key: 'conditionProviderInformalFamilyCaregivers'
-        }
-      ]
-    }
+          key: 'conditionProviderInformalFamilyCaregivers',
+        },
+      ],
+    },
   ],
   checkedLMIC: [
     { title: 'Target of document', key: 'lmicTargetOfDocument' },
     { title: 'At least one LMIC author', key: 'lmicAtLeastOneAuthor' },
     {
       title: 'At least one LMIC study included',
-      key: 'lmicAtLeastOneStudy'
-    }
+      key: 'lmicAtLeastOneStudy',
+    },
   ],
   checkedProvince: [
     { title: 'Federal/national', key: 'territoryFederalNational' },
@@ -691,11 +694,11 @@ export const treeData = {
     { title: 'New Brunswick', key: 'territoryNewBrunswick' },
     {
       title: 'Newfoundland and Labrador',
-      key: 'territoryNewFoundlandAndLabrador'
+      key: 'territoryNewFoundlandAndLabrador',
     },
     {
       title: 'Northwest Territories',
-      key: 'territoryNorthwestTerritories'
+      key: 'territoryNorthwestTerritories',
     },
     { title: 'Nova Scotia', key: 'territoryNovaScotia' },
     { title: 'Nunavut', key: 'territoryNunavut' },
@@ -703,263 +706,51 @@ export const treeData = {
     { title: 'Prince Edward Island', key: 'territoryPrinceEdwardIsland' },
     { title: 'Quebec', key: 'territoryQuebec' },
     { title: 'Saskatchewan', key: 'territorySaskatchewan' },
-    { title: 'Yukon', key: 'territoryYukon' }
+    { title: 'Yukon', key: 'territoryYukon' },
   ],
   checkedTheme: [
     { title: 'Optimal aging', key: 'themeOptimalAging' },
     {
       title: 'Health promotion/primary prevention',
-      key: 'themeHealthPromotionPrimaryPrevention'
-    }
+      key: 'themeHealthPromotionPrimaryPrevention',
+    },
   ],
   checkedPopulation: [
     { title: 'Children and youth', key: 'populationChildrenAndYouth' },
     { title: 'Indigenous peoples', key: 'populationIndigenousPeoples' },
-    { title: 'Old Adults', key: 'populationOldAdults' }
+    { title: 'Old Adults', key: 'populationOldAdults' },
   ],
   checkedOPA: [
     {
       title: 'Community-based care',
-      key: 'ontarioPriorityCommunityBasedCare'
+      key: 'ontarioPriorityCommunityBasedCare',
     },
     {
       title: 'Health system performance and sustainability',
-      key: 'ontarioPriorityHealthSystemPerformanceAndSustainability'
+      key: 'ontarioPriorityHealthSystemPerformanceAndSustainability',
     },
     {
       title: 'Healthy living, with a focus on tobacco control',
-      key: 'ontarioPriorityHealthyLivingWithAFocusOnTobaccoControl'
+      key: 'ontarioPriorityHealthyLivingWithAFocusOnTobaccoControl',
     },
     {
       title: 'Mental health and addictions',
-      key: 'ontarioPriorityMentalHealthAndAddictions'
+      key: 'ontarioPriorityMentalHealthAndAddictions',
     },
     { title: 'Nursing research', key: 'ontarioPriorityNursingResearch' },
     {
       title: 'Primary care reform',
-      key: 'ontarioPriorityPrimaryCareReform'
+      key: 'ontarioPriorityPrimaryCareReform',
     },
     {
       title: 'Quality improvement and safety',
-      key: 'ontarioPriorityQualityImprovementAndSafety'
+      key: 'ontarioPriorityQualityImprovementAndSafety',
     },
     { title: 'Seniors’ care', key: 'ontarioPrioritySeniorsCare' },
     {
       title: 'Vulnerable and special health needs populations',
-      key: 'ontarioPriorityVulnerableAndSpecialHealthNeedsPopulations'
+      key: 'ontarioPriorityVulnerableAndSpecialHealthNeedsPopulations',
     },
-    { title: 'Women’s health', key: 'ontarioPriorityWomensHealth' }
-  ]
-}
-
-/**
- * TODO: These will need to be mapped to the checked array like above.
- * I commented these ones out for now as they don't seem to be used anywhere yet.
- */
-
-// export const canadaHealthSystemSubtype = [
-//   { title: 'Health and health system data', key: 'healthSystemData' },
-//   {
-//     title: 'Health expenditure review',
-//     key: 'healthSystemExpenditureReview'
-//   },
-//   {
-//     title: 'National health account',
-//     key: 'healthSystemNationalAccount'
-//   },
-//   {
-//     title: 'Health system research priorities',
-//     key: 'healthSystemResearchPriorities'
-//   },
-//   { title: 'Situation analysis', key: 'healthSystemSituationAnalysis' },
-//   {
-//     title: 'Jurisdictional review',
-//     key: 'healthSystemJurisdictionalReview'
-//   },
-//   { title: 'Performance review', key: 'healthSystemPerformanceReview' },
-//   {
-//     title: 'External evaluation',
-//     key: 'healthSystemExternalEvaluation'
-//   },
-//   { title: 'Literature review', key: 'healthSystemLiteratureReview' },
-//   { title: 'Framework', key: 'healthSystemFramework' },
-//   { title: 'Toolkit', key: 'healthSystemToolkit' },
-//   { title: 'Options framing', key: 'healthSystemOptionsFraming' },
-//   { title: 'Guidance', key: 'healthSystemGuidance' },
-//   {
-//     title: 'Citizen/patient input',
-//     key: 'healthSystemCitizenPatientInput'
-//   },
-//   { title: 'Stakeholder input', key: 'healthSystemStakeholderInput' },
-//   {
-//     title: 'Stakeholder position paper',
-//     key: 'healthSystemStakeholderPositionPaper'
-//   },
-//   {
-//     title: 'Political party platform ',
-//     key: 'healthSystemPoliticalPartyPlatform'
-//   },
-//   {
-//     title: 'Government discussion paper',
-//     key: 'healthSystemGovernmentDiscussionPaper'
-//   },
-//   {
-//     title: 'Government position paper',
-//     key: 'healthSystemGovernmentPositionPaper'
-//   },
-//   {
-//     title: 'Government strategic plan for the health sector',
-//     key: 'healthSystemGovernmentStrategicPlan'
-//   },
-//   { title: 'Government policy', key: 'healthSystemGovernmentPolicy' },
-//   {
-//     title: 'Government legislation',
-//     key: 'healthSystemGovernmentLegislation'
-//   },
-//   {
-//     title: 'Intergovernmental communiqué',
-//     key: 'healthSystemIntergovernmentalCommunique'
-//   },
-//   {
-//     title: 'Intergovernmental accord',
-//     key: 'healthSystemIntergovernmentalAccord'
-//   },
-//   {
-//     title: 'Government/third party accord',
-//     key: 'healthSystemGovernmentThirdPartyAccord'
-//   }
-// ];
-
-// export const ontarioHealthSubtype = [
-//   { title: 'Health and health system data', key: 'healthSystemData' },
-//   {
-//     title: 'Health expenditure review',
-//     key: 'healthSystemExpenditureReview'
-//   },
-//   {
-//     title: 'Provincial health account',
-//     key: 'healthSystemProvincialAccount'
-//   },
-//   {
-//     title: 'Health system research priorities',
-//     key: 'healthSystemResearchPriorities'
-//   },
-//   { title: 'Situation analysis', key: 'healthSystemSituationAnalysis' },
-//   {
-//     title: 'Jurisdictional review',
-//     key: 'healthSystemJurisdictionalReview'
-//   },
-//   { title: 'Performance review', key: 'healthSystemPerformanceReview' },
-//   {
-//     title: 'External evaluation',
-//     key: 'healthSystemExternalEvaluation'
-//   },
-//   { title: 'Literature review', key: 'healthSystemLiteratureReview' },
-//   { title: 'Framework', key: 'healthSystemFramework' },
-//   { title: 'Toolkit', key: 'healthSystemToolkit' },
-//   { title: 'Options framing', key: 'healthSystemOptionsFraming' },
-//   { title: 'Guidance', key: 'healthSystemGuidance' },
-//   {
-//     title: 'Citizen/patient input',
-//     key: 'healthSystemCitizenPatientInput'
-//   },
-//   { title: 'Stakeholder input', key: 'healthSystemStakeholderInput' },
-//   {
-//     title: 'Stakeholder position paper',
-//     key: 'healthSystemStakeholderPositionPaper'
-//   },
-//   {
-//     title: 'Political party platform',
-//     key: 'healthSystemPoliticalPartyPlatform'
-//   },
-//   {
-//     title: 'Government discussion paper',
-//     key: 'healthSystemGovernmentDiscussionPaper'
-//   },
-//   {
-//     title: 'Government position paper',
-//     key: 'healthSystemGovernmentPositionPaper'
-//   },
-//   {
-//     title: 'Government strategic plan for the health sector',
-//     key: 'healthSystemGovernmentStrategicPlan'
-//   },
-//   { title: 'Government policy', key: 'healthSystemGovernmentPolicy' },
-//   {
-//     title: 'Government legislation',
-//     key: 'healthSystemGovernmentLegislation'
-//   },
-//   {
-//     title: 'Intergovernmental communiqué',
-//     key: 'healthSystemIntergovernmentalCommunique'
-//   },
-//   {
-//     title: 'Intergovernmental accord',
-//     key: 'healthSystemIntergovernmentalAccord'
-//   },
-//   {
-//     title: 'Government/third party accord',
-//     key: 'healthSystemGovernmentThirdPartyAccord'
-//   }
-// ];
-
-// export const intergovernmentalOrganizationSubtype = [
-//   { title: 'Health and health system data', key: 'healthSystemData' },
-//   {
-//     title: 'Health expenditure review',
-//     key: 'healthSystemExpenditureReview'
-//   },
-//   {
-//     title: 'Health system research priorities',
-//     key: 'healtySystemResearchPriorities'
-//   },
-//   { title: 'Situation analysis', key: 'healthSystemSituationAnalysis' },
-//   {
-//     title: 'Jurisdictional review',
-//     key: 'healthSystemJurisdictionalReview'
-//   },
-//   { title: 'Performance review', key: 'healthSystemPerformanceReview' },
-//   {
-//     title: 'External evaluation',
-//     key: 'healthSystemExternalEvaluation'
-//   },
-//   { title: 'Literature review', key: 'healthSystemLiteratureReview' },
-//   { title: 'Framework', key: 'healthSystemFramework' },
-//   { title: 'Toolkit', key: 'healthSystemToolkit' },
-//   { title: 'Options framing', key: 'healthSystemOptionsFraming' },
-//   { title: 'Guidance', key: 'healthSystemGuidance' },
-//   {
-//     title: 'Citizen/patient input',
-//     key: 'healthSystemCitizenPatientInput'
-//   },
-//   { title: 'Stakeholder input', key: 'healthSystemStakeholderInput' },
-//   {
-//     title: 'WHO discussion paper',
-//     key: 'healthSystemGovernmentDiscussionPaper'
-//   },
-//   {
-//     title: 'WHO position paper',
-//     key: 'healthSystemGovernmentPositionPaper'
-//   },
-//   {
-//     title: 'WHO strategic plan',
-//     key: 'healthSystemGovernmentStrategicPlan'
-//   },
-//   { title: 'WHO policy', key: 'healthSystemGovernmentPolicy' },
-//   {
-//     title: 'World Health Assembly resolution',
-//     key: 'healthSystemGovernmentLegislation'
-//   },
-//   {
-//     title: 'Inter-agency communiqué',
-//     key: 'healthSystemIntergovernmentalCommunique'
-//   },
-//   {
-//     title: 'Inter-agency accord',
-//     key: 'healthSystemIntergovernmentalAccord'
-//   },
-//   {
-//     title: 'WHO/third party accord',
-//     key: 'healthSystemGovernmentThirdPartyAccord'
-//   }
-// ];
+    { title: 'Women’s health', key: 'ontarioPriorityWomensHealth' },
+  ],
+};
