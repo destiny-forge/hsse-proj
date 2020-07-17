@@ -3,19 +3,19 @@
   "containerDefinitions": [
     {
       "name": "hsse-admin-client",
-      "image": "tdelam/hsse-admin-client",
+      "image": "destinyforge/hsse-admin-client",
       "essential": false,
       "memory": 128
     },
     {
       "name": "hsse-server",
-      "image": "tdelam/hsse-server",
+      "image": "destinyforge/hsse-server",
       "essential": false,
       "memory": 128
     },
     {
       "name": "nginx",
-      "image": "tdelam/hsse-nginx",
+      "image": "destinyforge/hsse-nginx",
       "essential": true,
       "portMappings": [
         {
