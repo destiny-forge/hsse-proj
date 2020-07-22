@@ -1,61 +1,17 @@
 import _ from 'lodash';
 import React from 'react';
-import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import Select from 'react-select';
-import ArticleService from '../../services/ArticleService';
 import { Tree } from 'antd';
-import 'antd/dist/antd.css';
-import EligibilityService from '../../services/EligibilityService';
-import { treeData } from './HSETreeData';
 import { toast } from 'react-toastify';
+import withAuth from '../withAuth';
+import ArticleService from '../../services/ArticleService';
+import EligibilityService from '../../services/EligibilityService';
+import { hse, sse } from './data';
+import 'antd/dist/antd.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 const { TreeNode } = Tree;
-
-const DOCUMENT_TYPES = [
-  { value: 'Evidence briefs for policy', label: 'Evidence briefs for policy' },
-  {
-    value: 'Overviews of systematic reviews',
-    label: 'Overviews of systematic reviews',
-  },
-  {
-    value: 'Systematic reviews addressing other questions',
-    label: 'Systematic reviews addressing other questions',
-  },
-  {
-    value: 'Systematic reviews in progress',
-    label: 'Systematic reviews in progress',
-  },
-  {
-    value: 'Systematic reviews being planned',
-    label: 'Systematic reviews being planned',
-  },
-  {
-    value: 'Economic evaluations and costing studies',
-    label: 'Economic evaluations and costing studies',
-  },
-  { value: 'Health reform descriptions', label: 'Health reform descriptions' },
-  { value: 'Health system descriptions', label: 'Health system descriptions' },
-  {
-    value: 'Intergovernmental organizations’ health systems documents',
-    label: 'Intergovernmental organizations’ health systems documents',
-  },
-  {
-    value: 'Canada’s health systems documents',
-    label: 'Canada’s health systems documents',
-  },
-  {
-    value: 'Ontario’s health system documents',
-    label: 'Ontario’s health system documents',
-  },
-  {
-    value:
-      'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.',
-    label:
-      'NO, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.',
-  },
-];
 
 const STATUSES = [
   { value: 'New Article', label: 'New Article' },
@@ -67,27 +23,31 @@ const STATUSES = [
 class EligibilityForm extends React.Component {
   constructor(props) {
     super(props);
+    const { type } = this.props.match.params;
+
+    this.types = type === 'hse' ? hse.types : sse.types || [];
+    this.treeData = type === 'hse' ? hse.tree : sse.tree;
 
     this.state = {
       _id: null,
       article: '',
       generalFocus: false,
       type: 'hse',
-      currentFilterState: {
-        checkedKeysHST: [],
-        checkedKeysCA: [],
-        checkedDomain: [],
-        checkedLMIC: [],
-        checkedProvince: [],
-        checkedTheme: [],
-        checkedPopulation: [],
-        checkedOPA: [],
-      },
+      currentFilterState: this.getKeyArray(this.treeData),
     };
 
     this.Article = ArticleService({ fetch: this.props.fetch });
     this.Eligibility = EligibilityService({ fetch: this.props.fetch });
   }
+
+  getKeyArray = (tree) => {
+    const filterState = {};
+    const keys = Object.keys(tree);
+    keys.forEach((key) => {
+      filterState[key] = [];
+    });
+    return filterState;
+  };
 
   handleChange = (field, value) => {
     this.setState({
@@ -128,7 +88,7 @@ class EligibilityForm extends React.Component {
     const { user } = this.props;
 
     let newState = Object.assign({}, this.state.currentFilterState);
-    const categories = Object.keys(treeData);
+    const categories = Object.keys(this.treeData);
 
     this.Article.get(shortId)
       .then((res) => {
@@ -142,7 +102,7 @@ class EligibilityForm extends React.Component {
             //console.log(eligibility);
             if (!_.isNull(eligibility)) {
               for (const category of categories) {
-                const keys = this.flatten(treeData[category]);
+                const keys = this.flatten(this.treeData[category].items);
                 keys.forEach((key) => {
                   if (eligibility.filters.indexOf(key) >= 0) {
                     newState[category].push(key);
@@ -173,12 +133,9 @@ class EligibilityForm extends React.Component {
     });
   };
 
-  renderTreeSection = (
-    sectionTreeData,
-    handleTreeClick,
-    checkedKeyState,
-    name
-  ) => {
+  renderTreeSection = (key) => {
+    const subTree = this.treeData[key].items;
+    const checkedKeyState = this.state.currentFilterState[key];
     return (
       <React.Fragment>
         <label className="col-md-1 offset-md-1 col-form-label"></label>
@@ -189,10 +146,10 @@ class EligibilityForm extends React.Component {
             defaultExpandAll={false}
             autoExpandParent={true}
             onExpand={this.onExpand}
-            onCheck={handleTreeClick}
+            onCheck={this.handleTreeClick}
             checkedKeys={checkedKeyState}
           >
-            {this.renderTreeNodes(sectionTreeData, name)}
+            {this.renderTreeNodes(subTree, key)}
           </Tree>
         </div>
       </React.Fragment>
@@ -302,14 +259,14 @@ class EligibilityForm extends React.Component {
                 <label className="col-sm-2 col-form-label">Document type</label>
                 <div className="col-sm-4">
                   <Select
-                    value={DOCUMENT_TYPES.filter(
+                    value={this.types.filter(
                       (opt) => opt.value === this.state.selectedDocumentType
                     )}
                     name="selectedDocumentType"
                     onChange={(opt) =>
                       this.handleChange('selectedDocumentType', opt.value)
                     }
-                    options={DOCUMENT_TYPES}
+                    options={this.types}
                     isSearchable
                   />
                 </div>
@@ -333,75 +290,14 @@ class EligibilityForm extends React.Component {
                   </label>
                 </div>
               </div>
-              <div className="box-divider pt-2 mb-3"></div>
-              <h6>Health Systems Topic</h6>
-              {this.renderTreeSection(
-                treeData.checkedKeysHST,
-                this.handleTreeClick,
-                this.state.currentFilterState.checkedKeysHST,
-                'checkedKeysHST'
-              )}
-              <div className="box-divider pt-2 mb-3"></div>
-              <h6>Canadian Areas</h6>
-              {this.renderTreeSection(
-                treeData.checkedKeysCA,
-                this.handleTreeClick,
-                this.state.currentFilterState.checkedKeysCA,
-                'checkedKeysCA'
-              )}
-              <div className="box-divider pt-2 mb-3"></div>
-              <h6>Domains</h6>
-              {this.renderTreeSection(
-                treeData.checkedDomain,
-                this.handleTreeClick,
-                this.state.currentFilterState.checkedDomain,
-                'checkedDomain'
-              )}
 
-              <div className="box-divider pt-2 mb-3"></div>
-              <h6>LMIC Focus</h6>
-              {this.renderTreeSection(
-                treeData.checkedLMIC,
-                this.handleTreeClick,
-                this.state.currentFilterState.checkedLMIC,
-                'checkedLMIC'
-              )}
-
-              <div className="box-divider pt-2 mb-3"></div>
-              <h6>Province Focus</h6>
-              {this.renderTreeSection(
-                treeData.checkedProvince,
-                this.handleTreeClick,
-                this.state.currentFilterState.checkedProvince,
-                'checkedProvince'
-              )}
-
-              <div className="box-divider pt-2 mb-3"></div>
-              <h6>Theme</h6>
-              {this.renderTreeSection(
-                treeData.checkedTheme,
-                this.handleTreeClick,
-                this.state.currentFilterState.checkedTheme,
-                'checkedTheme'
-              )}
-
-              <div className="box-divider pt-2 mb-3"></div>
-              <h6>Population</h6>
-              {this.renderTreeSection(
-                treeData.checkedPopulation,
-                this.handleTreeClick,
-                this.state.currentFilterState.checkedPopulation,
-                'checkedPopulation'
-              )}
-
-              <div className="box-divider pt-2 mb-3"></div>
-              <h6>Ontario Priority Areas</h6>
-              {this.renderTreeSection(
-                treeData.checkedOPA,
-                this.handleTreeClick,
-                this.state.currentFilterState.checkedOPA,
-                'checkedOPA'
-              )}
+              {Object.keys(this.treeData).map((key) => (
+                <>
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <h6>{this.treeData[key].title}</h6>
+                  {this.renderTreeSection(key)}
+                </>
+              ))}
 
               <div className="box-divider pt-2 mb-3"></div>
               <h6>Assessment and Assignment Status</h6>

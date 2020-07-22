@@ -22,37 +22,30 @@ class Conflicts extends React.Component {
     this.types = type === 'hse' ? hse.types : sse.types || [];
     this.treeData = type === 'hse' ? hse.tree : sse.tree;
 
+    const keys = this.getKeyArray(this.treeData);
+
     this.state = {
       eligibilityId: null,
       article: '',
       generalFocus: false,
       type: type,
       categories: Object.keys(this.treeData),
-      left: {
-        checkedKeysHST: [],
-        checkedKeysCA: [],
-        checkedDomain: [],
-        checkedLMIC: [],
-        checkedProvince: [],
-        checkedTheme: [],
-        checkedPopulation: [],
-        checkedOPA: [],
-      },
-      right: {
-        checkedKeysHST: [],
-        checkedKeysCA: [],
-        checkedDomain: [],
-        checkedLMIC: [],
-        checkedProvince: [],
-        checkedTheme: [],
-        checkedPopulation: [],
-        checkedOPA: [],
-      },
+      left: keys,
+      right: keys,
     };
 
     this.Article = ArticleService({ fetch: this.props.fetch });
     this.Eligibility = EligibilityService({ fetch: this.props.fetch });
   }
+
+  getKeyArray = (tree) => {
+    const filterState = {};
+    const keys = Object.keys(tree);
+    keys.forEach((key) => {
+      filterState[key] = [];
+    });
+    return filterState;
+  };
 
   handleChange = (field, value) => {
     this.setState({
@@ -149,7 +142,7 @@ class Conflicts extends React.Component {
       if (!_.isNull(eligibility)) {
         let newState = Object.assign({}, this.state[side]);
         for (const category of this.state.categories) {
-          const keys = this.flatten(this.treeData[category]);
+          const keys = this.flatten(this.treeData[category].items);
           keys.forEach((key) => {
             if (eligibility.filters.indexOf(key) >= 0) {
               newState[category].push(key);
@@ -192,13 +185,9 @@ class Conflicts extends React.Component {
     });
   };
 
-  renderTreeSection = (
-    sectionTreeData,
-    handleTreeClick,
-    checkedKeyState,
-    name,
-    rhs
-  ) => {
+  renderTreeSection = (key, side) => {
+    const subTree = this.treeData[key].items;
+    const checkedKeyState = this.state[side][key];
     return (
       <React.Fragment>
         <label className="col-md-1 offset-md-1 col-form-label"></label>
@@ -209,27 +198,25 @@ class Conflicts extends React.Component {
             defaultExpandAll={false}
             autoExpandParent={true}
             onExpand={this.onExpand}
-            onCheck={handleTreeClick}
+            onCheck={this.handleTreeClick}
             checkedKeys={checkedKeyState}
           >
-            {this.renderTreeNodes(sectionTreeData, name, rhs)}
+            {this.renderTreeNodes(subTree, key, side)}
           </Tree>
         </div>
       </React.Fragment>
     );
   };
 
-  renderTreeNodes = (data, name, rhs = false) =>
-    data.map((item) => {
-      // Adds name to the object to be used int he handle click
-      // so that we can set state properly.
-      item.name = name;
+  renderTreeNodes = (data, key, side) => {
+    const isTheirs = side === 'right';
+    return data.map((item) => {
+      item.name = key;
       let style;
-      if (rhs) {
-        style =
-          _.includes(this.state.conflicts, item.key) && rhs === true
-            ? { background: '#FFBABA' }
-            : { background: '#90ee90' };
+      if (isTheirs) {
+        style = _.includes(this.state.conflicts, item.key)
+          ? { background: '#FFBABA' }
+          : { background: '#90ee90' };
       }
 
       if (item.children) {
@@ -239,9 +226,9 @@ class Conflicts extends React.Component {
             title={<span style={style}>{item.title}</span>}
             key={item.key}
             dataRef={item}
-            disableCheckbox={rhs}
+            disableCheckbox={side === 'right'}
           >
-            {this.renderTreeNodes(item.children, name, rhs)}
+            {this.renderTreeNodes(item.children, key, side)}
           </TreeNode>
         );
       }
@@ -249,10 +236,11 @@ class Conflicts extends React.Component {
         <TreeNode
           {...item}
           title={<span style={style}>{item.title}</span>}
-          disableCheckbox={rhs}
+          disableCheckbox={side}
         />
       );
     });
+  };
 
   notifyDone = () => toast.success('Eligibility completed!');
   notifySuccess = () => toast.success('Successfully saved!');
@@ -366,153 +354,23 @@ class Conflicts extends React.Component {
               <div className="row">
                 <div className="col-sm-6">
                   <h2>Mine</h2>
-                  <h6>Health Systems Topic</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedKeysHST,
-                    this.handleTreeClick,
-                    this.state.left.checkedKeysHST,
-                    'checkedKeysHST'
-                  )}
-                  <div className="box-divider pt-2 mb-3"></div>
-                  <h6>Canadian Areas</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedKeysCA,
-                    this.handleTreeClick,
-                    this.state.left.checkedKeysCA,
-                    'checkedKeysCA'
-                  )}
-                  <div className="box-divider pt-2 mb-3"></div>
-                  <h6>Domains</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedDomain,
-                    this.handleTreeClick,
-                    this.state.left.checkedDomain,
-                    'checkedDomain'
-                  )}
-
-                  <div className="box-divider pt-2 mb-3"></div>
-                  <h6>LMIC Focus</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedLMIC,
-                    this.handleTreeClick,
-                    this.state.left.checkedLMIC,
-                    'checkedLMIC'
-                  )}
-
-                  <div className="box-divider pt-2 mb-3"></div>
-                  <h6>Province Focus</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedProvince,
-                    this.handleTreeClick,
-                    this.state.left.checkedProvince,
-                    'checkedProvince'
-                  )}
-
-                  <div className="box-divider pt-2 mb-3"></div>
-                  <h6>Theme</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedTheme,
-                    this.handleTreeClick,
-                    this.state.left.checkedTheme,
-                    'checkedTheme'
-                  )}
-
-                  <div className="box-divider pt-2 mb-3"></div>
-                  <h6>Population</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedPopulation,
-                    this.handleTreeClick,
-                    this.state.left.checkedPopulation,
-                    'checkedPopulation'
-                  )}
-
-                  <div className="box-divider pt-2 mb-3"></div>
-                  <h6>Ontario Priority Areas</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedOPA,
-                    this.handleTreeClick,
-                    this.state.left.checkedOPA,
-                    'checkedOPA'
-                  )}
+                  {Object.keys(this.treeData).map((key) => (
+                    <>
+                      <div className="box-divider pt-2 mb-3"></div>
+                      <h6>{this.treeData[key].title}</h6>
+                      {this.renderTreeSection(key, 'left')}
+                    </>
+                  ))}
                 </div>
                 <div className="col-sm-6">
                   <h2>Theirs</h2>
-                  <h6>Health Systems Topic</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedKeysHST,
-                    this.handleTreeClick,
-                    this.state.right.checkedKeysHST,
-                    'checkedKeysHST',
-                    true
-                  )}
-                  <div className="box-divider pt-2 mb-3"></div>
-                  <h6>Canadian Areas</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedKeysCA,
-                    this.handleTreeClick,
-                    this.state.right.checkedKeysCA,
-                    'checkedKeysCA',
-                    true
-                  )}
-                  <div className="box-divider pt-2 mb-3"></div>
-                  <h6>Domains</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedDomain,
-                    this.handleTreeClick,
-                    this.state.right.checkedDomain,
-                    'checkedDomain',
-                    true
-                  )}
-
-                  <div className="box-divider pt-2 mb-3"></div>
-                  <h6>LMIC Focus</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedLMIC,
-                    this.handleTreeClick,
-                    this.state.right.checkedLMIC,
-                    'checkedLMIC',
-                    true
-                  )}
-
-                  <div className="box-divider pt-2 mb-3"></div>
-                  <h6>Province Focus</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedProvince,
-                    this.handleTreeClick,
-                    this.state.right.checkedProvince,
-                    'checkedProvince',
-                    true
-                  )}
-
-                  <div className="box-divider pt-2 mb-3"></div>
-                  <h6>Theme</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedTheme,
-                    this.handleTreeClick,
-                    this.state.right.checkedTheme,
-                    'checkedTheme',
-                    true
-                  )}
-
-                  <div className="box-divider pt-2 mb-3"></div>
-                  <h6>Population</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedPopulation,
-                    this.handleTreeClick,
-                    this.state.right.checkedPopulation,
-                    'checkedPopulation',
-                    true
-                  )}
-
-                  <div className="box-divider pt-2 mb-3"></div>
-                  <h6>Ontario Priority Areas</h6>
-                  {this.renderTreeSection(
-                    this.treeData.checkedOPA,
-                    this.handleTreeClick,
-                    this.state.right.checkedOPA,
-                    'checkedOPA',
-                    true
-                  )}
+                  {Object.keys(this.treeData).map((key) => (
+                    <>
+                      <div className="box-divider pt-2 mb-3"></div>
+                      <h6>{this.treeData[key].title}</h6>
+                      {this.renderTreeSection(key, 'right')}
+                    </>
+                  ))}
                 </div>
               </div>
               <div className="box-divider pt-2 mb-3"></div>
