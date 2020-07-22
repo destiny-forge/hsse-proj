@@ -7,39 +7,28 @@ import ArticleService from '../../services/ArticleService';
 import { Tree } from 'antd';
 import 'antd/dist/antd.css';
 import EligibilityService from '../../services/EligibilityService';
-import {
-  treeData,
-} from '../Eligibility/HSETreeData';
+import { hse, sse } from '../Eligibility/data';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 const { TreeNode } = Tree;
 
-const DOCUMENT_TYPES = [
-  { value: 'Evidence briefs for policy', label: 'Evidence briefs for policy' },
-  { value: 'Overviews of systematic reviews', label: 'Overviews of systematic reviews' },
-  { value: 'Systematic reviews addressing other questions', label: 'Systematic reviews addressing other questions' },
-  { value: 'Systematic reviews in progress', label: 'Systematic reviews in progress' },
-  { value: 'Systematic reviews being planned', label: 'Systematic reviews being planned' },
-  { value: 'Economic evaluations and costing studies', label: 'Economic evaluations and costing studies' },
-  { value: 'Health reform descriptions', label: 'Health reform descriptions' },
-  { value: 'Health system descriptions', label: 'Health system descriptions' },
-  { value: 'Intergovernmental organizations’ health systems documents', label: 'Intergovernmental organizations’ health systems documents' },
-  { value: 'Canada’s health systems documents', label: 'Canada’s health systems documents' },
-  { value: 'Ontario’s health system documents', label: 'Ontario’s health system documents' },
-  { value: 'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.', label: 'NO, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.' },
-];
-
 class Conflicts extends React.Component {
-
   constructor(props) {
     super(props);
 
+    const { type } = this.props.match.params;
+
+    this.types = type === 'hse' ? hse.types : sse.types || [];
+    this.treeData = type === 'hse' ? hse.tree : sse.tree;
+
     this.state = {
-      article: "",
+      eligibilityId: null,
+      article: '',
       generalFocus: false,
-      type: 'hse',
-      currentFilterState1: {
+      type: type,
+      categories: Object.keys(this.treeData),
+      left: {
         checkedKeysHST: [],
         checkedKeysCA: [],
         checkedDomain: [],
@@ -49,7 +38,7 @@ class Conflicts extends React.Component {
         checkedPopulation: [],
         checkedOPA: [],
       },
-      currentFilterState2: {
+      right: {
         checkedKeysHST: [],
         checkedKeysCA: [],
         checkedDomain: [],
@@ -59,7 +48,7 @@ class Conflicts extends React.Component {
         checkedPopulation: [],
         checkedOPA: [],
       },
-    }
+    };
 
     this.Article = ArticleService({ fetch: this.props.fetch });
     this.Eligibility = EligibilityService({ fetch: this.props.fetch });
@@ -67,134 +56,128 @@ class Conflicts extends React.Component {
 
   handleChange = (field, value) => {
     this.setState({
-      [field]: value
+      [field]: value,
     });
-  }
+  };
 
   handleCheckbox = (e) => {
-    const {
-      checked,
-      name
-    } = e.target;
-    
+    const { checked, name } = e.target;
+
     this.setState({
-      [name]: checked
-    })
-  }
+      [name]: checked,
+    });
+  };
 
   handleTreeClick = (selectedKeys, evt) => {
     const { user } = this.props;
 
-    const {
-      articleId,
-      eligibilityId,
-      currentFilterState1,
-      type
-    } = this.state;
+    const { articleId, eligibilityId, type } = this.state;
 
-    let newCurrentFilterState = Object.assign({}, currentFilterState1);
-    newCurrentFilterState[evt.node.props.name] = selectedKeys;
-    
+    let newState = Object.assign({}, this.state.left);
+    newState[evt.node.props.name] = selectedKeys;
+
     let formData = {
       _id: eligibilityId,
       articleId: articleId,
       userId: user.id,
       type: type,
+      filters: selectedKeys,
     };
-    selectedKeys.forEach(key => {
-      formData[key] = true
-    });
-    
+
     this.Eligibility.create(formData)
-      .then(res => {
+      .then((_res) => {
         this.setState({
-          ...formData,
-          currentFilterState1: newCurrentFilterState
+          left: newState,
         });
         this.notifySuccess();
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-      })
+      });
+  };
+
+  flatten(tree) {
+    let keys = [];
+    tree.map((item) => {
+      //console.log(item);
+      keys.push(item.key);
+      if (item.hasOwnProperty('children')) {
+        keys = keys.concat(this.flatten(item.children));
+      }
+    });
+    return keys;
   }
 
   compare() {
     const { shortId } = this.props.match.params;
-    const { user } = this.props; // logged in user
+    const { user } = this.props;
 
     let conflicts = [];
-    this.Article.get(shortId)
-      .then(article => {
-        if (article.success) {
-          this.Article.compare(article.data._id)
-            .then(res => {
-              if (res.success) {
-                conflicts = res.data.map((conflict) => {
-                  return conflict.path[0];
-                })
-                // me, left side
-                const {
-                  junior, senior
-                } = article.data.stages.eligibility;
+    this.Article.get(shortId).then((result) => {
+      if (result.success) {
+        const article = result.data;
 
-                const theirId = junior._id === user.id ? senior._id : junior._id;
-                // left side is always logged in user
-                this.Eligibility.get(shortId, user.id)
-                  .then(filterData => {
-                    const filters = filterData.data;
-                    const treeKeys = Object.keys(treeData);
-                    for (const key of treeKeys) {
-                      treeData[key].map(k => {
-                        if (!_.isNull(filters)) {
-                          if (filters[k.key] === true) {
-                            let newCurrentFilterState = Object.assign({}, this.state.currentFilterState1);
-                            newCurrentFilterState[key].push(k.key);
-                            this.setState({
-                              selectedDocumentType: filterData.data.documentType,
-                              currentFilterState1: newCurrentFilterState,
-                              eligibilityId: filterData.data._id,
-                              articleId: article.data._id,
-                              type: article.data.type,
-                              conflicts
-                            });
-                          }
-                        }
-                      })
-                    }
-                  })
+        this.setState({
+          articleId: article._id,
+          type: article.type,
+        });
 
-                // right side is always "theirs"
-                this.Eligibility.get(shortId, theirId)
-                  .then(filterData => {
-                    const filters = filterData.data;
-                    const treeKeys = Object.keys(treeData);
-                    for (const key of treeKeys) {
-                      treeData[key].map(k => {
-                        if (!_.isNull(filters)) {
-                          if (filters[k.key] === true) {
-                            let newCurrentFilterState = Object.assign({}, this.state.currentFilterState2);
-                            newCurrentFilterState[key].push(k.key);
-                            this.setState({
-                              selectedDocumentType: filterData.data.documentType,
-                              currentFilterState2: newCurrentFilterState,
-                            });
-                          }
-                        }
-                      })
-                    }
-                  })
-              }
-            })
-            .catch(err => {
-              console.log(err);
-            })
+        this.Article.compare(article._id)
+          .then((res) => {
+            if (res.success) {
+              conflicts = res.data.map((conflict) => {
+                return conflict.path[1];
+              });
+              const { junior, senior } = article.stages.eligibility;
+              const theirId = junior._id === user.id ? senior._id : junior._id;
+
+              this.getEligibility(shortId, user.id, 'left', conflicts);
+              this.getEligibility(shortId, theirId, 'right', conflicts);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  }
+
+  getEligibility(shortId, userId, side, conflicts) {
+    this.Eligibility.get(shortId, userId).then((result) => {
+      const eligibility = result.data;
+      //console.log(eligibility);
+      if (!_.isNull(eligibility)) {
+        let newState = Object.assign({}, this.state[side]);
+        for (const category of this.state.categories) {
+          const keys = this.flatten(this.treeData[category]);
+          keys.forEach((key) => {
+            if (eligibility.filters.indexOf(key) >= 0) {
+              newState[category].push(key);
+            }
+          });
         }
-      })
+
+        let state = {
+          selectedDocumentType: eligibility.documentType,
+          [side]: newState,
+        };
+
+        if (side === 'left') {
+          state = Object.assign(state, {
+            generalFocus: eligibility.generalFocus,
+            eligibilityId: eligibility._id,
+            conflicts,
+          });
+        }
+
+        this.setState(state);
+      }
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (JSON.stringify(this.state.currentFilterState1) !== JSON.stringify(prevState.currentFilterState1)) {
-      this.compare()
+    if (JSON.stringify(this.state.left) !== JSON.stringify(prevState.left)) {
+      this.compare();
     }
   }
 
@@ -207,9 +190,15 @@ class Conflicts extends React.Component {
       expandedKeys,
       autoExpandParent: false,
     });
-  }
+  };
 
-  renderTreeSection = (sectionTreeData, handleTreeClick, checkedKeyState, name, rhs) => {
+  renderTreeSection = (
+    sectionTreeData,
+    handleTreeClick,
+    checkedKeyState,
+    name,
+    rhs
+  ) => {
     return (
       <React.Fragment>
         <label className="col-md-1 offset-md-1 col-form-label"></label>
@@ -228,53 +217,65 @@ class Conflicts extends React.Component {
         </div>
       </React.Fragment>
     );
-  }
+  };
 
-  renderTreeNodes = (data, name, rhs = false) => data.map((item) => {
-    // Adds name to the object to be used int he handle click
-    // so that we can set state properly.
-    item.name = name;
-    let style;
-    if (rhs) {
-      style = (_.includes(this.state.conflicts, item.key) && rhs === true) 
-        ? { background: "#FFBABA" } 
-        : { background: "#90ee90" }; 
-    }
+  renderTreeNodes = (data, name, rhs = false) =>
+    data.map((item) => {
+      // Adds name to the object to be used int he handle click
+      // so that we can set state properly.
+      item.name = name;
+      let style;
+      if (rhs) {
+        style =
+          _.includes(this.state.conflicts, item.key) && rhs === true
+            ? { background: '#FFBABA' }
+            : { background: '#90ee90' };
+      }
 
-    if (item.children) {
+      if (item.children) {
+        return (
+          <TreeNode
+            name={item.name}
+            title={<span style={style}>{item.title}</span>}
+            key={item.key}
+            dataRef={item}
+            disableCheckbox={rhs}
+          >
+            {this.renderTreeNodes(item.children, name, rhs)}
+          </TreeNode>
+        );
+      }
       return (
         <TreeNode
-          name={item.name}
+          {...item}
           title={<span style={style}>{item.title}</span>}
-          key={item.key}
-          dataRef={item}
           disableCheckbox={rhs}
-        >
-          {this.renderTreeNodes(item.children, name, rhs)}
-        </TreeNode>
+        />
       );
-    }
-    return <TreeNode 
-      {...item} 
-      title={<span style={style}>{item.title}</span>}
-      disableCheckbox={rhs} 
-    />;
-  })
+    });
 
-  notifyDone = () => toast.success("Eligibility completed!");
-  notifySuccess = () => toast.success("Successfully saved!");
+  notifyDone = () => toast.success('Eligibility completed!');
+  notifySuccess = () => toast.success('Successfully saved!');
+
+  getAssignmentRole(user, article) {
+    const { eligibility } = article.stages;
+    let juniorAssigned = false;
+    if (!_.isUndefined(eligibility['junior'])) {
+      juniorAssigned = eligibility.junior.email === user.email;
+    }
+    return juniorAssigned ? 'junior' : 'senior';
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
 
     const {
-      currentFilterState1,
-      currentFilterState2,
+      left,
       article,
       type,
       generalFocus,
       selectedDocumentType,
-      selectedStatus
+      //selectedStatus,
     } = this.state;
 
     const { user } = this.props;
@@ -285,32 +286,26 @@ class Conflicts extends React.Component {
       articleId: article._id,
       shortArticleId: article.shortId,
       generalFocus: generalFocus,
-      role: 'junior',
       documentType: selectedDocumentType.value,
-      selectedStatus: selectedStatus.value
+      filters: [],
+      //selectedStatus: selectedStatus.value,
     };
 
-    Object.keys(currentFilterState1).forEach((key, idx) => {
-      currentFilterState1[key].map(k => {
-        formData[k] = true;
+    Object.keys(left).forEach((key) => {
+      left[key].map((k) => {
+        formData.filters.push(k);
       });
-    })
-
-    Object.keys(currentFilterState2).forEach((key, idx) => {
-      currentFilterState2[key].map(k => {
-        formData[k] = true;
-      });
-    })
+    });
 
     this.Eligibility.create(formData)
-      .then(res => {
+      .then((res) => {
         this.props.history.replace(`/${type}`);
         this.notifyDone();
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-      })
-  }
+      });
+  };
 
   render() {
     const { article } = this.state;
@@ -326,238 +321,213 @@ class Conflicts extends React.Component {
             <form>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Ref id</label>
-                <div className="col-sm-10">
-                  {article.shortId}
-                </div>
+                <div className="col-sm-10">{article.shortId}</div>
               </div>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Live date</label>
-                <div className="col-sm-10">
-                  N/A
-                </div>
+                <div className="col-sm-10">N/A</div>
               </div>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Document type</label>
                 <div className="col-sm-4">
                   <Select
-                    value={this.state.selectedDocumentType}
+                    value={this.types.filter(
+                      (opt) => opt.value === this.state.selectedDocumentType
+                    )}
                     name="selectedDocumentType"
-                    onChange={(value) => this.handleChange('selectedDocumentType', value)}
-                    options={DOCUMENT_TYPES}
+                    onChange={(value) =>
+                      this.handleChange('selectedDocumentType', value)
+                    }
+                    options={this.types}
                     isSearchable
                   />
                 </div>
               </div>
               <div className="form-group row">
-                <label className="col-sm-2 col-form-label">General focus?</label>
+                <label className="col-sm-2 col-form-label">
+                  General focus?
+                </label>
                 <div className="col-sm-10">
                   <label className="form-check-label">
                     <input
+                      checked={this.state.generalFocus}
                       type="checkbox"
                       className="form-check-input"
                       name="generalFocus"
                       onChange={this.handleCheckbox}
-                    /> Yes, this article has a general focus (review definition and code accordingly, nothing that the default is set to specific)
+                    />{' '}
+                    Yes, this article has a general focus (review definition and
+                    code accordingly, nothing that the default is set to
+                    specific)
                   </label>
                 </div>
               </div>
               <div className="box-divider pt-2 mb-3"></div>
               <div className="row">
-              <div className="col-sm-6">
-                <h2>Mine</h2>
-                <h6>Health Systems Topic</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedKeysHST,
+                <div className="col-sm-6">
+                  <h2>Mine</h2>
+                  <h6>Health Systems Topic</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedKeysHST,
                     this.handleTreeClick,
-                    this.state.currentFilterState1.checkedKeysHST,
-                    'checkedKeysHST',
-                  )
-                }
-                <div className="box-divider pt-2 mb-3"></div>
-                <h6>Canadian Areas</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedKeysCA,
+                    this.state.left.checkedKeysHST,
+                    'checkedKeysHST'
+                  )}
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <h6>Canadian Areas</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedKeysCA,
                     this.handleTreeClick,
-                    this.state.currentFilterState1.checkedKeysCA,
-                    'checkedKeysCA',
-                  )
-                }
-                <div className="box-divider pt-2 mb-3"></div>
-                <h6>Domains</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedDomain,
+                    this.state.left.checkedKeysCA,
+                    'checkedKeysCA'
+                  )}
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <h6>Domains</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedDomain,
                     this.handleTreeClick,
-                    this.state.currentFilterState1.checkedDomain,
-                    'checkedDomain',
-                  )
-                }
+                    this.state.left.checkedDomain,
+                    'checkedDomain'
+                  )}
 
-                <div className="box-divider pt-2 mb-3"></div>
-                <h6>LMIC Focus</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedLMIC,
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <h6>LMIC Focus</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedLMIC,
                     this.handleTreeClick,
-                    this.state.currentFilterState1.checkedLMIC,
-                    'checkedLMIC',
-                  )
-                }
+                    this.state.left.checkedLMIC,
+                    'checkedLMIC'
+                  )}
 
-                <div className="box-divider pt-2 mb-3"></div>
-                <h6>Province Focus</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedProvince,
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <h6>Province Focus</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedProvince,
                     this.handleTreeClick,
-                    this.state.currentFilterState1.checkedProvince,
-                    'checkedProvince',
-                  )
-                }
+                    this.state.left.checkedProvince,
+                    'checkedProvince'
+                  )}
 
-                <div className="box-divider pt-2 mb-3"></div>
-                <h6>Theme</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedTheme,
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <h6>Theme</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedTheme,
                     this.handleTreeClick,
-                    this.state.currentFilterState1.checkedTheme,
-                    'checkedTheme',
-                  )
-                }
+                    this.state.left.checkedTheme,
+                    'checkedTheme'
+                  )}
 
-                <div className="box-divider pt-2 mb-3"></div>
-                <h6>Population</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedPopulation,
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <h6>Population</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedPopulation,
                     this.handleTreeClick,
-                    this.state.currentFilterState1.checkedPopulation,
-                    'checkedPopulation',
-                  )
-                }
+                    this.state.left.checkedPopulation,
+                    'checkedPopulation'
+                  )}
 
-                <div className="box-divider pt-2 mb-3"></div>
-                <h6>Ontario Priority Areas</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedOPA,
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <h6>Ontario Priority Areas</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedOPA,
                     this.handleTreeClick,
-                    this.state.currentFilterState1.checkedOPA,
-                    'checkedOPA',
-                  )
-                }
-              </div>
-              <div className="col-sm-6">
-                <h2>Theirs</h2>
-                <h6>Health Systems Topic</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedKeysHST,
+                    this.state.left.checkedOPA,
+                    'checkedOPA'
+                  )}
+                </div>
+                <div className="col-sm-6">
+                  <h2>Theirs</h2>
+                  <h6>Health Systems Topic</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedKeysHST,
                     this.handleTreeClick,
-                    this.state.currentFilterState2.checkedKeysHST,
+                    this.state.right.checkedKeysHST,
                     'checkedKeysHST',
                     true
-                  )
-                }
-                <div className="box-divider pt-2 mb-3"></div>
-                <h6>Canadian Areas</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedKeysCA,
+                  )}
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <h6>Canadian Areas</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedKeysCA,
                     this.handleTreeClick,
-                    this.state.currentFilterState2.checkedKeysCA,
+                    this.state.right.checkedKeysCA,
                     'checkedKeysCA',
                     true
-                  )
-                }
-                <div className="box-divider pt-2 mb-3"></div>
-                <h6>Domains</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedDomain,
+                  )}
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <h6>Domains</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedDomain,
                     this.handleTreeClick,
-                    this.state.currentFilterState2.checkedDomain,
+                    this.state.right.checkedDomain,
                     'checkedDomain',
                     true
-                  )
-                }
+                  )}
 
-                <div className="box-divider pt-2 mb-3"></div>
-                <h6>LMIC Focus</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedLMIC,
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <h6>LMIC Focus</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedLMIC,
                     this.handleTreeClick,
-                    this.state.currentFilterState2.checkedLMIC,
+                    this.state.right.checkedLMIC,
                     'checkedLMIC',
                     true
-                  )
-                }
+                  )}
 
-                <div className="box-divider pt-2 mb-3"></div>
-                <h6>Province Focus</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedProvince,
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <h6>Province Focus</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedProvince,
                     this.handleTreeClick,
-                    this.state.currentFilterState2.checkedProvince,
+                    this.state.right.checkedProvince,
                     'checkedProvince',
                     true
-                  )
-                }
+                  )}
 
-                <div className="box-divider pt-2 mb-3"></div>
-                <h6>Theme</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedTheme,
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <h6>Theme</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedTheme,
                     this.handleTreeClick,
-                    this.state.currentFilterState2.checkedTheme,
+                    this.state.right.checkedTheme,
                     'checkedTheme',
                     true
-                  )
-                }
+                  )}
 
-                <div className="box-divider pt-2 mb-3"></div>
-                <h6>Population</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedPopulation,
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <h6>Population</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedPopulation,
                     this.handleTreeClick,
-                    this.state.currentFilterState2.checkedPopulation,
+                    this.state.right.checkedPopulation,
                     'checkedPopulation',
                     true
-                  )
-                }
+                  )}
 
-                <div className="box-divider pt-2 mb-3"></div>
-                <h6>Ontario Priority Areas</h6>
-                {
-                  this.renderTreeSection(
-                    treeData.checkedOPA,
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <h6>Ontario Priority Areas</h6>
+                  {this.renderTreeSection(
+                    this.treeData.checkedOPA,
                     this.handleTreeClick,
-                    this.state.currentFilterState2.checkedOPA,
+                    this.state.right.checkedOPA,
                     'checkedOPA',
                     true
-                  )
-                }
-              </div>
+                  )}
+                </div>
               </div>
               <div className="box-divider pt-2 mb-3"></div>
               <button
                 type="submit"
                 onClick={this.handleSubmit}
-                className="btn primary">
+                className="btn primary"
+              >
                 Save
               </button>
             </form>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

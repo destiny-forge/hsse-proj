@@ -5,37 +5,42 @@ const ObjectID = require("mongodb").ObjectID;
  * Eligibility filter creation
  */
 module.exports = ({ eligibilityRepository }) => {
-  const create = async (filter) => {
+  const create = async (eligibility) => {
     try {
-      if (!filter.type || (filter.type !== "sse" && filter.type !== "hse")) {
+      if (
+        !eligibility.type ||
+        (eligibility.type !== "sse" && eligibility.type !== "hse")
+      ) {
         return {
           error: "A valid filter type is required",
         };
       }
-      if (!filter.userId) {
+      if (!eligibility.userId) {
         return {
           error: "A valid filter userId is required",
         };
       }
 
-      if (filter._id) {
-        const _id = filter._id;
-        delete filter._id;
+      if (eligibility._id) {
+        const _id = eligibility._id;
+        delete eligibility._id;
 
-        filter.articleId = new ObjectID(filter.articleId);
-        filter.userId = new ObjectID(filter.userId);
+        eligibility.articleId = new ObjectID(eligibility.articleId);
+        eligibility.userId = new ObjectID(eligibility.userId);
 
-        return await eligibilityRepository.update(_id, filter);
+        return await eligibilityRepository.update(_id, eligibility);
       } else {
-        filter.published = filter.published
-          ? new Date(filter.published, 1, 1)
+        eligibility.published = eligibility.published
+          ? new Date(eligibility.published, 1, 1)
           : new Date();
 
-        filter.articleId = new ObjectID(filter.articleId);
-        filter.userId = new ObjectID(filter.userId);
+        eligibility.articleId = new ObjectID(eligibility.articleId);
+        eligibility.userId = new ObjectID(eligibility.userId);
 
         const entity =
-          filter.type === "sse" ? sseFilter(filter) : hseFilter(filter);
+          eligibility.type === "sse"
+            ? sseFilter(eligibility)
+            : hseFilter(eligibility);
 
         return await eligibilityRepository.create(entity);
       }

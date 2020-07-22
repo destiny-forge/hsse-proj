@@ -48,12 +48,21 @@ class App extends Component {
           <Route path="/article" component={ArticleCreate} />
           <Route path="/hse" component={HSE} />
           <Route path="/sse" component={SSE} />
-          <Route path="/sse/eligibility-filters" component={EligibilityFilters} />
-          <Route path="/eligibility/:shortId" component={EligibilityForm} />
-          <Route path="/quality-appraisal/:shortId" component={QualityAppraisalForm} />
+          <Route
+            path="/sse/eligibility-filters"
+            component={EligibilityFilters}
+          />
+          <Route
+            path="/eligibility/:type/:shortId"
+            component={EligibilityForm}
+          />
+          <Route
+            path="/quality-appraisal/:shortId"
+            component={QualityAppraisalForm}
+          />
           <Route path="/appraisals/:type" component={Appraisals} />
           <Route path="/batch/articles/:shortId" component={Articles} />
-          <Route path="/conflicts/:shortId" component={Conflicts} />
+          <Route path="/conflicts/:type/:shortId" component={Conflicts} />
           <Route path="/upload" component={BatchUpload} />
           <Route path="/notes" component={Notes} />
         </Router>

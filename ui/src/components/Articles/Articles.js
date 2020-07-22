@@ -152,14 +152,20 @@ class Articles extends React.Component {
                     </td>
                     <td>
                       {this.isAssigned(article) && (
-                        <Link to={`/conflicts/${article.shortId}`}>
+                        <Link
+                          to={`/conflicts/${article.type}/${article.shortId}`}
+                        >
                           Resolve Conflicts
                         </Link>
                       )}
                     </td>
                     <td>
                       {this.isAssigned(article) && (
-                        <Link to={`/eligibility/${article.shortId}`}>Code</Link>
+                        <Link
+                          to={`/eligibility/${article.type}/${article.shortId}`}
+                        >
+                          Code
+                        </Link>
                       )}
                     </td>
                   </tr>

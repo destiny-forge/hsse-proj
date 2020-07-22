@@ -262,7 +262,7 @@ class EligibilityForm extends React.Component {
       formData._id = this.state._id;
     }
 
-    Object.keys(currentFilterState).forEach((key, idx) => {
+    Object.keys(currentFilterState).forEach((key) => {
       currentFilterState[key].map((k) => {
         formData.filters.push(k);
       });
