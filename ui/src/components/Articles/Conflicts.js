@@ -87,10 +87,6 @@ class Conflicts extends React.Component {
       filters: allKeys,
     };
 
-    // console.log(selectedKeys);
-    // console.log(newState);
-    // console.log(formData);
-
     this.Eligibility.create(formData)
       .then((_res) => {
         this.setState({ left: newState }, this.compare);
@@ -104,7 +100,6 @@ class Conflicts extends React.Component {
   flatten(tree) {
     let keys = [];
     tree.map((item) => {
-      //console.log(item);
       keys.push(item.key);
       if (item.hasOwnProperty('children')) {
         keys = keys.concat(this.flatten(item.children));
@@ -135,9 +130,6 @@ class Conflicts extends React.Component {
                 return conflict.path[1] || conflict.path[0];
               });
 
-              //console.log(conflicts);
-              //console.log(this.state);
-
               this.setState({ conflicts });
 
               const { junior, senior } = article.stages.eligibility;
@@ -157,7 +149,6 @@ class Conflicts extends React.Component {
   getEligibility(shortId, userId, side) {
     this.Eligibility.get(shortId, userId).then((result) => {
       const eligibility = result.data;
-      //console.log(eligibility);
       const filters = this.getEligibilityFilterState(eligibility, side);
       let newState = Object.assign({}, this.state[side]);
       newState.selected = filters;
@@ -168,7 +159,6 @@ class Conflicts extends React.Component {
           eligibility,
         },
       };
-      //console.log(state);
 
       this.setState(state);
     });
@@ -178,7 +168,6 @@ class Conflicts extends React.Component {
     let filters = this.getKeyArray(this.treeData);
     for (const topic of this.state.topics) {
       const keys = this.flatten(this.treeData[topic].items);
-      //console.log(keys);
       keys.forEach((key) => {
         eligibility.filters.forEach((filter) => {
           if (filter === key) {
@@ -187,12 +176,10 @@ class Conflicts extends React.Component {
         });
       });
     }
-    //console.log(filters);
     return filters;
   }
 
   componentDidMount() {
-    //console.log(this.state);
     this.compare();
   }
 
