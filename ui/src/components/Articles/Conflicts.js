@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { isNil, filter } from 'lodash';
 import React from 'react';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
@@ -22,16 +22,20 @@ class Conflicts extends React.Component {
     this.types = type === 'hse' ? hse.types : sse.types || [];
     this.treeData = type === 'hse' ? hse.tree : sse.tree;
 
-    const keys = this.getKeyArray(this.treeData);
+    const keyArray = this.getKeyArray(this.treeData);
 
     this.state = {
-      eligibilityId: null,
-      article: '',
-      generalFocus: false,
       type: type,
-      categories: Object.keys(this.treeData),
-      left: keys,
-      right: keys,
+      article: '',
+      topics: Object.keys(this.treeData),
+      left: {
+        eligibility: '',
+        selected: keyArray,
+      },
+      right: {
+        eligibility: '',
+        selected: keyArray,
+      },
     };
 
     this.Article = ArticleService({ fetch: this.props.fetch });
@@ -39,7 +43,7 @@ class Conflicts extends React.Component {
   }
 
   getKeyArray = (tree) => {
-    const filterState = {};
+    let filterState = {};
     const keys = Object.keys(tree);
     keys.forEach((key) => {
       filterState[key] = [];
@@ -63,25 +67,33 @@ class Conflicts extends React.Component {
 
   handleTreeClick = (selectedKeys, evt) => {
     const { user } = this.props;
+    const { type, article, left } = this.state;
+    const { eligibility } = left;
+    const key = evt.node.props.name;
 
-    const { articleId, eligibilityId, type } = this.state;
+    let newState = Object.assign({}, left);
+    newState.selected[key] = selectedKeys;
 
-    let newState = Object.assign({}, this.state.left);
-    newState[evt.node.props.name] = selectedKeys;
+    let allKeys = [];
+    Object.keys(newState.selected).forEach((key) => {
+      allKeys = allKeys.concat(newState.selected[key]);
+    });
 
     let formData = {
-      _id: eligibilityId,
-      articleId: articleId,
+      _id: eligibility._id,
+      articleId: article._id,
       userId: user.id,
       type: type,
-      filters: selectedKeys,
+      filters: allKeys,
     };
+
+    // console.log(selectedKeys);
+    // console.log(newState);
+    // console.log(formData);
 
     this.Eligibility.create(formData)
       .then((_res) => {
-        this.setState({
-          left: newState,
-        });
+        this.setState({ left: newState }, this.compare);
         this.notifySuccess();
       })
       .catch((err) => {
@@ -111,6 +123,7 @@ class Conflicts extends React.Component {
         const article = result.data;
 
         this.setState({
+          article: result.data,
           articleId: article._id,
           type: article.type,
         });
@@ -119,13 +132,19 @@ class Conflicts extends React.Component {
           .then((res) => {
             if (res.success) {
               conflicts = res.data.map((conflict) => {
-                return conflict.path[1];
+                return conflict.path[1] || conflict.path[0];
               });
+
+              //console.log(conflicts);
+              //console.log(this.state);
+
+              this.setState({ conflicts });
+
               const { junior, senior } = article.stages.eligibility;
               const theirId = junior._id === user.id ? senior._id : junior._id;
 
-              this.getEligibility(shortId, user.id, 'left', conflicts);
-              this.getEligibility(shortId, theirId, 'right', conflicts);
+              this.getEligibility(shortId, user.id, 'left');
+              this.getEligibility(shortId, theirId, 'right');
             }
           })
           .catch((err) => {
@@ -135,46 +154,45 @@ class Conflicts extends React.Component {
     });
   }
 
-  getEligibility(shortId, userId, side, conflicts) {
+  getEligibility(shortId, userId, side) {
     this.Eligibility.get(shortId, userId).then((result) => {
       const eligibility = result.data;
       //console.log(eligibility);
-      if (!_.isNull(eligibility)) {
-        let newState = Object.assign({}, this.state[side]);
-        for (const category of this.state.categories) {
-          const keys = this.flatten(this.treeData[category].items);
-          keys.forEach((key) => {
-            if (eligibility.filters.indexOf(key) >= 0) {
-              newState[category].push(key);
-            }
-          });
-        }
+      const filters = this.getEligibilityFilterState(eligibility, side);
+      let newState = Object.assign({}, this.state[side]);
+      newState.selected = filters;
 
-        let state = {
-          selectedDocumentType: eligibility.documentType,
-          [side]: newState,
-        };
+      let state = {
+        [side]: {
+          ...newState,
+          eligibility,
+        },
+      };
+      //console.log(state);
 
-        if (side === 'left') {
-          state = Object.assign(state, {
-            generalFocus: eligibility.generalFocus,
-            eligibilityId: eligibility._id,
-            conflicts,
-          });
-        }
-
-        this.setState(state);
-      }
+      this.setState(state);
     });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (JSON.stringify(this.state.left) !== JSON.stringify(prevState.left)) {
-      this.compare();
+  getEligibilityFilterState(eligibility, side) {
+    let filters = this.getKeyArray(this.treeData);
+    for (const topic of this.state.topics) {
+      const keys = this.flatten(this.treeData[topic].items);
+      //console.log(keys);
+      keys.forEach((key) => {
+        eligibility.filters.forEach((filter) => {
+          if (filter === key) {
+            filters[topic].push(filter);
+          }
+        });
+      });
     }
+    //console.log(filters);
+    return filters;
   }
 
   componentDidMount() {
+    //console.log(this.state);
     this.compare();
   }
 
@@ -187,10 +205,9 @@ class Conflicts extends React.Component {
 
   renderTreeSection = (key, side) => {
     const subTree = this.treeData[key].items;
-    const checkedKeyState = this.state[side][key];
+    const checkedKeyState = this.state[side].selected[key];
     return (
       <React.Fragment>
-        <label className="col-md-1 offset-md-1 col-form-label"></label>
         <div className="col-md-10">
           <Tree
             checkable
@@ -219,6 +236,8 @@ class Conflicts extends React.Component {
           : { background: '#90ee90' };
       }
 
+      const isCheckboxDisabled = side === 'right' ? true : false;
+
       if (item.children) {
         return (
           <TreeNode
@@ -226,7 +245,7 @@ class Conflicts extends React.Component {
             title={<span style={style}>{item.title}</span>}
             key={item.key}
             dataRef={item}
-            disableCheckbox={side === 'right'}
+            disableCheckbox={isCheckboxDisabled}
           >
             {this.renderTreeNodes(item.children, key, side)}
           </TreeNode>
@@ -236,7 +255,7 @@ class Conflicts extends React.Component {
         <TreeNode
           {...item}
           title={<span style={style}>{item.title}</span>}
-          disableCheckbox={side}
+          disableCheckbox={isCheckboxDisabled}
         />
       );
     });
@@ -257,26 +276,18 @@ class Conflicts extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const {
-      left,
-      article,
-      type,
-      generalFocus,
-      selectedDocumentType,
-      //selectedStatus,
-    } = this.state;
-
+    const { type, left, article } = this.state;
+    const { eligibility } = left;
     const { user } = this.props;
 
     let formData = {
-      type: type,
       userId: user.id,
       articleId: article._id,
       shortArticleId: article.shortId,
-      generalFocus: generalFocus,
-      documentType: selectedDocumentType.value,
+      type: type,
+      documentType: eligibility.type,
+      generalFocus: eligibility.focus,
       filters: [],
-      //selectedStatus: selectedStatus.value,
     };
 
     Object.keys(left).forEach((key) => {
@@ -296,7 +307,10 @@ class Conflicts extends React.Component {
   };
 
   render() {
-    const { article } = this.state;
+    const { article, left, right } = this.state;
+    if (!left.eligibility) {
+      return null;
+    }
 
     return (
       <div className="padding">
@@ -315,61 +329,88 @@ class Conflicts extends React.Component {
                 <label className="col-sm-2 col-form-label">Live date</label>
                 <div className="col-sm-10">N/A</div>
               </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Document type</label>
-                <div className="col-sm-4">
-                  <Select
-                    value={this.types.filter(
-                      (opt) => opt.value === this.state.selectedDocumentType
-                    )}
-                    name="selectedDocumentType"
-                    onChange={(value) =>
-                      this.handleChange('selectedDocumentType', value)
-                    }
-                    options={this.types}
-                    isSearchable
-                  />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">
-                  General focus?
-                </label>
-                <div className="col-sm-10">
-                  <label className="form-check-label">
-                    <input
-                      checked={this.state.generalFocus}
-                      type="checkbox"
-                      className="form-check-input"
-                      name="generalFocus"
-                      onChange={this.handleCheckbox}
-                    />{' '}
-                    Yes, this article has a general focus (review definition and
-                    code accordingly, nothing that the default is set to
-                    specific)
-                  </label>
-                </div>
-              </div>
+
               <div className="box-divider pt-2 mb-3"></div>
               <div className="row">
                 <div className="col-sm-6">
                   <h2>Mine</h2>
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <div className="form-group">
+                    <label>Document type</label>
+                    <Select
+                      value={this.types.filter(
+                        (opt) => opt.value === left.eligibility.type
+                      )}
+                      name="selectedDocumentType"
+                      onChange={(value) =>
+                        this.handleChange('selectedDocumentType', value)
+                      }
+                      options={this.types}
+                      isSearchable
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>General focus?</label>
+                    <label
+                      style={{ fontWeight: 'normal', padding: '0px 20px' }}
+                    >
+                      <input
+                        checked={left.eligibility.generalFocus}
+                        type="checkbox"
+                        className="form-check-input"
+                        name="generalFocus"
+                        onChange={this.handleCheckbox}
+                      />{' '}
+                      Yes, this article has a general focus (review definition
+                      and code accordingly, nothing that the default is set to
+                      specific)
+                    </label>
+                  </div>
                   {Object.keys(this.treeData).map((key) => (
-                    <>
+                    <div key={key}>
                       <div className="box-divider pt-2 mb-3"></div>
                       <h6>{this.treeData[key].title}</h6>
                       {this.renderTreeSection(key, 'left')}
-                    </>
+                    </div>
                   ))}
                 </div>
                 <div className="col-sm-6">
                   <h2>Theirs</h2>
+                  <div className="box-divider pt-2 mb-3"></div>
+                  <div className="form-group">
+                    <label>Document type</label>
+                    <Select
+                      value={this.types.filter(
+                        (opt) => opt.value === right.eligibility.focus
+                      )}
+                      name="selectedDocumentType"
+                      options={this.types}
+                      isDisabled={true}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>General focus?</label>
+                    <label
+                      style={{ fontWeight: 'normal', padding: '0px 20px' }}
+                    >
+                      <input
+                        checked={right.eligibility.focus}
+                        type="checkbox"
+                        className="form-check-input"
+                        name="generalFocus"
+                        disabled={true}
+                      />{' '}
+                      Yes, this article has a general focus (review definition
+                      and code accordingly, nothing that the default is set to
+                      specific)
+                    </label>
+                  </div>
                   {Object.keys(this.treeData).map((key) => (
-                    <>
+                    <div key={key}>
                       <div className="box-divider pt-2 mb-3"></div>
                       <h6>{this.treeData[key].title}</h6>
                       {this.renderTreeSection(key, 'right')}
-                    </>
+                    </div>
                   ))}
                 </div>
               </div>
