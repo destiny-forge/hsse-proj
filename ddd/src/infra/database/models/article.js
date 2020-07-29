@@ -229,6 +229,25 @@ module.exports = ({ database }) => {
     }
   };
 
+  const updateStage = async (articleId, stage, kvp) => {
+    try {
+      const fields = {};
+
+      for (const [key, value] of Object.entries(kvp)) {
+        fields[`stages.${stage}.${key}`] = value;
+      }
+
+      const cmdResult = await database
+        .get()
+        .collection("articles")
+        .updateOne({ _id: { $eq: ObjectID(articleId) } }, { $set: fields });
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const update = async (id, fields) => {
     try {
       const cmdResult = await database
@@ -300,6 +319,7 @@ module.exports = ({ database }) => {
     find,
     assign,
     update,
+    updateStage,
     findByBatch,
     findByBatchAndRefTypes,
     aggregate,

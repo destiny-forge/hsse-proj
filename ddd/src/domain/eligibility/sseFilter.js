@@ -4,7 +4,10 @@ const { compose } = require("ramda");
 const { cleanData, cleanMongoId } = require("../helper");
 
 const SSEFilter = Filter.extend(
-  {},
+  {
+    generalFocus: t.Boolean,
+    selectedStatus: t.String,
+  },
   {
     defaultProps: {
       type: "sse",

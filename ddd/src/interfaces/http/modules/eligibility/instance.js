@@ -20,6 +20,7 @@ module.exports = () => {
   });
 
   const resolveUseCase = resolve({
+    articleRepository,
     eligibilityRepository,
   });
 

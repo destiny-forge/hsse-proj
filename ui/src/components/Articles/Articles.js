@@ -41,6 +41,8 @@ class Articles extends React.Component {
   componentDidMount() {
     const { shortId } = this.props.match.params;
 
+    console.log(this.props);
+
     this.Article.getArticlesByBatch(shortId)
       .then((res) => {
         if (res.success) {

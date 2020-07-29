@@ -32,7 +32,7 @@ class EligibilityForm extends React.Component {
       _id: null,
       article: '',
       generalFocus: false,
-      type: 'hse',
+      type: type,
       currentFilterState: this.getKeyArray(this.treeData),
     };
 
@@ -74,7 +74,6 @@ class EligibilityForm extends React.Component {
   flatten(tree) {
     let keys = [];
     tree.forEach((item) => {
-      //console.log(item);
       keys.push(item.key);
       if (item.hasOwnProperty('children')) {
         keys = keys.concat(this.flatten(item.children));
@@ -99,7 +98,6 @@ class EligibilityForm extends React.Component {
 
           this.Eligibility.get(shortId, user.id).then((result) => {
             const eligibility = result.data;
-            //console.log(eligibility);
             if (!_.isNull(eligibility)) {
               for (const category of categories) {
                 const keys = this.flatten(this.treeData[category].items);
@@ -218,7 +216,6 @@ class EligibilityForm extends React.Component {
 
     this.Eligibility.create(formData)
       .then((res) => {
-        console.log(article);
         this.props.history.replace(`/batch/articles/${article.batchId}`);
         this.notifyDone();
       })
