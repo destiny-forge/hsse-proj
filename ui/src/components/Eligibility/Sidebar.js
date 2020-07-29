@@ -12,9 +12,9 @@ const Sidebar = (props) => {
         <ul className="list">
           <li className="list-item">
             <div className="list-body">
-              <a href="#!" className="text-primary">
+              <Link to={`${props.type}`} className="text-primary">
                 Eligibility &amp; Filters
-              </a>
+              </Link>
             </div>
           </li>
           <li className="list-item">

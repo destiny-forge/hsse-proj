@@ -4,9 +4,9 @@ import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import Select from 'react-select';
 import ArticleService from '../../services/ArticleService';
+import EligibilityService from '../../services/EligibilityService';
 import { Tree } from 'antd';
 import 'antd/dist/antd.css';
-import EligibilityService from '../../services/EligibilityService';
 import { hse, sse } from '../Eligibility/data';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -124,7 +124,7 @@ class Conflicts extends React.Component {
           type: article.type,
         });
 
-        this.Article.compare(article._id)
+        this.Eligibility.compare(article._id)
           .then((res) => {
             if (res.success) {
               conflicts = res.data.map((conflict) => {
@@ -317,20 +317,25 @@ class Conflicts extends React.Component {
       filters: [],
     };
 
-    Object.keys(left).forEach((key) => {
-      left[key].forEach((k) => {
+    Object.keys(left.selected).forEach((key) => {
+      left.selected[key].forEach((k) => {
         formData.filters.push(k);
       });
     });
 
-    this.Eligibility.create(formData)
-      .then((res) => {
-        this.props.history.replace(`/${type}`);
-        this.notifyDone();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log(formData);
+
+    // We need to call the resolve function of the Conflict
+    //
+
+    // this.Eligibility.create(formData)
+    //   .then((res) => {
+    //     this.props.history.replace(`/${type}`);
+    //     this.notifyDone();
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   render() {
@@ -446,8 +451,9 @@ class Conflicts extends React.Component {
                 type="submit"
                 onClick={this.handleSubmit}
                 className="btn primary"
+                disabled={this.state.conflicts.length > 0}
               >
-                Save
+                Resolve Conflicts
               </button>
             </form>
           </div>
