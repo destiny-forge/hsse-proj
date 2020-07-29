@@ -444,7 +444,6 @@ class Conflicts extends React.Component {
                 Resolve Conflicts
               </button>
             </form>
-            {this.state.conflicts}
           </div>
         </div>
       </div>
