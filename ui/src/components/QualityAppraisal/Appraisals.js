@@ -1,6 +1,4 @@
-import _ from 'lodash';
 import React from 'react';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import AppraisalService from '../../services/AppraisalService';
 import withAuth from '../withAuth';
@@ -8,11 +6,10 @@ import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 
 class Appraisals extends React.Component {
-
   constructor(props) {
     super(props);
 
-    this.state = { appraisals: [] }
+    this.state = { appraisals: [] };
     this.Appraisal = AppraisalService({ fetch: this.props.fetch });
   }
 
@@ -20,16 +17,16 @@ class Appraisals extends React.Component {
     const { type } = this.props.match.params;
 
     this.Appraisal.list(type, 'pending_assignment')
-      .then(res => {
+      .then((res) => {
         if (res.success) {
           this.setState({
             appraisals: res.data,
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-      }) 
+      });
   }
 
   percentNeeding(total, complete) {
@@ -37,7 +34,7 @@ class Appraisals extends React.Component {
   }
 
   render() {
-    console.log(this.state.appraisals)
+    console.log(this.state.appraisals);
     return (
       <div className="box">
         <div className="table-responsive">
@@ -53,12 +50,17 @@ class Appraisals extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {
-                this.state.appraisals && this.state.appraisals.map(appraisal => (
+              {this.state.appraisals &&
+                this.state.appraisals.map((appraisal) => (
                   <tr key={Math.random()}>
                     <td>{appraisal.name}</td>
                     <td>{appraisal.total}%</td>
-                    <td>{Math.round(this.percentNeeding(appraisal.total, appraisal.complete))}%</td>
+                    <td>
+                      {Math.round(
+                        this.percentNeeding(appraisal.total, appraisal.complete)
+                      )}
+                      %
+                    </td>
                     <td>{appraisal.in_progress}%</td>
                     <td>{appraisal.complete}%</td>
                     <td>
@@ -67,13 +69,12 @@ class Appraisals extends React.Component {
                       </Link>
                     </td>
                   </tr>
-                ))
-              }
+                ))}
             </tbody>
           </table>
         </div>
       </div>
-    )
+    );
   }
 }
 

@@ -73,7 +73,7 @@ class EligibilityForm extends React.Component {
 
   flatten(tree) {
     let keys = [];
-    tree.map((item) => {
+    tree.forEach((item) => {
       //console.log(item);
       keys.push(item.key);
       if (item.hasOwnProperty('children')) {
@@ -126,26 +126,17 @@ class EligibilityForm extends React.Component {
       });
   }
 
-  onExpand = (expandedKeys) => {
-    this.setState({
-      expandedKeys,
-      autoExpandParent: false,
-    });
-  };
-
   renderTreeSection = (key) => {
     const subTree = this.treeData[key].items;
     const checkedKeyState = this.state.currentFilterState[key];
     return (
       <React.Fragment>
-        <label className="col-md-1 offset-md-1 col-form-label"></label>
         <div className="col-md-10">
           <Tree
             checkable
             showLine={true}
             defaultExpandAll={false}
             autoExpandParent={true}
-            onExpand={this.onExpand}
             onCheck={this.handleTreeClick}
             checkedKeys={checkedKeyState}
           >
@@ -220,13 +211,14 @@ class EligibilityForm extends React.Component {
     }
 
     Object.keys(currentFilterState).forEach((key) => {
-      currentFilterState[key].map((k) => {
+      currentFilterState[key].forEach((k) => {
         formData.filters.push(k);
       });
     });
 
     this.Eligibility.create(formData)
       .then((res) => {
+        console.log(article);
         this.props.history.replace(`/batch/articles/${article.batchId}`);
         this.notifyDone();
       })
@@ -292,11 +284,11 @@ class EligibilityForm extends React.Component {
               </div>
 
               {Object.keys(this.treeData).map((key) => (
-                <>
+                <div key={key}>
                   <div className="box-divider pt-2 mb-3"></div>
                   <h6>{this.treeData[key].title}</h6>
                   {this.renderTreeSection(key)}
-                </>
+                </div>
               ))}
 
               <div className="box-divider pt-2 mb-3"></div>

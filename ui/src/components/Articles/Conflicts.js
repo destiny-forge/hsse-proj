@@ -1,4 +1,4 @@
-import _, { isNil, filter } from 'lodash';
+import _ from 'lodash';
 import React from 'react';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
@@ -100,7 +100,7 @@ class Conflicts extends React.Component {
 
   flatten(tree) {
     let keys = [];
-    tree.map((item) => {
+    tree.forEach((item) => {
       keys.push(item.key);
       if (item.hasOwnProperty('children')) {
         keys = keys.concat(this.flatten(item.children));
@@ -318,7 +318,7 @@ class Conflicts extends React.Component {
     };
 
     Object.keys(left).forEach((key) => {
-      left[key].map((k) => {
+      left[key].forEach((k) => {
         formData.filters.push(k);
       });
     });
