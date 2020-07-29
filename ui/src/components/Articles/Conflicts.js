@@ -25,6 +25,7 @@ class Conflicts extends React.Component {
     const keyArray = this.getKeyArray(this.treeData);
 
     this.state = {
+      expanded: {},
       type: type,
       article: '',
       topics: Object.keys(this.treeData),
@@ -130,6 +131,8 @@ class Conflicts extends React.Component {
                 return conflict.path[1] || conflict.path[0];
               });
 
+              this.setExpandedNodes(conflicts);
+
               this.setState({ conflicts });
 
               const { junior, senior } = article.stages.eligibility;
@@ -146,10 +149,42 @@ class Conflicts extends React.Component {
     });
   }
 
+  setExpandedNodes(conflicts) {
+    const expanded = {};
+    Object.keys(this.treeData).forEach((key) => {
+      expanded[key] = this.getExpandedNodes(
+        this.treeData[key].items,
+        conflicts
+      );
+    });
+    this.setState({ expanded });
+  }
+
+  getExpandedNodes(items, conflicts, parent) {
+    let nodes = [];
+    items.forEach((item) => {
+      if (_.includes(conflicts, item.key)) {
+        if (!_.isUndefined(parent)) {
+          if (!_.includes(nodes, parent)) {
+            nodes.push(parent);
+          }
+        } else {
+          nodes.push(item.key);
+        }
+      }
+      if (_.has(item, 'children')) {
+        nodes = nodes.concat(
+          this.getExpandedNodes(item.children, conflicts, item.key)
+        );
+      }
+    });
+    return nodes;
+  }
+
   getEligibility(shortId, userId, side) {
     this.Eligibility.get(shortId, userId).then((result) => {
       const eligibility = result.data;
-      const filters = this.getEligibilityFilterState(eligibility, side);
+      const filters = this.getEligibilityFilterState(eligibility);
       let newState = Object.assign({}, this.state[side]);
       newState.selected = filters;
 
@@ -164,7 +199,7 @@ class Conflicts extends React.Component {
     });
   }
 
-  getEligibilityFilterState(eligibility, side) {
+  getEligibilityFilterState(eligibility) {
     let filters = this.getKeyArray(this.treeData);
     for (const topic of this.state.topics) {
       const keys = this.flatten(this.treeData[topic].items);
@@ -183,16 +218,18 @@ class Conflicts extends React.Component {
     this.compare();
   }
 
-  onExpand = (expandedKeys) => {
+  onExpand = (key, expandedKeys) => {
+    const expanded = Object.assign({}, this.state.expanded);
+    expanded[key] = expandedKeys;
     this.setState({
-      expandedKeys,
-      autoExpandParent: false,
+      expanded,
     });
   };
 
   renderTreeSection = (key, side) => {
     const subTree = this.treeData[key].items;
     const checkedKeyState = this.state[side].selected[key];
+    const expandedKeys = this.state.expanded[key] || [];
     return (
       <React.Fragment>
         <div className="col-md-10">
@@ -201,9 +238,10 @@ class Conflicts extends React.Component {
             showLine={true}
             defaultExpandAll={false}
             autoExpandParent={true}
-            onExpand={this.onExpand}
+            onExpand={(expandedKeys) => this.onExpand(key, expandedKeys)}
             onCheck={this.handleTreeClick}
             checkedKeys={checkedKeyState}
+            expandedKeys={expandedKeys}
           >
             {this.renderTreeNodes(subTree, key, side)}
           </Tree>
@@ -218,9 +256,11 @@ class Conflicts extends React.Component {
       item.name = key;
       let style;
       if (isTheirs) {
-        style = _.includes(this.state.conflicts, item.key)
-          ? { background: '#FFBABA' }
-          : { background: '#90ee90' };
+        if (_.includes(this.state.conflicts, item.key)) {
+          style = { background: '#FFBABA' };
+        } else {
+          style = { background: '#90ee90' };
+        }
       }
 
       const isCheckboxDisabled = side === 'right' ? true : false;
