@@ -8,52 +8,56 @@ import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 
 class Articles extends React.Component {
-
   constructor(props) {
     super(props);
 
-    this.state = { articles: [] }
+    this.state = { articles: [] };
     this.Article = ArticleService({ fetch: this.props.fetch });
   }
 
-  notifyDone = () => toast.success("Assignment created successfully.");
+  notifyDone = () => toast.success('Assignment created successfully.');
 
   showEmail = (article, type) => {
     const { eligibility } = article.stages;
-
-    if (eligibility.status === 'half_assigned') {
-      if (!_.isUndefined(eligibility[type])) {
-        return eligibility[type].email;
-      }
+    if (!_.isUndefined(eligibility[type])) {
+      return eligibility[type].email;
     }
+  };
 
-    if (eligibility.status === 'assigned') {
-      if (!_.isUndefined(eligibility[type])) {
-        return eligibility[type].email;
-      }
+  isAssigned = (article) => {
+    const { user } = this.props;
+    const { eligibility } = article.stages;
+    let juniorAssigned,
+      seniorAssigned = false;
+    if (!_.isUndefined(eligibility['junior'])) {
+      juniorAssigned = eligibility.junior.email === user.email;
     }
-  }
+    if (!_.isUndefined(eligibility['senior'])) {
+      seniorAssigned = eligibility.senior.email === user.email;
+    }
+    return juniorAssigned || seniorAssigned;
+  };
 
   componentDidMount() {
     const { shortId } = this.props.match.params;
 
     this.Article.getArticlesByBatch(shortId)
-      .then(res => {
+      .then((res) => {
         if (res.success) {
           this.setState({
-            articles: res.data
+            articles: res.data,
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-      })
+      });
   }
 
-  assignment = (type, articleId) => {
-    const { user }  = this.props;
+  assign = (type, articleId) => {
+    const { user } = this.props;
     const { shortId } = this.props.match.params;
-      
+
     const assignment = {
       articleId,
       stage: 'eligibility',
@@ -62,30 +66,30 @@ class Articles extends React.Component {
 
     assignment.user = {
       _id: user.id,
-      email: user.email
-    }
+      email: user.email,
+    };
 
-    this.Article.assign(assignment).then(res => {
-      if (res.success) {
-        this.notifyDone();
-        this.Article.getArticlesByBatch(shortId)
-          .then(res => {
-            if (res.success) {
-              this.setState({
-                articles: res.data
-              });
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          })
-      }
-
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  }
+    this.Article.assign(assignment)
+      .then((res) => {
+        if (res.success) {
+          this.notifyDone();
+          this.Article.getArticlesByBatch(shortId)
+            .then((res) => {
+              if (res.success) {
+                this.setState({
+                  articles: res.data,
+                });
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   render() {
     return (
@@ -105,55 +109,72 @@ class Articles extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {
-                this.state.articles && this.state.articles.map(article => (
+              {this.state.articles &&
+                this.state.articles.map((article) => (
                   <tr key={Math.random()}>
                     <td>{article._id}</td>
                     <td>{article.title}</td>
                     <td>{article.authors}</td>
                     <td>TBD</td>
                     <td>
-                      {
-                        this.showEmail(article, 'junior') ||
-                        <button
-                          className="md-btn md-flat mb-2 w-xs text-success"
-                          onClick={() => { 
-                            if (window.confirm('Are you sure you want to assign this article to your assigned quality appraisals list?')) this.assignment('junior', article._id) } 
-                          }>
-                          Assign
-                        </button>
-                      }
-                    </td>
-                    <td>
-                      {
-                        this.showEmail(article, 'senior') ||
+                      {this.showEmail(article, 'junior') || (
                         <button
                           className="md-btn md-flat mb-2 w-xs text-success"
                           onClick={() => {
-                            if (window.confirm('Are you sure you want to assign this article to your assigned quality appraisals list?')) this.assignment('senior', article._id) }
-                          }>
+                            if (
+                              window.confirm(
+                                'Are you sure you want to assign this article to your assigned quality appraisals list?'
+                              )
+                            )
+                              this.assign('junior', article._id);
+                          }}
+                        >
                           Assign
                         </button>
-                      }
+                      )}
                     </td>
                     <td>
-                      <Link to={`/conflicts/${article.shortId}`}>
-                        Resolve Conflicts
-                      </Link>
+                      {this.showEmail(article, 'senior') || (
+                        <button
+                          className="md-btn md-flat mb-2 w-xs text-success"
+                          onClick={() => {
+                            if (
+                              window.confirm(
+                                'Are you sure you want to assign this article to your assigned quality appraisals list?'
+                              )
+                            )
+                              this.assign('senior', article._id);
+                          }}
+                        >
+                          Assign
+                        </button>
+                      )}
                     </td>
                     <td>
-                      <Link to={`/eligibility/${article.shortId}`}>
-                        Code
-                      </Link>
+                      {this.isAssigned(article) && (
+                        <Link
+                          to={`/conflicts/${article.type}/${article.shortId}`}
+                        >
+                          Resolve Conflicts
+                        </Link>
+                      )}
+                    </td>
+                    <td>
+                      {this.isAssigned(article) && (
+                        <Link
+                          to={`/eligibility/${article.type}/${article.shortId}`}
+                        >
+                          Code
+                        </Link>
+                      )}
                     </td>
                   </tr>
-                ))
-              }
+                ))}
             </tbody>
           </table>
         </div>
       </div>
-    )
+    );
   }
 }
 

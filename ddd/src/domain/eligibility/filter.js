@@ -15,6 +15,9 @@ const Filter = t.struct(
 
     type: t.String,
 
+    documentType: t.String,
+    filters: t.Array,
+
     relevance: t.Boolean,
     completed: t.Boolean,
     complicated: t.Boolean,

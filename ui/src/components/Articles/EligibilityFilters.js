@@ -8,24 +8,24 @@ class EligibilityFilters extends Component {
     super(props);
 
     this.state = {
-      articles: []
-    }
+      articles: [],
+    };
 
     this.Article = ArticleService({ fetch: this.props.fetch });
   }
 
   componentDidMount() {
     this.Article.eligibilityFilters()
-      .then(res => {
+      .then((res) => {
         if (res.success) {
           this.setState({
             articles: res.data,
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-      })
+      });
   }
 
   render() {
@@ -33,7 +33,7 @@ class EligibilityFilters extends Component {
       <div className="padding">
         <div className="box">
           <div className="box-header">
-            <h3>Assessing Eligibility & Assigning Filters</h3>
+            <h3>Assessing Eligibility &amp; Assigning Filters</h3>
           </div>
           <div className="table-responsive">
             <table className="table table-striped b-t">
@@ -52,18 +52,18 @@ class EligibilityFilters extends Component {
                 </tr>
               </thead>
               <tbody>
-                    <tr key={Math.random()}>
-                      <td>LOW</td>
-                      <td>Todo</td>
-                      <td>Todo</td>
-                      <td>Todo</td>
-                      <td>Todo</td>
-                      <td>Todo</td>
-                      <td>Todo</td>
-                      <td>Todo</td>
-                      <td>Todo</td>
-                      <td>Todo</td>
-                    </tr>
+                <tr key={Math.random()}>
+                  <td>LOW</td>
+                  <td>Todo</td>
+                  <td>Todo</td>
+                  <td>Todo</td>
+                  <td>Todo</td>
+                  <td>Todo</td>
+                  <td>Todo</td>
+                  <td>Todo</td>
+                  <td>Todo</td>
+                  <td>Todo</td>
+                </tr>
               </tbody>
             </table>
           </div>
