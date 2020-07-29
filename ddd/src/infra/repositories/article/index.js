@@ -84,6 +84,14 @@ module.exports = ({ model }) => {
     }
   };
 
+  const updateStage = async (...args) => {
+    try {
+      return model.updateStage(...args);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const assign = async (...args) => {
     try {
       return model.assign(...args);
@@ -114,6 +122,7 @@ module.exports = ({ model }) => {
     getAll,
     create,
     update,
+    updateStage,
     findById,
     findByType,
     findByBatch,

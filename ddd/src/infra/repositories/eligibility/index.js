@@ -4,7 +4,7 @@ module.exports = ({ model }) => {
   const getAll = async (...args) => {
     try {
       const filters = await model.getAll(...args);
-      return filters.map(filter => {
+      return filters.map((filter) => {
         return toEntity(filter);
       });
     } catch (err) {
@@ -15,7 +15,7 @@ module.exports = ({ model }) => {
   const find = async (...args) => {
     try {
       const filters = await model.find(...args);
-      return filters.map(filter => {
+      return filters.map((filter) => {
         return toEntity(filter);
       });
     } catch (err) {
@@ -23,10 +23,10 @@ module.exports = ({ model }) => {
     }
   };
 
-  const findByArticleId = async articleId => {
+  const findByArticleId = async (articleId) => {
     try {
       const filters = await model.findByArticleId(articleId);
-      return filters.map(filter => {
+      return filters.map((filter) => {
         return toEntity(filter);
       });
     } catch (err) {
@@ -34,10 +34,10 @@ module.exports = ({ model }) => {
     }
   };
 
-  const findByType = async type => {
+  const findByType = async (type) => {
     try {
       const filters = await model.findByType(type);
-      return filters.map(filter => {
+      return filters.map((filter) => {
         return toEntity(filter);
       });
     } catch (err) {
@@ -88,6 +88,6 @@ module.exports = ({ model }) => {
     findByArticleId,
     findByType,
     findOne,
-    find
+    find,
   };
 };

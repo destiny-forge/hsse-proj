@@ -120,7 +120,7 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/resolve/:articleId", (req, res) => {
+  router.post("/resolve/:articleId", (req, res) => {
     const { articleId } = req.params;
     const { user } = req;
     resolveUseCase

@@ -288,7 +288,7 @@ class Conflicts extends React.Component {
     });
   };
 
-  notifyDone = () => toast.success('Eligibility completed!');
+  notifyDone = () => toast.success('Eligibility conflicts resolved!');
   notifySuccess = () => toast.success('Successfully saved!');
 
   getAssignmentRole(user, article) {
@@ -305,7 +305,8 @@ class Conflicts extends React.Component {
     const { article } = this.state;
 
     this.Eligibility.resolve(article._id).then((result) => {
-      console.log(result);
+      this.notifyDone();
+      this.props.history.replace(`/batch/articles/${article.batchId}`);
     });
   };
 
