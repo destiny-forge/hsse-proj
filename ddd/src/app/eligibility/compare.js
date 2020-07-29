@@ -41,6 +41,7 @@ module.exports = ({ eligibilityRepository }) => {
           "completed",
           "complicated",
           "role",
+          "selectedStatus",
         ].indexOf(key) < 0;
 
       const diffs = diff(source, target, filter);
