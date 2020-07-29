@@ -52,25 +52,18 @@ class Conflicts extends React.Component {
     return filterState;
   };
 
-  handleChange = (field, value) => {
-    this.setState({
-      [field]: value,
-    });
+  handleChange = (field, opt) => {
+    this.updateEligibility(field, opt.value);
   };
 
   handleCheckbox = (e) => {
-    const { checked, name } = e.target;
-
-    this.setState({
-      [name]: checked,
-    });
+    const { name, checked } = e.target;
+    this.updateEligibility(name, checked);
   };
 
   handleTreeClick = (selectedKeys, evt) => {
-    const { user } = this.props;
-    const { type, article, left } = this.state;
-    const { eligibility } = left;
     const key = evt.node.props.name;
+    const { left } = this.state;
 
     let newState = Object.assign({}, left);
     newState.selected[key] = selectedKeys;
@@ -80,23 +73,30 @@ class Conflicts extends React.Component {
       allKeys = allKeys.concat(newState.selected[key]);
     });
 
+    this.updateEligibility('filters', allKeys);
+  };
+
+  updateEligibility(field, value) {
+    const { user } = this.props;
+    const { type, article, left } = this.state;
+
     let formData = {
-      _id: eligibility._id,
+      _id: left.eligibility._id,
       articleId: article._id,
       userId: user.id,
       type: type,
-      filters: allKeys,
+      [field]: value,
     };
 
     this.Eligibility.create(formData)
       .then((_res) => {
-        this.setState({ left: newState }, this.compare);
+        this.compare();
         this.notifySuccess();
       })
       .catch((err) => {
         console.log(err);
       });
-  };
+  }
 
   flatten(tree) {
     let keys = [];
@@ -302,41 +302,16 @@ class Conflicts extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    const { article } = this.state;
 
-    const { type, left, article } = this.state;
-    const { eligibility } = left;
-    const { user } = this.props;
-
-    let formData = {
-      userId: user.id,
-      articleId: article._id,
-      shortArticleId: article.shortId,
-      type: type,
-      documentType: eligibility.type,
-      generalFocus: eligibility.focus,
-      filters: [],
-    };
-
-    Object.keys(left.selected).forEach((key) => {
-      left.selected[key].forEach((k) => {
-        formData.filters.push(k);
-      });
+    this.Eligibility.resolve(article._id).then((result) => {
+      console.log(result);
     });
-
-    console.log(formData);
-
-    // We need to call the resolve function of the Conflict
-    //
-
-    // this.Eligibility.create(formData)
-    //   .then((res) => {
-    //     this.props.history.replace(`/${type}`);
-    //     this.notifyDone();
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   };
+
+  getConflictBG(key) {
+    return _.includes(this.state.conflicts, key) ? '#FFBABA' : '#90ee90';
+  }
 
   render() {
     const { article, left, right } = this.state;
@@ -371,11 +346,11 @@ class Conflicts extends React.Component {
                     <label>Document type</label>
                     <Select
                       value={this.types.filter(
-                        (opt) => opt.value === left.eligibility.type
+                        (opt) => opt.value === left.eligibility.documentType
                       )}
-                      name="selectedDocumentType"
+                      name="documentType"
                       onChange={(value) =>
-                        this.handleChange('selectedDocumentType', value)
+                        this.handleChange('documentType', value)
                       }
                       options={this.types}
                       isSearchable
@@ -410,12 +385,16 @@ class Conflicts extends React.Component {
                   <h2>Theirs</h2>
                   <div className="box-divider pt-2 mb-3"></div>
                   <div className="form-group">
-                    <label>Document type</label>
+                    <label
+                      style={{ background: this.getConflictBG('documentType') }}
+                    >
+                      Document type
+                    </label>
                     <Select
                       value={this.types.filter(
-                        (opt) => opt.value === right.eligibility.focus
+                        (opt) => opt.value === right.eligibility.documentType
                       )}
-                      name="selectedDocumentType"
+                      name="documentType"
                       options={this.types}
                       isDisabled={true}
                     />
@@ -423,18 +402,27 @@ class Conflicts extends React.Component {
                   <div className="form-group">
                     <label>General focus?</label>
                     <label
-                      style={{ fontWeight: 'normal', padding: '0px 20px' }}
+                      style={{
+                        fontWeight: 'normal',
+                        padding: '0px 20px',
+                      }}
                     >
                       <input
-                        checked={right.eligibility.focus}
+                        checked={right.eligibility.generalFocus}
                         type="checkbox"
                         className="form-check-input"
                         name="generalFocus"
                         disabled={true}
                       />{' '}
-                      Yes, this article has a general focus (review definition
-                      and code accordingly, nothing that the default is set to
-                      specific)
+                      <div
+                        style={{
+                          background: this.getConflictBG('generalFocus'),
+                        }}
+                      >
+                        Yes, this article has a general focus (review definition
+                        and code accordingly, nothing that the default is set to
+                        specific)
+                      </div>
                     </label>
                   </div>
                   {Object.keys(this.treeData).map((key) => (
@@ -456,6 +444,7 @@ class Conflicts extends React.Component {
                 Resolve Conflicts
               </button>
             </form>
+            {this.state.conflicts}
           </div>
         </div>
       </div>
