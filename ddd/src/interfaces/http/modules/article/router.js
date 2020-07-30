@@ -193,10 +193,10 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/batch/:batchId", (req, res) => {
-    const { batchId } = req.params;
+  router.get("/batch/:stage/:batchId", (req, res) => {
+    const { stage, batchId } = req.params;
     listUseCase
-      .listByBatch(batchId)
+      .listByBatch(batchId, stage)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

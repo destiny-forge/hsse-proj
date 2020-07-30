@@ -38,12 +38,14 @@ class Articles extends React.Component {
     return juniorAssigned || seniorAssigned;
   };
 
+  isFullyCoded = (article) => {
+    return article.stages.eligibility.status === 'fully_coded';
+  };
+
   componentDidMount() {
-    const { shortId } = this.props.match.params;
+    const { shortId, stage } = this.props.match.params;
 
-    console.log(this.props);
-
-    this.Article.getArticlesByBatch(shortId)
+    this.Article.getArticlesByBatch(shortId, stage)
       .then((res) => {
         if (res.success) {
           this.setState({
@@ -153,13 +155,14 @@ class Articles extends React.Component {
                       )}
                     </td>
                     <td>
-                      {this.isAssigned(article) && (
-                        <Link
-                          to={`/conflicts/${article.type}/${article.shortId}`}
-                        >
-                          Resolve Conflicts
-                        </Link>
-                      )}
+                      {this.isAssigned(article) &&
+                        this.isFullyCoded(article) && (
+                          <Link
+                            to={`/conflicts/${article.type}/${article.shortId}`}
+                          >
+                            Resolve Conflicts
+                          </Link>
+                        )}
                     </td>
                     <td>
                       {this.isAssigned(article) && (

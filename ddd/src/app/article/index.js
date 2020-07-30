@@ -7,5 +7,5 @@ module.exports = {
   create,
   get,
   list,
-  assign
+  assign,
 };

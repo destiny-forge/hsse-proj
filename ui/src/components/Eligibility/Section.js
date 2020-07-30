@@ -11,9 +11,10 @@ const withSection = (WrappedComponent) => {
 
     const parms = queryString.parse(history.location.search);
     const uid = parms['t'] || false;
+    const stage = 'eligibility';
 
     function fetchData(type, tab) {
-      Batch.list(type, 'eligibility', tab)
+      Batch.list(type, stage, tab)
         .then((res) => {
           if (res.success) {
             setBatches(res.data);
@@ -35,7 +36,13 @@ const withSection = (WrappedComponent) => {
     };
 
     return (
-      <WrappedComponent trackTab={trackTab} batches={batches} {...props} />
+      <WrappedComponent
+        trackTab={trackTab}
+        batches={batches}
+        type={type}
+        stage={stage}
+        {...props}
+      />
     );
   };
 

@@ -34,9 +34,9 @@ module.exports = ({ model }) => {
     }
   };
 
-  const findByBatch = async (batchId) => {
+  const findByBatch = async (...args) => {
     try {
-      const articles = await model.findByBatch(batchId);
+      const articles = await model.findByBatch(...args);
       return articles.map((article) => {
         return toEntity(article);
       });

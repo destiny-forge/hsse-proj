@@ -1,13 +1,21 @@
 const container = require("src/container");
-const { create, get, compare, resolve } = require("src/app/eligibility");
+const {
+  create,
+  get,
+  compare,
+  resolve,
+  initEvents,
+} = require("src/app/eligibility");
 
 module.exports = () => {
   const {
     repository: { eligibilityRepository, articleRepository },
+    events,
   } = container.cradle;
 
   const createUseCase = create({
     eligibilityRepository,
+    events,
   });
 
   const getUseCase = get({
@@ -22,6 +30,12 @@ module.exports = () => {
   const resolveUseCase = resolve({
     articleRepository,
     eligibilityRepository,
+  });
+
+  initEvents({
+    events,
+    eligibilityRepository,
+    articleRepository,
   });
 
   return {

@@ -51,13 +51,15 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findByBatch = async (batchId) => {
+  const findByBatch = async (batchId, stage, status) => {
+    const filters = Array.isArray(status) ? { $in: status } : status;
     try {
       return await database
         .get()
         .collection("articles")
         .find({
           batchId: { $eq: ObjectID(batchId) },
+          [`stages.${stage}.status`]: filters,
         })
         .toArray();
     } catch (e) {
@@ -131,17 +133,17 @@ module.exports = ({ database }) => {
         total: { $sum: 1 },
         in_progress: {
           $sum: {
-            $cond: [{ $eq: ["$status", "in_progress"] }, 1, 0],
+            $cond: [{ $eq: [`$stages.${stage}.status`, "in_progress"] }, 1, 0],
           },
         },
         complete: {
           $sum: {
-            $cond: [{ $eq: ["$status", "complete"] }, 1, 0],
+            $cond: [{ $eq: [`$stages.${stage}.status`, "complete"] }, 1, 0],
           },
         },
         created: {
           $sum: {
-            $cond: [{ $eq: ["$status", "created"] }, 1, 0],
+            $cond: [{ $ne: [`$stages.${stage}.status`, "complete"] }, 1, 0],
           },
         },
         batchName: { $first: "$batchName" },
