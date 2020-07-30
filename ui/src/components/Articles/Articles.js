@@ -77,7 +77,7 @@ class Articles extends React.Component {
       .then((res) => {
         if (res.success) {
           this.notifyDone();
-          this.Article.getArticlesByBatch(shortId)
+          this.Article.getArticlesByBatch(shortId, assignment.stage)
             .then((res) => {
               if (res.success) {
                 this.setState({
