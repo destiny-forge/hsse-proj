@@ -216,7 +216,9 @@ class EligibilityForm extends React.Component {
 
     this.Eligibility.create(formData)
       .then((res) => {
-        this.props.history.replace(`/batch/articles/${article.batchId}`);
+        this.props.history.replace(
+          `/batch/articles/eligibility/${article.batchId}`
+        );
         this.notifyDone();
       })
       .catch((err) => {

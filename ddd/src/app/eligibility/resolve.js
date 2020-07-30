@@ -41,7 +41,6 @@ module.exports = ({ articleRepository, eligibilityRepository }) => {
         }
       );
     } catch (error) {
-      console.log(error);
       throw new Error(error);
     }
   };

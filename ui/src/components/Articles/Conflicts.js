@@ -306,7 +306,9 @@ class Conflicts extends React.Component {
 
     this.Eligibility.resolve(article._id).then((result) => {
       this.notifyDone();
-      this.props.history.replace(`/batch/articles/${article.batchId}`);
+      this.props.history.replace(
+        `/batch/articles/eligibility/${article.batchId}`
+      );
     });
   };
 

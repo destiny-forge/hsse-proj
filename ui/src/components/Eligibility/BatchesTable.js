@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const BatchesTable = ({ batches }) => {
+const BatchesTable = ({ stage, batches }) => {
   return (
     <div className="box">
       <div className="table-responsive">
@@ -33,13 +33,15 @@ const BatchesTable = ({ batches }) => {
                   </td>
                   <td>{batch.batch[0].referenceType || 'N/A'}</td>
                   <td>
-                    <Link to={`/batch/articles/${batch._id}`}>
+                    <Link to={`/batch/articles/${stage}/${batch._id}`}>
                       {batch.name}
                     </Link>
                   </td>
                   <td>{batch.total}</td>
-                  <td>{batch.in_progress}%</td>
-                  <td>{batch.complete}%</td>
+                  <td>
+                    {Math.round((batch.in_progress / batch.total) * 100)}%
+                  </td>
+                  <td>{Math.round((batch.complete / batch.total) * 100)}%</td>
                 </tr>
               ))}
           </tbody>

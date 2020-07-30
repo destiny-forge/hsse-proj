@@ -29,8 +29,8 @@ const ArticleService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
-  const getArticlesByBatch = async (id) => {
-    const res = await fetch(`/articles/batch/${id}`);
+  const getArticlesByBatch = async (id, stage) => {
+    const res = await fetch(`/articles/batch/${stage}/${id}`);
     return Promise.resolve(res);
   };
 

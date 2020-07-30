@@ -12,7 +12,6 @@ import BatchUpload from './components/Articles/BatchUpload';
 import Notes from './components/Articles/Notes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import EligibilityFilters from './components/Articles/EligibilityFilters';
 import SSE from './components/Eligibility/SSE';
 import HSE from './components/Eligibility/HSE';
 import EligibilityForm from './components/Eligibility/EligibilityForm';
@@ -49,10 +48,6 @@ class App extends Component {
           <Route path="/hse" component={HSE} />
           <Route path="/sse" component={SSE} />
           <Route
-            path="/sse/eligibility-filters"
-            component={EligibilityFilters}
-          />
-          <Route
             path="/eligibility/:type/:shortId"
             component={EligibilityForm}
           />
@@ -61,7 +56,7 @@ class App extends Component {
             component={QualityAppraisalForm}
           />
           <Route path="/appraisals/:type" component={Appraisals} />
-          <Route path="/batch/articles/:shortId" component={Articles} />
+          <Route path="/batch/articles/:stage/:shortId" component={Articles} />
           <Route path="/conflicts/:type/:shortId" component={Conflicts} />
           <Route path="/upload" component={BatchUpload} />
           <Route path="/notes" component={Notes} />

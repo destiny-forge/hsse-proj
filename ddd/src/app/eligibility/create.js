@@ -4,7 +4,7 @@ const ObjectID = require("mongodb").ObjectID;
 /**
  * Eligibility filter creation
  */
-module.exports = ({ eligibilityRepository }) => {
+module.exports = ({ eligibilityRepository, events }) => {
   const create = async (eligibility) => {
     try {
       if (
@@ -42,7 +42,10 @@ module.exports = ({ eligibilityRepository }) => {
             ? sseFilter(eligibility)
             : hseFilter(eligibility);
 
-        return await eligibilityRepository.create(entity);
+        const result = await eligibilityRepository.create(entity);
+        events.emit("article.eligibility.coded", eligibility.articleId);
+
+        return result;
       }
     } catch (error) {
       throw new Error(error);

@@ -8,12 +8,8 @@ import Tabs from './Tabs';
 import Sidebar from './Sidebar';
 
 class SSE extends Component {
-
   render() {
-    const { 
-      trackTab,
-      batches
-    } = this.props;
+    const { trackTab, batches, type, stage } = this.props;
 
     return (
       <React.Fragment>
@@ -22,10 +18,7 @@ class SSE extends Component {
           <div className="row">
             <div className="col-sm-12 order-sm-1">
               <div className="py-4 clearfix nav-active-theme">
-                <Tabs 
-                  trackTab={trackTab} 
-                  type={'sse'}
-                />
+                <Tabs trackTab={trackTab} type={type} />
               </div>
             </div>
           </div>
@@ -35,23 +28,23 @@ class SSE extends Component {
             <div className="col-sm-8 col-lg-9">
               <div className="tab-content">
                 <div className="tab-pane fade show active" id="tab_1">
-                  <BatchesTable batches={batches} />
+                  <BatchesTable batches={batches} stage={stage} />
                 </div>
-              
+
                 <div className="tab-pane fade" id="tab_2">
-                  <BatchesTable batches={batches} />
+                  <BatchesTable batches={batches} stage={stage} />
                 </div>
-                
+
                 <div className="tab-pane fade" id="tab_3">
                   Third tab (complicated)... this one is in progress
                 </div>
               </div>
             </div>
-            <Sidebar type="sse" />
+            <Sidebar type={type} />
           </div>
         </div>
       </React.Fragment>
-    )
+    );
   }
 }
 
