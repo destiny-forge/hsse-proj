@@ -52,7 +52,6 @@ class EligibilityForm extends React.Component {
   };
 
   handleChange = (field, value) => {
-    console.log(field, value);
     this.setState({
       [field]: value,
     });
@@ -110,8 +109,6 @@ class EligibilityForm extends React.Component {
                   }
                 });
               }
-
-              console.log(eligibility);
 
               this.setState({
                 _id: eligibility._id,
