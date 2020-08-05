@@ -228,6 +228,7 @@ class Conflicts extends React.Component {
 
   renderTreeSection = (key, side) => {
     const subTree = this.treeData[key].items;
+    const hasChildren = _.has(subTree[0], 'children');
     const checkedKeyState = this.state[side].selected[key];
     const expandedKeys = this.state.expanded[key] || [];
     return (
@@ -235,7 +236,7 @@ class Conflicts extends React.Component {
         <div className="col-md-10">
           <Tree
             checkable
-            showLine={true}
+            showLine={hasChildren}
             defaultExpandAll={false}
             autoExpandParent={true}
             onExpand={(expandedKeys) => this.onExpand(key, expandedKeys)}

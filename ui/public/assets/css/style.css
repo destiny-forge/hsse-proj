@@ -15,7 +15,8 @@ div.react-datepicker-wrapper {
   display: block;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
   color: #fff;
   background-color: #9e9e9e;
 }
@@ -24,19 +25,19 @@ div.react-datepicker-wrapper {
   position: fixed;
   top: 0;
   left: 0;
-  width:100%;
+  width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
 }
 
 .modal-main {
-  position:fixed;
+  position: fixed;
   background: white;
   width: 50%;
   height: auto;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .display-block {
@@ -48,35 +49,35 @@ div.react-datepicker-wrapper {
 }
 
 label {
-	color: #282A25;
-	font-weight: bold;
+  color: #282a25;
+  font-weight: bold;
 }
 
 .btn-radio {
-  color: #4A4A4A;
+  color: #4a4a4a;
   background-color: #fff;
-	padding: 5px 15px 5px 15px;
-	border: 1px solid #D4D4D3;
-	border-radius: 4px;
+  padding: 5px 15px 5px 15px;
+  border: 1px solid #d4d4d3;
+  border-radius: 4px;
 }
 
 .btn-radio:hover {
-	border: 1px solid #888;
-	border-radius: 4px;
-	background-color: #FFFFFF;
-	color: #96C61A;
+  border: 1px solid #888;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #96c61a;
 }
 
 .btn-radio.active {
-	border: 1px solid #888;
-	border-radius: 4px;
-	background-color: #D4D4D3;
-	color: #fff;
+  border: 1px solid #888;
+  border-radius: 4px;
+  background-color: #d4d4d3;
+  color: #fff;
 }
 
 .cap {
   font-weight: normal;
   color: #666;
   font-style: normal;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }

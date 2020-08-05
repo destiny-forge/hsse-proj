@@ -4,10 +4,7 @@ const { compose } = require("ramda");
 const { cleanData, cleanMongoId } = require("../helper");
 
 const HSEFilter = Filter.extend(
-  {
-    generalFocus: t.Boolean,
-    selectedStatus: t.String,
-  },
+  {},
   {
     defaultProps: {
       type: "hse",

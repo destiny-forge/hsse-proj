@@ -26,6 +26,8 @@ class EligibilityForm extends React.Component {
     const { type } = this.props.match.params;
 
     this.types = type === 'hse' ? hse.types : sse.types || [];
+    this.questionTypes =
+      type === 'hse' ? hse.questionTypes : sse.questionTypes || [];
     this.treeData = type === 'hse' ? hse.tree : sse.tree;
 
     this.state = {
@@ -50,6 +52,7 @@ class EligibilityForm extends React.Component {
   };
 
   handleChange = (field, value) => {
+    console.log(field, value);
     this.setState({
       [field]: value,
     });
@@ -108,9 +111,12 @@ class EligibilityForm extends React.Component {
                 });
               }
 
+              console.log(eligibility);
+
               this.setState({
                 _id: eligibility._id,
                 generalFocus: eligibility.generalFocus,
+                questionType: eligibility.questionType,
                 selectedStatus: eligibility.selectedStatus,
                 selectedDocumentType: eligibility.documentType,
                 currentFilterState: newState,
@@ -126,29 +132,25 @@ class EligibilityForm extends React.Component {
 
   renderTreeSection = (key) => {
     const subTree = this.treeData[key].items;
+    const hasChildren = _.has(subTree[0], 'children');
     const checkedKeyState = this.state.currentFilterState[key];
     return (
-      <React.Fragment>
-        <div className="col-md-10">
-          <Tree
-            checkable
-            showLine={true}
-            defaultExpandAll={false}
-            autoExpandParent={true}
-            onCheck={this.handleTreeClick}
-            checkedKeys={checkedKeyState}
-          >
-            {this.renderTreeNodes(subTree, key)}
-          </Tree>
-        </div>
-      </React.Fragment>
+      <Tree
+        checkable
+        showLine={hasChildren}
+        showIcon={false}
+        defaultExpandAll={false}
+        autoExpandParent={true}
+        onCheck={this.handleTreeClick}
+        checkedKeys={checkedKeyState}
+      >
+        {this.renderTreeNodes(subTree, key)}
+      </Tree>
     );
   };
 
   renderTreeNodes = (data, name) =>
     data.map((item) => {
-      // Adds name to the object to be used int he handle click
-      // so that we can set state properly.
       item.name = name;
 
       if (item.children) {
@@ -187,6 +189,7 @@ class EligibilityForm extends React.Component {
       type,
       generalFocus,
       selectedDocumentType,
+      questionType,
       selectedStatus,
     } = this.state;
 
@@ -198,6 +201,7 @@ class EligibilityForm extends React.Component {
       articleId: article._id,
       shortArticleId: article.shortId,
       generalFocus: generalFocus,
+      questionType: questionType,
       role: this.getAssignmentRole(user, article),
       documentType: selectedDocumentType,
       selectedStatus: selectedStatus,
@@ -237,7 +241,8 @@ class EligibilityForm extends React.Component {
             <small>Ref Id: {article.shortId}</small>
           </div>
           <div className="box-body">
-            <form>
+            <fieldset>
+              <legend>General Information</legend>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Ref id</label>
                 <div className="col-sm-10">{article.shortId}</div>
@@ -258,6 +263,23 @@ class EligibilityForm extends React.Component {
                       this.handleChange('selectedDocumentType', opt.value)
                     }
                     options={this.types}
+                    isSearchable
+                    required
+                  />
+                </div>
+              </div>
+              <div className="form-group row">
+                <label className="col-sm-2 col-form-label">Question type</label>
+                <div className="col-sm-4">
+                  <Select
+                    value={this.questionTypes.filter(
+                      (opt) => opt.value === this.state.questionType
+                    )}
+                    name="questionType"
+                    onChange={(opt) =>
+                      this.handleChange('questionType', opt.value)
+                    }
+                    options={this.questionTypes}
                     isSearchable
                   />
                 </div>
@@ -282,76 +304,97 @@ class EligibilityForm extends React.Component {
                 </div>
               </div>
 
-              {Object.keys(this.treeData).map((key) => (
-                <div key={key}>
-                  <div className="box-divider pt-2 mb-3"></div>
-                  <h6>{this.treeData[key].title}</h6>
-                  {this.renderTreeSection(key)}
-                </div>
-              ))}
-
-              <div className="box-divider pt-2 mb-3"></div>
-              <h6>Assessment and Assignment Status</h6>
-
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Status</label>
-                <div className="col-sm-4">
-                  <Select
-                    value={STATUSES.filter(
-                      (opt) => opt.value === this.state.selectedStatus
-                    )}
-                    name="selectedStatus"
-                    onChange={(opt) =>
-                      this.handleChange('selectedStatus', opt.value)
-                    }
-                    options={STATUSES}
-                    isSearchable
-                  />
-                </div>
-                <ul>
-                  <li>
-                    <b>New article</b> = New, still having content added, not
-                    visible in searches
-                  </li>
-                  <li>
-                    <b>Data entry complete</b> = All required content has been
-                    added, still not visible in searches
-                  </li>
-                  <li>
-                    <b>Live</b> = Available for searching/alerting
-                  </li>
-                  <li>
-                    <b>Deleted</b> = Removed from the system, not visible in
-                    searches
-                  </li>
-                </ul>
-              </div>
-              {this.state.selectedStatus &&
-                this.state.selectedStatus.value === 'Delete' && (
+              {/*
                   <div className="form-group row">
-                    <label className="col-sm-2 col-form-label">
-                      Please enter the reason for removal (in case its removal
-                      is questioned later):
-                    </label>
-                    <div className="col-sm-10">
-                      <textarea
-                        className="form-control"
-                        rows="5"
-                        name="deleteReason"
-                        value={this.state.deleteReason}
-                        onChange={this.handleChange}
-                      ></textarea>
-                    </div>
+                <label className="col-sm-2 col-form-label">Relevance?</label>
+                <div className="col-sm-10">
+                  <label className="form-check-label">
+                    <input
+                      checked={this.state.relevance}
+                      type="checkbox"
+                      className="form-check-input"
+                      name="relevance"
+                      onChange={this.handleCheckbox}
+                    />{' '}
+                    Yes, this title is relevant to health systems governance,
+                    financial or delivery arrangements (or implementation
+                    strategies).
+                  </label>
+                </div>
+              </div>
+              */}
+            </fieldset>
+
+            {Object.keys(this.treeData).map((key) => (
+              <fieldset key={key}>
+                <legend>{this.treeData[key].title}</legend>
+                {this.renderTreeSection(key)}
+              </fieldset>
+            ))}
+
+            <fieldset>
+              <legend>Article Status</legend>
+              <form>
+                <div className="form-group row">
+                  <label className="col-sm-2 col-form-label">Status</label>
+                  <div className="col-sm-4">
+                    <Select
+                      value={STATUSES.filter(
+                        (opt) => opt.value === this.state.selectedStatus
+                      )}
+                      name="selectedStatus"
+                      onChange={(opt) =>
+                        this.handleChange('selectedStatus', opt.value)
+                      }
+                      options={STATUSES}
+                      isSearchable
+                    />
                   </div>
-                )}
-              <button
-                type="submit"
-                onClick={this.handleSubmit}
-                className="btn primary"
-              >
-                Save
-              </button>
-            </form>
+                  <ul>
+                    <li>
+                      <b>New article</b> = New, still having content added, not
+                      visible in searches
+                    </li>
+                    <li>
+                      <b>Data entry complete</b> = All required content has been
+                      added, still not visible in searches
+                    </li>
+                    <li>
+                      <b>Live</b> = Available for searching/alerting
+                    </li>
+                    <li>
+                      <b>Deleted</b> = Removed from the system, not visible in
+                      searches
+                    </li>
+                  </ul>
+                </div>
+                {this.state.selectedStatus &&
+                  this.state.selectedStatus.value === 'Delete' && (
+                    <div className="form-group row">
+                      <label className="col-sm-2 col-form-label">
+                        Please enter the reason for removal (in case its removal
+                        is questioned later):
+                      </label>
+                      <div className="col-sm-10">
+                        <textarea
+                          className="form-control"
+                          rows="5"
+                          name="deleteReason"
+                          value={this.state.deleteReason}
+                          onChange={this.handleChange}
+                        ></textarea>
+                      </div>
+                    </div>
+                  )}
+              </form>
+            </fieldset>
+            <button
+              type="submit"
+              onClick={this.handleSubmit}
+              className="btn primary"
+            >
+              Save
+            </button>
           </div>
         </div>
       </div>

@@ -20,7 +20,11 @@ module.exports = ({ articleRepository }) => {
           break;
       }
 
-      const refTypes = ["Systematic reviews and other types of syntheses"];
+      const refTypes = [
+        "Overviews of systematic reviews",
+        "Systematic reviews of effects",
+        "Systematic reviews addressing other questions",
+      ];
       return await articleRepository.aggregate(
         type,
         "appraisals",

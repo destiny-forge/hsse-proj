@@ -18,6 +18,10 @@ const Filter = t.struct(
     documentType: t.String,
     filters: t.Array,
 
+    generalFocus: t.Boolean,
+    selectedStatus: t.String,
+    questionType: t.String,
+
     relevance: t.Boolean,
     completed: t.Boolean,
     complicated: t.Boolean,
