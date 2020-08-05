@@ -6116,16 +6116,9 @@ legend {
   width: auto;
   margin: 0;
   font-weight: bold;
-  color: #22b66e;
+  color: #6c757d;
   font-size: 16px;
 }
-
-/* ul.ant-tree-child-tree-open
-  li.ant-tree-treenode-switcher-close
-  span.ant-tree-switcher.ant-tree-switcher-noop {
-  display: auto;
-}
-*/
 
 li.ant-tree-treenode-switcher-close
   span.ant-tree-switcher.ant-tree-switcher-noop {
