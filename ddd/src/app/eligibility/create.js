@@ -7,6 +7,7 @@ const ObjectID = require("mongodb").ObjectID;
 module.exports = ({ eligibilityRepository, events }) => {
   const create = async (eligibility) => {
     try {
+      console.log(eligibility);
       if (
         !eligibility.type ||
         (eligibility.type !== "sse" && eligibility.type !== "hse")
@@ -30,6 +31,7 @@ module.exports = ({ eligibilityRepository, events }) => {
 
         return await eligibilityRepository.update(_id, eligibility);
       } else {
+        console.log(eligibility);
         eligibility.published = eligibility.published
           ? new Date(eligibility.published, 1, 1)
           : new Date();
@@ -48,6 +50,7 @@ module.exports = ({ eligibilityRepository, events }) => {
         return result;
       }
     } catch (error) {
+      console.log(error);
       throw new Error(error);
     }
   };

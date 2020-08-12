@@ -14,10 +14,8 @@ import 'react-toastify/dist/ReactToastify.min.css';
 const { TreeNode } = Tree;
 
 const STATUSES = [
-  { value: 'New Article', label: 'New Article' },
+  { value: 'In Progress', label: 'In Progress' },
   { value: 'Data Entry Complete', label: 'Data Entry Complete' },
-  { value: 'Live', label: 'Live' },
-  { value: 'Delete', label: 'Delete' },
 ];
 
 class EligibilityForm extends React.Component {
@@ -34,8 +32,10 @@ class EligibilityForm extends React.Component {
       _id: null,
       article: '',
       generalFocus: false,
+      selectedStatus: 'In Progress',
       type: type,
       currentFilterState: this.getKeyArray(this.treeData),
+      eligible: true,
     };
 
     this.Article = ArticleService({ fetch: this.props.fetch });
@@ -49,6 +49,19 @@ class EligibilityForm extends React.Component {
       filterState[key] = [];
     });
     return filterState;
+  };
+
+  handleDocumentType = (selectedDocumentType) => {
+    const eligible = selectedDocumentType.indexOf('not eligible') === -1;
+    const selectedStatus = !eligible
+      ? 'Data Entry Complete'
+      : this.state.selectedStatus;
+
+    this.setState({
+      eligible,
+      selectedStatus,
+      selectedDocumentType,
+    });
   };
 
   handleChange = (field, value) => {
@@ -227,175 +240,199 @@ class EligibilityForm extends React.Component {
       });
   };
 
+  updateRelevance(relevant) {
+    const { user } = this.props;
+    const { article, type } = this.state;
+    const data = {
+      articleId: article._id,
+      userId: user.id,
+      role: this.getAssignmentRole(user, article),
+      type: type,
+      relevance: relevant,
+      completed: !relevant,
+    };
+    this.Eligibility.create(data).then((res) => {
+      this.setState({ relevant });
+      if (!relevant) {
+        this.props.history.replace(
+          `/batch/articles/eligibility/${article.batchId}`
+        );
+        this.notifyDone();
+      }
+    });
+  }
+
   render() {
-    const { article } = this.state;
+    const { article, _id, type, relevant, eligible } = this.state;
 
-    return (
-      <div className="padding">
-        <div className="box">
-          <div className="box-header">
-            <h2>{article.title}</h2>
-            <small>Ref Id: {article.shortId}</small>
-          </div>
-          <div className="box-body">
-            <fieldset>
-              <legend>General Information</legend>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Ref id</label>
-                <div className="col-sm-10">{article.shortId}</div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Live date</label>
-                <div className="col-sm-10">N/A</div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Document type</label>
-                <div className="col-sm-4">
-                  <Select
-                    value={this.types.filter(
-                      (opt) => opt.value === this.state.selectedDocumentType
-                    )}
-                    name="selectedDocumentType"
-                    onChange={(opt) =>
-                      this.handleChange('selectedDocumentType', opt.value)
-                    }
-                    options={this.types}
-                    isSearchable
-                    required
-                  />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Question type</label>
-                <div className="col-sm-4">
-                  <Select
-                    value={this.questionTypes.filter(
-                      (opt) => opt.value === this.state.questionType
-                    )}
-                    name="questionType"
-                    onChange={(opt) =>
-                      this.handleChange('questionType', opt.value)
-                    }
-                    options={this.questionTypes}
-                    isSearchable
-                  />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">
-                  General focus?
+    if (!_id && !relevant) {
+      let q1 =
+        type === 'hse'
+          ? 'Is the document relevant to health system governance, financial or delivery arrangements (or implementation strategies)?'
+          : 'Is the document relevant to social systems program and service areas?';
+      return (
+        <div className="padding">
+          <div className="box">
+            <div className="box-header">
+              <h2>{article.title}</h2>
+              <small>Ref Id: {article.shortId}</small>
+            </div>
+            <div className="box-body">
+              <fieldset>
+                <legend>Relevance</legend>
+                <label>{q1}</label>
+                <br />
+                <label className="radio-inline">
+                  <input
+                    type="radio"
+                    name="relevant"
+                    value="yes"
+                    onChange={() => this.updateRelevance(true)}
+                  />{' '}
+                  Yes &nbsp;
+                  <input
+                    type="radio"
+                    name="relevant"
+                    value="no"
+                    onChange={() => this.updateRelevance(false)}
+                  />{' '}
+                  No
                 </label>
-                <div className="col-sm-10">
-                  <label className="form-check-label">
-                    <input
-                      checked={this.state.generalFocus}
-                      type="checkbox"
-                      className="form-check-input"
-                      name="generalFocus"
-                      onChange={this.handleCheckbox}
-                    />{' '}
-                    Yes, this article has a general focus (review definition and
-                    code accordingly, nothing that the default is set to
-                    specific)
-                  </label>
-                </div>
-              </div>
-
-              {/*
-                  <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Relevance?</label>
-                <div className="col-sm-10">
-                  <label className="form-check-label">
-                    <input
-                      checked={this.state.relevance}
-                      type="checkbox"
-                      className="form-check-input"
-                      name="relevance"
-                      onChange={this.handleCheckbox}
-                    />{' '}
-                    Yes, this title is relevant to health systems governance,
-                    financial or delivery arrangements (or implementation
-                    strategies).
-                  </label>
-                </div>
-              </div>
-              */}
-            </fieldset>
-
-            {Object.keys(this.treeData).map((key) => (
-              <fieldset key={key}>
-                <legend>{this.treeData[key].title}</legend>
-                {this.renderTreeSection(key)}
               </fieldset>
-            ))}
-
-            <fieldset>
-              <legend>Article Status</legend>
-              <form>
-                <div className="form-group row">
-                  <label className="col-sm-2 col-form-label">Status</label>
-                  <div className="col-sm-4">
-                    <Select
-                      value={STATUSES.filter(
-                        (opt) => opt.value === this.state.selectedStatus
-                      )}
-                      name="selectedStatus"
-                      onChange={(opt) =>
-                        this.handleChange('selectedStatus', opt.value)
-                      }
-                      options={STATUSES}
-                      isSearchable
-                    />
-                  </div>
-                  <ul>
-                    <li>
-                      <b>New article</b> = New, still having content added, not
-                      visible in searches
-                    </li>
-                    <li>
-                      <b>Data entry complete</b> = All required content has been
-                      added, still not visible in searches
-                    </li>
-                    <li>
-                      <b>Live</b> = Available for searching/alerting
-                    </li>
-                    <li>
-                      <b>Deleted</b> = Removed from the system, not visible in
-                      searches
-                    </li>
-                  </ul>
-                </div>
-                {this.state.selectedStatus &&
-                  this.state.selectedStatus.value === 'Delete' && (
-                    <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">
-                        Please enter the reason for removal (in case its removal
-                        is questioned later):
-                      </label>
-                      <div className="col-sm-10">
-                        <textarea
-                          className="form-control"
-                          rows="5"
-                          name="deleteReason"
-                          value={this.state.deleteReason}
-                          onChange={this.handleChange}
-                        ></textarea>
-                      </div>
-                    </div>
-                  )}
-              </form>
-            </fieldset>
-            <button
-              type="submit"
-              onClick={this.handleSubmit}
-              className="btn primary"
-            >
-              Save
-            </button>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="padding">
+          <div className="box">
+            <div className="box-header">
+              <h2>{article.title}</h2>
+              <small>Ref Id: {article.shortId}</small>
+            </div>
+            <div className="box-body">
+              <fieldset>
+                <legend>General Information</legend>
+                <div className="form-group row">
+                  <label className="col-sm-2 col-form-label">Ref id</label>
+                  <div className="col-sm-10">{article.shortId}</div>
+                </div>
+                <div className="form-group row">
+                  <label className="col-sm-2 col-form-label">Live date</label>
+                  <div className="col-sm-10">N/A</div>
+                </div>
+                <div className="form-group row">
+                  <label className="col-sm-2 col-form-label">
+                    Document type
+                  </label>
+                  <div className="col-sm-4">
+                    <Select
+                      value={this.types.filter(
+                        (opt) => opt.value === this.state.selectedDocumentType
+                      )}
+                      name="selectedDocumentType"
+                      onChange={(opt) => this.handleDocumentType(opt.value)}
+                      options={this.types}
+                      isSearchable
+                      required
+                    />
+                  </div>
+                </div>
+                {eligible && (
+                  <div>
+                    <div className="form-group row">
+                      <label className="col-sm-2 col-form-label">
+                        Question type
+                      </label>
+                      <div className="col-sm-4">
+                        <Select
+                          value={this.questionTypes.filter(
+                            (opt) => opt.value === this.state.questionType
+                          )}
+                          name="questionType"
+                          onChange={(opt) =>
+                            this.handleChange('questionType', opt.value)
+                          }
+                          options={this.questionTypes}
+                          isSearchable
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label className="col-sm-2 col-form-label">
+                        General focus?
+                      </label>
+                      <div className="col-sm-10">
+                        <label className="form-check-label">
+                          <input
+                            checked={this.state.generalFocus}
+                            type="checkbox"
+                            className="form-check-input"
+                            name="generalFocus"
+                            onChange={this.handleCheckbox}
+                          />{' '}
+                          Yes, this article has a general focus (review
+                          definition and code accordingly, noting that the
+                          default is set to specific)
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </fieldset>
+
+              {eligible &&
+                Object.keys(this.treeData).map((key) => (
+                  <fieldset key={key}>
+                    <legend>{this.treeData[key].title}</legend>
+                    {this.renderTreeSection(key)}
+                  </fieldset>
+                ))}
+
+              <fieldset>
+                <legend>Coding Status</legend>
+                <form>
+                  <div className="form-group row">
+                    <div className="col-sm-4">
+                      <Select
+                        value={STATUSES.filter(
+                          (opt) => opt.value === this.state.selectedStatus
+                        )}
+                        name="selectedStatus"
+                        onChange={(opt) =>
+                          this.handleChange('selectedStatus', opt.value)
+                        }
+                        options={STATUSES}
+                        isSearchable
+                        isDisabled={!eligible}
+                      />
+                    </div>
+                    <ul>
+                      <li>
+                        <b>In Progress</b> = Still having content added, not
+                        visible in searches
+                      </li>
+                      <li>
+                        <b>Data Entry Complete</b> = All required content has
+                        been added, still not visible in searches
+                      </li>
+                    </ul>
+                  </div>
+                </form>
+              </fieldset>
+              <button
+                type="submit"
+                onClick={this.handleSubmit}
+                className="btn primary"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 }
 

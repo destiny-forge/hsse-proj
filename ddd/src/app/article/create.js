@@ -13,33 +13,46 @@ module.exports = ({ articleRepository, batchRepository }) => {
           error: "A valid article type is required",
         };
       }
-
-      const batch = {
-        type: article.type,
-        fileUrl: "",
-        referenceType: article.source,
-        source: article.source,
-        language: article.language,
-        uploaded: new Date(),
-        harvested: new Date(),
-      };
-
-      const newBatch = await batchRepository.create(Batch(batch));
-
-      article.batchId = new ObjectID(newBatch._id);
-      article.batchName = article.title;
-
-      article.published = article.published
-        ? new Date(article.published, 1, 1)
-        : new Date();
-
-      const entity =
-        article.type === "sse" ? sseArticle(article) : hseArticle(article);
-
-      return await articleRepository.create(entity);
+      return !article._id
+        ? await createArticle(article)
+        : await updateArticle(article);
     } catch (error) {
+      //console.log(error);
       throw new Error(error);
     }
+  };
+
+  const createArticle = async (article) => {
+    const batch = {
+      type: article.type,
+      fileUrl: "",
+      referenceType: article.source,
+      source: article.source,
+      language: article.language,
+      uploaded: new Date(),
+      harvested: new Date(),
+    };
+
+    const newBatch = await batchRepository.create(Batch(batch));
+
+    article.batchId = new ObjectID(newBatch._id);
+    article.batchName = article.title;
+
+    article.published = article.published
+      ? new Date(article.published, 1, 1)
+      : new Date();
+
+    const entity =
+      article.type === "sse" ? sseArticle(article) : hseArticle(article);
+
+    return await articleRepository.create(entity);
+  };
+
+  const updateArticle = async (article) => {
+    const entity = Object.assign({}, article);
+    delete entity._id;
+
+    return await articleRepository.update(article._id, entity);
   };
 
   return {
