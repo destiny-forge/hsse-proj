@@ -25,7 +25,6 @@ module.exports = ({ events, eligibilityRepository, articleRepository }) => {
     stage.updateStatus(articleId, "eligibility", status);
 
     filters.forEach((filter) => {
-      console.log(filter.selectedStatus);
       stage.updateCoderStatus(
         articleId,
         "eligibility",

@@ -68,7 +68,6 @@ module.exports = ({ eligibilityRepository }) => {
 
   const mapFilters = (filters) => {
     const objects = {};
-    console.log(filters);
     filters.forEach((filter) => {
       objects[filter] = true;
     });
