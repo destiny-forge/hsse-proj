@@ -10,14 +10,7 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      var filters = [
-        "pending_assignment",
-        "half_assigned",
-        "assigned",
-        "In Progress",
-        "Conflicted",
-        "Complete",
-      ];
+      var filters = ["New Article", "In Progress", "Conflicted", "Complete"];
 
       return await articleRepository.aggregate(type, stage, filters);
     } catch (error) {
@@ -39,14 +32,7 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      let status = [
-        "pending_assignment",
-        "half_assigned",
-        "assigned",
-        "In Progress",
-        "Conflicted",
-        "Complete",
-      ];
+      let status = ["New Article", "In Progress", "Conflicted", "Complete"];
       // switch (stage) {
       //   case "eligibility":
       //     break;

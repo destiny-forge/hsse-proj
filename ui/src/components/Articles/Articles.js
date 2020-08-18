@@ -40,10 +40,6 @@ class Articles extends React.Component {
     return juniorAssigned || seniorAssigned;
   };
 
-  isFullyCoded = (stage) => {
-    return stage.status === 'fully_coded';
-  };
-
   componentDidMount() {
     const { shortId, stage } = this.props.match.params;
 
@@ -147,9 +143,9 @@ class Articles extends React.Component {
                 <th>Article Id</th>
                 <th>Title</th>
                 <th>Authors</th>
-                <th>My Status</th>
                 <th>Junior Appraiser</th>
                 <th>Senior Appraiser</th>
+                <th>My Status</th>
                 <th>Article Status</th>
                 <th>Actions</th>
               </tr>
@@ -161,7 +157,6 @@ class Articles extends React.Component {
                     <td>{article._id}</td>
                     <td>{article.title}</td>
                     <td>{article.authors}</td>
-                    <td>{this.getMyStatus(article.stages[stage])}</td>
                     <td>
                       {this.showEmail(article, 'junior') || (
                         <button
@@ -196,6 +191,7 @@ class Articles extends React.Component {
                         </button>
                       )}
                     </td>
+                    <td>{this.getMyStatus(article.stages[stage])}</td>
                     <td>{this.getStatus(article, stage)}</td>
                     <td>{this.getAction(article, stage)}</td>
                   </tr>

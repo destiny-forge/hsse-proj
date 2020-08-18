@@ -302,11 +302,11 @@ module.exports = ({ database }) => {
       {
         $set: {
           stages: {
-            eligibility: { status: "pending_assignment" },
-            studies: { status: "pending_assignment" },
-            appraisals: { status: "pending_assignment" },
-            prioritizing: { status: "pending_assignment" },
-            translations: { status: "pending_assignment" },
+            eligibility: { status: "New Article" },
+            studies: { status: "New Article" },
+            appraisals: { status: "New Article" },
+            prioritizing: { status: "New Article" },
+            translations: { status: "New Article" },
           },
         },
       },

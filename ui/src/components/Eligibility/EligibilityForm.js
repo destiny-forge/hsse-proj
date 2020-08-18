@@ -8,8 +8,10 @@ import withAuth from '../withAuth';
 import ArticleService from '../../services/ArticleService';
 import EligibilityService from '../../services/EligibilityService';
 import { hse, sse } from './data';
+import ErrorMessage from '../atoms/ErrorMessage';
 import 'antd/dist/antd.css';
 import 'react-toastify/dist/ReactToastify.min.css';
+import validate from './validate';
 
 const { TreeNode } = Tree;
 
@@ -37,6 +39,7 @@ class EligibilityForm extends React.Component {
       selectedStatus: 'In Progress',
       currentFilterState: this.getKeyArray(this.treeData),
       eligible: true,
+      errors: {},
     };
 
     this.Article = ArticleService({ fetch: this.props.fetch });
@@ -201,6 +204,7 @@ class EligibilityForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    const { user } = this.props;
 
     const {
       currentFilterState,
@@ -211,8 +215,6 @@ class EligibilityForm extends React.Component {
       questionType,
       selectedStatus,
     } = this.state;
-
-    const { user } = this.props;
 
     let formData = {
       type: type,
@@ -237,16 +239,22 @@ class EligibilityForm extends React.Component {
       });
     });
 
-    this.Eligibility.create(formData)
-      .then((res) => {
-        this.props.history.replace(
-          `/batch/articles/eligibility/${article.batchId}`
-        );
-        this.notifyDone();
+    validate(formData)
+      .then(() => {
+        this.setState({ valid: true, errors: {} });
+
+        this.Eligibility.create(formData)
+          .then((res) => {
+            this.props.history.replace(
+              `/batch/articles/eligibility/${article.batchId}`
+            );
+            this.notifyDone();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((errors) => this.setState({ errors, valid: false }));
   };
 
   updateRelevance(event) {
@@ -281,7 +289,15 @@ class EligibilityForm extends React.Component {
   }
 
   render() {
-    const { article, _id, type, eligible, relevant, loaded } = this.state;
+    const {
+      article,
+      _id,
+      type,
+      eligible,
+      relevant,
+      loaded,
+      errors,
+    } = this.state;
 
     if (!loaded) {
       return null;
@@ -361,8 +377,11 @@ class EligibilityForm extends React.Component {
                       onChange={(opt) => this.handleDocumentType(opt.value)}
                       options={this.types}
                       isSearchable
-                      required
+                      isRequired
                     />
+                  </div>
+                  <div className="col-sm-2">
+                    <ErrorMessage errors={errors} field="documentType" />
                   </div>
                 </div>
                 {eligible && (
@@ -383,6 +402,9 @@ class EligibilityForm extends React.Component {
                           options={this.questionTypes}
                           isSearchable
                         />
+                      </div>
+                      <div className="col-sm-2">
+                        <ErrorMessage errors={errors} field="questionType" />
                       </div>
                     </div>
                     <div className="form-group row">
@@ -447,6 +469,14 @@ class EligibilityForm extends React.Component {
                   </div>
                 </form>
               </fieldset>
+              {Object.keys(errors).length > 0 && (
+                <fieldset>
+                  <legend style={{ color: 'red' }}>
+                    Missing Required Fields
+                  </legend>
+                  <div>Please complete all required fields and re-submit.</div>
+                </fieldset>
+              )}
               <button
                 type="submit"
                 onClick={this.handleSubmit}

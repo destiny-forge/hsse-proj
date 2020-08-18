@@ -26,7 +26,7 @@ const withSection = (WrappedComponent) => {
     }
 
     useEffect(() => {
-      fetchData(type, 'pending_assignment');
+      fetchData(type, 'New Article');
     }, [type, uid]);
 
     const trackTab = (type, tab) => {
