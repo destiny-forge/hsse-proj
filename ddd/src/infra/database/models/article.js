@@ -133,17 +133,17 @@ module.exports = ({ database }) => {
         total: { $sum: 1 },
         in_progress: {
           $sum: {
-            $cond: [{ $eq: [`$stages.${stage}.status`, "in_progress"] }, 1, 0],
+            $cond: [{ $eq: [`$stages.${stage}.status`, "In Progress"] }, 1, 0],
           },
         },
         complete: {
           $sum: {
-            $cond: [{ $eq: [`$stages.${stage}.status`, "complete"] }, 1, 0],
+            $cond: [{ $eq: [`$stages.${stage}.status`, "Complete"] }, 1, 0],
           },
         },
         created: {
           $sum: {
-            $cond: [{ $ne: [`$stages.${stage}.status`, "complete"] }, 1, 0],
+            $cond: [{ $ne: [`$stages.${stage}.status`, "Complete"] }, 1, 0],
           },
         },
         batchName: { $first: "$batchName" },
