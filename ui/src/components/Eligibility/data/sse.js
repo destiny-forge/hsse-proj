@@ -40,7 +40,7 @@ const types = [
     value:
       'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in SSE.',
     label:
-      'NO, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in SSE.',
+      'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in SSE.',
   },
 ];
 

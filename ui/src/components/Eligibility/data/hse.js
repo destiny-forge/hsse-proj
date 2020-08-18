@@ -42,7 +42,7 @@ const types = [
     value:
       'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.',
     label:
-      'NO, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.',
+      'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.',
   },
 ];
 

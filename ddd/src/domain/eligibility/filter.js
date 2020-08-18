@@ -25,6 +25,7 @@ const Filter = t.struct(
     defaultProps: {
       shortId: shortid.generate(),
       selectedStatus: "In Progress",
+      generalFocus: false,
       completed: false,
       relevant: true,
       filters: [],

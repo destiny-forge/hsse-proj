@@ -2,7 +2,7 @@ const ObjectID = require("mongodb").ObjectID;
 const COLLECTION = "eligibility";
 
 module.exports = ({ database }) => {
-  const create = async article => {
+  const create = async (article) => {
     try {
       const results = await database
         .get()
@@ -27,7 +27,7 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findByType = async type => {
+  const findByType = async (type) => {
     try {
       return await database
         .get()
@@ -39,19 +39,15 @@ module.exports = ({ database }) => {
     }
   };
 
-  const find = async query => {
+  const find = async (query) => {
     try {
-      return await database
-        .get()
-        .collection(COLLECTION)
-        .find(query)
-        .toArray();
+      return await database.get().collection(COLLECTION).find(query).toArray();
     } catch (e) {
       throw e;
     }
   };
 
-  const findById = async id => {
+  const findById = async (id) => {
     try {
       if (!ObjectID.isValid(id)) throw "Invalid MongoDB ID.";
       const results = await database
@@ -64,7 +60,7 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findByArticleId = async articleId => {
+  const findByArticleId = async (articleId) => {
     try {
       if (!ObjectID.isValid(articleId)) throw "Invalid MongoDB ID.";
       const results = await database
@@ -85,7 +81,7 @@ module.exports = ({ database }) => {
         .collection(COLLECTION)
         .findOne({
           articleId: { $eq: ObjectID(articleId) },
-          userId: { $eq: ObjectID(userId) }
+          userId: { $eq: ObjectID(userId) },
         });
       return results;
     } catch (e) {
@@ -122,6 +118,6 @@ module.exports = ({ database }) => {
     findOne,
     find,
     update,
-    createIndexes
+    createIndexes,
   };
 };

@@ -11,7 +11,10 @@ class Articles extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { articles: [] };
+    this.state = {
+      articles: [],
+      stage: 'eligibility',
+    };
     this.Article = ArticleService({ fetch: this.props.fetch });
   }
 
@@ -24,22 +27,21 @@ class Articles extends React.Component {
     }
   };
 
-  isAssigned = (article) => {
+  isAssigned = (stage) => {
     const { user } = this.props;
-    const { eligibility } = article.stages;
     let juniorAssigned,
       seniorAssigned = false;
-    if (!_.isUndefined(eligibility['junior'])) {
-      juniorAssigned = eligibility.junior.email === user.email;
+    if (!_.isUndefined(stage['junior'])) {
+      juniorAssigned = stage.junior.email === user.email;
     }
-    if (!_.isUndefined(eligibility['senior'])) {
-      seniorAssigned = eligibility.senior.email === user.email;
+    if (!_.isUndefined(stage['senior'])) {
+      seniorAssigned = stage.senior.email === user.email;
     }
     return juniorAssigned || seniorAssigned;
   };
 
-  isFullyCoded = (article) => {
-    return article.stages.eligibility.status === 'fully_coded';
+  isFullyCoded = (stage) => {
+    return stage.status === 'fully_coded';
   };
 
   componentDidMount() {
@@ -61,10 +63,11 @@ class Articles extends React.Component {
   assign = (type, articleId) => {
     const { user } = this.props;
     const { shortId } = this.props.match.params;
+    const { stage } = this.state;
 
     const assignment = {
       articleId,
-      stage: 'eligibility',
+      stage,
       type,
     };
 
@@ -95,7 +98,46 @@ class Articles extends React.Component {
       });
   };
 
+  getMyStatus(stage) {
+    let status = '';
+    if (this.isAssignedAs(stage, 'junior')) {
+      status = stage.junior.status;
+    }
+    if (this.isAssignedAs(stage, 'senior')) {
+      status = stage.senior.status;
+    }
+    return status;
+  }
+
+  getStatus(article, stage) {
+    return article.stages[stage].status || '';
+  }
+
+  isAssignedAs(stage, role) {
+    const { user } = this.props;
+    return !_.isUndefined(stage[role]) && stage[role].email === user.email;
+  }
+
+  getAction(article, stageName) {
+    const stage = article.stages[stageName];
+    const { status } = stage;
+
+    if (!this.isAssigned(stage) || status === 'Complete') {
+      return null;
+    }
+
+    const code = `/eligibility/${article.type}/${article.shortId}`;
+    const resolve = `/conflicts/${article.type}/${article.shortId}`;
+
+    return status === 'In Progress' ? (
+      <Link to={code}>Code</Link>
+    ) : (
+      <Link to={resolve}>Resolve Conflicts</Link>
+    );
+  }
+
   render() {
+    const stage = 'eligibility';
     return (
       <div className="box">
         <div className="table-responsive">
@@ -119,7 +161,7 @@ class Articles extends React.Component {
                     <td>{article._id}</td>
                     <td>{article.title}</td>
                     <td>{article.authors}</td>
-                    <td>TBD</td>
+                    <td>{this.getMyStatus(article.stages[stage])}</td>
                     <td>
                       {this.showEmail(article, 'junior') || (
                         <button
@@ -154,25 +196,8 @@ class Articles extends React.Component {
                         </button>
                       )}
                     </td>
-                    <td>
-                      {this.isAssigned(article) &&
-                        this.isFullyCoded(article) && (
-                          <Link
-                            to={`/conflicts/${article.type}/${article.shortId}`}
-                          >
-                            Resolve Conflicts
-                          </Link>
-                        )}
-                    </td>
-                    <td>
-                      {this.isAssigned(article) && (
-                        <Link
-                          to={`/eligibility/${article.type}/${article.shortId}`}
-                        >
-                          Code
-                        </Link>
-                      )}
-                    </td>
+                    <td>{this.getStatus(article, stage)}</td>
+                    <td>{this.getAction(article, stage)}</td>
                   </tr>
                 ))}
             </tbody>

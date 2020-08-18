@@ -29,11 +29,12 @@ class EligibilityForm extends React.Component {
     this.treeData = type === 'hse' ? hse.tree : sse.tree;
 
     this.state = {
+      loaded: false,
       _id: null,
+      type: type,
       article: '',
       generalFocus: false,
       selectedStatus: 'In Progress',
-      type: type,
       currentFilterState: this.getKeyArray(this.treeData),
       eligible: true,
     };
@@ -51,17 +52,17 @@ class EligibilityForm extends React.Component {
     return filterState;
   };
 
-  handleDocumentType = (selectedDocumentType) => {
-    const eligible = selectedDocumentType.indexOf('not eligible') === -1;
+  handleDocumentType = (docType) => {
+    this.handleChange('selectedDocumentType', docType);
+    this.setStatusAndEligibility(docType);
+  };
+
+  setStatusAndEligibility = (docType) => {
+    const eligible = docType.indexOf('not eligible') === -1;
     const selectedStatus = !eligible
       ? 'Data Entry Complete'
       : this.state.selectedStatus;
-
-    this.setState({
-      eligible,
-      selectedStatus,
-      selectedDocumentType,
-    });
+    this.setState({ eligible, selectedStatus });
   };
 
   handleChange = (field, value) => {
@@ -98,6 +99,10 @@ class EligibilityForm extends React.Component {
   }
 
   componentDidMount() {
+    this.getData();
+  }
+
+  getData() {
     const { shortId } = this.props.match.params;
     const { user } = this.props;
 
@@ -109,6 +114,7 @@ class EligibilityForm extends React.Component {
         if (res.success) {
           this.setState({
             article: res.data,
+            loaded: true,
           });
 
           this.Eligibility.get(shortId, user.id).then((result) => {
@@ -129,8 +135,11 @@ class EligibilityForm extends React.Component {
                 questionType: eligibility.questionType,
                 selectedStatus: eligibility.selectedStatus,
                 selectedDocumentType: eligibility.documentType,
+                relevant: eligibility.relevant,
                 currentFilterState: newState,
               });
+
+              this.setStatusAndEligibility(eligibility.documentType || '');
             }
           });
         }
@@ -240,32 +249,45 @@ class EligibilityForm extends React.Component {
       });
   };
 
-  updateRelevance(relevant) {
+  updateRelevance(event) {
+    event.persist();
+    const { name, checked } = event.target;
+    const relevant = name === 'yesRelevant' ? checked : !checked;
     const { user } = this.props;
-    const { article, type } = this.state;
+    const { article, type, _id } = this.state;
     const data = {
       articleId: article._id,
       userId: user.id,
       role: this.getAssignmentRole(user, article),
       type: type,
-      relevance: relevant,
+      relevant: relevant,
+      selectedStatus: !relevant ? 'Data Entry Complete' : 'In Progress',
+      generalFocus: false,
       completed: !relevant,
     };
+    if (_id !== null) {
+      data._id = _id;
+    }
     this.Eligibility.create(data).then((res) => {
-      this.setState({ relevant });
       if (!relevant) {
         this.props.history.replace(
           `/batch/articles/eligibility/${article.batchId}`
         );
         this.notifyDone();
+      } else {
+        this.getData();
       }
     });
   }
 
   render() {
-    const { article, _id, type, relevant, eligible } = this.state;
+    const { article, _id, type, eligible, relevant, loaded } = this.state;
 
-    if (!_id && !relevant) {
+    if (!loaded) {
+      return null;
+    }
+
+    if (!_id || (_id && !relevant)) {
       let q1 =
         type === 'hse'
           ? 'Is the document relevant to health system governance, financial or delivery arrangements (or implementation strategies)?'
@@ -285,16 +307,20 @@ class EligibilityForm extends React.Component {
                 <label className="radio-inline">
                   <input
                     type="radio"
-                    name="relevant"
+                    name="yesRelevant"
                     value="yes"
-                    onChange={() => this.updateRelevance(true)}
+                    checked={_id && relevant}
+                    onChange={(e) => this.updateRelevance(e)}
                   />{' '}
                   Yes &nbsp;
+                </label>
+                <label className="radio-inline">
                   <input
                     type="radio"
-                    name="relevant"
+                    name="notRelevant"
                     value="no"
-                    onChange={() => this.updateRelevance(false)}
+                    checked={_id && !relevant}
+                    onChange={(e) => this.updateRelevance(e)}
                   />{' '}
                   No
                 </label>

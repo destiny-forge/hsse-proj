@@ -215,9 +215,13 @@ module.exports = ({ database }) => {
 
   const assign = async (assignment) => {
     const { articleId, stage, type, user, status } = assignment;
+    const assign = {
+      ...user,
+      status: "In Progress",
+    };
     try {
       const fields = {
-        [`stages.${stage}.${type}`]: user,
+        [`stages.${stage}.${type}`]: assign,
         [`stages.${stage}.status`]: status,
       };
       const cmdResult = await database
@@ -238,6 +242,22 @@ module.exports = ({ database }) => {
       for (const [key, value] of Object.entries(kvp)) {
         fields[`stages.${stage}.${key}`] = value;
       }
+
+      const cmdResult = await database
+        .get()
+        .collection("articles")
+        .updateOne({ _id: { $eq: ObjectID(articleId) } }, { $set: fields });
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const updateStageCoderStatus = async (articleId, stage, role, status) => {
+    try {
+      const fields = {};
+      fields[`stages.${stage}.${role}.status`] = status;
 
       const cmdResult = await database
         .get()
@@ -322,6 +342,7 @@ module.exports = ({ database }) => {
     assign,
     update,
     updateStage,
+    updateStageCoderStatus,
     findByBatch,
     findByBatchAndRefTypes,
     aggregate,

@@ -14,7 +14,9 @@ module.exports = ({ articleRepository }) => {
         "pending_assignment",
         "half_assigned",
         "assigned",
-        "complete",
+        "In Progress",
+        "Conflicted",
+        "Complete",
       ];
 
       return await articleRepository.aggregate(type, stage, filters);
@@ -39,10 +41,11 @@ module.exports = ({ articleRepository }) => {
 
       let status = [
         "pending_assignment",
-        "assigned",
         "half_assigned",
-        "half_coded",
-        "fully_coded",
+        "assigned",
+        "In Progress",
+        "Conflicted",
+        "Complete",
       ];
       // switch (stage) {
       //   case "eligibility":
