@@ -36,7 +36,7 @@ module.exports = ({ articleRepository, eligibilityRepository }) => {
         source.articleId,
         "eligibility",
         {
-          status: "complete",
+          status: "Complete",
           data: source,
         }
       );

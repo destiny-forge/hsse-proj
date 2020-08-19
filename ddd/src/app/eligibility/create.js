@@ -28,7 +28,10 @@ module.exports = ({ eligibilityRepository, events }) => {
         eligibility.articleId = new ObjectID(eligibility.articleId);
         eligibility.userId = new ObjectID(eligibility.userId);
 
-        return await eligibilityRepository.update(_id, eligibility);
+        const result = await eligibilityRepository.update(_id, eligibility);
+        events.emit("article.eligibility.coded", eligibility.articleId);
+
+        return result;
       } else {
         eligibility.published = eligibility.published
           ? new Date(eligibility.published, 1, 1)
@@ -48,6 +51,7 @@ module.exports = ({ eligibilityRepository, events }) => {
         return result;
       }
     } catch (error) {
+      console.log(error);
       throw new Error(error);
     }
   };

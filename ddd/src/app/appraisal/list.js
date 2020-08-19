@@ -12,15 +12,19 @@ module.exports = ({ articleRepository }) => {
 
       var filters = status;
       switch (status) {
-        case "pending_assignment":
-          filters = ["pending_assignment", "half_assigned"];
+        case "New Article":
+          filters = ["New Article"];
           break;
-        case "assigned":
-          filters = ["half_assigned", "assigned"];
+        case "In Progress":
+          filters = ["In Progress"];
           break;
       }
 
-      const refTypes = ["Systematic reviews and other types of syntheses"];
+      const refTypes = [
+        "Overviews of systematic reviews",
+        "Systematic reviews of effects",
+        "Systematic reviews addressing other questions",
+      ];
       return await articleRepository.aggregate(
         type,
         "appraisals",
@@ -39,7 +43,11 @@ module.exports = ({ articleRepository }) => {
           error: "A valid batchId is required",
         };
       }
-      const refTypes = ["Systematic reviews and other types of syntheses"];
+      const refTypes = [
+        "Overviews of systematic reviews",
+        "Systematic reviews of effects",
+        "Systematic reviews addressing other questions",
+      ];
       return await articleRepository.findByBatchAndRefTypes(batchId, refTypes);
     } catch (error) {
       throw new Error(error);

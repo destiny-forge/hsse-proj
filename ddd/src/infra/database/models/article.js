@@ -133,17 +133,17 @@ module.exports = ({ database }) => {
         total: { $sum: 1 },
         in_progress: {
           $sum: {
-            $cond: [{ $eq: [`$stages.${stage}.status`, "in_progress"] }, 1, 0],
+            $cond: [{ $eq: [`$stages.${stage}.status`, "In Progress"] }, 1, 0],
           },
         },
         complete: {
           $sum: {
-            $cond: [{ $eq: [`$stages.${stage}.status`, "complete"] }, 1, 0],
+            $cond: [{ $eq: [`$stages.${stage}.status`, "Complete"] }, 1, 0],
           },
         },
         created: {
           $sum: {
-            $cond: [{ $ne: [`$stages.${stage}.status`, "complete"] }, 1, 0],
+            $cond: [{ $ne: [`$stages.${stage}.status`, "Complete"] }, 1, 0],
           },
         },
         batchName: { $first: "$batchName" },
@@ -215,9 +215,13 @@ module.exports = ({ database }) => {
 
   const assign = async (assignment) => {
     const { articleId, stage, type, user, status } = assignment;
+    const assign = {
+      ...user,
+      status: "In Progress",
+    };
     try {
       const fields = {
-        [`stages.${stage}.${type}`]: user,
+        [`stages.${stage}.${type}`]: assign,
         [`stages.${stage}.status`]: status,
       };
       const cmdResult = await database
@@ -238,6 +242,22 @@ module.exports = ({ database }) => {
       for (const [key, value] of Object.entries(kvp)) {
         fields[`stages.${stage}.${key}`] = value;
       }
+
+      const cmdResult = await database
+        .get()
+        .collection("articles")
+        .updateOne({ _id: { $eq: ObjectID(articleId) } }, { $set: fields });
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const updateStageCoderStatus = async (articleId, stage, role, status) => {
+    try {
+      const fields = {};
+      fields[`stages.${stage}.${role}.status`] = status;
 
       const cmdResult = await database
         .get()
@@ -282,11 +302,11 @@ module.exports = ({ database }) => {
       {
         $set: {
           stages: {
-            eligibility: { status: "pending_assignment" },
-            studies: { status: "pending_assignment" },
-            appraisals: { status: "pending_assignment" },
-            prioritizing: { status: "pending_assignment" },
-            translations: { status: "pending_assignment" },
+            eligibility: { status: "New Article" },
+            studies: { status: "New Article" },
+            appraisals: { status: "New Article" },
+            prioritizing: { status: "New Article" },
+            translations: { status: "New Article" },
           },
         },
       },
@@ -322,6 +342,7 @@ module.exports = ({ database }) => {
     assign,
     update,
     updateStage,
+    updateStageCoderStatus,
     findByBatch,
     findByBatchAndRefTypes,
     aggregate,

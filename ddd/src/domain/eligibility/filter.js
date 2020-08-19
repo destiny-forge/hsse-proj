@@ -9,25 +9,26 @@ const Filter = t.struct(
     _id: t.maybe(t.String),
     legacyId: t.maybe(t.String),
     shortId: t.String,
-    articleId: t.maybe(t.Object),
-    userId: t.maybe(t.Object),
+    articleId: t.Object,
+    userId: t.Object,
     role: t.String,
-
     type: t.String,
-
-    documentType: t.String,
+    generalFocus: t.maybe(t.Boolean),
+    selectedStatus: t.maybe(t.String),
+    questionType: t.maybe(t.String),
+    documentType: t.maybe(t.String),
     filters: t.Array,
-
-    relevance: t.Boolean,
+    relevant: t.Boolean,
     completed: t.Boolean,
-    complicated: t.Boolean,
   },
   {
     defaultProps: {
       shortId: shortid.generate(),
-      relevance: false,
+      selectedStatus: "In Progress",
+      generalFocus: false,
       completed: false,
-      complicated: false,
+      relevant: true,
+      filters: [],
     },
   }
 );

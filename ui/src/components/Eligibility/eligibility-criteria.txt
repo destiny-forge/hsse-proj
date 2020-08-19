@@ -1,0 +1,73 @@
+Note: 
+
+1. If both coders indicate the article is not relevant
+than it will drop off the list. Otherwise, it will show up in the discrepancy
+conflict resolution interface for both parties.
+
+2. Second question can be removed from SSE.
+
+3. If the user indicates Yes to the first question, we'll load the full edit interface.
+If the user selects NO for document type, we will clear / disable all editable fields on the form.
+Leaving the save button.
+
+4. Modify Article status
+- options should be "In Progress" | "Data Entry Complete"
+- remove the other values and update the legend appropriately
+
+5. Document Type in current system has context popup menu descriptions for each of the items
+in the list. Our current implementation on the new system is a dropdown so we don't have the
+context menus for coders. 
+
+Optimization - change it to a radio button list, or provide context aware icon in the dropdown select list.
+
+
+Relevance - boolean 
+- Not relevant (if both coders indicate not relevant - has a refid - should be accessible in the system via search - edit Article details)
+But it should not show up in any of the workflow lists for appraisal etc...
+
+
+
+
+
+
+
+
+
+Evidence brief for policy:
+
+Must draw on synthesized research (i.e. systematic reviews, overviews of reviews) to address at least two of the following three elements of a policy issue:
+
+What is known about the problem underlying the issue
+Options for addressing the problem, including the pros and cons of each option
+Implementation considerations that ought to be considered related to the options
+
+
+Overview of reviews:
+
+Must have searched at least two different databases
+
+Must have an explicitly stated inclusion/exclusion criteria
+
+Systematic review:
+
+Must have searched at least two different databases
+
+Must have an explicitly stated inclusion/exclusion criteria
+
+Systematic review in progress (protocol)
+
+The proposed methods suggest that the study will:
+
+Undertake a systematic review of the literature
+Search at least two different databases
+Explicitly state an inclusion/exclusion criteria
+
+
+Systematic review being planned (registered review title):
+
+The title or description of the registered title states that the study’s intent is to undertake a systematic review of the literature
+
+
+Economic evaluation and costing studies
+
+Compares two or more interventions or care alternatives in terms of both their costs and outcomes (for economic evaluations) or provides details of the costs of one or more intervention or care alternatives (for costing studies)

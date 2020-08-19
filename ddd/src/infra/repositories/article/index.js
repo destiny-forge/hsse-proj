@@ -92,6 +92,14 @@ module.exports = ({ model }) => {
     }
   };
 
+  const updateStageCoderStatus = async (...args) => {
+    try {
+      return model.updateStageCoderStatus(...args);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const assign = async (...args) => {
     try {
       return model.assign(...args);
@@ -123,6 +131,7 @@ module.exports = ({ model }) => {
     create,
     update,
     updateStage,
+    updateStageCoderStatus,
     findById,
     findByType,
     findByBatch,

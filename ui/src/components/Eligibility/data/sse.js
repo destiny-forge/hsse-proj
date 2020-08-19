@@ -5,6 +5,10 @@ const types = [
     label: 'Overviews of systematic reviews',
   },
   {
+    label: 'Systematic reviews of effects',
+    value: 'Systematic reviews of effects',
+  },
+  {
     value: 'Systematic reviews addressing other questions',
     label: 'Systematic reviews addressing other questions',
   },
@@ -20,8 +24,6 @@ const types = [
     value: 'Economic evaluations and costing studies',
     label: 'Economic evaluations and costing studies',
   },
-  { value: 'Health reform descriptions', label: 'Health reform descriptions' },
-  { value: 'Health system descriptions', label: 'Health system descriptions' },
   {
     value: 'Intergovernmental organizations’ health systems documents',
     label: 'Intergovernmental organizations’ health systems documents',
@@ -38,7 +40,32 @@ const types = [
     value:
       'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in SSE.',
     label:
-      'NO, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in SSE.',
+      'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in SSE.',
+  },
+];
+
+const questionTypes = [
+  {
+    label: 'Many',
+    value: 'Many',
+  },
+  {
+    label: 'Effectiveness',
+    value: 'Effectiveness',
+  },
+  {
+    label: 'Not Effectiveness',
+    value: 'Not Effectiveness',
+  },
+  {
+    label:
+      'Cost-effectiveness/benefit/utility analysis or description of costs',
+    value:
+      'Cost-effectiveness/benefit/utility analysis or description of costs',
+  },
+  {
+    label: 'Description',
+    value: 'Description',
   },
 ];
 
@@ -1875,7 +1902,7 @@ const tree = {
   checkedTheme: {
     title: 'Theme',
     items: [{ title: 'Optimal aging', key: 'themeOptimalAging' }],
-  },
+  } /*
   checkedAge: {
     title: 'Age',
     items: [
@@ -1894,7 +1921,7 @@ const tree = {
       },
       { title: 'Geriatrics (>=60 years)', key: 'ageGeriatrics' },
     ],
-  },
+  },*/,
   checkedTarget: {
     title: 'Target',
     items: [
@@ -1908,5 +1935,6 @@ const tree = {
 
 export default {
   types,
+  questionTypes,
   tree,
 };

@@ -16,7 +16,7 @@ class Appraisals extends React.Component {
   componentDidMount() {
     const { type } = this.props.match.params;
 
-    this.Appraisal.list(type, 'pending_assignment')
+    this.Appraisal.list(type, 'New Article')
       .then((res) => {
         if (res.success) {
           this.setState({

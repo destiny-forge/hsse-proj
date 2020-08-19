@@ -20,6 +20,8 @@ class Conflicts extends React.Component {
     const { type } = this.props.match.params;
 
     this.types = type === 'hse' ? hse.types : sse.types || [];
+    this.questionTypes =
+      type === 'hse' ? hse.questionTypes : sse.questionTypes || [];
     this.treeData = type === 'hse' ? hse.tree : sse.tree;
 
     const keyArray = this.getKeyArray(this.treeData);
@@ -228,25 +230,22 @@ class Conflicts extends React.Component {
 
   renderTreeSection = (key, side) => {
     const subTree = this.treeData[key].items;
+    const hasChildren = _.has(subTree[0], 'children');
     const checkedKeyState = this.state[side].selected[key];
     const expandedKeys = this.state.expanded[key] || [];
     return (
-      <React.Fragment>
-        <div className="col-md-10">
-          <Tree
-            checkable
-            showLine={true}
-            defaultExpandAll={false}
-            autoExpandParent={true}
-            onExpand={(expandedKeys) => this.onExpand(key, expandedKeys)}
-            onCheck={this.handleTreeClick}
-            checkedKeys={checkedKeyState}
-            expandedKeys={expandedKeys}
-          >
-            {this.renderTreeNodes(subTree, key, side)}
-          </Tree>
-        </div>
-      </React.Fragment>
+      <Tree
+        checkable
+        showLine={hasChildren}
+        defaultExpandAll={false}
+        autoExpandParent={true}
+        onExpand={(expandedKeys) => this.onExpand(key, expandedKeys)}
+        onCheck={this.handleTreeClick}
+        checkedKeys={checkedKeyState}
+        expandedKeys={expandedKeys}
+      >
+        {this.renderTreeNodes(subTree, key, side)}
+      </Tree>
     );
   };
 
@@ -330,7 +329,8 @@ class Conflicts extends React.Component {
             <small>Ref Id: {article.shortId}</small>
           </div>
           <div className="box-body">
-            <form>
+            <fieldset>
+              <legend>Article</legend>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Ref id</label>
                 <div className="col-sm-10">{article.shortId}</div>
@@ -339,12 +339,13 @@ class Conflicts extends React.Component {
                 <label className="col-sm-2 col-form-label">Live date</label>
                 <div className="col-sm-10">N/A</div>
               </div>
+            </fieldset>
 
-              <div className="box-divider pt-2 mb-3"></div>
-              <div className="row">
-                <div className="col-sm-6">
-                  <h2>Mine</h2>
-                  <div className="box-divider pt-2 mb-3"></div>
+            <div className="row">
+              <div className="col-sm-6">
+                <h2>Mine</h2>
+                <fieldset>
+                  <legend>General Information</legend>
                   <div className="form-group">
                     <label>Document type</label>
                     <Select
@@ -356,6 +357,20 @@ class Conflicts extends React.Component {
                         this.handleChange('documentType', value)
                       }
                       options={this.types}
+                      isSearchable
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Question type</label>
+                    <Select
+                      value={this.questionTypes.filter(
+                        (opt) => opt.value === left.eligibility.questionType
+                      )}
+                      name="documentType"
+                      onChange={(value) =>
+                        this.handleChange('questionType', value)
+                      }
+                      options={this.questionTypes}
                       isSearchable
                     />
                   </div>
@@ -376,17 +391,19 @@ class Conflicts extends React.Component {
                       specific)
                     </label>
                   </div>
-                  {Object.keys(this.treeData).map((key) => (
-                    <div key={key}>
-                      <div className="box-divider pt-2 mb-3"></div>
-                      <h6>{this.treeData[key].title}</h6>
-                      {this.renderTreeSection(key, 'left')}
-                    </div>
-                  ))}
-                </div>
-                <div className="col-sm-6">
-                  <h2>Theirs</h2>
-                  <div className="box-divider pt-2 mb-3"></div>
+                </fieldset>
+
+                {Object.keys(this.treeData).map((key) => (
+                  <fieldset key={key}>
+                    <legend>{this.treeData[key].title}</legend>
+                    {this.renderTreeSection(key, 'left')}
+                  </fieldset>
+                ))}
+              </div>
+              <div className="col-sm-6">
+                <h2>Theirs</h2>
+                <fieldset>
+                  <legend>General Information</legend>
                   <div className="form-group">
                     <label
                       style={{ background: this.getConflictBG('documentType') }}
@@ -400,6 +417,22 @@ class Conflicts extends React.Component {
                       name="documentType"
                       options={this.types}
                       isDisabled={true}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label
+                      style={{ background: this.getConflictBG('questionType') }}
+                    >
+                      Question type
+                    </label>
+                    <Select
+                      value={this.questionTypes.filter(
+                        (opt) => opt.value === right.eligibility.questionType
+                      )}
+                      name="documentType"
+                      options={this.questionTypes}
+                      isDisabled={true}
+                      isSearchable
                     />
                   </div>
                   <div className="form-group">
@@ -428,25 +461,23 @@ class Conflicts extends React.Component {
                       </div>
                     </label>
                   </div>
-                  {Object.keys(this.treeData).map((key) => (
-                    <div key={key}>
-                      <div className="box-divider pt-2 mb-3"></div>
-                      <h6>{this.treeData[key].title}</h6>
-                      {this.renderTreeSection(key, 'right')}
-                    </div>
-                  ))}
-                </div>
+                </fieldset>
+                {Object.keys(this.treeData).map((key) => (
+                  <fieldset key={key}>
+                    <legend>{this.treeData[key].title}</legend>
+                    {this.renderTreeSection(key, 'right')}
+                  </fieldset>
+                ))}
               </div>
-              <div className="box-divider pt-2 mb-3"></div>
-              <button
-                type="submit"
-                onClick={this.handleSubmit}
-                className="btn primary"
-                disabled={this.state.conflicts.length > 0}
-              >
-                Resolve Conflicts
-              </button>
-            </form>
+            </div>
+            <button
+              type="submit"
+              onClick={this.handleSubmit}
+              className="btn primary"
+              disabled={this.state.conflicts.length > 0}
+            >
+              Resolve Conflicts
+            </button>
           </div>
         </div>
       </div>

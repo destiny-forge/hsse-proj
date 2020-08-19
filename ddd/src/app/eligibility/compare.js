@@ -24,33 +24,46 @@ module.exports = ({ eligibilityRepository }) => {
         };
       }
 
-      const source = filters[0].userId === userId ? filters[0] : filters[1];
-      const target = filters[1].userId === userId ? filters[1] : filters[0];
-
-      // re-map filters from array into objects
-      source.filters = mapFilters(source.filters);
-      target.filters = mapFilters(target.filters);
-
-      const filter = (path, key) =>
-        path.length === 0 &&
-        ~[
-          "_id",
-          "shortId",
-          "userId",
-          "relevance",
-          "completed",
-          "complicated",
-          "role",
-          "selectedStatus",
-        ].indexOf(key) < 0;
-
-      const diffs = diff(source, target, filter);
-      const differences = diffs || [];
-
-      return differences;
+      return compareFilters(filters, userId);
     } catch (error) {
       throw new Error(error);
     }
+  };
+
+  const compareFilters = (filters, userId) => {
+    const first = filters[0];
+    const second = filters[1];
+    let source, target;
+
+    if (first.userId == userId) {
+      source = first;
+      target = second;
+    } else {
+      source = second;
+      target = first;
+    }
+
+    // re-map filters from array into objects
+    source.filters = mapFilters(source.filters);
+    target.filters = mapFilters(target.filters);
+
+    const filter = (path, key) =>
+      path.length === 0 &&
+      ~[
+        "_id",
+        "shortId",
+        "userId",
+        "relevance",
+        "completed",
+        "complicated",
+        "role",
+        "selectedStatus",
+      ].indexOf(key) < 0;
+
+    const diffs = diff(source, target, filter);
+    const differences = diffs || [];
+
+    return differences;
   };
 
   const mapFilters = (filters) => {
@@ -63,5 +76,6 @@ module.exports = ({ eligibilityRepository }) => {
 
   return {
     compare,
+    compareFilters,
   };
 };

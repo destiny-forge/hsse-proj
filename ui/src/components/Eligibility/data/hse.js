@@ -5,6 +5,10 @@ const types = [
     label: 'Overviews of systematic reviews',
   },
   {
+    label: 'Systematic reviews of effects',
+    value: 'Systematic reviews of effects',
+  },
+  {
     value: 'Systematic reviews addressing other questions',
     label: 'Systematic reviews addressing other questions',
   },
@@ -38,7 +42,32 @@ const types = [
     value:
       'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.',
     label:
-      'NO, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.',
+      'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.',
+  },
+];
+
+const questionTypes = [
+  {
+    label: 'Many',
+    value: 'Many',
+  },
+  {
+    label: 'Effectiveness',
+    value: 'Effectiveness',
+  },
+  {
+    label: 'Not Effectiveness',
+    value: 'Not Effectiveness',
+  },
+  {
+    label:
+      'Cost-effectiveness/benefit/utility analysis or description of costs',
+    value:
+      'Cost-effectiveness/benefit/utility analysis or description of costs',
+  },
+  {
+    label: 'Description',
+    value: 'Description',
   },
 ];
 
@@ -825,5 +854,6 @@ const tree = {
 
 export default {
   types,
+  questionTypes,
   tree,
 };
