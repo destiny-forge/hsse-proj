@@ -44,8 +44,7 @@ class App extends Component {
           <Route path="/account/confirm/:token" component={ConfirmEmail} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/article" component={ArticleCreate} />
-          <Route path="/hse/eligibility" component={TabView} />
-          <Route path="/sse/eligibility" component={TabView} />
+          <Route path="/:type/eligibility" component={TabView} />
           <Route
             path="/eligibility/:type/:shortId"
             component={EligibilityForm}
@@ -54,7 +53,7 @@ class App extends Component {
             path="/quality-appraisal/:shortId"
             component={QualityAppraisalForm}
           />
-          <Route path="/:type/appraisals" component={Appraisals} />
+          <Route path="/:type/appraisals" component={TabView} />
           <Route path="/batch/articles/:stage/:shortId" component={Articles} />
           <Route path="/conflicts/:type/:shortId" component={Conflicts} />
           <Route path="/upload" component={BatchUpload} />

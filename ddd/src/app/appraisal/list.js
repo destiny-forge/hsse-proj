@@ -10,15 +10,7 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      var filters = status;
-      switch (status) {
-        case "New Article":
-          filters = ["New Article"];
-          break;
-        case "In Progress":
-          filters = ["In Progress"];
-          break;
-      }
+      var filters = status; //status.split(",")
 
       const refTypes = [
         "Overviews of systematic reviews",

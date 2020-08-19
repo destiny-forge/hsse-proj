@@ -166,10 +166,16 @@ module.exports = ({ database }) => {
 
     let aggregates = [lookup, match, group, project, sort];
 
+    // @TODO - Should this be documentType?
+    // We have it on the batch model, on the eligibility model
+    // and on the article model. I gander that once documents have
+    // the proper documentType - either from batch uploading??? or
+    // completing the eligibility filtering then the article's model
+    // should be where this queries from
     if (refTypes) {
       const refMatch = {
         $match: {
-          ["batches.0.referenceType"]: { $in: refTypes },
+          referenceType: { $in: refTypes },
         },
       };
       aggregates = [match, lookup, unwind, refMatch, group, project, sort];
