@@ -9,7 +9,7 @@ const Tabs = (props) => (
           href="#!"
           data-toggle="tab"
           data-target="#tab_1"
-          onClick={() => props.trackTab(props.type, 'New Article')}
+          onClick={() => props.trackTab(props.type, ['New Article'])}
         >
           Pending
         </a>
@@ -20,7 +20,7 @@ const Tabs = (props) => (
           href="#!"
           data-toggle="tab"
           data-target="#tab_2"
-          onClick={() => props.trackTab(props.type, 'assigned')}
+          onClick={() => props.trackTab(props.type, ['In Progress'])}
         >
           Assigned
         </a>
@@ -31,7 +31,7 @@ const Tabs = (props) => (
           href="#!"
           data-toggle="tab"
           data-target="#tab_3"
-          onClick={() => props.trackTab(props.type, 'complicated')}
+          onClick={() => props.trackTab(props.type, ['Complicated'])}
         >
           Complicated
         </a>

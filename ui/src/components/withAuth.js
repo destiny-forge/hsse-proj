@@ -8,7 +8,7 @@ export default function withAuth(AuthComponent) {
     constructor() {
       super();
       this.state = {
-        user: null
+        user: null,
       };
       this.handleLogout = this.handleLogout.bind(this);
     }
@@ -28,7 +28,7 @@ export default function withAuth(AuthComponent) {
         try {
           const profile = Auth.getProfile();
           this.setState({
-            user: profile
+            user: profile,
           });
         } catch (err) {
           Auth.logout();
@@ -39,10 +39,7 @@ export default function withAuth(AuthComponent) {
 
     render() {
       const { user } = this.state;
-      const { 
-        history, 
-        match 
-      } = this.props;
+      const { history, match } = this.props;
 
       if (this.state.user) {
         return (
@@ -70,7 +67,10 @@ export default function withAuth(AuthComponent) {
                       <ul className="nav bg">
                         <li className="nav-header">
                           <div className="py-3">
-                            <a href="/article" className="btn btn-sm success theme-accent btn-block">
+                            <a
+                              href="/article"
+                              className="btn btn-sm success theme-accent btn-block"
+                            >
                               <i className="fa fa-fw fa-plus"></i>
                               <span className="hidden-folded d-inline">
                                 New Article
@@ -96,7 +96,7 @@ export default function withAuth(AuthComponent) {
                           </a>
                         </li>
                         <li>
-                          <a href="/hse">
+                          <a href="/hse/eligibility">
                             <span className="nav-icon">
                               <i className="fa fa-align-left"></i>
                             </span>
@@ -104,8 +104,10 @@ export default function withAuth(AuthComponent) {
                           </a>
                         </li>
                         <li>
-                          <a href="/sse">
-                            <span className="nav-icon"><i className="fa fa-align-left"></i></span>
+                          <a href="/sse/eligibility">
+                            <span className="nav-icon">
+                              <i className="fa fa-align-left"></i>
+                            </span>
                             <span className="nav-text">Social Systems</span>
                           </a>
                         </li>
@@ -119,18 +121,21 @@ export default function withAuth(AuthComponent) {
             <div id="content" className="app-content box-shadow-0" role="main">
               <div
                 className="content-header white  box-shadow-0"
-                id="content-header">
+                id="content-header"
+              >
                 <div className="navbar navbar-expand-lg">
                   <a
                     className="d-lg-none mx-2"
                     data-toggle="modal"
                     data-target="#aside"
-                    href="!#">
+                    href="!#"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
                       height="24"
-                      viewBox="0 0 512 512">
+                      viewBox="0 0 512 512"
+                    >
                       <path d="M80 304h352v16H80zM80 248h352v16H80zM80 192h352v16H80z" />
                     </svg>
                   </a>
@@ -142,7 +147,8 @@ export default function withAuth(AuthComponent) {
                       <a
                         href="!#"
                         data-toggle="dropdown"
-                        className="d-flex align-items-center">
+                        className="d-flex align-items-center"
+                      >
                         <span className="avatar w-32">
                           <img src="../assets/images/a3.jpg" alt="..." />
                         </span>
@@ -170,7 +176,8 @@ export default function withAuth(AuthComponent) {
                         <a
                           className="dropdown-item"
                           href="!#"
-                          onClick={this.handleLogout}>
+                          onClick={this.handleLogout}
+                        >
                           Sign out
                         </a>
                       </div>
@@ -180,12 +187,14 @@ export default function withAuth(AuthComponent) {
                         href="!#"
                         className="mx-2"
                         data-toggle="collapse"
-                        data-target="#navbarToggler">
+                        data-target="#navbarToggler"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="18"
                           height="18"
-                          viewBox="0 0 512 512">
+                          viewBox="0 0 512 512"
+                        >
                           <path d="M64 144h384v32H64zM64 240h384v32H64zM64 336h384v32H64z" />
                         </svg>
                       </a>
@@ -193,12 +202,14 @@ export default function withAuth(AuthComponent) {
                   </ul>
                   <div
                     className="collapse navbar-collapse no-grow order-lg-1"
-                    id="navbarToggler">
+                    id="navbarToggler"
+                  >
                     <form className="input-group m-2 my-lg-0">
                       <span className="input-group-btn">
                         <button
                           type="button"
-                          className="btn no-border no-bg no-shadow">
+                          className="btn no-border no-bg no-shadow"
+                        >
                           <i className="fa fa-search"></i>
                         </button>
                       </span>
@@ -212,10 +223,10 @@ export default function withAuth(AuthComponent) {
                 </div>
               </div>
               <div className="content-main " id="content-main">
-                <AuthComponent 
-                  history={history} 
-                  user={user} 
-                  fetch={Auth.fetch} 
+                <AuthComponent
+                  history={history}
+                  user={user}
+                  fetch={Auth.fetch}
                   match={match}
                 />
               </div>

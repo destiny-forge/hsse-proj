@@ -7,11 +7,13 @@ const withSection = (WrappedComponent) => {
     const props = { history, fetch };
     const [batches, setBatches] = useState([]);
     const Batch = BatchService({ fetch });
-    const type = history.location.pathname.replace(/\//g, '');
+    const paths = history.location.pathname.split('/');
+
+    const type = paths[1];
+    const stage = paths[2];
 
     const parms = queryString.parse(history.location.search);
     const uid = parms['t'] || false;
-    const stage = 'eligibility';
 
     function fetchData(type, tab) {
       Batch.list(type, stage, tab)

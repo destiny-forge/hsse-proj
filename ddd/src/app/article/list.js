@@ -10,9 +10,7 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      var filters = ["New Article", "In Progress", "Conflicted", "Complete"];
-
-      return await articleRepository.aggregate(type, stage, filters);
+      return await articleRepository.aggregate(type, stage, status);
     } catch (error) {
       throw new Error(error);
     }

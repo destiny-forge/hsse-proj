@@ -12,14 +12,14 @@ const Sidebar = (props) => {
         <ul className="list">
           <li className="list-item">
             <div className="list-body">
-              <Link to={`${props.type}`} className="text-primary">
+              <Link to={`/${props.type}/eligibility`} className="text-primary">
                 Eligibility &amp; Filters
               </Link>
             </div>
           </li>
           <li className="list-item">
             <div className="list-body">
-              <Link to={`/appraisals/${props.type}`} className="text-primary">
+              <Link to={`/${props.type}/appraisals`} className="text-primary">
                 Quality Appraisals
               </Link>
             </div>
