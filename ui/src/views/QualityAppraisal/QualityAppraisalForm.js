@@ -3,7 +3,7 @@ import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import ArticleService from '../../services/ArticleService';
 import { toast } from 'react-toastify';
-import Radio from './Radio';
+import Radio from '../../components/atoms/Radio';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 class QualityAppraisalForm extends React.Component {

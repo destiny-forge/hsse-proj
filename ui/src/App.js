@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Login from './components/Accounts/Login';
-import Dashboard from './components/Dashboard';
-import Signup from './components/Accounts/Signup';
-import ArticleCreate from './components/Articles/ArticleCreate';
-import SignupSuccess from './components/Accounts/SignupSuccess';
-import ConfirmEmail from './components/Accounts/ConfirmEmail';
-import ForgotPassword from './components/Accounts/ForgotPassword';
-import PasswordReset from './components/Accounts/PasswordReset';
-import BatchUpload from './components/Articles/BatchUpload';
-import Notes from './components/Articles/Notes';
+import Login from './views/Accounts/Login';
+import Dashboard from './views/Dashboard';
+import Signup from './views/Accounts/Signup';
+import ArticleCreate from './views/Articles/ArticleCreate';
+import SignupSuccess from './views/Accounts/SignupSuccess';
+import ConfirmEmail from './views/Accounts/ConfirmEmail';
+import ForgotPassword from './views/Accounts/ForgotPassword';
+import PasswordReset from './views/Accounts/PasswordReset';
+import BatchUpload from './views/Articles/BatchUpload';
+import Notes from './views/Articles/Notes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import SSE from './components/Eligibility/SSE';
-import HSE from './components/Eligibility/HSE';
-import EligibilityForm from './components/Eligibility/EligibilityForm';
-import Articles from './components/Articles/Articles';
-import Conflicts from './components/Articles/Conflicts';
-import QualityAppraisalForm from './components/QualityAppraisal/QualityAppraisalForm';
-import Appraisals from './components/QualityAppraisal/Appraisals';
+import SSE from './views/Eligibility/SSE';
+import HSE from './views/Eligibility/HSE';
+import EligibilityForm from './views/Eligibility/EligibilityForm';
+import Articles from './views/Articles/Articles';
+import Conflicts from './views/Articles/Conflicts';
+import QualityAppraisalForm from './views/QualityAppraisal/QualityAppraisalForm';
+import Appraisals from './views/QualityAppraisal/Appraisals';
 
 class App extends Component {
   render() {

@@ -8,7 +8,7 @@ import withAuth from '../withAuth';
 import ArticleService from '../../services/ArticleService';
 import EligibilityService from '../../services/EligibilityService';
 import { hse, sse } from './data';
-import ErrorMessage from '../atoms/ErrorMessage';
+import ErrorMessage from '../../components/atoms/ErrorMessage';
 import 'antd/dist/antd.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import validate from './validate';
