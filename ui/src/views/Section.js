@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import BatchService from '../../services/BatchService';
+import BatchService from '../services/BatchService';
 import queryString from 'query-string';
 
 const withSection = (WrappedComponent) => {

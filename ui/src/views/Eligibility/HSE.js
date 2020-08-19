@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
-import withSection from './Section';
-import BatchesTable from './BatchesTable';
-import Tabs from './Tabs';
-import Sidebar from './Sidebar';
-import Header from './Header';
+import withSection from '../Section';
+import BatchesTable from '../../components/atoms/BatchesTable';
+import Tabs from '../../components/atoms/Tabs';
+import Sidebar from '../../components/atoms/Sidebar';
+import Header from '../../components/atoms/Header';
 
 class HSE extends Component {
   render() {

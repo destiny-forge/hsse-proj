@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
-import withSection from './Section';
-import Header from './Header';
-import BatchesTable from './BatchesTable';
-import Tabs from './Tabs';
-import Sidebar from './Sidebar';
+import withSection from '../Section';
+import BatchesTable from '../../components/atoms/BatchesTable';
+import Tabs from '../../components/atoms/Tabs';
+import Sidebar from '../../components/atoms/Sidebar';
+import Header from '../../components/atoms/Header';
 
 class SSE extends Component {
   render() {
