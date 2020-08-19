@@ -12,11 +12,10 @@ import BatchUpload from './views/Articles/BatchUpload';
 import Notes from './views/Articles/Notes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import SSE from './views/Eligibility/SSE';
-import HSE from './views/Eligibility/HSE';
+import TabView from './views/TabView';
 import EligibilityForm from './views/Eligibility/EligibilityForm';
 import Articles from './views/Articles/Articles';
-import Conflicts from './views/Articles/Conflicts';
+import Conflicts from './views/Eligibility/Conflicts';
 import QualityAppraisalForm from './views/QualityAppraisal/QualityAppraisalForm';
 import Appraisals from './views/QualityAppraisal/Appraisals';
 
@@ -45,8 +44,8 @@ class App extends Component {
           <Route path="/account/confirm/:token" component={ConfirmEmail} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/article" component={ArticleCreate} />
-          <Route path="/hse/eligibility" component={HSE} />
-          <Route path="/sse/eligibility" component={SSE} />
+          <Route path="/hse/eligibility" component={TabView} />
+          <Route path="/sse/eligibility" component={TabView} />
           <Route
             path="/eligibility/:type/:shortId"
             component={EligibilityForm}

@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
-import withSection from '../Section';
-import BatchesTable from '../../components/atoms/BatchesTable';
-import Tabs from '../../components/atoms/Tabs';
-import Sidebar from '../../components/atoms/Sidebar';
-import Header from '../../components/atoms/Header';
+import withAuth from './withAuth';
+import withSection from './Section';
+import BatchesTable from '../components/atoms/BatchesTable';
+import Tabs from '../components/atoms/Tabs';
+import Sidebar from '../components/atoms/Sidebar';
+import Header from '../components/atoms/Header';
 
-class HSE extends Component {
+class TabView extends Component {
   render() {
     const { trackTab, batches, type, stage } = this.props;
 
     return (
       <React.Fragment>
-        <Header type={'hse'} />
+        <Header type={type} />
         <div className="white bg b-b px-3">
           <div className="row">
             <div className="col-sm-12 order-sm-1">
@@ -48,4 +48,4 @@ class HSE extends Component {
   }
 }
 
-export default withRouter(withAuth(withSection(HSE)));
+export default withRouter(withAuth(withSection(TabView)));
