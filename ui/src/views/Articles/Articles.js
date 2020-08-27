@@ -171,38 +171,46 @@ class Articles extends React.Component {
                     <td>{article.title}</td>
                     <td>{article.authors}</td>
                     <td>
-                      {this.showEmail(article, 'junior') || (
-                        <button
-                          className="md-btn md-flat mb-2 w-xs text-success"
-                          onClick={() => {
-                            if (
-                              window.confirm(
-                                'Are you sure you want to assign this article to your assigned quality appraisals list?'
+                      {this.showEmail(article, 'junior') ||
+                        (!this.isAssignedAs(
+                          article.stages[stage],
+                          'senior'
+                        ) && (
+                          <button
+                            className="md-btn md-flat mb-2 w-xs text-success"
+                            onClick={() => {
+                              if (
+                                window.confirm(
+                                  'Are you sure you want to assign this article to your assigned quality appraisals list?'
+                                )
                               )
-                            )
-                              this.assign('junior', article._id);
-                          }}
-                        >
-                          Assign
-                        </button>
-                      )}
+                                this.assign('junior', article._id);
+                            }}
+                          >
+                            Assign
+                          </button>
+                        ))}
                     </td>
                     <td>
-                      {this.showEmail(article, 'senior') || (
-                        <button
-                          className="md-btn md-flat mb-2 w-xs text-success"
-                          onClick={() => {
-                            if (
-                              window.confirm(
-                                'Are you sure you want to assign this article to your assigned quality appraisals list?'
+                      {this.showEmail(article, 'senior') ||
+                        (!this.isAssignedAs(
+                          article.stages[stage],
+                          'junior'
+                        ) && (
+                          <button
+                            className="md-btn md-flat mb-2 w-xs text-success"
+                            onClick={() => {
+                              if (
+                                window.confirm(
+                                  'Are you sure you want to assign this article to your assigned quality appraisals list?'
+                                )
                               )
-                            )
-                              this.assign('senior', article._id);
-                          }}
-                        >
-                          Assign
-                        </button>
-                      )}
+                                this.assign('senior', article._id);
+                            }}
+                          >
+                            Assign
+                          </button>
+                        ))}
                     </td>
                     <td>{this.getMyStatus(article.stages[stage])}</td>
                     <td>{this.getStatus(article, stage)}</td>
