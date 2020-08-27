@@ -10,8 +10,6 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      console.log(type, status);
-
       return await articleRepository.aggregate(type, "eligibility", status);
     } catch (error) {
       throw new Error(error);

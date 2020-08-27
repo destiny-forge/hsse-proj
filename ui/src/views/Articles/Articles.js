@@ -132,6 +132,19 @@ class Articles extends React.Component {
     );
   }
 
+  getAssignmentText(role, stage) {
+    let text = '';
+    switch (stage) {
+      case 'eligibility':
+        text = 'filterer';
+        break;
+      case 'appraisal':
+        text = 'appraiser';
+        break;
+    }
+    return `${role} ${text}`;
+  }
+
   render() {
     const stage = 'eligibility';
     return (
@@ -143,8 +156,8 @@ class Articles extends React.Component {
                 <th>Article Id</th>
                 <th>Title</th>
                 <th>Authors</th>
-                <th>Junior Appraiser</th>
-                <th>Senior Appraiser</th>
+                <th>{this.getAssignmentText('Junior', stage)}</th>
+                <th>{this.getAssignmentText('Senior', stage)}</th>
                 <th>My Status</th>
                 <th>Article Status</th>
                 <th>Actions</th>
