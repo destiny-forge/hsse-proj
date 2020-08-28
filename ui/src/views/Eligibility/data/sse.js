@@ -25,18 +25,6 @@ const types = [
     label: 'Economic evaluations and costing studies',
   },
   {
-    value: 'Intergovernmental organizations’ health systems documents',
-    label: 'Intergovernmental organizations’ health systems documents',
-  },
-  {
-    value: 'Canada’s health systems documents',
-    label: 'Canada’s health systems documents',
-  },
-  {
-    value: 'Ontario’s health system documents',
-    label: 'Ontario’s health system documents',
-  },
-  {
     value:
       'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in SSE.',
     label:
@@ -54,8 +42,8 @@ const questionTypes = [
     value: 'Effectiveness',
   },
   {
-    label: 'Not Effectiveness',
-    value: 'Not Effectiveness',
+    label: 'Not effectiveness',
+    value: 'Not effectiveness',
   },
   {
     label:
@@ -90,7 +78,7 @@ const tree = {
                 key: 'programsServicesChildrenCaregiver',
               },
               {
-                title: 'Early childhood development servies',
+                title: 'Early childhood development services',
                 key: 'programsServicesChildrenEarlyChildhood',
               },
               {
@@ -171,7 +159,7 @@ const tree = {
                 children: [
                   { title: 'Buildings', key: 'climateEnergyBuildings' },
                   {
-                    title: 'Energy productions',
+                    title: 'Energy production',
                     key: 'climateEnergyProduction',
                   },
                   { title: 'Households', key: 'climateEnergyHouseholds' },
@@ -407,6 +395,10 @@ const tree = {
                 key: 'educationTuitionSubsidy',
               },
               { title: 'Marketing', key: 'educationMarketing' },
+              {
+                title: 'Admission and recruitment',
+                key: 'educationAdmissionRecruitment',
+              },
               { title: 'Streaming', key: 'educationStreaming' },
               { title: 'Curriculum', key: 'educationCurriculum' },
               {
@@ -748,8 +740,16 @@ const tree = {
                 key: 'environmentalConservationThreats',
                 children: [
                   {
+                    title: 'Droughts',
+                    key: 'environmentalConservationThreatsDroughts',
+                  },
+                  {
                     title: 'Fires',
                     key: 'environmentalConservationThreatsFires',
+                  },
+                  {
+                    title: 'Floods',
+                    key: 'environmentalConservationThreatsFloods',
                   },
                   {
                     title: 'Invasive species',
@@ -762,6 +762,10 @@ const tree = {
                   {
                     title: 'Noise',
                     key: 'environmentalConservationThreatsNoise',
+                  },
+                  {
+                    title: 'Severe storm events',
+                    key: 'environmentalConservationThreatsSevereStormEvents',
                   },
                 ],
               },
@@ -1416,7 +1420,7 @@ const tree = {
                 key: 'deliveryArrangementDesign',
                 children: [
                   {
-                    title: 'System - Need, demand & supply',
+                    title: 'Availability of services',
                     key: 'deliveryArrangementDesignAvailability',
                   },
                   {
@@ -1446,7 +1450,7 @@ const tree = {
                 key: 'serviceProvider',
                 children: [
                   {
-                    title: 'Availability of services',
+                    title: 'System - Need, demand & supply',
                     key: 'serviceProviderAvailability',
                   },
                   {
@@ -1502,7 +1506,7 @@ const tree = {
                     key: 'serviceProviderStaffSupport',
                   },
                   {
-                    title: 'SserviceProviderStaffWorkloadWorkflowIntensity',
+                    title: 'Staff workload/workflow/intensity',
                     key: 'serviceProviderStaffWorkloadWorkflowIntensity',
                   },
                   {
@@ -1656,6 +1660,10 @@ const tree = {
                 key: 'implementationProviderTargetedPeerReview',
               },
               {
+                title: 'Audit and feedback',
+                key: 'implementationProviderTargetedAuditFeedback',
+              },
+              {
                 title: 'Reminders and prompts',
                 key: 'implementationProviderTargetedRemindersAndPrompts',
               },
@@ -1802,31 +1810,23 @@ const tree = {
             ],
           },
           {
-            title: 'Provider-targeted strategy',
-            key: 'perspectivesProvider',
+            title: 'Outcomes',
+            key: 'outcomesProvider',
             children: [
-              { title: 'Economic', key: 'perspectivesProviderEconomic' },
-              { title: 'Education', key: 'perspectivesProviderEducation' },
-              { title: 'Employment', key: 'perspectivesProviderEmployment' },
-              { title: 'Health', key: 'perspectivesProviderHealth' },
-              { title: 'Housing', key: 'perspectivesProviderHousing' },
+              { title: 'Economic', key: 'outcomesProviderEconomic' },
+              { title: 'Education', key: 'outcomesProviderEducation' },
+              { title: 'Employment', key: 'outcomesProviderEmployment' },
+              { title: 'Health', key: 'outcomesProviderHealth' },
+              { title: 'Housing', key: 'outcomesProviderHousing' },
               {
-                title: 'Peer review',
-                key: 'perspectivesProviderPeerReview',
+                title: 'Other sector/area-specific outcomes',
+                key: 'outcomesProviderOther',
               },
               {
                 title: 'Social inclusion',
-                key: 'perspectivesProviderSocialInclusion',
+                key: 'outcomesProviderSocialInclusion',
               },
-              { title: 'Well-being', key: 'perspectivesProviderWellBeing' },
-              {
-                title: 'Citizen-mediated intervention',
-                key: 'perspectivesProviderCitizenIntervention',
-              },
-              {
-                title: 'Other sector/area-specific outcomes',
-                key: 'perspectivesProviderOther',
-              },
+              { title: 'Well-being', key: 'outcomesProviderWellBeing' },
             ],
           },
           {
