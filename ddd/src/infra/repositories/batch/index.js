@@ -4,7 +4,7 @@ module.exports = ({ model }) => {
   const getAll = async (...args) => {
     try {
       const batches = await model.getAll(...args);
-      return batches.map(batch => {
+      return batches.map((batch) => {
         return toEntity(batch);
       });
     } catch (err) {
@@ -12,10 +12,10 @@ module.exports = ({ model }) => {
     }
   };
 
-  const findByType = async type => {
+  const findByType = async (type) => {
     try {
       const batches = await model.findByType(type);
-      return batches.map(batch => {
+      return batches.map((batch) => {
         return toEntity(batch);
       });
     } catch (err) {
@@ -35,6 +35,14 @@ module.exports = ({ model }) => {
   const update = async (...args) => {
     try {
       return model.update(...args);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
+  const assign = async (...args) => {
+    try {
+      return model.assign(...args);
     } catch (err) {
       throw new Error(err);
     }
@@ -62,8 +70,9 @@ module.exports = ({ model }) => {
     getAll,
     create,
     update,
+    assign,
     findById,
     findByType,
-    findOne
+    findOne,
   };
 };

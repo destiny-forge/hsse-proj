@@ -21,6 +21,7 @@ const Batch = t.struct(
 
     uploaded: t.Date,
     harvested: t.Date,
+    stages: t.maybe(t.Object),
   },
   {
     defaultProps: {
@@ -29,6 +30,13 @@ const Batch = t.struct(
       uploaded: new Date(),
       harvested: new Date(),
       priority: "LOW",
+      stages: {
+        eligibility: {},
+        studies: {},
+        appraisals: {},
+        prioritizing: {},
+        translations: {},
+      },
     },
   }
 );

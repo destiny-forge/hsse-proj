@@ -1,7 +1,7 @@
 const ObjectID = require("mongodb").ObjectID;
 
 module.exports = ({ database }) => {
-  const create = async batch => {
+  const create = async (batch) => {
     try {
       const results = await database
         .get()
@@ -26,7 +26,7 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findByType = async type => {
+  const findByType = async (type) => {
     try {
       return await database
         .get()
@@ -38,7 +38,7 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findById = async id => {
+  const findById = async (id) => {
     try {
       if (!ObjectID.isValid(id)) throw "Invalid MongoDB ID.";
       const results = await database
@@ -51,12 +51,9 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findOne = async query => {
+  const findOne = async (query) => {
     try {
-      const results = await database
-        .get()
-        .collection("batches")
-        .findOne(query);
+      const results = await database.get().collection("batches").findOne(query);
       return results;
     } catch (e) {
       throw e;
@@ -69,6 +66,28 @@ module.exports = ({ database }) => {
         .get()
         .collection("batches")
         .updateOne({ _id: { $eq: ObjectID(id) } }, { $set: fields });
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const assign = async (assignment) => {
+    const { batchId, stage, type, user, status } = assignment;
+    const assign = {
+      ...user,
+      status: "In Progress",
+    };
+    try {
+      const fields = {
+        [`stages.${stage}.${type}`]: assign,
+        [`stages.${stage}.status`]: status,
+      };
+      const cmdResult = await database
+        .get()
+        .collection("batches")
+        .updateOne({ _id: { $eq: ObjectID(batchId) } }, { $set: fields });
       const { result } = cmdResult.toJSON();
       return result;
     } catch (e) {
@@ -89,6 +108,7 @@ module.exports = ({ database }) => {
     findByType,
     findOne,
     update,
-    createIndexes
+    assign,
+    createIndexes,
   };
 };

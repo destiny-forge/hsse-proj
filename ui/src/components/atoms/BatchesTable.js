@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const BatchesTable = ({ stage, batches }) => {
+  console.log(batches);
   return (
     <div className="box">
       <div className="table-responsive">

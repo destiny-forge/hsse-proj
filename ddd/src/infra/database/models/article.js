@@ -220,7 +220,7 @@ module.exports = ({ database }) => {
   };
 
   const assign = async (assignment) => {
-    const { articleId, stage, type, user, status } = assignment;
+    const { articleId, batchId, stage, type, user, status } = assignment;
     const assign = {
       ...user,
       status: "In Progress",
@@ -230,10 +230,14 @@ module.exports = ({ database }) => {
         [`stages.${stage}.${type}`]: assign,
         [`stages.${stage}.status`]: status,
       };
+
+      let key = batchId ? "batchId" : "_id";
+      let id = batchId ? batchId : articleId;
+
       const cmdResult = await database
         .get()
         .collection("articles")
-        .updateOne({ _id: { $eq: ObjectID(articleId) } }, { $set: fields });
+        .updateOne({ [key]: { $eq: ObjectID(id) } }, { $set: fields });
       const { result } = cmdResult.toJSON();
       return result;
     } catch (e) {

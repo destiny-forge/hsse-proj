@@ -6,6 +6,7 @@ import ArticleService from '../../services/ArticleService';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
+import { AssignHeader, AssignAction } from '../../components/Assignment';
 
 class Articles extends React.Component {
   constructor(props) {
@@ -56,7 +57,7 @@ class Articles extends React.Component {
       });
   }
 
-  assign = (type, articleId) => {
+  assign = (role, articleId) => {
     const { user } = this.props;
     const { shortId } = this.props.match.params;
     const { stage } = this.state;
@@ -64,7 +65,7 @@ class Articles extends React.Component {
     const assignment = {
       articleId,
       stage,
-      type,
+      type: role,
     };
 
     assignment.user = {
@@ -147,6 +148,7 @@ class Articles extends React.Component {
 
   render() {
     const stage = 'eligibility';
+    const { user } = this.props;
     return (
       <div className="box">
         <div className="table-responsive">
@@ -156,8 +158,12 @@ class Articles extends React.Component {
                 <th>Article Id</th>
                 <th>Title</th>
                 <th>Authors</th>
-                <th>{this.getAssignmentText('Junior', stage)}</th>
-                <th>{this.getAssignmentText('Senior', stage)}</th>
+                <th>
+                  <AssignHeader role="Junior" stage={stage} />
+                </th>
+                <th>
+                  <AssignHeader role="Senior" stage={stage} />
+                </th>
                 <th>My Status</th>
                 <th>Article Status</th>
                 <th>Actions</th>
@@ -171,6 +177,15 @@ class Articles extends React.Component {
                     <td>{article.title}</td>
                     <td>{article.authors}</td>
                     <td>
+                      {/*
+                        <AssignAction
+                          user={user}
+                          stage={stage}
+                          role="junior"
+                          action={this.assign}
+                        />
+                      */}
+
                       {this.showEmail(article, 'junior') ||
                         (!this.isAssignedAs(
                           article.stages[stage],

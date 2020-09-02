@@ -4,24 +4,30 @@ const { create, list, signature } = require("src/app/batch");
 module.exports = () => {
   const {
     repository: { batchRepository, articleRepository },
-    config
+    config,
   } = container.cradle;
 
   const createUseCase = create({
     batchRepository,
     articleRepository,
-    config
+    config,
   });
 
   const listUseCase = list({
-    batchRepository
+    batchRepository,
+  });
+
+  const assignUseCase = assign({
+    articleRepository,
+    batchRepository,
   });
 
   const signatureUseCase = signature({ config });
 
   return {
     createUseCase,
+    assignUseCase,
     listUseCase,
-    signatureUseCase
+    signatureUseCase,
   };
 };
