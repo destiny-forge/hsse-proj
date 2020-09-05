@@ -1,5 +1,5 @@
 const container = require("src/container");
-const { create, list, signature } = require("src/app/batch");
+const { create, list, assign, signature } = require("src/app/batch");
 
 module.exports = () => {
   const {
