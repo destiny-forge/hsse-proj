@@ -17,7 +17,7 @@ import EligibilityForm from './views/Eligibility/EligibilityForm';
 import Articles from './views/Articles/Articles';
 import Conflicts from './views/Eligibility/Conflicts';
 import QualityAppraisalForm from './views/QualityAppraisal/QualityAppraisalForm';
-import Appraisals from './views/QualityAppraisal/Appraisals';
+//import Appraisals from './views/QualityAppraisal/Appraisals';
 
 class App extends Component {
   render() {

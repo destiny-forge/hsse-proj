@@ -67,7 +67,7 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findByBatchAndRefTypes = async (batchId, refTypes) => {
+  const findByBatchAndDocTypes = async (batchId, docTypes) => {
     const join = {
       $lookup: {
         from: "batches",
@@ -83,13 +83,13 @@ module.exports = ({ database }) => {
       },
     };
 
-    const matchRefType = {
+    const matchDocType = {
       $match: {
-        ["batches.0.referenceType"]: { $in: refTypes },
+        documentType: { $in: docTypes },
       },
     };
 
-    const aggregates = [matchBatch, join, matchRefType];
+    const aggregates = [matchBatch, join, matchDocType];
 
     try {
       return await database
@@ -102,7 +102,7 @@ module.exports = ({ database }) => {
     }
   };
 
-  const aggregate = async (type, stage, status, refTypes) => {
+  const aggregate = async (type, stage, status, docTypes) => {
     const filters = Array.isArray(status) ? { $in: status } : status;
 
     const lookup = {
@@ -172,13 +172,13 @@ module.exports = ({ database }) => {
     // the proper documentType - either from batch uploading??? or
     // completing the eligibility filtering then the article's model
     // should be where this queries from
-    if (refTypes) {
-      const refMatch = {
+    if (docTypes) {
+      const matchDocType = {
         $match: {
-          referenceType: { $in: refTypes },
+          documentType: { $in: docTypes },
         },
       };
-      aggregates = [match, lookup, unwind, refMatch, group, project, sort];
+      aggregates = [match, lookup, unwind, matchDocType, group, project, sort];
     }
 
     try {
@@ -354,7 +354,7 @@ module.exports = ({ database }) => {
     updateStage,
     updateStageCoderStatus,
     findByBatch,
-    findByBatchAndRefTypes,
+    findByBatchAndDocTypes,
     aggregate,
     createIndexes,
     migrate,

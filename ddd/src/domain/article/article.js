@@ -64,6 +64,7 @@ const Article = t.struct(
     translatedTitle: t.maybe(t.String),
     nameOfDatabase: t.maybe(t.String),
     databaseProvider: t.maybe(t.String),
+    documentType: t.maybe(t.String),
     stages: t.maybe(t.Object),
     status: t.maybe(t.String),
   },

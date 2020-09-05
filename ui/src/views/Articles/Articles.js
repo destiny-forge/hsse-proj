@@ -6,7 +6,7 @@ import ArticleService from '../../services/ArticleService';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import { AssignHeader, AssignAction } from '../../components/Assignment';
+import { AssignHeader } from '../../components/Assignment';
 
 class Articles extends React.Component {
   constructor(props) {
@@ -142,13 +142,15 @@ class Articles extends React.Component {
       case 'appraisal':
         text = 'appraiser';
         break;
+      default:
+        text = '';
     }
     return `${role} ${text}`;
   }
 
   render() {
     const stage = 'eligibility';
-    const { user } = this.props;
+    //const { user } = this.props;
     return (
       <div className="box">
         <div className="table-responsive">

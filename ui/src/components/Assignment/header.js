@@ -7,6 +7,8 @@ const getAssignmentHeader = (role, stage) => {
     case 'appraisal':
       text = 'appraiser';
       break;
+    default:
+      text = '';
   }
   return `${role} ${text}`;
 };

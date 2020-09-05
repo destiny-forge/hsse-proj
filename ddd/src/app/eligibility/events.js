@@ -29,6 +29,7 @@ module.exports = ({ events, eligibilityRepository, articleRepository }) => {
           // completed and validated?????
           articleRepository.update(articleId, {
             "stages.eligibility.data": first,
+            documentType: first.documentType,
           });
         }
       }

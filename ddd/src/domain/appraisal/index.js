@@ -12,26 +12,16 @@ const Appraisal = t.struct(
     userId: t.maybe(t.Object),
     role: t.String,
 
-    questionOne: t.String,
-    questionTwo: t.String,
-    questionThree: t.String,
-    questionFour: t.String,
-    questionFive: t.String,
-    questionSix: t.String,
-    questionSeven: t.String,
-    questionEight: t.String,
-    questionNine: t.String,
-    questionTen: t.String,
-    questionEleven: t.String,
+    questions: t.Array,
 
-    amstarStatus: t.String,
+    completed: t.Boolean,
     amstarNumerator: t.Number,
     amstarDenominator: t.Number,
   },
   {
     defaultProps: {
       shortId: shortid.generate(),
-      amstarStatus: "In progress",
+      completed: false,
     },
   }
 );
