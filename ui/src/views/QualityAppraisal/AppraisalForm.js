@@ -217,7 +217,7 @@ class AppraisalForm extends React.Component {
               {questions.map((question, i) => (
                 <div key={i} className="row">
                   <div className="col-md-12">
-                    <div className="form-block mt-3">
+                    <div className="form-block mt-3 mb-3">
                       <label>
                         <b>
                           {i + 1}. {question.title}
