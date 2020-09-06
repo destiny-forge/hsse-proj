@@ -16,6 +16,9 @@ const Appraisal = t.struct(
 
     status: t.String,
     completed: t.Boolean,
+    complicated: t.Boolean,
+    notInEnglish: t.Boolean,
+    noFreeFullText: t.Boolean,
     amstarNumerator: t.Number,
     amstarDenominator: t.Number,
   },
@@ -23,7 +26,10 @@ const Appraisal = t.struct(
     defaultProps: {
       shortId: shortid.generate(),
       status: "In Progress",
+      notInEnglish: false,
+      noFreeFullText: false,
       completed: false,
+      complicated: false,
     },
   }
 );

@@ -33,6 +33,8 @@ class AppraisalForm extends React.Component {
       _id: null,
       article: '',
       status: 'In Progress',
+      notInEnglish: false,
+      noFreeFullText: false,
       type,
       questions,
       errors: {},
@@ -49,6 +51,14 @@ class AppraisalForm extends React.Component {
   handleChange = (field, value) => {
     this.setState({
       [field]: value,
+    });
+  };
+
+  handleCheckbox = (e) => {
+    const { checked, name } = e.target;
+
+    this.setState({
+      [name]: checked,
     });
   };
 
@@ -84,7 +94,12 @@ class AppraisalForm extends React.Component {
               question.value = q.value;
             });
 
-            this.setState({ _id: appraisal._id, questions });
+            this.setState({
+              _id: appraisal._id,
+              notInEnglish: appraisal.notInEnglish,
+              noFreeFullText: appraisal.noFreeFullText,
+              questions,
+            });
           }
         });
       })
@@ -107,7 +122,14 @@ class AppraisalForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { article, type, status, _id } = this.state;
+    const {
+      article,
+      type,
+      status,
+      _id,
+      notInEnglish,
+      noFreeFullText,
+    } = this.state;
     const { user } = this.props;
 
     const questions = this.state.questions.map((q) => {
@@ -125,6 +147,9 @@ class AppraisalForm extends React.Component {
       role: this.getAssignmentRole(user, article),
       questions,
       status,
+      notInEnglish,
+      noFreeFullText,
+      complicated: notInEnglish || noFreeFullText,
     };
 
     if (_id != null) {
@@ -160,6 +185,33 @@ class AppraisalForm extends React.Component {
             <small>Ref Id: {article.shortId}</small>
           </div>
           <div className="box-body">
+            <fieldset>
+              <legend>Complicated reviews</legend>
+              <div className="col-sm-10">
+                <label className="form-check-label">
+                  <input
+                    checked={this.state.notInEnglish}
+                    type="checkbox"
+                    className="form-check-input"
+                    name="notInEnglish"
+                    onChange={this.handleCheckbox}
+                  />{' '}
+                  Not in English
+                </label>
+              </div>
+              <div className="col-sm-10">
+                <label className="form-check-label">
+                  <input
+                    checked={this.state.noFreeFullText}
+                    type="checkbox"
+                    className="form-check-input"
+                    name="noFreeFullText"
+                    onChange={this.handleCheckbox}
+                  />{' '}
+                  No free full text
+                </label>
+              </div>
+            </fieldset>
             <fieldset>
               <legend>Questions</legend>
               {questions.map((question, i) => (
