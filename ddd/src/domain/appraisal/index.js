@@ -14,6 +14,7 @@ const Appraisal = t.struct(
 
     questions: t.Array,
 
+    status: t.String,
     completed: t.Boolean,
     amstarNumerator: t.Number,
     amstarDenominator: t.Number,
@@ -21,6 +22,7 @@ const Appraisal = t.struct(
   {
     defaultProps: {
       shortId: shortid.generate(),
+      status: "In Progress",
       completed: false,
     },
   }

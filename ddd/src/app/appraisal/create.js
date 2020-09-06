@@ -9,7 +9,19 @@ module.exports = ({ appraisalRepository }) => {
     try {
       if (!appraisal.userId) {
         return {
-          error: "A valid filter userId is required",
+          error: "A valid userId is required",
+        };
+      }
+
+      if (!appraisal.questions) {
+        return {
+          error: "A questions array is required",
+        };
+      }
+
+      if (!appraisal.role) {
+        return {
+          error: "A role is required",
         };
       }
 
@@ -35,16 +47,13 @@ module.exports = ({ appraisalRepository }) => {
   };
 
   const calculateAMStarRating = (appraisal) => {
-    const questions = Object.entries(appraisal)
-      .filter(([key, _value]) => key.indexOf("question") !== -1)
-      .map(([_key, value]) => value);
-
-    let numerator = questions.reduce(
-      (acc, question) => acc + (question === "Yes" ? 1 : 0),
+    const answers = appraisal.questions.map((q) => q.value);
+    let numerator = answers.reduce(
+      (acc, answer) => acc + (answer === "Yes" ? 1 : 0),
       0
     );
-    let denominator = questions.reduce(
-      (acc, question) => acc + (question !== "Not applicable" ? 1 : 0),
+    let denominator = answers.reduce(
+      (acc, answer) => acc + (answer !== "Not applicable" ? 1 : 0),
       0
     );
     return { numerator, denominator };

@@ -16,7 +16,7 @@ import TabView from './views/TabView';
 import EligibilityForm from './views/Eligibility/EligibilityForm';
 import Articles from './views/Articles/Articles';
 import Conflicts from './views/Eligibility/Conflicts';
-import QualityAppraisalForm from './views/QualityAppraisal/QualityAppraisalForm';
+import AppraisalForm from './views/QualityAppraisal/AppraisalForm';
 //import Appraisals from './views/QualityAppraisal/Appraisals';
 
 class App extends Component {
@@ -45,15 +45,12 @@ class App extends Component {
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/article" component={ArticleCreate} />
           <Route path="/:type/eligibility" component={TabView} />
+          <Route path="/:type/appraisals" component={TabView} />
           <Route
             path="/eligibility/:type/:shortId"
             component={EligibilityForm}
           />
-          <Route
-            path="/quality-appraisal/:shortId"
-            component={QualityAppraisalForm}
-          />
-          <Route path="/:type/appraisals" component={TabView} />
+          <Route path="/appraisals/:type/:shortId" component={AppraisalForm} />
           <Route path="/batch/articles/:stage/:shortId" component={Articles} />
           <Route path="/conflicts/:type/:shortId" component={Conflicts} />
           <Route path="/upload" component={BatchUpload} />

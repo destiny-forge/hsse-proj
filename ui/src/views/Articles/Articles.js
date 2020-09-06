@@ -12,19 +12,21 @@ class Articles extends React.Component {
   constructor(props) {
     super(props);
 
+    const { stage } = this.props.match.params;
+
     this.state = {
       articles: [],
-      stage: 'eligibility',
+      stage,
     };
+
     this.Article = ArticleService({ fetch: this.props.fetch });
   }
 
   notifyDone = () => toast.success('Assignment created successfully.');
 
-  showEmail = (article, type) => {
-    const { eligibility } = article.stages;
-    if (!_.isUndefined(eligibility[type])) {
-      return eligibility[type].email;
+  showEmail = (stage, type) => {
+    if (!_.isUndefined(stage[type])) {
+      return stage[type].email;
     }
   };
 
@@ -49,6 +51,7 @@ class Articles extends React.Component {
         if (res.success) {
           this.setState({
             articles: res.data,
+            stage,
           });
         }
       })
@@ -59,13 +62,12 @@ class Articles extends React.Component {
 
   assign = (role, articleId) => {
     const { user } = this.props;
-    const { shortId } = this.props.match.params;
-    const { stage } = this.state;
+    const { shortId, stage } = this.props.match.params;
 
     const assignment = {
       articleId,
-      stage,
       type: role,
+      stage,
     };
 
     assignment.user = {
@@ -77,7 +79,7 @@ class Articles extends React.Component {
       .then((res) => {
         if (res.success) {
           this.notifyDone();
-          this.Article.getArticlesByBatch(shortId, assignment.stage)
+          this.Article.getArticlesByBatch(shortId, stage)
             .then((res) => {
               if (res.success) {
                 this.setState({
@@ -123,7 +125,7 @@ class Articles extends React.Component {
       return null;
     }
 
-    const code = `/eligibility/${article.type}/${article.shortId}`;
+    const code = `/${stageName}/${article.type}/${article.shortId}`;
     const resolve = `/conflicts/${article.type}/${article.shortId}`;
 
     return status === 'In Progress' ? (
@@ -149,8 +151,7 @@ class Articles extends React.Component {
   }
 
   render() {
-    const stage = 'eligibility';
-    //const { user } = this.props;
+    const { stage } = this.state;
     return (
       <div className="box">
         <div className="table-responsive">
@@ -188,7 +189,7 @@ class Articles extends React.Component {
                         />
                       */}
 
-                      {this.showEmail(article, 'junior') ||
+                      {this.showEmail(article.stages[stage], 'junior') ||
                         (!this.isAssignedAs(
                           article.stages[stage],
                           'senior'
@@ -209,7 +210,7 @@ class Articles extends React.Component {
                         ))}
                     </td>
                     <td>
-                      {this.showEmail(article, 'senior') ||
+                      {this.showEmail(article.stages[stage], 'senior') ||
                         (!this.isAssignedAs(
                           article.stages[stage],
                           'junior'
