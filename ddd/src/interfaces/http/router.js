@@ -53,7 +53,7 @@ module.exports = ({ config, logger }) => {
   apiRouter.use("/batches", controller("batch").router);
   apiRouter.use("/notes", controller("note").router);
   apiRouter.use("/eligibility", controller("eligibility").router);
-  apiRouter.use("/appraisal", controller("appraisal").router);
+  apiRouter.use("/appraisals", controller("appraisal").router);
   apiRouter.use("/studies", controller("study").router);
 
   router.use("", apiRouter);

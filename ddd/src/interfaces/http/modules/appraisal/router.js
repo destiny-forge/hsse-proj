@@ -51,6 +51,45 @@ module.exports = ({
         res.status(Status.OK).json(Success(data));
       })
       .catch((error) => {
+        console.log(error);
+        logger.error(error); // we still need to log every error for debugging
+        res.status(Status.BAD_REQUEST).json(Fail(error.message));
+      });
+  });
+
+  /**
+   * @swagger
+   * /:
+   *   get:
+   *     tags:
+   *       - Appraisal
+   *     description: Apraisal list aggregate
+   *     consumes:
+   *       - application/json
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: body
+   *         description: Article type
+   *         in: body
+   *         required: true
+   *         type: string
+   *         schema:
+   *           $ref: '#/definitions/article'
+   *     responses:
+   *       200:
+   *         description: Successfully created
+   *       400:
+   *         $ref: '#/responses/BadRequest'
+   */
+  router.get("/", (req, res) => {
+    const { type, status } = req.query;
+    listUseCase
+      .list(type, status)
+      .then((data) => {
+        res.status(Status.OK).json(Success(data));
+      })
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });
@@ -120,11 +159,11 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/resolve/:shortArticleId", (req, res) => {
-    const { shortArticleId } = req.params;
+  router.post("/resolve/:articleId", (req, res) => {
+    const { articleId } = req.params;
     const { user } = req;
     resolveUseCase
-      .resolve(shortArticleId, user._id)
+      .resolve(articleId, user._id)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
@@ -159,11 +198,10 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/:shortArticleId", (req, res) => {
-    const { shortArticleId } = req.params;
-    const { user } = req;
+  router.get("/:articleId/:userId", (req, res) => {
+    const { articleId, userId } = req.params;
     getUseCase
-      .get(shortArticleId, user._id)
+      .get(articleId, userId)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
@@ -202,44 +240,6 @@ module.exports = ({
     const { batchId } = req.params;
     listUseCase
       .listByBatch(batchId)
-      .then((data) => {
-        res.status(Status.OK).json(Success(data));
-      })
-      .catch((error) => {
-        logger.error(error); // we still need to log every error for debugging
-        res.status(Status.BAD_REQUEST).json(Fail(error.message));
-      });
-  });
-
-  /**
-   * @swagger
-   * /:
-   *   get:
-   *     tags:
-   *       - Appraisal
-   *     description: Apraisal list aggregate
-   *     consumes:
-   *       - application/json
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *       - name: body
-   *         description: Article type
-   *         in: body
-   *         required: true
-   *         type: string
-   *         schema:
-   *           $ref: '#/definitions/article'
-   *     responses:
-   *       200:
-   *         description: Successfully created
-   *       400:
-   *         $ref: '#/responses/BadRequest'
-   */
-  router.get("/", (req, res) => {
-    const { type, status } = req.query;
-    listUseCase
-      .list(type, status)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

@@ -263,12 +263,8 @@ const tree = {
                 key: 'fundingOrganizationGlobalBudget',
               },
               {
-                title: 'Prospective payment (Funding)',
-                key: 'fundingOrganizationProspectivePayment',
-              },
-              {
-                title: 'Indicative budgets (Funding)',
-                key: 'fundingOrganizationIndicativeBudgets',
+                title: 'Case-mix funding',
+                key: 'fundingOrganizationCaseMixFunding',
               },
               {
                 title: 'Targeted payments/penalties (Funding)',
@@ -290,16 +286,12 @@ const tree = {
               },
               { title: 'Salary', key: 'remuneratingProviderSalary' },
               {
-                title: 'Prospective payment (Remuneration)',
-                key: 'remuneratingProviderProspectivePayment',
+                title: 'Episode-based payment',
+                key: 'remuneratingProviderEpisodeBasedPayment',
               },
               {
                 title: 'Fundholding',
                 key: 'remuneratingProviderFundholding',
-              },
-              {
-                title: 'Indicative budgets (Remuneration)',
-                key: 'remuneratingProviderIndicativeBudgets',
               },
               {
                 title: 'Targeted payments/penalties (Remuneration)',
@@ -437,8 +429,8 @@ const tree = {
                 key: 'careProviderSkillMixMultidisciplinaryTeams',
               },
               {
-                title: 'Skill mix - Volunteers or informal/family caregivers',
-                key: 'careProviderSkillMixVolunteersOrInformalFamilyCaregivers',
+                title: 'Skill mix - Volunteers or caregivers',
+                key: 'careProviderSkillMixVolunteersOrCaregivers',
               },
               {
                 title:
@@ -681,13 +673,20 @@ const tree = {
             key: 'conditionOther',
             children: [
               {
-                title: 'Maternal and child health',
-                key: 'conditionMaternalAndChildHealth',
+                title: 'Accidents/injuries',
+                key: 'conditionOtherAccidentsInjuries',
               },
-              { title: 'Accidents', key: 'conditionAccidents' },
+              {
+                title: 'Maternal and child health',
+                key: 'conditionOtherMaternalAndChildHealth',
+              },
               {
                 title: 'Mental health and addictions',
                 key: 'conditionMentalHealthAddictions',
+              },
+              {
+                title: 'Oral health',
+                key: 'conditionOtherOralHealth',
               },
             ],
           },
@@ -713,8 +712,8 @@ const tree = {
           },
           { title: 'Primary care', key: 'primaryCare' },
           {
-            title: 'Specialty (hospital) care',
-            key: 'conditionSectorSpecialHospitalCare',
+            title: 'Specialty care',
+            key: 'conditionSectorSpecialtyCare',
           },
           {
             title: 'Rehabilitation care',
@@ -729,27 +728,27 @@ const tree = {
         key: 'conditionProviders',
         children: [
           {
-            title: 'Physician',
+            title: 'Physicians',
             key: 'conditionProviderPhysician',
             children: [
-              { title: 'Generalist', key: 'conditionProviderGeneralist' },
-              { title: 'Specialist', key: 'conditionProviderSpecialist' },
+              { title: 'Generalists', key: 'conditionProviderGeneralist' },
+              { title: 'Specialists', key: 'conditionProviderSpecialist' },
             ],
           },
           {
-            title: 'Nurse',
+            title: 'Nurses',
             key: 'conditionProviderNurse',
           },
           {
-            title: 'Pharmacist',
+            title: 'Pharmacists',
             key: 'conditionProviderPharmacist',
           },
           {
-            title: 'Allied health professional',
+            title: 'Allied health professionals',
             key: 'conditionProviderAlliedHealthProfessional',
           },
           {
-            title: 'Lay/community health worker',
+            title: 'Lay/community health workers',
             key: 'conditionProviderLayCommunityCealthWorker',
           },
           {

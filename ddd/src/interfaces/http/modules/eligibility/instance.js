@@ -2,6 +2,7 @@ const container = require("src/container");
 const {
   create,
   get,
+  list,
   compare,
   resolve,
   initEvents,
@@ -23,6 +24,10 @@ module.exports = () => {
     articleRepository,
   });
 
+  const listUseCase = list({
+    articleRepository,
+  });
+
   const compareUseCase = compare({
     eligibilityRepository,
   });
@@ -41,6 +46,7 @@ module.exports = () => {
   return {
     createUseCase,
     getUseCase,
+    listUseCase,
     compareUseCase,
     resolveUseCase,
   };

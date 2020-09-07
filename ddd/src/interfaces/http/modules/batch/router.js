@@ -3,6 +3,7 @@ const { Router } = require("express");
 
 module.exports = ({
   createUseCase,
+  assignUseCase,
   listUseCase,
   signatureUseCase,
   logger,
@@ -79,6 +80,48 @@ module.exports = ({
     const { type } = req.query;
     listUseCase
       .list(type)
+      .then((data) => {
+        res.status(Status.OK).json(Success(data));
+      })
+      .catch((error) => {
+        logger.error(error); // we still need to log every error for debugging
+        res.status(Status.BAD_REQUEST).json(Fail(error.message));
+      });
+  });
+
+  /**
+   * @swagger
+   * /:
+   *   post:
+   *     tags:
+   *       - Article
+   *     description: Article assignment
+   *     consumes:
+   *       - application/json
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: body
+   *         description: Batch assignment
+   *         in: body
+   *         required: true
+   *         type: string
+   *         schema:
+   *           $ref: '#/definitions/batch/assign'
+   *     responses:
+   *       200:
+   *         description: Successfully created
+   *       400:
+   *         $ref: '#/responses/BadRequest'
+   */
+  router.post("/assign", (req, res) => {
+    const { body, user } = req;
+    const assignment = {
+      ...body,
+      userId: user._id,
+    };
+    assignUseCase
+      .assign(assignment)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

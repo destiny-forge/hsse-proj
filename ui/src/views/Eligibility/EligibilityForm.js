@@ -8,7 +8,7 @@ import withAuth from '../withAuth';
 import ArticleService from '../../services/ArticleService';
 import EligibilityService from '../../services/EligibilityService';
 import { hse, sse } from './data';
-import ErrorMessage from '../atoms/ErrorMessage';
+import ErrorMessage from '../../components/atoms/ErrorMessage';
 import 'antd/dist/antd.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import validate from './validate';
@@ -37,7 +37,7 @@ class EligibilityForm extends React.Component {
       article: '',
       generalFocus: false,
       selectedStatus: 'In Progress',
-      currentFilterState: this.getKeyArray(this.treeData),
+      filters: this.getKeyArray(this.treeData),
       eligible: true,
       errors: {},
     };
@@ -83,10 +83,10 @@ class EligibilityForm extends React.Component {
   };
 
   handleTreeClick = (selectedKeys, evt) => {
-    let newState = Object.assign({}, this.state.currentFilterState);
-    newState[evt.node.props.name] = selectedKeys;
+    let filters = Object.assign({}, this.state.filters);
+    filters[evt.node.props.name] = selectedKeys;
     this.setState({
-      currentFilterState: newState,
+      filters,
     });
   };
 
@@ -109,7 +109,7 @@ class EligibilityForm extends React.Component {
     const { shortId } = this.props.match.params;
     const { user } = this.props;
 
-    let newState = Object.assign({}, this.state.currentFilterState);
+    let filters = Object.assign({}, this.state.filters);
     const categories = Object.keys(this.treeData);
 
     this.Article.get(shortId)
@@ -127,7 +127,7 @@ class EligibilityForm extends React.Component {
                 const keys = this.flatten(this.treeData[category].items);
                 keys.forEach((key) => {
                   if (eligibility.filters.indexOf(key) >= 0) {
-                    newState[category].push(key);
+                    filters[category].push(key);
                   }
                 });
               }
@@ -139,7 +139,7 @@ class EligibilityForm extends React.Component {
                 selectedStatus: eligibility.selectedStatus,
                 selectedDocumentType: eligibility.documentType,
                 relevant: eligibility.relevant,
-                currentFilterState: newState,
+                filters,
               });
 
               this.setStatusAndEligibility(eligibility.documentType || '');
@@ -155,7 +155,7 @@ class EligibilityForm extends React.Component {
   renderTreeSection = (key) => {
     const subTree = this.treeData[key].items;
     const hasChildren = _.has(subTree[0], 'children');
-    const checkedKeyState = this.state.currentFilterState[key];
+    const checkedKeyState = this.state.filters[key];
     return (
       <Tree
         checkable
@@ -207,7 +207,7 @@ class EligibilityForm extends React.Component {
     const { user } = this.props;
 
     const {
-      currentFilterState,
+      filters,
       article,
       type,
       generalFocus,
@@ -233,8 +233,8 @@ class EligibilityForm extends React.Component {
       formData._id = this.state._id;
     }
 
-    Object.keys(currentFilterState).forEach((key) => {
-      currentFilterState[key].forEach((k) => {
+    Object.keys(filters).forEach((key) => {
+      filters[key].forEach((k) => {
         formData.filters.push(k);
       });
     });
@@ -380,7 +380,7 @@ class EligibilityForm extends React.Component {
                       isRequired
                     />
                   </div>
-                  <div className="col-sm-2">
+                  <div className="col-sm-4">
                     <ErrorMessage errors={errors} field="documentType" />
                   </div>
                 </div>
@@ -403,7 +403,7 @@ class EligibilityForm extends React.Component {
                           isSearchable
                         />
                       </div>
-                      <div className="col-sm-2">
+                      <div className="col-sm-4">
                         <ErrorMessage errors={errors} field="questionType" />
                       </div>
                     </div>
@@ -475,6 +475,13 @@ class EligibilityForm extends React.Component {
                     Missing Required Fields
                   </legend>
                   <div>Please complete all required fields and re-submit.</div>
+                  <div className="box-body">
+                    {Object.keys(errors).map((key) => (
+                      <div key={key}>
+                        <ErrorMessage errors={errors} field={key} />
+                      </div>
+                    ))}
+                  </div>
                 </fieldset>
               )}
               <button

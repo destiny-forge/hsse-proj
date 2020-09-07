@@ -3,10 +3,10 @@
  */
 
 const BatchService = ({ fetch }) => {
-  const create = async batch => {
+  const create = async (batch) => {
     const res = await fetch('/batches', {
       method: 'POST',
-      body: JSON.stringify(batch)
+      body: JSON.stringify(batch),
     });
     return Promise.resolve(res);
   };
@@ -14,7 +14,7 @@ const BatchService = ({ fetch }) => {
   const signedUrl = async ({ type }) => {
     const res = await fetch('/batches/signed-url', {
       method: 'POST',
-      body: JSON.stringify({ type })
+      body: JSON.stringify({ type }),
     });
     return Promise.resolve(res);
   };
@@ -24,19 +24,18 @@ const BatchService = ({ fetch }) => {
       method: 'GET',
       data: {
         type,
-        stage,
         status,
-      }
+      },
     };
 
-    const res = await fetch('/articles', params)
+    const res = await fetch(`/${stage}`, params);
     return Promise.resolve(res);
   };
 
   return {
     signedUrl,
     create,
-    list
+    list,
   };
 };
 

@@ -13,12 +13,25 @@ module.exports = ({ events, eligibilityRepository, articleRepository }) => {
     let status = "In Progress";
 
     if (filters.length === 2) {
+      const first = filters[0];
+      const second = filters[1];
       if (
-        filters[0].selectedStatus === "Data Entry Complete" &&
-        filters[1].selectedStatus === "Data Entry Complete"
+        first.selectedStatus === "Data Entry Complete" &&
+        second.selectedStatus === "Data Entry Complete"
       ) {
-        const conflicts = diff.compareFilters(filters, filters[0].userId);
+        const conflicts = diff.compareFilters(filters, first.userId);
         status = conflicts.length > 0 ? "Conflicted" : "Complete";
+
+        if (status === "Complete") {
+          // @TODO: What other fields should we update on the
+          // original article so that we don't have to update
+          // it within the stages section anymore once it's been
+          // completed and validated?????
+          articleRepository.update(articleId, {
+            "stages.eligibility.data": first,
+            documentType: first.documentType,
+          });
+        }
       }
     }
 

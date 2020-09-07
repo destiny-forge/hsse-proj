@@ -67,7 +67,7 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findByBatchAndRefTypes = async (batchId, refTypes) => {
+  const findByBatchAndDocTypes = async (batchId, docTypes) => {
     const join = {
       $lookup: {
         from: "batches",
@@ -83,13 +83,13 @@ module.exports = ({ database }) => {
       },
     };
 
-    const matchRefType = {
+    const matchDocType = {
       $match: {
-        ["batches.0.referenceType"]: { $in: refTypes },
+        documentType: { $in: docTypes },
       },
     };
 
-    const aggregates = [matchBatch, join, matchRefType];
+    const aggregates = [matchBatch, join, matchDocType];
 
     try {
       return await database
@@ -102,7 +102,7 @@ module.exports = ({ database }) => {
     }
   };
 
-  const aggregate = async (type, stage, status, refTypes) => {
+  const aggregate = async (type, stage, status, docTypes) => {
     const filters = Array.isArray(status) ? { $in: status } : status;
 
     const lookup = {
@@ -166,13 +166,19 @@ module.exports = ({ database }) => {
 
     let aggregates = [lookup, match, group, project, sort];
 
-    if (refTypes) {
-      const refMatch = {
+    // @TODO - Should this be documentType?
+    // We have it on the batch model, on the eligibility model
+    // and on the article model. I gander that once documents have
+    // the proper documentType - either from batch uploading??? or
+    // completing the eligibility filtering then the article's model
+    // should be where this queries from
+    if (docTypes) {
+      const matchDocType = {
         $match: {
-          ["batches.0.referenceType"]: { $in: refTypes },
+          documentType: { $in: docTypes },
         },
       };
-      aggregates = [match, lookup, unwind, refMatch, group, project, sort];
+      aggregates = [match, lookup, unwind, matchDocType, group, project, sort];
     }
 
     try {
@@ -214,7 +220,7 @@ module.exports = ({ database }) => {
   };
 
   const assign = async (assignment) => {
-    const { articleId, stage, type, user, status } = assignment;
+    const { articleId, batchId, stage, type, user, status } = assignment;
     const assign = {
       ...user,
       status: "In Progress",
@@ -224,10 +230,14 @@ module.exports = ({ database }) => {
         [`stages.${stage}.${type}`]: assign,
         [`stages.${stage}.status`]: status,
       };
+
+      let key = batchId ? "batchId" : "_id";
+      let id = batchId ? batchId : articleId;
+
       const cmdResult = await database
         .get()
         .collection("articles")
-        .updateOne({ _id: { $eq: ObjectID(articleId) } }, { $set: fields });
+        .updateOne({ [key]: { $eq: ObjectID(id) } }, { $set: fields });
       const { result } = cmdResult.toJSON();
       return result;
     } catch (e) {
@@ -344,7 +354,7 @@ module.exports = ({ database }) => {
     updateStage,
     updateStageCoderStatus,
     findByBatch,
-    findByBatchAndRefTypes,
+    findByBatchAndDocTypes,
     aggregate,
     createIndexes,
     migrate,

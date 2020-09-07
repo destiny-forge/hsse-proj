@@ -25,25 +25,60 @@ module.exports = ({ appraisalRepository }) => {
         };
       }
 
-      const source =
-        appraisals[0].userId === userId ? appraisals[0] : appraisals[1];
-      const target =
-        appraisals[1].userId === userId ? appraisals[1] : appraisals[0];
-
-      const filter = (path, key) =>
-        path.length === 0 &&
-        ~["_id", "shortId", "userId", "role"].indexOf(key) < 0;
-
-      const diffs = diff(source, target, filter);
-      const differences = diffs || [];
-
-      return differences;
+      return compareAppraisals(appraisals, userId);
     } catch (error) {
+      console.log(error);
       throw new Error(error);
     }
   };
 
+  const compareAppraisals = (appraisals, userId) => {
+    const first = appraisals[0];
+    const second = appraisals[1];
+    let source, target;
+
+    if (first.userId == userId) {
+      source = first;
+      target = second;
+    } else {
+      source = second;
+      target = first;
+    }
+
+    // re-map filters from array into objects
+    source.questions = mapQuestions(source.questions);
+    target.questions = mapQuestions(target.questions);
+
+    const filter = (path, key) =>
+      path.length === 0 &&
+      ~[
+        "_id",
+        "shortId",
+        "userId",
+        "completed",
+        "complicated",
+        "role",
+        "status",
+        "amstarNumerator",
+        "amstarDenominator",
+      ].indexOf(key) < 0;
+
+    const diffs = diff(source, target, filter);
+    const differences = diffs || [];
+
+    return differences;
+  };
+
+  const mapQuestions = (questions) => {
+    const objects = {};
+    questions.forEach((question) => {
+      objects[question.key] = question.value;
+    });
+    return objects;
+  };
+
   return {
     compare,
+    compareAppraisals,
   };
 };

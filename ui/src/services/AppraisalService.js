@@ -3,35 +3,49 @@
  */
 
 const AppraisalService = ({ fetch }) => {
+  const create = async (appraisal) => {
+    const res = await fetch('/appraisals', {
+      method: 'POST',
+      body: JSON.stringify(appraisal),
+    });
+    return Promise.resolve(res);
+  };
+
   const list = async (type, status) => {
     const params = {
       method: 'GET',
       data: {
         type,
         status,
-      }
+      },
     };
-    const res = await fetch('/appraisal', params)
+    const res = await fetch('/appraisals', params);
     return Promise.resolve(res);
   };
 
-  const get = async (shortId) => {
-    const res = await fetch(`/appraisal/${shortId}`)
+  const get = async (shortId, userId) => {
+    const res = await fetch(`/appraisals/${shortId}/${userId}`);
     return Promise.resolve(res);
   };
 
-  const assign = async assignment => {
-    const res = await fetch('/appraisal/assign', {
+  const compare = async (id) => {
+    const res = await fetch(`/appraisals/compare/${id}`);
+    return Promise.resolve(res);
+  };
+
+  const resolve = async (id) => {
+    const res = await fetch(`/appraisals/resolve/${id}`, {
       method: 'POST',
-      body: JSON.stringify(assignment)
     });
     return Promise.resolve(res);
   };
 
   return {
+    create,
     list,
     get,
-    assign,
+    compare,
+    resolve,
   };
 };
 

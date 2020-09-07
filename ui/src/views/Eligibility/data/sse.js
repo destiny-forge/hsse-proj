@@ -25,18 +25,6 @@ const types = [
     label: 'Economic evaluations and costing studies',
   },
   {
-    value: 'Intergovernmental organizations’ health systems documents',
-    label: 'Intergovernmental organizations’ health systems documents',
-  },
-  {
-    value: 'Canada’s health systems documents',
-    label: 'Canada’s health systems documents',
-  },
-  {
-    value: 'Ontario’s health system documents',
-    label: 'Ontario’s health system documents',
-  },
-  {
     value:
       'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in SSE.',
     label:
@@ -54,8 +42,8 @@ const questionTypes = [
     value: 'Effectiveness',
   },
   {
-    label: 'Not Effectiveness',
-    value: 'Not Effectiveness',
+    label: 'Not effectiveness',
+    value: 'Not effectiveness',
   },
   {
     label:
@@ -90,7 +78,7 @@ const tree = {
                 key: 'programsServicesChildrenCaregiver',
               },
               {
-                title: 'Early childhood development servies',
+                title: 'Early childhood development services',
                 key: 'programsServicesChildrenEarlyChildhood',
               },
               {
@@ -113,312 +101,403 @@ const tree = {
           },
           {
             title: 'Citizenship',
-            key: 'citizenship',
+            key: 'programsServicesCitizenship',
             children: [
               {
                 title: 'Admissibility, security and visa services',
-                key: 'citizenshipAdmissibility',
+                key: 'programsServicesCitizenshipAdmissibility',
               },
               { title: 'Border services', key: 'citizenshipBorder' },
               { title: 'Refugee services', key: 'citizenshipRefugee' },
               {
                 title: 'Temporary residence permits',
-                key: 'citizenshipTemporaryResidence',
+                key: 'programsServicesCitizenshipTemporaryResidence',
               },
               {
                 title: 'Permanent residence permits',
-                key: 'citizenshipPermanentResidence',
+                key: 'programsServicesCitizenshipPermanentResidence',
               },
               { title: 'Citizenship grants', key: 'citizenshipGrants' },
               {
                 title: 'Settlement/re-settlement',
-                key: 'citizenshipSettlement',
+                key: 'programsServicesCitizenshipSettlement',
               },
               {
                 title: 'Civic engagement/volunteering',
-                key: 'citizenshipVolunteering',
+                key: 'programsServicesCitizenshipVolunteering',
               },
               {
                 title: 'Civic/cultural integration',
-                key: 'citizenshipCulturalIntegration',
+                key: 'programsServicesCitizenshipCulturalIntegration',
               },
               {
                 title: 'Undocumented individuals',
-                key: 'citizenshipUndocumented',
+                key: 'programsServicesCitizenshipUndocumented',
               },
               { title: 'Migration', key: 'citizenshipMigration' },
               {
                 title: 'Detention, deportation and extradition',
-                key: 'citizenshipDetentionDeportation',
+                key: 'programsServicesCitizenshipDetentionDeportation',
               },
               {
                 title: 'Sub-national cooperation',
-                key: 'citizenshipSubnational',
+                key: 'programsServicesCitizenshipSubnational',
               },
               {
                 title: 'International cooperation',
-                key: 'citizenshipInternational',
+                key: 'programsServicesCitizenshipInternational',
               },
             ],
           },
           {
             title: 'Climate action',
-            key: 'climate',
+            key: 'programsServicesClimate',
             children: [
               {
                 title: 'Energy-use production',
-                key: 'climateEnergy',
+                key: 'programsServicesClimateEnergy',
                 children: [
-                  { title: 'Buildings', key: 'climateEnergyBuildings' },
                   {
-                    title: 'Energy productions',
-                    key: 'climateEnergyProduction',
+                    title: 'Buildings',
+                    key: 'programsServicesClimateEnergyBuildings',
                   },
-                  { title: 'Households', key: 'climateEnergyHouseholds' },
-                  { title: 'Industries', key: 'climateEnergyIndustries' },
-                  { title: 'Land use', key: 'climateEnergyLandUse' },
-                  { title: 'Tourism', key: 'climateEnergyTourism' },
-                  { title: 'Transport', key: 'climateEnergyTransport' },
+                  {
+                    title: 'Energy production',
+                    key: 'programsServicesClimateEnergyProduction',
+                  },
+                  {
+                    title: 'Households',
+                    key: 'programsServicesClimateEnergyHouseholds',
+                  },
+                  {
+                    title: 'Industries',
+                    key: 'programsServicesClimateEnergyIndustries',
+                  },
+                  {
+                    title: 'Land use',
+                    key: 'programsServicesClimateEnergyLandUse',
+                  },
+                  {
+                    title: 'Tourism',
+                    key: 'programsServicesClimateEnergyTourism',
+                  },
+                  {
+                    title: 'Transport',
+                    key: 'programsServicesClimateEnergyTransport',
+                  },
                 ],
               },
               {
                 title: 'Low or zero-carbon electricity supply',
-                key: 'climateZeroCarbon',
+                key: 'programsServicesClimateZeroCarbon',
                 children: [
                   {
                     title: 'Nuclear power',
-                    key: 'climateZeroCarbonNuclear',
+                    key: 'programsServicesClimateZeroCarbonNuclear',
                   },
                   {
                     title: 'Renewable energy',
-                    key: 'climateZeroCarbonRenewable',
+                    key: 'programsServicesClimateZeroCarbonRenewable',
                   },
                 ],
               },
               {
                 title: 'Electrification and other fuel switching',
-                key: 'climateElectrification',
+                key: 'programsServicesClimateElectrification',
                 children: [
                   {
                     title: 'Appliances',
-                    key: 'climateElectrificationAppliances',
+                    key: 'programsServicesClimateElectrificationAppliances',
                   },
                   {
                     title: 'Supporting infrastructure',
-                    key: 'climateElectrificationSupportingInfra',
+                    key:
+                      'programsServicesClimateElectrificationSupportingInfra',
                   },
                   {
                     title: 'Vehicles',
-                    key: 'climateElectrificationVehicles',
+                    key: 'programsServicesClimateElectrificationVehicles',
                   },
                 ],
               },
               {
                 title: 'Non-energy emission solutions',
-                key: 'climateNonEnergy',
+                key: 'programsServicesClimateNonEnergy',
                 children: [
                   {
                     title: 'Bio-sequestration',
-                    key: 'climateNonEnergyBioSequestration',
+                    key: 'programsServicesClimateNonEnergyBioSequestration',
                   },
                   {
                     title: 'Carbon capture and storage',
-                    key: 'climateNonEnergyCarbonCapture',
+                    key: 'programsServicesClimateNonEnergyCarbonCapture',
                   },
                   {
                     title: 'Fugitive-emission reduction',
-                    key: 'climateNonEnergyFugitiveEmissionReduction',
+                    key:
+                      'programsServicesClimateNonEnergyFugitiveEmissionReduction',
                   },
                   {
                     title: 'Industrial-process improvements',
-                    key: 'climateNonEnergyIndustrialProcessImprovements',
+                    key:
+                      'programsServicesClimateNonEnergyIndustrialProcessImprovements',
                   },
                   {
                     title: 'Reuse and recycling',
-                    key: 'climateNonEnergyReuseRecycling',
+                    key: 'programsServicesClimateNonEnergyReuseRecycling',
                   },
                 ],
               },
               {
                 title: 'Climate-change risk management',
-                key: 'climateChangeRisk',
+                key: 'programsServicesClimateChangeRisk',
                 children: [
-                  { title: 'Financial', key: 'climateChangeRiskFinancial' },
-                  { title: 'Human', key: 'climateChangeRiskHuman' },
-                  { title: 'Property', key: 'climateChangeRiskProperty' },
-                  { title: 'Settlement', key: 'climateChangeRiskSettlement' },
+                  {
+                    title: 'Financial',
+                    key: 'programsServicesClimateChangeRiskFinancial',
+                  },
+                  {
+                    title: 'Human',
+                    key: 'programsServicesClimateChangeRiskHuman',
+                  },
+                  {
+                    title: 'Property',
+                    key: 'programsServicesClimateChangeRiskProperty',
+                  },
+                  {
+                    title: 'Settlement',
+                    key: 'programsServicesClimateChangeRiskSettlement',
+                  },
                 ],
               },
             ],
           },
           {
             title: 'Community and social services',
-            key: 'community',
+            key: 'programsServicesCommunity',
             children: [
               {
                 title: 'Accessibility services',
-                key: 'communityAccessibility',
+                key: 'programsServicesCommunityAccessibility',
               },
-              { title: 'Disability services', key: 'communityDisability' },
+              {
+                title: 'Disability services',
+                key: 'programsServicesCommunityDisability',
+              },
               {
                 title: 'Problem gambling services',
-                key: 'communityGambling',
+                key: 'programsServicesCommunityGambling',
               },
               {
                 title: 'Other social services',
-                key: 'communitySocial',
+                key: 'programsServicesCommunitySocial',
               },
-              { title: 'Community services', key: 'communityServices' },
+              {
+                title: 'Community services',
+                key: 'programsServicesCommunityServices',
+              },
               {
                 title: 'Community development',
-                key: 'communityDevelopment',
+                key: 'programsServicesCommunityDevelopment',
               },
               {
                 title: 'Emergency response and preparedness',
-                key: 'communityEmergencyResponse',
+                key: 'programsServicesCommunityEmergencyResponse',
               },
             ],
           },
           {
             title: 'Consumer protection',
-            key: 'consumer',
+            key: 'programsServicesConsumer',
             children: [
               {
                 title: 'Consumer awareness and education',
-                key: 'consumerAwarenessEducation',
+                key: 'programsServicesConsumerAwarenessEducation',
               },
               {
                 title: 'Consumer advocacy and rights',
-                key: 'consumerAdvocacy',
+                key: 'programsServicesConsumerAdvocacy',
               },
               {
                 title: 'Advertising and marketing standards',
-                key: 'consumerAdvertising',
+                key: 'programsServicesConsumerAdvertising',
               },
               {
                 title: 'Consumer promotion standards',
-                key: 'consumerPromotion',
+                key: 'programsServicesConsumerPromotion',
               },
               {
                 title: 'Responsible consumption initiatives',
-                key: 'consumerConsumption',
+                key: 'programsServicesConsumerConsumption',
               },
-              { title: 'Product safety', key: 'consumerProductSafety' },
-              { title: 'Fraud', key: 'consumerFraud' },
-              { title: 'Privacy', key: 'consumerPrivacy' },
-              { title: 'Competition supports', key: 'consumerCompetition' },
+              {
+                title: 'Product safety',
+                key: 'programsServicesConsumerProductSafety',
+              },
+              { title: 'Fraud', key: 'programsServicesConsumerFraud' },
+              { title: 'Privacy', key: 'programsServicesConsumerPrivacy' },
+              {
+                title: 'Competition supports',
+                key: 'programsServicesConsumerCompetition',
+              },
               {
                 title: 'E-commerce and the sharing economy',
-                key: 'consumerEcommerce',
+                key: 'programsServicesConsumerEcommerce',
               },
             ],
           },
           {
             title: 'Culture and gender',
-            key: 'culture',
+            key: 'programsServicesCulture',
             children: [
-              { title: 'Arts', key: 'cultureArts' },
-              { title: 'Heritage', key: 'cultureHeritage' },
-              { title: 'Cultural industries', key: 'cultureIndustries' },
+              { title: 'Arts', key: 'programsServicesCultureArts' },
+              { title: 'Heritage', key: 'programsServicesCultureHeritage' },
+              {
+                title: 'Cultural industries',
+                key: 'programsServicesCultureIndustries',
+              },
               {
                 title: 'Cultural protectionism',
-                key: 'cultureProtectionism',
+                key: 'programsServicesCultureProtectionism',
               },
               {
                 title: 'Cultural competency training',
-                key: 'cultureTraining',
+                key: 'programsServicesCultureTraining',
               },
-              { title: 'Multiculturalism', key: 'cultureMulticulturalism' },
+              {
+                title: 'Multiculturalism',
+                key: 'programsServicesCultureMulticulturalism',
+              },
               {
                 title: 'Gender mainstreaming',
-                key: 'cultureGenderMainstreaming',
+                key: 'programsServicesCultureGenderMainstreaming',
               },
-              { title: 'Gender equality', key: 'cultureGenderEquality' },
-              { title: 'Human rights', key: 'cultureHumanRights' },
+              {
+                title: 'Gender equality',
+                key: 'programsServicesCultureGenderEquality',
+              },
+              {
+                title: 'Human rights',
+                key: 'programsServicesCultureHumanRights',
+              },
             ],
           },
           {
             title: 'Economic development and growth',
-            key: 'economic',
+            key: 'programsServicesEconomic',
             children: [
-              { title: 'Access to finance', key: 'economicAccessToFinance' },
+              {
+                title: 'Access to finance',
+                key: 'programsServicesEconomicAccessToFinance',
+              },
               {
                 title: 'Area-based initiatives',
-                key: 'economicAreaBasedInitiatives',
+                key: 'programsServicesEconomicAreaBasedInitiatives',
               },
-              { title: 'Broadband access', key: 'economicBroadbandAccess' },
-              { title: 'Business advice', key: 'economicBusinessAdvice' },
+              {
+                title: 'Broadband access',
+                key: 'programsServicesEconomicBroadbandAccess',
+              },
+              {
+                title: 'Business advice',
+                key: 'programsServicesEconomicBusinessAdvice',
+              },
               {
                 title: 'Housing stock renewal',
-                key: 'economicHousingStock',
+                key: 'programsServicesEconomicHousingStock',
               },
               {
                 title: 'Human capital investments',
-                key: 'economicHumanCapital',
+                key: 'programsServicesEconomicHumanCapital',
               },
-              { title: 'Innovation supports', key: 'economicInnovation' },
+              {
+                title: 'Innovation supports',
+                key: 'programsServicesEconomicInnovation',
+              },
               {
                 title: 'Public space improvements',
-                key: 'economicPublicSpace',
+                key: 'programsServicesEconomicPublicSpace',
               },
               {
                 title: 'Sport/culture events and facilities',
-                key: 'economicSportCulture',
+                key: 'programsServicesEconomicSportCulture',
               },
               {
                 title: 'Transportation enhancements',
-                key: 'economicTransportationEnhancements',
+                key: 'programsServicesEconomicTransportationEnhancements',
               },
               {
                 title: 'General fiscal policy tools',
-                key: 'economicFiscalPolicy',
+                key: 'programsServicesEconomicFiscalPolicy',
               },
               {
                 title: 'General monetary policy tools',
-                key: 'economicMonetaryPolicy',
+                key: 'programsServicesEconomicMonetaryPolicy',
               },
               {
                 title: 'General trade policy tools',
-                key: 'economicTradePolicy',
+                key: 'programsServicesEconomicTradePolicy',
               },
             ],
           },
           {
             title: 'Education',
-            key: 'education',
+            key: 'programsServicesEducation',
             children: [
               {
                 title: 'Pre-primary education',
-                key: 'educationPrePrimary',
+                key: 'programsServicesEducationPrePrimary',
               },
-              { title: 'Primary education', key: 'educationPrimary' },
-              { title: 'Secondary education', key: 'educationSecondary' },
+              {
+                title: 'Primary education',
+                key: 'programsServicesEducationPrimary',
+              },
+              {
+                title: 'Secondary education',
+                key: 'programsServicesEducationSecondary',
+              },
               {
                 title: 'Tertiary/higher education',
-                key: 'educationTertiary',
+                key: 'programsServicesEducationTertiary',
               },
               {
                 title: 'Academic planning',
-                key: 'educationAcademicPlanning',
+                key: 'programsServicesEducationAcademicPlanning',
               },
-              { title: 'Revenue streams', key: 'educationRevenueStreams' },
+              {
+                title: 'Revenue streams',
+                key: 'programsServicesEducationRevenueStreams',
+              },
               {
                 title: 'Tuition setting and subsidy',
-                key: 'educationTuitionSubsidy',
+                key: 'programsServicesEducationTuitionSubsidy',
               },
-              { title: 'Marketing', key: 'educationMarketing' },
-              { title: 'Streaming', key: 'educationStreaming' },
-              { title: 'Curriculum', key: 'educationCurriculum' },
+              { title: 'Marketing', key: 'programsServicesEducationMarketing' },
+              {
+                title: 'Admission and recruitment',
+                key: 'programsServicesEducationAdmissionRecruitment',
+              },
+              { title: 'Streaming', key: 'programsServicesEducationStreaming' },
+              {
+                title: 'Curriculum',
+                key: 'programsServicesEducationCurriculum',
+              },
               {
                 title: 'Literacy training',
-                key: 'educationLiteracyTraining',
+                key: 'programsServicesEducationLiteracyTraining',
               },
-              { title: 'Apprenticeships', key: 'educationApprenticeships' },
-              { title: 'Teaching', key: 'educationTeaching' },
-              { title: 'Assessment', key: 'educationAssessment' },
+              {
+                title: 'Apprenticeships',
+                key: 'programsServicesEducationApprenticeships',
+              },
+              { title: 'Teaching', key: 'programsServicesEducationTeaching' },
+              {
+                title: 'Assessment',
+                key: 'programsServicesEducationAssessment',
+              },
               {
                 title: 'Student engagement',
-                key: 'educationStudentEngagement',
+                key: 'programsServicesEducationStudentEngagement',
               },
               {
                 title: 'Parent/legal guardian engagement',
@@ -426,57 +505,63 @@ const tree = {
               },
               {
                 title: 'Teacher/faculty engagement',
-                key: 'educationTeacherEngagement',
+                key: 'programsServicesEducationTeacherEngagement',
               },
               {
                 title: 'Community engagement',
-                key: 'educationCommunityEngagement',
+                key: 'programsServicesEducationCommunityEngagement',
               },
               {
                 title: 'Prospective employers engagement',
-                key: 'educationEmployerEngagement',
+                key: 'programsServicesEducationEmployerEngagement',
               },
             ],
           },
           {
             title: 'Employment',
-            key: 'employment',
+            key: 'programsServicesEmployment',
             children: [
               {
                 title: 'Job training/retraining',
-                key: 'employmentTraining',
+                key: 'programsServicesEmploymentTraining',
               },
-              { title: 'Wages', key: 'employmentWages' },
-              { title: 'Benefits', key: 'employmentBenefits' },
+              { title: 'Wages', key: 'programsServicesEmploymentWages' },
+              { title: 'Benefits', key: 'programsServicesEmploymentBenefits' },
               {
                 title: 'Employment conditions',
-                key: 'employmentEmploymentConditions',
+                key: 'programsServicesEmploymentConditions',
               },
               {
                 title: 'Displaced workers',
-                key: 'employmentDisplacedWorkers',
+                key: 'programsServicesEmploymentDisplacedWorkers',
               },
-              { title: 'Unemployment', key: 'employmentUnemployment' },
-              { title: 'Unpaid labour', key: 'employmentUnpaidLabour' },
+              {
+                title: 'Unemployment',
+                key: 'programsServicesEmploymentUnemployment',
+              },
+              {
+                title: 'Unpaid labour',
+                key: 'programsServicesEmploymentUnpaidLabour',
+              },
               {
                 title: 'Workplace safety and prevention',
-                key: 'employmentWorkplaceSafety',
+                key: 'programsServicesEmploymentWorkplaceSafety',
               },
               {
                 title: 'Workplace violence and harassment',
-                key: 'employmentWorkplaceViolence',
+                key: 'programsServicesEmploymentWorkplaceViolence',
               },
               {
                 title: 'Unions and collective bargaining',
-                key: 'employmentUnions',
+                key: 'programsServicesEmploymentUnions',
               },
               {
                 title: 'Labour-market interventions',
-                key: 'employmentLabourMarket',
+                key: 'programsServicesEmploymentLabourMarket',
               },
               {
                 title: 'Industry-level interventions',
-                key: 'employmentIndustry',
+                key: 'programsServicesEmploymentIndustry',
               },
             ],
           },
@@ -748,8 +833,16 @@ const tree = {
                 key: 'environmentalConservationThreats',
                 children: [
                   {
+                    title: 'Droughts',
+                    key: 'environmentalConservationThreatsDroughts',
+                  },
+                  {
                     title: 'Fires',
                     key: 'environmentalConservationThreatsFires',
+                  },
+                  {
+                    title: 'Floods',
+                    key: 'environmentalConservationThreatsFloods',
                   },
                   {
                     title: 'Invasive species',
@@ -762,6 +855,10 @@ const tree = {
                   {
                     title: 'Noise',
                     key: 'environmentalConservationThreatsNoise',
+                  },
+                  {
+                    title: 'Severe storm events',
+                    key: 'environmentalConservationThreatsSevereStormEvents',
                   },
                 ],
               },
@@ -1416,7 +1513,7 @@ const tree = {
                 key: 'deliveryArrangementDesign',
                 children: [
                   {
-                    title: 'System - Need, demand & supply',
+                    title: 'Availability of services',
                     key: 'deliveryArrangementDesignAvailability',
                   },
                   {
@@ -1446,7 +1543,7 @@ const tree = {
                 key: 'serviceProvider',
                 children: [
                   {
-                    title: 'Availability of services',
+                    title: 'System - Need, demand & supply',
                     key: 'serviceProviderAvailability',
                   },
                   {
@@ -1502,7 +1599,7 @@ const tree = {
                     key: 'serviceProviderStaffSupport',
                   },
                   {
-                    title: 'SserviceProviderStaffWorkloadWorkflowIntensity',
+                    title: 'Staff workload/workflow/intensity',
                     key: 'serviceProviderStaffWorkloadWorkflowIntensity',
                   },
                   {
@@ -1656,6 +1753,10 @@ const tree = {
                 key: 'implementationProviderTargetedPeerReview',
               },
               {
+                title: 'Audit and feedback',
+                key: 'implementationProviderTargetedAuditFeedback',
+              },
+              {
                 title: 'Reminders and prompts',
                 key: 'implementationProviderTargetedRemindersAndPrompts',
               },
@@ -1802,31 +1903,23 @@ const tree = {
             ],
           },
           {
-            title: 'Provider-targeted strategy',
-            key: 'perspectivesProvider',
+            title: 'Outcomes',
+            key: 'outcomesProvider',
             children: [
-              { title: 'Economic', key: 'perspectivesProviderEconomic' },
-              { title: 'Education', key: 'perspectivesProviderEducation' },
-              { title: 'Employment', key: 'perspectivesProviderEmployment' },
-              { title: 'Health', key: 'perspectivesProviderHealth' },
-              { title: 'Housing', key: 'perspectivesProviderHousing' },
+              { title: 'Economic', key: 'outcomesProviderEconomic' },
+              { title: 'Education', key: 'outcomesProviderEducation' },
+              { title: 'Employment', key: 'outcomesProviderEmployment' },
+              { title: 'Health', key: 'outcomesProviderHealth' },
+              { title: 'Housing', key: 'outcomesProviderHousing' },
               {
-                title: 'Peer review',
-                key: 'perspectivesProviderPeerReview',
+                title: 'Other sector/area-specific outcomes',
+                key: 'outcomesProviderOther',
               },
               {
                 title: 'Social inclusion',
-                key: 'perspectivesProviderSocialInclusion',
+                key: 'outcomesProviderSocialInclusion',
               },
-              { title: 'Well-being', key: 'perspectivesProviderWellBeing' },
-              {
-                title: 'Citizen-mediated intervention',
-                key: 'perspectivesProviderCitizenIntervention',
-              },
-              {
-                title: 'Other sector/area-specific outcomes',
-                key: 'perspectivesProviderOther',
-              },
+              { title: 'Well-being', key: 'outcomesProviderWellBeing' },
             ],
           },
           {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const BatchesTable = ({ stage, batches }) => {
+  //console.log(batches);
   return (
     <div className="box">
       <div className="table-responsive">
@@ -31,7 +32,11 @@ const BatchesTable = ({ stage, batches }) => {
                       <i className="dark-white"></i>
                     </label>
                   </td>
-                  <td>{batch.batch[0].referenceType || 'N/A'}</td>
+                  <td>
+                    {Array.isArray(batch.batch)
+                      ? batch.batch[0].referenceType
+                      : batch.batch.referenceType || 'N/A'}
+                  </td>
                   <td>
                     <Link to={`/batch/articles/${stage}/${batch._id}`}>
                       {batch.name}
