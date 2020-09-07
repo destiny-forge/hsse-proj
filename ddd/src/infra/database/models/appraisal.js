@@ -1,7 +1,7 @@
 const ObjectID = require("mongodb").ObjectID;
 
 module.exports = ({ database }) => {
-  const create = async appraisal => {
+  const create = async (appraisal) => {
     try {
       const results = await database
         .get()
@@ -26,7 +26,7 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findByType = async type => {
+  const findByType = async (type) => {
     try {
       return await database
         .get()
@@ -51,7 +51,7 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findById = async id => {
+  const findById = async (id) => {
     try {
       if (!ObjectID.isValid(id)) throw "Invalid MongoDB ID.";
       const results = await database
@@ -64,7 +64,7 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findByArticleId = async articleId => {
+  const findByArticleId = async (articleId) => {
     try {
       if (!ObjectID.isValid(articleId)) throw "Invalid MongoDB ID.";
       const results = await database
@@ -85,27 +85,9 @@ module.exports = ({ database }) => {
         .collection("appraisals")
         .findOne({
           articleId: { $eq: ObjectID(articleId) },
-          userId: { $eq: ObjectID(userId) }
+          userId: { $eq: ObjectID(userId) },
         });
       return results;
-    } catch (e) {
-      throw e;
-    }
-  };
-
-  const assign = async assignment => {
-    const { appraisalId, stage, type, user, status } = assignment;
-    try {
-      const fields = {
-        [`stages.${stage}.${type}`]: user,
-        [`stages.${stage}.status`]: status
-      };
-      const cmdResult = await database
-        .get()
-        .collection("appraisals")
-        .updateOne({ _id: { $eq: ObjectID(appraisalId) } }, { $set: fields });
-      const { result } = cmdResult.toJSON();
-      return result;
     } catch (e) {
       throw e;
     }
@@ -137,8 +119,7 @@ module.exports = ({ database }) => {
     findByType,
     findOne,
     find,
-    assign,
     update,
-    createIndexes
+    createIndexes,
   };
 };

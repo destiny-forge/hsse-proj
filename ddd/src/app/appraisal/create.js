@@ -1,10 +1,11 @@
+const _ = require("lodash");
 const Appraisal = require("src/domain/appraisal");
 const ObjectID = require("mongodb").ObjectID;
 
 /**
  * Appraisal creation
  */
-module.exports = ({ appraisalRepository }) => {
+module.exports = ({ appraisalRepository, events }) => {
   const create = async (appraisal) => {
     try {
       if (!appraisal.userId) {
@@ -13,34 +14,28 @@ module.exports = ({ appraisalRepository }) => {
         };
       }
 
-      if (!appraisal.questions) {
-        return {
-          error: "A questions array is required",
-        };
+      if (_.has(appraisal, "questions")) {
+        const { numerator, denominator } = calculateAMStarRating(appraisal);
+        appraisal.amstarNumerator = numerator;
+        appraisal.amstarDenominator = denominator;
       }
 
-      if (!appraisal.role) {
-        return {
-          error: "A role is required",
-        };
-      }
+      let result = null;
 
-      const { numerator, denominator } = calculateAMStarRating(appraisal);
-      appraisal.amstarNumerator = numerator;
-      appraisal.amstarDenominator = denominator;
+      appraisal.articleId = new ObjectID(appraisal.articleId);
+      appraisal.userId = new ObjectID(appraisal.userId);
 
       if (appraisal._id) {
         const _id = appraisal._id;
         delete appraisal._id;
-        appraisal.articleId = new ObjectID(appraisal.articleId);
-        appraisal.userId = new ObjectID(appraisal.userId);
-        return await appraisalRepository.update(_id, appraisal);
+        result = await appraisalRepository.update(_id, appraisal);
       } else {
-        appraisal.articleId = new ObjectID(appraisal.articleId);
-        appraisal.userId = new ObjectID(appraisal.userId);
         const entity = Appraisal(appraisal);
-        return await appraisalRepository.create(entity);
+        result = await appraisalRepository.create(entity);
       }
+
+      events.emit("article.appraisals.coded", appraisal.articleId);
+      return result;
     } catch (error) {
       throw new Error(error);
     }

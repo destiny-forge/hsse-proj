@@ -3,6 +3,7 @@ const get = require("./get");
 const compare = require("./compare");
 const resolve = require("./resolve");
 const list = require("./list");
+const initEvents = require("./events");
 
 module.exports = {
   create,
@@ -10,4 +11,5 @@ module.exports = {
   list,
   compare,
   resolve,
+  initEvents,
 };

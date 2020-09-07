@@ -23,8 +23,20 @@ const AppraisalService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
-  const get = async (shortId) => {
-    const res = await fetch(`/appraisals/${shortId}`);
+  const get = async (shortId, userId) => {
+    const res = await fetch(`/appraisals/${shortId}/${userId}`);
+    return Promise.resolve(res);
+  };
+
+  const compare = async (id) => {
+    const res = await fetch(`/appraisals/compare/${id}`);
+    return Promise.resolve(res);
+  };
+
+  const resolve = async (id) => {
+    const res = await fetch(`/appraisals/resolve/${id}`, {
+      method: 'POST',
+    });
     return Promise.resolve(res);
   };
 
@@ -32,6 +44,8 @@ const AppraisalService = ({ fetch }) => {
     create,
     list,
     get,
+    compare,
+    resolve,
   };
 };
 

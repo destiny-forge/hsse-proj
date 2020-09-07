@@ -11,10 +11,10 @@ module.exports = ({ events, eligibilityRepository, articleRepository }) => {
   events.on("article.eligibility.coded", async (articleId) => {
     const filters = await eligibilityRepository.findByArticleId(articleId);
     let status = "In Progress";
-    const first = filters[0];
-    const second = filters[1];
 
     if (filters.length === 2) {
+      const first = filters[0];
+      const second = filters[1];
       if (
         first.selectedStatus === "Data Entry Complete" &&
         second.selectedStatus === "Data Entry Complete"

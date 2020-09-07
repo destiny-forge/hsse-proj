@@ -159,11 +159,11 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/resolve/:shortArticleId", (req, res) => {
-    const { shortArticleId } = req.params;
+  router.post("/resolve/:articleId", (req, res) => {
+    const { articleId } = req.params;
     const { user } = req;
     resolveUseCase
-      .resolve(shortArticleId, user._id)
+      .resolve(articleId, user._id)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
@@ -198,11 +198,10 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/:shortArticleId", (req, res) => {
-    const { shortArticleId } = req.params;
-    const { user } = req;
+  router.get("/:articleId/:userId", (req, res) => {
+    const { articleId, userId } = req.params;
     getUseCase
-      .get(shortArticleId, user._id)
+      .get(articleId, userId)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

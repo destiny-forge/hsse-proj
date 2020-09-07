@@ -98,6 +98,7 @@ class AppraisalForm extends React.Component {
               _id: appraisal._id,
               notInEnglish: appraisal.notInEnglish,
               noFreeFullText: appraisal.noFreeFullText,
+              status: appraisal.status,
               questions,
             });
           }
@@ -151,6 +152,8 @@ class AppraisalForm extends React.Component {
       noFreeFullText,
       complicated: notInEnglish || noFreeFullText,
     };
+
+    console.log(formData);
 
     if (_id != null) {
       formData._id = _id;
@@ -254,18 +257,6 @@ class AppraisalForm extends React.Component {
                       isSearchable
                     />
                   </div>
-                  {
-                    // <ul>
-                    //   <li>
-                    //     <b>In Progress</b> = Still having content added, not
-                    //   visible in searches
-                    // </li>
-                    //   <li>
-                    //     <b>Data Entry Complete</b> = All required content has been
-                    //   added, still not visible in searches
-                    // </li>
-                    // </ul>
-                  }
                 </div>
               </form>
             </fieldset>

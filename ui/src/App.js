@@ -15,7 +15,8 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import TabView from './views/TabView';
 import EligibilityForm from './views/Eligibility/EligibilityForm';
 import Articles from './views/Articles/Articles';
-import Conflicts from './views/Eligibility/Conflicts';
+import EligibilityConflicts from './views/Eligibility/Conflicts';
+import AppraisalConflicts from './views/QualityAppraisal/Conflicts';
 import AppraisalForm from './views/QualityAppraisal/AppraisalForm';
 //import Appraisals from './views/QualityAppraisal/Appraisals';
 
@@ -44,15 +45,24 @@ class App extends Component {
           <Route path="/account/confirm/:token" component={ConfirmEmail} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/article" component={ArticleCreate} />
+          <Route
+            path="/conflicts/:type/eligibility/:shortId"
+            component={EligibilityConflicts}
+          />
+          <Route
+            path="/conflicts/:type/appraisals/:shortId"
+            component={AppraisalConflicts}
+          />
           <Route path="/:type/eligibility" component={TabView} />
           <Route path="/:type/appraisals" component={TabView} />
+
           <Route
             path="/eligibility/:type/:shortId"
             component={EligibilityForm}
           />
           <Route path="/appraisals/:type/:shortId" component={AppraisalForm} />
           <Route path="/batch/articles/:stage/:shortId" component={Articles} />
-          <Route path="/conflicts/:type/:shortId" component={Conflicts} />
+
           <Route path="/upload" component={BatchUpload} />
           <Route path="/notes" component={Notes} />
         </Router>

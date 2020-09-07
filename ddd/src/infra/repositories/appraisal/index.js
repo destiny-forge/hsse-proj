@@ -4,7 +4,7 @@ module.exports = ({ model }) => {
   const getAll = async (...args) => {
     try {
       const appraisals = await model.getAll(...args);
-      return appraisals.map(appraisal => {
+      return appraisals.map((appraisal) => {
         return toEntity(appraisal);
       });
     } catch (err) {
@@ -12,10 +12,10 @@ module.exports = ({ model }) => {
     }
   };
 
-  const findByArticleId = async articleId => {
+  const findByArticleId = async (articleId) => {
     try {
       const appraisals = await model.findByArticleId(articleId);
-      return appraisals.map(appraisal => {
+      return appraisals.map((appraisal) => {
         return toEntity(appraisal);
       });
     } catch (err) {
@@ -23,10 +23,10 @@ module.exports = ({ model }) => {
     }
   };
 
-  const findByType = async type => {
+  const findByType = async (type) => {
     try {
       const appraisals = await model.findByType(type);
-      return appraisals.map(appraisal => {
+      return appraisals.map((appraisal) => {
         return toEntity(appraisal);
       });
     } catch (err) {
@@ -37,7 +37,7 @@ module.exports = ({ model }) => {
   const find = async (...args) => {
     try {
       const appraisals = await model.find(...args);
-      return appraisals.map(appraisal => {
+      return appraisals.map((appraisal) => {
         return toEntity(appraisal);
       });
     } catch (err) {
@@ -57,14 +57,6 @@ module.exports = ({ model }) => {
   const update = async (...args) => {
     try {
       return model.update(...args);
-    } catch (err) {
-      throw new Error(err);
-    }
-  };
-
-  const assign = async (...args) => {
-    try {
-      return model.assign(...args);
     } catch (err) {
       throw new Error(err);
     }
@@ -96,7 +88,6 @@ module.exports = ({ model }) => {
     findByArticleId,
     findByType,
     find,
-    assign,
-    findOne
+    findOne,
   };
 };
