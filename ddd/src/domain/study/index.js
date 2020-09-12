@@ -3,13 +3,19 @@ const { compose } = require("ramda");
 const { cleanData, cleanMongoId } = require("../helper");
 const shortid = require("shortid");
 
-const Link = t.struct({
-  country: t.String,
-  name: t.String,
-  url: t.String,
-  atLeast: t.Boolean,
-  isFocus: t.Boolean,
-});
+/*
+countryLinks:  {
+  "Africa": {
+    id: 20,
+    atLeast: 3,
+    isFocus: true,
+    links: [ {
+      name: '',
+      url: ''
+    }]
+  }
+}
+*/
 
 const Study = t.struct(
   {
@@ -18,26 +24,26 @@ const Study = t.struct(
     articleId: t.maybe(t.Object),
     userId: t.maybe(t.Object),
 
-    links: t.list(Link),
+    countryLinks: t.Object,
 
-    countries: t.Boolean,
-    countryFocus: t.Boolean,
+    countriesNotReported: t.Boolean,
+    countryNotFocus: t.Boolean,
 
-    english: t.Boolean,
-    fullText: t.Boolean,
-    largeReviews: t.Boolean,
+    notInEnglish: t.Boolean,
+    noFreeFullText: t.Boolean,
+    largeReview: t.Boolean,
 
-    status: t.String, //'New article', 'In progress', 'Completed', 'Unknown'
+    status: t.String, //'In progress', 'Completed'
   },
   {
     defaultProps: {
       shortId: shortid.generate(),
-      status: "Unknown",
-      english: true,
-      fullText: true,
-      largeReviews: false,
-      countries: true,
-      countryFocus: false,
+      status: "In progress",
+      notInEnglish: false,
+      noFreeFullText: false,
+      largeReview: false,
+      countriesNotReported: false,
+      countryNotFocus: false,
     },
   }
 );

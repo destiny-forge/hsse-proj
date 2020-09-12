@@ -26,7 +26,7 @@ const Sidebar = (props) => {
           </li>
           <li className="list-item">
             <div className="list-body">
-              <a href="#!" className="text-primary">
+              <a href={`/${props.type}/studies`} className="text-primary">
                 Linking Studies
               </a>
             </div>

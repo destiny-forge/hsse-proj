@@ -40,12 +40,15 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findOne = async (query) => {
+  const findOne = async (articleId, userId) => {
     try {
       const results = await database
         .get()
         .collection(COLLECTION)
-        .findOne(query);
+        .findOne({
+          articleId: { $eq: ObjectID(articleId) },
+          userId: { $eq: ObjectID(userId) },
+        });
       return results;
     } catch (e) {
       throw e;

@@ -81,3 +81,48 @@ label {
   font-style: normal;
   font-size: 0.8rem;
 }
+
+.striped {
+  background-color: rgba(0, 0, 0, 0.025);
+  background-clip: padding-box;
+}
+
+.pl10 {
+  padding-left: 10px;
+  padding-bottom: 5px;
+}
+.mt10 {
+  margin-top: 10px;
+}
+
+.box-header.primary {
+  background-color: #f7f7f7;
+}
+.primary h4 {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: bold;
+}
+.country-focus {
+  font-weight: bold;
+}
+
+.del-country {
+  margin: auto;
+  float: right;
+  position: relative;
+  top: -40px;
+  background: white;
+  display: block;
+  padding: 10px;
+}
+
+.nav-link {
+  color: #1890ff;
+  text-decoration: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+}
+.dropdown-item {
+  cursor: pointer;
+}

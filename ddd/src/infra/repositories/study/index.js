@@ -41,7 +41,7 @@ module.exports = ({ model }) => {
   const findOne = async (...args) => {
     try {
       const study = await model.findOne(...args);
-      return toEntity(study);
+      return study ? toEntity(study) : null;
     } catch (err) {
       throw new Error(err);
     }
