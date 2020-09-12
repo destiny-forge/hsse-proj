@@ -157,15 +157,21 @@ class StudyForm extends React.Component {
   //   });
   // }
 
-  // handleLinkRemove(key, value) {
-  //   const questions = _.clone(this.state.questions);
-  //   let question = _.find(questions, { key: name });
-  //   question.value = value;
-
-  //   this.setState({
-  //     questions,
-  //   });
-  // }
+  handleLinkRemove = (key, name) => {
+    let confirmed = window.confirm(
+      'Are you sure you want to remove this link?'
+    );
+    if (!confirmed) {
+      return;
+    }
+    const { countryLinks } = this.state;
+    const updated = _.clone(countryLinks);
+    const country = updated[key];
+    country.links = country.links.filter((link) => link.name !== name);
+    this.setState({
+      countryLinks: updated,
+    });
+  };
 
   componentDidMount() {
     const { shortId } = this.props.match.params;
@@ -472,7 +478,12 @@ class StudyForm extends React.Component {
                           <td>{link.name}</td>
                           <td>{link.url}</td>
                           <td>
-                            <i className="fa fa-times text-danger d-inline"></i>
+                            <i
+                              className="fa fa-times text-danger d-inline clickable"
+                              onClick={() =>
+                                this.handleLinkRemove(key, link.name)
+                              }
+                            ></i>
                           </td>
                         </tr>
                       ))}

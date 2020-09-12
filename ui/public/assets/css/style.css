@@ -126,3 +126,6 @@ label {
 .dropdown-item {
   cursor: pointer;
 }
+.clickable {
+  cursor: pointer;
+}
