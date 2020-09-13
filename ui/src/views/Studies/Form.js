@@ -13,6 +13,7 @@ import ErrorMessage from '../../components/atoms/ErrorMessage';
 import { countries } from './data/countries';
 
 import validate from './validate';
+import validateLink from './validateLink';
 
 const STATUSES = [
   { value: 'In Progress', label: 'In Progress' },
@@ -25,39 +26,6 @@ class StudyForm extends React.Component {
 
     const { type } = this.props.match.params;
 
-    const testCountryLinks = {
-      Africa: {
-        id: 23,
-        count: '3+',
-        focus: true,
-        links: [
-          {
-            name: 'first',
-            url: 'https://first.com',
-          },
-          {
-            name: 'second',
-            url: 'https://second.com',
-          },
-          {
-            name: 'third',
-            url: 'https://third.com',
-          },
-        ],
-      },
-      Canada: {
-        id: 23,
-        count: '1',
-        focus: true,
-        links: [
-          {
-            name: 'first',
-            url: 'https://first.com',
-          },
-        ],
-      },
-    };
-
     this.state = {
       _id: null,
       type,
@@ -69,13 +37,9 @@ class StudyForm extends React.Component {
       country: 0,
       count: '',
       focus: false,
-      countryLinks: testCountryLinks,
+      countryLinks: {},
       errors: {},
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    //this.handleQuestionChange = this.handleQuestionChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
 
     this.Article = ArticleService({ fetch: this.props.fetch });
     this.Study = StudyService({ fetch: this.props.fetch });
@@ -148,14 +112,39 @@ class StudyForm extends React.Component {
     this.setState({ countryLinks: updated });
   };
 
-  // handleLinkAdd(key, value, count, isFocus) {
-  //   const links = _.clone(this.state.links);
-  //   links.append({
-  //     ...opts,
-  //     count,
-  //     isFocus,
-  //   });
-  // }
+  handleLinkEdit = (key, field, value) => {
+    const { countryLinks } = this.state;
+    const updated = _.clone(countryLinks);
+    const country = updated[key];
+    _.set(country, `link.${field}`, value);
+
+    validateLink(country.link)
+      .then(() => {
+        country.errors = {};
+        country.valid = true;
+        this.setState({ countryLinks: updated });
+      })
+      .catch((errors) => {
+        country.errors = errors;
+        country.valid = false;
+        this.setState({ countryLinks: updated });
+      });
+  };
+
+  handleLinkAdd = (key) => {
+    const { countryLinks } = this.state;
+    const updated = _.clone(countryLinks);
+    const country = updated[key];
+    const { name, url } = country.link;
+
+    country.links.push({ name, url });
+    country.link = {};
+    country.valid = false;
+
+    this.setState({
+      countryLinks: updated,
+    });
+  };
 
   handleLinkRemove = (key, name) => {
     let confirmed = window.confirm(
@@ -492,27 +481,42 @@ class StudyForm extends React.Component {
                           <input
                             type="text"
                             className="form-control"
-                            name="countryName"
-                            onChange={this.change}
+                            name="linkName"
+                            value={_.get(country, 'link.name', '')}
+                            onChange={(e) =>
+                              this.handleLinkEdit(key, 'name', e.target.value)
+                            }
                             placeholder="Enter name"
                             required
+                          />
+                          <ErrorMessage
+                            errors={country.errors || {}}
+                            field="name"
                           />
                         </td>
                         <td>
                           <input
                             type="text"
                             className="form-control"
-                            name="countryLink"
-                            onChange={this.change}
+                            name="linkURL"
+                            value={_.get(country, 'link.url', '')}
+                            onChange={(e) =>
+                              this.handleLinkEdit(key, 'url', e.target.value)
+                            }
                             placeholder="Enter url"
                             required
+                          />
+                          <ErrorMessage
+                            errors={country.errors || {}}
+                            field="url"
                           />
                         </td>
                         <td>
                           <button
                             type="submit"
-                            onClick={this.handleSubmit}
+                            onClick={() => this.handleLinkAdd(key)}
                             className="btn primary"
+                            disabled={!country.valid}
                           >
                             Add link
                           </button>
