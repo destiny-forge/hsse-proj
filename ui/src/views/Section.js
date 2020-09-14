@@ -29,7 +29,7 @@ const withSection = (WrappedComponent) => {
 
     useEffect(() => {
       fetchData(type, 'New Article');
-    }, [type, uid]);
+    }, [type, stage, uid]);
 
     const trackTab = (type, tab) => {
       if (type && tab) {

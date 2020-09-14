@@ -18,7 +18,8 @@ import EligibilityForm from './views/Eligibility/EligibilityForm';
 import Articles from './views/Articles/Articles';
 import EligibilityConflicts from './views/Eligibility/Conflicts';
 import AppraisalConflicts from './views/QualityAppraisal/Conflicts';
-import AppraisalForm from './views/QualityAppraisal/AppraisalForm';
+import AppraisalForm from './views/QualityAppraisal/Form';
+import AppraisalList from './views/QualityAppraisal/List';
 import StudyForm from './views/Studies/Form';
 import StudyList from './views/Studies/List';
 
@@ -72,6 +73,10 @@ class App extends Component {
             <Route
               path="/batch/articles/studies/:shortId"
               component={StudyList}
+            />
+            <Route
+              path="/batch/articles/appraisals/:shortId"
+              component={AppraisalList}
             />
             <Route
               path="/batch/articles/:stage/:shortId"

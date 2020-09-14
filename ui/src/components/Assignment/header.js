@@ -4,7 +4,7 @@ const getAssignmentHeader = (role, stage) => {
     case 'eligibility':
       text = 'filterer';
       break;
-    case 'appraisal':
+    case 'appraisals':
       text = 'appraiser';
       break;
     case 'studies':

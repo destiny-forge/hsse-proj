@@ -10,7 +10,24 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      return await articleRepository.aggregate(type, "studies", status);
+      const docTypes = [
+        "Overviews of systematic reviews",
+        "Systematic reviews of effects",
+        "Systematic reviews addressing other questions",
+      ];
+
+      const matches = [
+        { "stages.eligibility.status": "Complete" },
+        { "stages.appraisals.status": "Complete" },
+      ];
+
+      return await articleRepository.aggregate(
+        type,
+        "studies",
+        status,
+        docTypes,
+        matches
+      );
     } catch (error) {
       throw new Error(error);
     }
@@ -24,15 +41,29 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      if (!stage) {
-        return {
-          error: "A valid stage is required",
-        };
-      }
+      const docTypes = [
+        "Overviews of systematic reviews",
+        "Systematic reviews of effects",
+        "Systematic reviews addressing other questions",
+      ];
 
-      let status = ["New Article", "In Progress", "Complete"];
+      const matches = [
+        { "stages.eligibility.status": "Complete" },
+        { "stages.appraisals.status": "Complete" },
+      ];
 
-      return await articleRepository.findByBatch(batchId, "studies", status);
+      const articles = await articleRepository.findByBatchAndDocTypes(
+        batchId,
+        docTypes,
+        matches
+      );
+
+      return articles.filter((article) => {
+        return (
+          article.stages.eligibility.status === "Complete" &&
+          article.stages.appraisals.status === "Complete"
+        );
+      });
     } catch (error) {
       throw new Error(error);
     }

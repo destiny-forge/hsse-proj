@@ -67,7 +67,7 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findByBatchAndDocTypes = async (batchId, docTypes) => {
+  const findByBatchAndDocTypes = async (batchId, docTypes, optMatches) => {
     const join = {
       $lookup: {
         from: "batches",
@@ -89,7 +89,17 @@ module.exports = ({ database }) => {
       },
     };
 
-    const aggregates = [matchBatch, join, matchDocType];
+    let aggregates = [matchBatch, join, matchDocType];
+
+    if (optMatches.length > 0) {
+      let matches = { $match: {} };
+      optMatches.forEach((item) => {
+        const key = Object.keys(item)[0];
+        const value = item[key];
+        matches["$match"][key] = value;
+      });
+      aggregates = aggregates.concat(matches);
+    }
 
     try {
       return await database
@@ -102,7 +112,7 @@ module.exports = ({ database }) => {
     }
   };
 
-  const aggregate = async (type, stage, status, docTypes) => {
+  const aggregate = async (type, stage, status, docTypes, optMatches) => {
     const filters = Array.isArray(status) ? { $in: status } : status;
 
     const lookup = {
@@ -125,6 +135,14 @@ module.exports = ({ database }) => {
         [`stages.${stage}.status`]: filters,
       },
     };
+
+    if (optMatches.length > 0) {
+      optMatches.forEach((item) => {
+        const key = Object.keys(item)[0];
+        const value = item[key];
+        match["$match"][key] = value;
+      });
+    }
 
     const group = {
       $group: {
@@ -166,12 +184,6 @@ module.exports = ({ database }) => {
 
     let aggregates = [lookup, match, group, project, sort];
 
-    // @TODO - Should this be documentType?
-    // We have it on the batch model, on the eligibility model
-    // and on the article model. I gander that once documents have
-    // the proper documentType - either from batch uploading??? or
-    // completing the eligibility filtering then the article's model
-    // should be where this queries from
     if (docTypes) {
       const matchDocType = {
         $match: {

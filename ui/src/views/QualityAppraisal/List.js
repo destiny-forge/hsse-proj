@@ -2,24 +2,24 @@ import _ from 'lodash';
 import React from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import AppraisalService from '../../services/AppraisalService';
 import ArticleService from '../../services/ArticleService';
-import StudyService from '../../services/StudyService';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { AssignHeader } from '../../components/Assignment';
 
-class StudiesList extends React.Component {
+class AppraisalList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       articles: [],
-      stage: 'studies',
+      stage: 'appraisals',
     };
 
+    this.Appraisal = AppraisalService({ fetch: this.props.fetch });
     this.Article = ArticleService({ fetch: this.props.fetch });
-    this.Study = StudyService({ fetch: this.props.fetch });
   }
 
   notifyDone = () => toast.success('Assignment created successfully.');
@@ -32,23 +32,25 @@ class StudiesList extends React.Component {
 
   isAssigned = (stage) => {
     const { user } = this.props;
-    let seniorAssigned = false;
+    let juniorAssigned,
+      seniorAssigned = false;
+    if (!_.isUndefined(stage['junior'])) {
+      juniorAssigned = stage.junior.email === user.email;
+    }
     if (!_.isUndefined(stage['senior'])) {
       seniorAssigned = stage.senior.email === user.email;
     }
-    return seniorAssigned;
+    return juniorAssigned || seniorAssigned;
   };
 
   componentDidMount() {
     const { shortId } = this.props.match.params;
-    const { stage } = this.state;
 
-    this.Study.listByBatch(shortId)
+    this.Appraisal.listByBatch(shortId)
       .then((res) => {
         if (res.success) {
           this.setState({
             articles: res.data,
-            stage,
           });
         }
       })
@@ -77,7 +79,7 @@ class StudiesList extends React.Component {
       .then((res) => {
         if (res.success) {
           this.notifyDone();
-          this.Study.listByBatch(shortId)
+          this.Appraisal.listByBatch(shortId)
             .then((res) => {
               if (res.success) {
                 this.setState({
@@ -97,6 +99,9 @@ class StudiesList extends React.Component {
 
   getMyStatus(stage) {
     let status = '';
+    if (this.isAssignedAs(stage, 'junior')) {
+      status = stage.junior.status;
+    }
     if (this.isAssignedAs(stage, 'senior')) {
       status = stage.senior.status;
     }
@@ -121,8 +126,13 @@ class StudiesList extends React.Component {
     }
 
     const code = `/${stageName}/${article.type}/${article.shortId}`;
+    const resolve = `/conflicts/${article.type}/${stageName}/${article.shortId}`;
 
-    return status === 'In Progress' ? <Link to={code}>Code</Link> : null;
+    return status === 'In Progress' ? (
+      <Link to={code}>Code</Link>
+    ) : (
+      <Link to={resolve}>Resolve Conflicts</Link>
+    );
   }
 
   render() {
@@ -137,7 +147,10 @@ class StudiesList extends React.Component {
                 <th>Title</th>
                 <th>Authors</th>
                 <th>
-                  <AssignHeader role="" stage={stage} />
+                  <AssignHeader role="Junior" stage={stage} />
+                </th>
+                <th>
+                  <AssignHeader role="Senior" stage={stage} />
                 </th>
                 <th>My Status</th>
                 <th>Article Status</th>
@@ -152,6 +165,36 @@ class StudiesList extends React.Component {
                     <td>{article.title}</td>
                     <td>{article.authors}</td>
                     <td>
+                      {/*
+                        <AssignAction
+                          user={user}
+                          stage={stage}
+                          role="junior"
+                          action={this.assign}
+                        />
+                      */}
+
+                      {this.showEmail(article.stages[stage], 'junior') ||
+                        (!this.isAssignedAs(
+                          article.stages[stage],
+                          'senior'
+                        ) && (
+                          <button
+                            className="md-btn md-flat mb-2 w-xs text-success"
+                            onClick={() => {
+                              if (
+                                window.confirm(
+                                  'Are you sure you want to assign this article to your assigned quality appraisals list?'
+                                )
+                              )
+                                this.assign('junior', article._id);
+                            }}
+                          >
+                            Assign
+                          </button>
+                        ))}
+                    </td>
+                    <td>
                       {this.showEmail(article.stages[stage], 'senior') ||
                         (!this.isAssignedAs(
                           article.stages[stage],
@@ -162,7 +205,7 @@ class StudiesList extends React.Component {
                             onClick={() => {
                               if (
                                 window.confirm(
-                                  'Are you sure you want to assign this article to your assigned linking studies list?'
+                                  'Are you sure you want to assign this article to your assigned quality appraisals list?'
                                 )
                               )
                                 this.assign('senior', article._id);
@@ -185,4 +228,4 @@ class StudiesList extends React.Component {
   }
 }
 
-export default withRouter(withAuth(StudiesList));
+export default withRouter(withAuth(AppraisalList));

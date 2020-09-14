@@ -45,9 +45,13 @@ module.exports = ({ model }) => {
     }
   };
 
-  const findByBatchAndDocTypes = async (batchId, docTypes) => {
+  const findByBatchAndDocTypes = async (batchId, docTypes, matches) => {
     try {
-      const articles = await model.findByBatchAndDocTypes(batchId, docTypes);
+      const articles = await model.findByBatchAndDocTypes(
+        batchId,
+        docTypes,
+        matches || []
+      );
       return articles.map((article) => {
         return toEntity(article);
       });
@@ -56,9 +60,15 @@ module.exports = ({ model }) => {
     }
   };
 
-  const aggregate = async (type, stage, status, docTypes) => {
+  const aggregate = async (type, stage, status, docTypes, optMatches) => {
     try {
-      const articles = await model.aggregate(type, stage, status, docTypes);
+      const articles = await model.aggregate(
+        type,
+        stage,
+        status,
+        docTypes,
+        optMatches || []
+      );
       return articles.map((article) => {
         return article;
       });

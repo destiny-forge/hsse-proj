@@ -28,10 +28,16 @@ const StudyService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
+  const listByBatch = async (batchId) => {
+    const res = await fetch(`/studies/batch/${batchId}`);
+    return Promise.resolve(res);
+  };
+
   return {
+    get,
     create,
     list,
-    get,
+    listByBatch,
   };
 };
 

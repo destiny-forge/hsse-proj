@@ -31,10 +31,6 @@ module.exports = ({ articleRepository }) => {
       }
 
       let status = ["New Article", "In Progress", "Conflicted", "Complete"];
-      // switch (stage) {
-      //   case "eligibility":
-      //     break;
-      // }
 
       return await articleRepository.findByBatch(batchId, stage, status);
     } catch (error) {
