@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Switch } from 'react-router';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Login from './views/Accounts/Login';
 import Dashboard from './views/Dashboard';
@@ -17,8 +18,10 @@ import EligibilityForm from './views/Eligibility/EligibilityForm';
 import Articles from './views/Articles/Articles';
 import EligibilityConflicts from './views/Eligibility/Conflicts';
 import AppraisalConflicts from './views/QualityAppraisal/Conflicts';
-import AppraisalForm from './views/QualityAppraisal/AppraisalForm';
-//import Appraisals from './views/QualityAppraisal/Appraisals';
+import AppraisalForm from './views/QualityAppraisal/Form';
+import AppraisalList from './views/QualityAppraisal/List';
+import StudyForm from './views/Studies/Form';
+import StudyList from './views/Studies/List';
 
 class App extends Component {
   render() {
@@ -36,35 +39,52 @@ class App extends Component {
           pauseOnHover
         />
         <Router>
-          <Route exact path="/" component={Dashboard} />
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/forgot-password" component={ForgotPassword} />
-          <Route path="/account/reset/:token" component={PasswordReset} />
-          <Route path="/signup-success" component={SignupSuccess} />
-          <Route path="/account/confirm/:token" component={ConfirmEmail} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/article" component={ArticleCreate} />
-          <Route
-            path="/conflicts/:type/eligibility/:shortId"
-            component={EligibilityConflicts}
-          />
-          <Route
-            path="/conflicts/:type/appraisals/:shortId"
-            component={AppraisalConflicts}
-          />
-          <Route path="/:type/eligibility" component={TabView} />
-          <Route path="/:type/appraisals" component={TabView} />
+          <Switch>
+            <Route exact path="/" component={Dashboard} />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/forgot-password" component={ForgotPassword} />
+            <Route path="/account/reset/:token" component={PasswordReset} />
+            <Route path="/signup-success" component={SignupSuccess} />
+            <Route path="/account/confirm/:token" component={ConfirmEmail} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/article" component={ArticleCreate} />
+            <Route
+              path="/conflicts/:type/eligibility/:shortId"
+              component={EligibilityConflicts}
+            />
+            <Route
+              path="/conflicts/:type/appraisals/:shortId"
+              component={AppraisalConflicts}
+            />
+            <Route path="/:type/eligibility" component={TabView} />
+            <Route path="/:type/appraisals" component={TabView} />
+            <Route path="/:type/studies" component={TabView} />
 
-          <Route
-            path="/eligibility/:type/:shortId"
-            component={EligibilityForm}
-          />
-          <Route path="/appraisals/:type/:shortId" component={AppraisalForm} />
-          <Route path="/batch/articles/:stage/:shortId" component={Articles} />
-
-          <Route path="/upload" component={BatchUpload} />
-          <Route path="/notes" component={Notes} />
+            <Route
+              path="/eligibility/:type/:shortId"
+              component={EligibilityForm}
+            />
+            <Route
+              path="/appraisals/:type/:shortId"
+              component={AppraisalForm}
+            />
+            <Route path="/studies/:type/:shortId" component={StudyForm} />
+            <Route
+              path="/batch/articles/studies/:shortId"
+              component={StudyList}
+            />
+            <Route
+              path="/batch/articles/appraisals/:shortId"
+              component={AppraisalList}
+            />
+            <Route
+              path="/batch/articles/:stage/:shortId"
+              component={Articles}
+            />
+            <Route path="/upload" component={BatchUpload} />
+            <Route path="/notes" component={Notes} />
+          </Switch>
         </Router>
       </React.Fragment>
     );

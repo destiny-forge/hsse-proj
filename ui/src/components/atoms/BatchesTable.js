@@ -2,7 +2,24 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const BatchesTable = ({ stage, batches }) => {
-  //console.log(batches);
+  const actionText = () => {
+    let text = '';
+    switch (stage) {
+      case 'eligibility':
+        text = 'filtering';
+        break;
+      case 'appraisals':
+        text = 'coding';
+        break;
+      case 'studies':
+        text = 'linking';
+        break;
+      default:
+        break;
+    }
+    return text;
+  };
+
   return (
     <div className="box">
       <div className="table-responsive">
@@ -18,8 +35,8 @@ const BatchesTable = ({ stage, batches }) => {
               <th>Batch Type</th>
               <th>Batch Name</th>
               <th># in Batch</th>
-              <th># coding in progress(%)</th>
-              <th># coding complete(%)</th>
+              <th># {actionText()} in progress(%)</th>
+              <th># {actionText()} complete(%)</th>
             </tr>
           </thead>
           <tbody>

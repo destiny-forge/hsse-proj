@@ -40,12 +40,29 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findOne = async (query) => {
+  const findOne = async (articleId, userId) => {
     try {
       const results = await database
         .get()
         .collection(COLLECTION)
-        .findOne(query);
+        .findOne({
+          articleId: { $eq: ObjectID(articleId) },
+          userId: { $eq: ObjectID(userId) },
+        });
+      return results;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const findByArticleId = async (articleId) => {
+    try {
+      if (!ObjectID.isValid(articleId)) throw "Invalid MongoDB ID.";
+      const results = await database
+        .get()
+        .collection(COLLECTION)
+        .find({ articleId: { $eq: ObjectID(articleId) } })
+        .toArray();
       return results;
     } catch (e) {
       throw e;
@@ -76,6 +93,7 @@ module.exports = ({ database }) => {
     create,
     getAll,
     findById,
+    findByArticleId,
     findOne,
     update,
     createIndexes,

@@ -28,6 +28,11 @@ const AppraisalService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
+  const listByBatch = async (batchId) => {
+    const res = await fetch(`/appraisals/batch/${batchId}`);
+    return Promise.resolve(res);
+  };
+
   const compare = async (id) => {
     const res = await fetch(`/appraisals/compare/${id}`);
     return Promise.resolve(res);
@@ -44,6 +49,7 @@ const AppraisalService = ({ fetch }) => {
     create,
     list,
     get,
+    listByBatch,
     compare,
     resolve,
   };

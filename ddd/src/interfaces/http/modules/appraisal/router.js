@@ -178,44 +178,6 @@ module.exports = ({
    * /:
    *   get:
    *     tags:
-   *       - Appraisal
-   *     description: Appraisal filter by shortArticleId and userId
-   *     consumes:
-   *       - application/json
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *       - name: body
-   *         description: Appraisal filter
-   *         in: body
-   *         required: true
-   *         type: string
-   *         schema:
-   *           $ref: '#/definitions/appraisal'
-   *     responses:
-   *       200:
-   *         description: Successfully created
-   *       400:
-   *         $ref: '#/responses/BadRequest'
-   */
-  router.get("/:articleId/:userId", (req, res) => {
-    const { articleId, userId } = req.params;
-    getUseCase
-      .get(articleId, userId)
-      .then((data) => {
-        res.status(Status.OK).json(Success(data));
-      })
-      .catch((error) => {
-        logger.error(error); // we still need to log every error for debugging
-        res.status(Status.BAD_REQUEST).json(Fail(error.message));
-      });
-  });
-
-  /**
-   * @swagger
-   * /:
-   *   get:
-   *     tags:
    *       - Article
    *     description: Article list by batchId
    *     consumes:
@@ -240,6 +202,44 @@ module.exports = ({
     const { batchId } = req.params;
     listUseCase
       .listByBatch(batchId)
+      .then((data) => {
+        res.status(Status.OK).json(Success(data));
+      })
+      .catch((error) => {
+        logger.error(error); // we still need to log every error for debugging
+        res.status(Status.BAD_REQUEST).json(Fail(error.message));
+      });
+  });
+
+  /**
+   * @swagger
+   * /:
+   *   get:
+   *     tags:
+   *       - Appraisal
+   *     description: Appraisal filter by shortArticleId and userId
+   *     consumes:
+   *       - application/json
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: body
+   *         description: Appraisal filter
+   *         in: body
+   *         required: true
+   *         type: string
+   *         schema:
+   *           $ref: '#/definitions/appraisal'
+   *     responses:
+   *       200:
+   *         description: Successfully created
+   *       400:
+   *         $ref: '#/responses/BadRequest'
+   */
+  router.get("/:articleId/:userId", (req, res) => {
+    const { articleId, userId } = req.params;
+    getUseCase
+      .get(articleId, userId)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

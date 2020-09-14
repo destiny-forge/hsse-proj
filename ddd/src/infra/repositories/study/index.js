@@ -38,10 +38,21 @@ module.exports = ({ model }) => {
     }
   };
 
+  const findByArticleId = async (articleId) => {
+    try {
+      const filters = await model.findByArticleId(articleId);
+      return filters.map((filter) => {
+        return toEntity(filter);
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const findOne = async (...args) => {
     try {
       const study = await model.findOne(...args);
-      return toEntity(study);
+      return study ? toEntity(study) : null;
     } catch (err) {
       throw new Error(err);
     }
@@ -52,6 +63,7 @@ module.exports = ({ model }) => {
     create,
     update,
     findById,
+    findByArticleId,
     findOne,
   };
 };
