@@ -52,18 +52,11 @@ module.exports = ({ articleRepository }) => {
         { "stages.appraisals.status": "Complete" },
       ];
 
-      const articles = await articleRepository.findByBatchAndDocTypes(
+      return await articleRepository.findByBatchAndDocTypes(
         batchId,
         docTypes,
         matches
       );
-
-      return articles.filter((article) => {
-        return (
-          article.stages.eligibility.status === "Complete" &&
-          article.stages.appraisals.status === "Complete"
-        );
-      });
     } catch (error) {
       throw new Error(error);
     }
