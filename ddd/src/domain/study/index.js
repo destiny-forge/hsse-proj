@@ -21,10 +21,8 @@ const Study = t.struct(
   {
     _id: t.maybe(t.String),
     shortId: t.String,
-    articleId: t.maybe(t.Object),
-    userId: t.maybe(t.Object),
-
-    countryLinks: t.Object,
+    articleId: t.Object,
+    userId: t.Object,
 
     countriesNotReported: t.Boolean,
     countryNotFocus: t.Boolean,
@@ -32,6 +30,8 @@ const Study = t.struct(
     notInEnglish: t.Boolean,
     noFreeFullText: t.Boolean,
     largeReview: t.Boolean,
+
+    countryLinks: t.Object,
 
     status: t.String, //'In progress', 'Completed'
   },
@@ -44,6 +44,7 @@ const Study = t.struct(
       largeReview: false,
       countriesNotReported: false,
       countryNotFocus: false,
+      countryLinks: {},
     },
   }
 );

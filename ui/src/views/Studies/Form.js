@@ -34,6 +34,8 @@ class StudyForm extends React.Component {
       notInEnglish: false,
       noFreeFullText: false,
       largeReview: false,
+      countriesNotReported: false,
+      countryNotFocus: false,
       country: 0,
       count: '',
       focus: false,
@@ -204,7 +206,7 @@ class StudyForm extends React.Component {
       });
   }
 
-  notifyDone = () => toast.success('Appraisal completed!');
+  notifyDone = () => toast.success('Study saved successfully.');
 
   handleSubmit = (e) => {
     e.preventDefault();
