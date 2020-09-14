@@ -14,6 +14,7 @@ import { countries } from './data/countries';
 
 import validate from './validate';
 import validateLink from './validateLink';
+import CountryCountFocus from '../../components/molecules/CountryCountFocus';
 
 const STATUSES = [
   { value: 'In Progress', label: 'In Progress' },
@@ -419,17 +420,18 @@ class StudyForm extends React.Component {
 
             {Object.keys(countryLinks).map((key) => {
               const country = countryLinks[key];
+              const showLinks = country.id > 0;
               return (
                 <div className="box" key={key}>
                   <div className="box-header primary">
                     <h2>
-                      {key} ({country.count},{' '}
-                      {country.focus ? (
-                        <i className="fa fa-check text-success d-inline"></i>
-                      ) : (
-                        <i className="fa fa-times text-danger d-inline"></i>
-                      )}{' '}
-                      focus)
+                      {key}
+                      <CountryCountFocus
+                        count={country.count}
+                        text="focus"
+                        disabled={!showLinks}
+                        checked={country.focus}
+                      />
                     </h2>
                   </div>
                   <div className="box-tool">
@@ -455,77 +457,79 @@ class StudyForm extends React.Component {
                       </li>
                     </ul>
                   </div>
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>URL</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {country.links.map((link, i) => (
-                        <tr key={i}>
-                          <td>{link.name}</td>
-                          <td>{link.url}</td>
+                  {showLinks && (
+                    <table className="table">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>URL</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {country.links.map((link, i) => (
+                          <tr key={i}>
+                            <td>{link.name}</td>
+                            <td>{link.url}</td>
+                            <td>
+                              <i
+                                className="fa fa-times text-danger d-inline clickable"
+                                onClick={() =>
+                                  this.handleLinkRemove(key, link.name)
+                                }
+                              ></i>
+                            </td>
+                          </tr>
+                        ))}
+                        <tr>
                           <td>
-                            <i
-                              className="fa fa-times text-danger d-inline clickable"
-                              onClick={() =>
-                                this.handleLinkRemove(key, link.name)
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="linkName"
+                              value={_.get(country, 'link.name', '')}
+                              onChange={(e) =>
+                                this.handleLinkEdit(key, 'name', e.target.value)
                               }
-                            ></i>
+                              placeholder="Enter name"
+                              required
+                            />
+                            <ErrorMessage
+                              errors={country.errors || {}}
+                              field="name"
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="text"
+                              className="form-control"
+                              name="linkURL"
+                              value={_.get(country, 'link.url', '')}
+                              onChange={(e) =>
+                                this.handleLinkEdit(key, 'url', e.target.value)
+                              }
+                              placeholder="Enter url"
+                              required
+                            />
+                            <ErrorMessage
+                              errors={country.errors || {}}
+                              field="url"
+                            />
+                          </td>
+                          <td>
+                            <button
+                              type="submit"
+                              onClick={() => this.handleLinkAdd(key)}
+                              className="btn primary"
+                              disabled={!country.valid}
+                            >
+                              Add link
+                            </button>
                           </td>
                         </tr>
-                      ))}
-                      <tr>
-                        <td>
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="linkName"
-                            value={_.get(country, 'link.name', '')}
-                            onChange={(e) =>
-                              this.handleLinkEdit(key, 'name', e.target.value)
-                            }
-                            placeholder="Enter name"
-                            required
-                          />
-                          <ErrorMessage
-                            errors={country.errors || {}}
-                            field="name"
-                          />
-                        </td>
-                        <td>
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="linkURL"
-                            value={_.get(country, 'link.url', '')}
-                            onChange={(e) =>
-                              this.handleLinkEdit(key, 'url', e.target.value)
-                            }
-                            placeholder="Enter url"
-                            required
-                          />
-                          <ErrorMessage
-                            errors={country.errors || {}}
-                            field="url"
-                          />
-                        </td>
-                        <td>
-                          <button
-                            type="submit"
-                            onClick={() => this.handleLinkAdd(key)}
-                            className="btn primary"
-                            disabled={!country.valid}
-                          >
-                            Add link
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                      </tbody>
+                    </table>
+                  )}
                 </div>
               );
             })}
