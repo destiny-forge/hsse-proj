@@ -18,7 +18,7 @@ import CountryCountFocus from '../../components/molecules/CountryCountFocus';
 
 const STATUSES = [
   { value: 'In Progress', label: 'In Progress' },
-  { value: 'Complete', label: 'Complete' },
+  { value: 'Data Entry Complete', label: 'Data Entry Complete' },
 ];
 
 class StudyForm extends React.Component {
@@ -247,8 +247,9 @@ class StudyForm extends React.Component {
     validate(formData)
       .then(() => {
         this.setState({ valid: true, errors: {} });
+        const data = this.cleanFormData(formData);
 
-        this.Study.create(formData)
+        this.Study.create(data)
           .then((res) => {
             this.props.history.replace(
               `/batch/articles/studies/${article.batchId}`
@@ -260,6 +261,16 @@ class StudyForm extends React.Component {
           });
       })
       .catch((errors) => this.setState({ errors, valid: false }));
+  };
+
+  cleanFormData = (formData) => {
+    for (let country in formData.countryLinks) {
+      const item = formData.countryLinks[country];
+      delete item.link;
+      delete item.errors;
+      delete item.valid;
+    }
+    return formData;
   };
 
   render() {

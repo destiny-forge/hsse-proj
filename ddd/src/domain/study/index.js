@@ -23,6 +23,7 @@ const Study = t.struct(
     shortId: t.String,
     articleId: t.Object,
     userId: t.Object,
+    type: t.String,
 
     countriesNotReported: t.Boolean,
     countryNotFocus: t.Boolean,
@@ -30,9 +31,9 @@ const Study = t.struct(
     notInEnglish: t.Boolean,
     noFreeFullText: t.Boolean,
     largeReview: t.Boolean,
+    complicated: t.Boolean,
 
     countryLinks: t.Object,
-
     status: t.String, //'In progress', 'Completed'
   },
   {
@@ -45,6 +46,7 @@ const Study = t.struct(
       countriesNotReported: false,
       countryNotFocus: false,
       countryLinks: {},
+      complicated: false,
     },
   }
 );
