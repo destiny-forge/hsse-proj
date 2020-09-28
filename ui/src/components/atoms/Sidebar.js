@@ -33,7 +33,7 @@ const Sidebar = (props) => {
           </li>
           <li className="list-item">
             <div className="list-body">
-              <a href="#!" className="text-primary">
+              <a href={`/${props.type}/presentation`} className="text-primary">
                 Presentation Details
               </a>
             </div>

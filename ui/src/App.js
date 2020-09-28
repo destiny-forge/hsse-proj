@@ -22,6 +22,8 @@ import AppraisalForm from './views/QualityAppraisal/Form';
 import AppraisalList from './views/QualityAppraisal/List';
 import StudyForm from './views/Studies/Form';
 import StudyList from './views/Studies/List';
+import PresentationDetails from './views/Presentation/Details';
+import PresentationForm from './views/Presentation/Form';
 
 class App extends Component {
   render() {
@@ -57,9 +59,16 @@ class App extends Component {
               path="/conflicts/:type/appraisals/:shortId"
               component={AppraisalConflicts}
             />
+
+            <Route
+              path="/:type/presentation/:shortId"
+              component={PresentationForm}
+            />
+
             <Route path="/:type/eligibility" component={TabView} />
             <Route path="/:type/appraisals" component={TabView} />
             <Route path="/:type/studies" component={TabView} />
+            <Route path="/:type/presentation" component={PresentationDetails} />
 
             <Route
               path="/eligibility/:type/:shortId"

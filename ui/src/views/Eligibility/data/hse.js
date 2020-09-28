@@ -605,7 +605,7 @@ const tree = {
         ],
       },
     ],
-  },
+  } /*
   checkedKeysCA: {
     title: 'Canadian Areas',
     items: [
@@ -623,7 +623,7 @@ const tree = {
       },
       { title: 'Aging (emergent)', key: 'canadianAgingEmergent' },
     ],
-  },
+  },*/,
   checkedDomain: {
     title: 'Domains',
     items: [
@@ -769,7 +769,7 @@ const tree = {
         key: 'lmicAtLeastOneStudy',
       },
     ],
-  },
+  } /*
   checkedProvince: {
     title: 'Province Focus',
     items: [
@@ -794,7 +794,7 @@ const tree = {
       { title: 'Saskatchewan', key: 'territorySaskatchewan' },
       { title: 'Yukon', key: 'territoryYukon' },
     ],
-  },
+  },*/,
   checkedTheme: {
     title: 'Theme',
     items: [
@@ -812,7 +812,7 @@ const tree = {
       { title: 'Indigenous peoples', key: 'populationIndigenousPeoples' },
       { title: 'Old Adults', key: 'populationOldAdults' },
     ],
-  },
+  } /*
   checkedOPA: {
     title: 'Ontario Priority Areas',
     items: [
@@ -848,7 +848,7 @@ const tree = {
       },
       { title: 'Women’s health', key: 'ontarioPriorityWomensHealth' },
     ],
-  },
+  },*/,
 };
 
 export default {
