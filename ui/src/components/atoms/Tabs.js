@@ -25,17 +25,19 @@ const Tabs = (props) => (
           Assigned
         </a>
       </li>
-      <li className="nav-item">
-        <a
-          className="nav-link"
-          href="#!"
-          data-toggle="tab"
-          data-target="#tab_3"
-          onClick={() => props.trackTab(props.type, ['Complicated'])}
-        >
-          Complicated
-        </a>
-      </li>
+      {props.stage !== 'eligibility' && (
+        <li className="nav-item">
+          <a
+            className="nav-link"
+            href="#!"
+            data-toggle="tab"
+            data-target="#tab_3"
+            onClick={() => props.trackTab(props.type, ['Complicated'])}
+          >
+            Complicated
+          </a>
+        </li>
+      )}
     </ul>
   </React.Fragment>
 );
