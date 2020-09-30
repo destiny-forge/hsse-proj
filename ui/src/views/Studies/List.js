@@ -133,7 +133,7 @@ class StudiesList extends React.Component {
           <table className="table table-striped b-t">
             <thead>
               <tr>
-                <th>Article Id</th>
+                <th>Ref Id</th>
                 <th>Title</th>
                 <th>Authors</th>
                 <th>
@@ -148,7 +148,7 @@ class StudiesList extends React.Component {
               {this.state.articles &&
                 this.state.articles.map((article) => (
                   <tr key={Math.random()}>
-                    <td>{article._id}</td>
+                    <td>{article.shortId}</td>
                     <td>{article.title}</td>
                     <td>{article.authors}</td>
                     <td>
