@@ -25,10 +25,9 @@ module.exports = ({ events, appraisalRepository, articleRepository }) => {
             complicated: first.complicated,
           });
         }
+        stage.updateStatus(articleId, "appraisals", status);
       }
     }
-
-    stage.updateStatus(articleId, "appraisals", status);
 
     appraisals.forEach((appraisal) => {
       stage.updateCoderStatus(

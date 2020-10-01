@@ -32,10 +32,10 @@ module.exports = ({ events, eligibilityRepository, articleRepository }) => {
             documentType: first.documentType,
           });
         }
+
+        stage.updateStatus(articleId, "eligibility", status);
       }
     }
-
-    stage.updateStatus(articleId, "eligibility", status);
 
     filters.forEach((filter) => {
       stage.updateCoderStatus(
