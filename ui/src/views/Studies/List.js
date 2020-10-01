@@ -122,7 +122,7 @@ class StudiesList extends React.Component {
 
     const code = `/${stageName}/${article.type}/${article.shortId}`;
 
-    return status === 'In Progress' ? <Link to={code}>Code</Link> : null;
+    return <Link to={code}>Code</Link>;
   }
 
   render() {

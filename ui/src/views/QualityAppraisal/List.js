@@ -133,10 +133,10 @@ class AppraisalList extends React.Component {
     const code = `/${stageName}/${article.type}/${article.shortId}`;
     const resolve = `/conflicts/${article.type}/${stageName}/${article.shortId}`;
 
-    return status === 'New Article' || 'In Progress' ? (
-      <Link to={code}>Code</Link>
-    ) : (
+    return status === 'Conflicted' ? (
       <Link to={resolve}>Resolve Conflicts</Link>
+    ) : (
+      <Link to={code}>Code</Link>
     );
   }
 
