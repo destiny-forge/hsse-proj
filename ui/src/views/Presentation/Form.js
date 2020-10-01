@@ -9,6 +9,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { hse, sse } from '../Eligibility/data';
 import { abstracts, summaries } from './data/';
 import EditLinkTable from '../../components/atoms/EditLinkTable';
+import EligibilityService from '../../services/EligibilityService';
+import TreeView from '../../components/molecules/TreeView';
+import _ from 'lodash';
 
 const STATUSES = [
   { value: 'Data Entry Complete', label: 'Data Entry Complete' },
@@ -72,6 +75,7 @@ class PresentationForm extends React.Component {
 
     const { type } = this.props.match.params;
 
+    this.tree = type === 'hse' ? hse.tree : sse.tree;
     this.types = type === 'hse' ? hse.types : sse.types || [];
     this.types = this.types.filter((type) => type.value.indexOf('No,') !== 0);
     this.questionTypes =
@@ -83,7 +87,9 @@ class PresentationForm extends React.Component {
     };
 
     this.Article = ArticleService({ fetch: this.props.fetch });
+    this.Eligibility = EligibilityService({ fetch: this.props.fetch });
     this.handleLinkUpdate = this.handleLinkUpdate.bind(this);
+    this.handleTreeChange = this.handleTreeChange.bind(this);
     //this.Monthly = MonthlyService({fetch: this.props.fetch });
   }
 
@@ -97,8 +103,14 @@ class PresentationForm extends React.Component {
     this.Article.get(shortId).then((res) => {
       if (res.data != null) {
         const article = res.data;
+        const filtersArray = _.get(
+          article.stages.eligibility,
+          'data.filters',
+          []
+        );
         this.setState({
           article,
+          filtersArray,
           loaded: true,
         });
       }
@@ -146,6 +158,15 @@ class PresentationForm extends React.Component {
     };
     this.handleChange(field, links);
   }
+
+  handleTreeChange(selectedItems) {
+    this.setState({ filters: selectedItems });
+  }
+
+  handleSave = (e) => {
+    e.preventDefault();
+    console.log(this.state);
+  };
 
   render() {
     const { article, _id, type, loaded, errors } = this.state;
@@ -630,9 +651,13 @@ class PresentationForm extends React.Component {
               <legend>Countries / Included Studies</legend>
               Simply embed the existing component :)
             </fieldset>
-            <fieldset>
-              ... The filters treeview categories rendered here
-            </fieldset>
+
+            <TreeView
+              tree={this.tree}
+              selectedItems={this.state.filtersArray}
+              onChange={this.handleTreeChange}
+            />
+
             <fieldset>
               <legend>Information for evidence briefs</legend>
               Note: I don't think this fieldset is even required - refer to the
@@ -666,6 +691,13 @@ class PresentationForm extends React.Component {
                 />
               </div>
             </fieldset>
+            <button
+              type="submit"
+              onClick={this.handleSave}
+              className="btn primary"
+            >
+              Save
+            </button>
           </div>
         </div>
       </div>
