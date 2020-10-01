@@ -2014,7 +2014,7 @@ const tree = {
       },
       { title: 'Geriatrics (>=60 years)', key: 'ageGeriatrics' },
     ],
-  },*/,
+  },
   checkedTarget: {
     title: 'Target',
     items: [
@@ -2023,7 +2023,7 @@ const tree = {
       { title: 'Community', key: 'targetCommunity' },
       { title: 'System', key: 'targetSystem' },
     ],
-  },
+  },*/,
 };
 
 export default {

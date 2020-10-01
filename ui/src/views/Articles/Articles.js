@@ -60,14 +60,19 @@ class Articles extends React.Component {
       });
   }
 
-  assign = (role, articleId) => {
+  assign = (role, articleId, articleStage) => {
     const { user } = this.props;
     const { shortId, stage } = this.props.match.params;
+
+    const isFull =
+      !_.isUndefined(articleStage['junior']) ||
+      !_.isUndefined(articleStage['senior']);
 
     const assignment = {
       articleId,
       type: role,
       stage,
+      isFull,
     };
 
     assignment.user = {
@@ -158,7 +163,7 @@ class Articles extends React.Component {
           <table className="table table-striped b-t">
             <thead>
               <tr>
-                <th>Article Id</th>
+                <th>Ref Id</th>
                 <th>Title</th>
                 <th>Authors</th>
                 <th>
@@ -176,7 +181,7 @@ class Articles extends React.Component {
               {this.state.articles &&
                 this.state.articles.map((article) => (
                   <tr key={Math.random()}>
-                    <td>{article._id}</td>
+                    <td>{article.shortId}</td>
                     <td>{article.title}</td>
                     <td>{article.authors}</td>
                     <td>
@@ -202,7 +207,11 @@ class Articles extends React.Component {
                                   'Are you sure you want to assign this article to your assigned quality appraisals list?'
                                 )
                               )
-                                this.assign('junior', article._id);
+                                this.assign(
+                                  'junior',
+                                  article._id,
+                                  article.stages[stage]
+                                );
                             }}
                           >
                             Assign
@@ -223,7 +232,11 @@ class Articles extends React.Component {
                                   'Are you sure you want to assign this article to your assigned quality appraisals list?'
                                 )
                               )
-                                this.assign('senior', article._id);
+                                this.assign(
+                                  'senior',
+                                  article._id,
+                                  article.stages[stage]
+                                );
                             }}
                           >
                             Assign
