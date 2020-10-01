@@ -169,7 +169,7 @@ class PresentationForm extends React.Component {
   };
 
   render() {
-    const { article, _id, type, loaded, errors } = this.state;
+    const { article, loaded, errors } = this.state;
     if (!loaded) {
       return null;
     }

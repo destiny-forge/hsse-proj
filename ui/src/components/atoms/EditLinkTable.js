@@ -21,8 +21,7 @@ const EditLinkTable = ({
   };
 
   const changeValue = (e) => {
-    const { name, value } = e.target;
-    setActiveValue(value);
+    setActiveValue(e.target.value);
   };
 
   const sendUpdate = () => {
@@ -48,8 +47,7 @@ const EditLinkTable = ({
         <tbody>
           {Object.keys(items).map((key) => {
             const url = items[key];
-            const isEmpty = url === '' || url === null;
-            if (key == activeKey) {
+            if (key === activeKey) {
               return (
                 <tr key={key}>
                   <td>
@@ -74,7 +72,7 @@ const EditLinkTable = ({
                 </td>
                 <td>{key}</td>
                 <td>
-                  {isTestable && url.indexOf('http') != -1 && (
+                  {isTestable && url.indexOf('http') !== -1 && (
                     <button onClick={() => test(url)}>Test</button>
                   )}{' '}
                   {url}
