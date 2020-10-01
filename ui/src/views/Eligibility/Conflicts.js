@@ -476,8 +476,21 @@ class Conflicts extends React.Component {
               className="btn primary"
               disabled={this.state.conflicts.length > 0}
             >
-              Resolve Conflicts
+              Save
             </button>
+            {this.state.conflicts.length > 0 && (
+              <span
+                style={{
+                  color: 'red',
+                  paddingLeft: 0,
+                  paddingRight: '10px',
+                  paddingBottom: 0,
+                  fontWeight: 'bold',
+                }}
+              >
+                &nbsp; * Conflicts must be resolved before you can save
+              </span>
+            )}
           </div>
         </div>
       </div>

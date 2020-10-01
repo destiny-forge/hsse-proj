@@ -6,7 +6,7 @@ const _ = require("underscore");
 module.exports = ({ articleRepository }) => {
   const assign = async (assignment) => {
     try {
-      const { articleId, stage, type, userId } = assignment;
+      const { articleId, stage, type, userId, isFull } = assignment;
 
       if (!type || (type !== "junior" && type !== "senior")) {
         return {
@@ -39,7 +39,7 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      assignment.status = "In Progress";
+      assignment.status = isFull ? "In Progress" : "New Article";
 
       return await articleRepository.assign(assignment);
     } catch (error) {

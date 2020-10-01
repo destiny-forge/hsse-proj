@@ -18,7 +18,7 @@ class TabView extends Component {
           <div className="row">
             <div className="col-sm-12 order-sm-1">
               <div className="py-4 clearfix nav-active-theme">
-                <Tabs trackTab={trackTab} type={type} />
+                <Tabs trackTab={trackTab} type={type} stage={stage} />
               </div>
             </div>
           </div>
