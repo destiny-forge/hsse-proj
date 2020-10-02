@@ -11,6 +11,7 @@ import { abstracts, summaries } from './data/';
 import EditLinkTable from '../../components/atoms/EditLinkTable';
 import EligibilityService from '../../services/EligibilityService';
 import TreeView from '../../components/molecules/TreeView';
+import CountryLinks from '../../components/molecules/CountryLinks';
 import _ from 'lodash';
 
 const STATUSES = [
@@ -108,9 +109,15 @@ class PresentationForm extends React.Component {
           'data.filters',
           []
         );
+        const initialLinks = _.get(
+          article.stages.studies,
+          'data.countryLinks',
+          {}
+        );
         this.setState({
           article,
           filtersArray,
+          initialLinks,
           loaded: true,
         });
       }
@@ -166,6 +173,10 @@ class PresentationForm extends React.Component {
   handleSave = (e) => {
     e.preventDefault();
     console.log(this.state);
+  };
+
+  handleLinkChange = (countryLinks) => {
+    this.setState({ countryLinks });
   };
 
   render() {
@@ -649,7 +660,10 @@ class PresentationForm extends React.Component {
 
             <fieldset>
               <legend>Countries / Included Studies</legend>
-              Simply embed the existing component :)
+              <CountryLinks
+                initialLinks={this.state.initialLinks}
+                onChange={this.handleLinkChange}
+              />
             </fieldset>
 
             <TreeView
