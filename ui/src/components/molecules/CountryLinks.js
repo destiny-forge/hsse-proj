@@ -15,7 +15,7 @@ const CountryLinks = ({ initialLinks, onChange }) => {
   useEffect(() => {
     setLinks(initialLinks);
     onChange(initialLinks);
-  }, [initialLinks]);
+  }, [initialLinks, onChange]);
 
   const handleFocusChange = (e) => {
     setFocus(e.target.checked);

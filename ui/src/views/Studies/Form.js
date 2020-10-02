@@ -36,9 +36,6 @@ class StudyForm extends React.Component {
       largeReview: false,
       countriesNotReported: false,
       countryNotFocus: false,
-      country: 0,
-      count: '',
-      focus: false,
       countryLinks: {},
       errors: {},
     };
@@ -188,9 +185,6 @@ class StudyForm extends React.Component {
       largeReview,
       countriesNotReported,
       countryNotFocus,
-      country,
-      focus,
-      countryLinks,
       errors,
     } = this.state;
 
