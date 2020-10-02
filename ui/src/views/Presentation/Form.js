@@ -57,7 +57,7 @@ const AMSTAR_DENOMINATORS = [...Array(8)].map((_, i) => {
 });
 
 const ISSUES = [...Array(11)].map((_, i) => {
-  const text = `issue ${i}`;
+  const text = `Issue ${i}`;
   return { label: text, value: text };
 });
 
