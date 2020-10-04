@@ -166,6 +166,10 @@ class PresentationForm extends React.Component {
     this.handleChange(field, links);
   }
 
+  handleLinkChange = (countryLinks) => {
+    this.setState({ countryLinks });
+  };
+
   handleTreeChange(selectedItems) {
     this.setState({ filters: selectedItems });
   }
@@ -173,10 +177,6 @@ class PresentationForm extends React.Component {
   handleSave = (e) => {
     e.preventDefault();
     console.log(this.state);
-  };
-
-  handleLinkChange = (countryLinks) => {
-    this.setState({ countryLinks });
   };
 
   render() {

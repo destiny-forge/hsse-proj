@@ -1,7 +1,6 @@
 const t = require("tcomb");
 const { compose } = require("ramda");
 const { cleanData, cleanMongoId } = require("../helper");
-const shortid = require("shortid");
 
 const Batch = t.struct(
   {
@@ -25,7 +24,6 @@ const Batch = t.struct(
   },
   {
     defaultProps: {
-      shortId: shortid.generate(),
       language: "English",
       uploaded: new Date(),
       harvested: new Date(),

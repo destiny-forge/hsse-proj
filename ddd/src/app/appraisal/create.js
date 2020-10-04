@@ -1,7 +1,7 @@
 const _ = require("lodash");
 const Appraisal = require("src/domain/appraisal");
 const ObjectID = require("mongodb").ObjectID;
-
+const shortid = require("shortid");
 /**
  * Appraisal creation
  */
@@ -30,6 +30,7 @@ module.exports = ({ appraisalRepository, events }) => {
         delete appraisal._id;
         result = await appraisalRepository.update(_id, appraisal);
       } else {
+        appraisal.shortId = shortid.generate();
         const entity = Appraisal(appraisal);
         result = await appraisalRepository.create(entity);
       }
