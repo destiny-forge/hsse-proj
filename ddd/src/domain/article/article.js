@@ -26,14 +26,14 @@ const Article = t.struct(
     status: t.maybe(t.String),
 
     // eligibility fields
-    filters: t.maybe(t.String),
+    filters: t.maybe(t.Array),
     documentType: t.maybe(t.String),
     questionType: t.maybe(t.String),
     generalFocus: t.maybe(t.Boolean),
 
     // appraisal fields
     rating: t.maybe(t.String), // related
-    questions: t.maybe(t.Object),
+    questions: t.maybe(t.Array),
     amstarNumerator: t.maybe(t.String),
     amstarDenominator: t.maybe(t.String),
     noFreeFullText: t.maybe(t.Boolean),
@@ -80,6 +80,8 @@ const Article = t.struct(
     abstracts: t.maybe(t.Object), // {{"PubMed", ""}, {"Cochrane Library", ""}, ...}
     summaries: t.maybe(t.Object), // {{"Australasian Cochrane Centre Policy Liaison Initiative", ""}, {"Cochrane Library", ""}, ...}
 
+    deletedReason: t.maybe(t.String),
+
     year: t.maybe(t.String),
     date: t.maybe(t.String),
     typeOfArticle: t.maybe(t.String),
@@ -124,6 +126,9 @@ const Article = t.struct(
         prioritizing: { status: "New Article" },
         translations: { status: "New Article" },
       },
+      filters: [],
+      questions: [],
+      countryLinks: {},
     },
   }
 );

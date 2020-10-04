@@ -1,20 +1,27 @@
+import _ from 'lodash';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Select from 'react-select';
-import withAuth from '../withAuth';
-import ErrorMessage from '../../components/atoms/ErrorMessage';
-import ArticleService from '../../services/ArticleService';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { toast } from 'react-toastify';
+import withAuth from '../withAuth';
+
+import validate from './validate';
 import { hse, sse } from '../Eligibility/data';
 import { abstracts, summaries } from './data/';
+
+import ArticleService from '../../services/ArticleService';
 import EditLinkTable from '../../components/atoms/EditLinkTable';
 import EligibilityService from '../../services/EligibilityService';
 import TreeView from '../../components/molecules/TreeView';
 import CountryLinks from '../../components/molecules/CountryLinks';
-import _ from 'lodash';
+import ErrorMessage from '../../components/atoms/ErrorMessage';
+
+import 'react-toastify/dist/ReactToastify.min.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const STATUSES = [
+  { value: 'New Article', label: 'New Article' },
   { value: 'Data Entry Complete', label: 'Data Entry Complete' },
   { value: 'Live', label: 'Live' },
   { value: 'Deleted', label: 'Deleted' },
@@ -83,6 +90,7 @@ class PresentationForm extends React.Component {
       type === 'hse' ? hse.questionTypes : sse.questionTypes || [];
 
     this.state = {
+      type,
       loaded: false,
       article: null,
     };
@@ -106,8 +114,8 @@ class PresentationForm extends React.Component {
         const article = res.data;
         this.setState({
           article,
-          filtersArray: article.filters,
-          initialLinks: article.countryLinks,
+          filtersArray: article.filters || [],
+          initialLinks: article.countryLinks || {},
           loaded: true,
         });
       }
@@ -153,17 +161,58 @@ class PresentationForm extends React.Component {
   }
 
   handleLinkChange = (countryLinks) => {
-    this.setState({ countryLinks });
+    this.handleChange('countryLinks', countryLinks);
   };
 
   handleTreeChange(selectedItems) {
-    this.setState({ filters: selectedItems });
+    let filters = [];
+    Object.keys(selectedItems).forEach((key) => {
+      selectedItems[key].forEach((k) => {
+        filters.push(k);
+      });
+    });
+    this.handleChange('filters', filters);
   }
 
   handleSave = (e) => {
     e.preventDefault();
-    console.log(this.state);
+    const { type, article } = this.state;
+
+    const formData = this.cleanData({
+      ...article,
+    });
+
+    console.log(formData);
+
+    validate(formData)
+      .then(() => {
+        this.setState({ valid: true, errors: {} });
+
+        this.Article.create(formData)
+          .then((res) => {
+            this.props.history.replace(`/${type}/presentation`);
+            this.notifyDone();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((errors) => this.setState({ errors, valid: false }));
   };
+
+  cleanData(article) {
+    const fieldsToOmit = [
+      'stages',
+      'batchId',
+      'batchName',
+      'shortId',
+      'lost',
+      'published',
+    ];
+    return _.omit(article, fieldsToOmit);
+  }
+
+  notifyDone = () => toast.success('Presentation details successfully saved!');
 
   render() {
     const { article, loaded, errors } = this.state;
@@ -666,13 +715,9 @@ class PresentationForm extends React.Component {
             <fieldset>
               <legend>Article Status</legend>
               <Select
-                value={STATUSES.filter(
-                  (opt) => opt.value === this.state.status
-                )}
+                value={STATUSES.filter((opt) => opt.value === article.status)}
                 name="status"
-                onChange={(opt) =>
-                  this.handleChange('selectedStatus', opt.value)
-                }
+                onChange={(opt) => this.handleChange('status', opt.value)}
                 options={STATUSES}
                 isSearchable
               />
