@@ -104,20 +104,10 @@ class PresentationForm extends React.Component {
     this.Article.get(shortId).then((res) => {
       if (res.data != null) {
         const article = res.data;
-        const filtersArray = _.get(
-          article.stages.eligibility,
-          'data.filters',
-          []
-        );
-        const initialLinks = _.get(
-          article.stages.studies,
-          'data.countryLinks',
-          {}
-        );
         this.setState({
           article,
-          filtersArray,
-          initialLinks,
+          filtersArray: article.filters,
+          initialLinks: article.countryLinks,
           loaded: true,
         });
       }
@@ -131,10 +121,6 @@ class PresentationForm extends React.Component {
         [field]: value,
       },
     });
-  };
-
-  handleDocumentType = (docType) => {
-    this.handleChange('selectedDocumentType', docType);
   };
 
   handleTextChange = (e) => {
