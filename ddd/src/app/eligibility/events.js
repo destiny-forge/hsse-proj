@@ -1,5 +1,6 @@
 const Stage = require("../article/stage");
 const Diff = require("./compare");
+const ObjectID = require("mongodb").ObjectID;
 
 /**
  * Eligibility related event handlers
@@ -23,13 +24,14 @@ module.exports = ({ events, eligibilityRepository, articleRepository }) => {
         status = conflicts.length > 0 ? "Conflicted" : "Complete";
 
         if (status === "Complete") {
-          // @TODO: What other fields should we update on the
-          // original article so that we don't have to update
-          // it within the stages section anymore once it's been
-          // completed and validated?????
+          const { _id, documentType, questionType, filters } = first;
           articleRepository.update(articleId, {
-            "stages.eligibility.data": first,
-            documentType: first.documentType,
+            "stages.eligibility._id": new ObjectID(_id),
+            documentType,
+            questionType,
+            generalFocus,
+            filters,
+            //relevant?
           });
         }
 

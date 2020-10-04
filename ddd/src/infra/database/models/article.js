@@ -338,7 +338,7 @@ module.exports = ({ database }) => {
       { status: { $exists: false } },
       {
         $set: {
-          status: "created",
+          status: "New Article",
         },
       },
       { multi: true }

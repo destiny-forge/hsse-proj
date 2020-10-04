@@ -1,4 +1,5 @@
 const Stage = require("../article/stage");
+const ObjectID = require("mongodb").ObjectID;
 
 /**
  * Study related event handlers
@@ -13,14 +14,27 @@ module.exports = ({ events, studyRepository, articleRepository }) => {
 
     if (study.status === "Data Entry Complete") {
       status = "Complete";
-      // @TODO: What other fields should we update on the
-      // original article so that we don't have to update
-      // it within the stages section anymore once it's been
-      // completed and validated?????
+
       try {
+        const {
+          _id,
+          complicated,
+          countriesNotReported,
+          countryNotFocus,
+          countryLinks,
+          notInEnglish,
+          noFreeFullText,
+          largeReview,
+        } = study;
         await articleRepository.update(articleId, {
-          "stages.studies.data": study,
-          complicated: study.complicated,
+          "stages.studies._id": new ObjectID(_id),
+          complicated,
+          countriesNotReported,
+          countryNotFocus,
+          countryLinks,
+          notInEnglish,
+          noFreeFullText,
+          largeReview,
         });
       } catch (err) {
         console.log(err);

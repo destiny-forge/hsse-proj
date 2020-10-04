@@ -46,7 +46,7 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
         article.batchName = batch.name;
         article.published = new Date(batch.uploaded);
         article.harvested = new Date(batch.harvested);
-        article.status = "created";
+        article.status = "New Article";
         article.shortId = shortids[index];
 
         let entity =

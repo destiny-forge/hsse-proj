@@ -1,5 +1,6 @@
 const Stage = require("../article/stage");
 const Diff = require("./compare");
+const ObjectID = require("mongodb").ObjectID;
 
 /**
  * Appraisal related event handlers
@@ -20,9 +21,23 @@ module.exports = ({ events, appraisalRepository, articleRepository }) => {
         status = conflicts.length > 0 ? "Conflicted" : "Complete";
 
         if (status === "Complete") {
+          const {
+            _id,
+            questions,
+            complicated,
+            amstarNumerator,
+            amstarDenominator,
+            notInEnglish,
+            noFreeFullText,
+          } = first;
           articleRepository.update(articleId, {
-            "stages.appraisals.data": first,
-            complicated: first.complicated,
+            "stages.appraisals._id": new ObjectID(_id),
+            questions,
+            complicated,
+            amstarNumerator,
+            amstarDenominator,
+            notInEnglish,
+            noFreeFullText,
           });
         }
         stage.updateStatus(articleId, "appraisals", status);

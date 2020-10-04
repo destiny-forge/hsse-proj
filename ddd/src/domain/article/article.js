@@ -10,30 +10,41 @@ const Article = t.struct(
     batchId: t.maybe(t.Object),
     batchName: t.maybe(t.String),
     shortId: t.maybe(t.String),
-
-    source: t.String,
     type: t.String,
 
+    source: t.String,
     language: t.String,
-    complicated: t.Boolean,
     lost: t.Boolean,
-
     published: t.Date,
     harvested: t.maybe(t.Date),
-
-    //refMan fields
-    referenceType: t.maybe(t.String),
-
-    // these come from eligibility stage
-    // so need to read from the stage data
-    // or copied onto thearticle object
-    documentType: t.maybe(t.String),
-    questionType: t.maybe(t.String),
 
     title: t.String,
     journal: t.String,
     authors: t.String,
 
+    stages: t.maybe(t.Object),
+    status: t.maybe(t.String),
+
+    // eligibility fields
+    filters: t.maybe(t.String),
+    documentType: t.maybe(t.String),
+    questionType: t.maybe(t.String),
+    generalFocus: t.maybe(t.Boolean),
+
+    // appraisal fields
+    rating: t.maybe(t.String), // related
+    questions: t.maybe(t.Object),
+    amstarNumerator: t.maybe(t.String),
+    amstarDenominator: t.maybe(t.String),
+    noFreeFullText: t.maybe(t.Boolean),
+    notInEnglish: t.maybe(t.Boolean),
+    complicated: t.Boolean,
+
+    // studies fields
+    countryLinks: t.maybe(t.Object),
+
+    // Presentation fields
+    referenceType: t.maybe(t.String),
     authorAddress: t.maybe(t.String),
     ePubDate: t.maybe(t.String),
 
@@ -54,11 +65,6 @@ const Article = t.struct(
 
     DOI: t.maybe(t.String),
 
-    rating: t.maybe(t.String),
-    // Need to come from appraisal stage
-    amstarNumerator: t.maybe(t.String),
-    amstarDenominator: t.maybe(t.String),
-
     meshTerms: t.maybe(t.String),
     lastLitSearch: t.maybe(t.String),
     isCochrane: t.maybe(t.Boolean),
@@ -66,7 +72,6 @@ const Article = t.struct(
     cochraneYear: t.maybe(t.Integer),
 
     isEpocReview: t.maybe(t.Boolean),
-    isGeneral: t.maybe(t.Boolean), // is this from the eligibility filter - generalFocus?
     isHotDocs: t.maybe(t.Boolean),
 
     pdfTexts: t.maybe(t.Object), // {"en": "S3 file upload url"}
@@ -74,9 +79,6 @@ const Article = t.struct(
 
     abstracts: t.maybe(t.Object), // {{"PubMed", ""}, {"Cochrane Library", ""}, ...}
     summaries: t.maybe(t.Object), // {{"Australasian Cochrane Centre Policy Liaison Initiative", ""}, {"Cochrane Library", ""}, ...}
-
-    //countries: t.maybe(t.Object), // comes from studies stage
-    //filters: t.maybe(t.String)    // comes from eligibility filters stage
 
     year: t.maybe(t.String),
     date: t.maybe(t.String),
@@ -107,9 +109,6 @@ const Article = t.struct(
     translatedTitle: t.maybe(t.String),
     nameOfDatabase: t.maybe(t.String),
     databaseProvider: t.maybe(t.String),
-
-    stages: t.maybe(t.Object),
-    status: t.maybe(t.String),
   },
   {
     defaultProps: {
@@ -117,7 +116,7 @@ const Article = t.struct(
       language: "English",
       complicated: false,
       lost: false,
-      status: "created",
+      status: "New Article",
       stages: {
         eligibility: { status: "New Article" },
         studies: { status: "New Article" },
