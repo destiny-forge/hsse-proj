@@ -27,6 +27,7 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
       // Create batch
       batch.uploaded = new Date();
       batch.harvested = new Date(batch.harvested);
+      batch.shortId = shortid.generate();
 
       const entity = Batch(batch);
       const newBatch = await batchRepository.create(entity);
@@ -46,11 +47,10 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
         article.published = new Date(batch.uploaded);
         article.harvested = new Date(batch.harvested);
         article.status = "created";
+        article.shortId = shortids[index];
 
         let entity =
           batch.type === "sse" ? sseArticle(article) : hseArticle(article);
-
-        entity.shortId = shortids[index];
 
         return await articleRepository.create(entity);
       });

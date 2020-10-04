@@ -1,6 +1,6 @@
 const { hseFilter, sseFilter } = require("src/domain/eligibility");
 const ObjectID = require("mongodb").ObjectID;
-
+const shortid = require("shortid");
 /**
  * Eligibility filter creation
  */
@@ -39,6 +39,7 @@ module.exports = ({ eligibilityRepository, events }) => {
 
         eligibility.articleId = new ObjectID(eligibility.articleId);
         eligibility.userId = new ObjectID(eligibility.userId);
+        eligibility.shortId = shortid.generate();
 
         const entity =
           eligibility.type === "sse"

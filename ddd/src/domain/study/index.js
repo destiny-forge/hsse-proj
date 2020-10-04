@@ -1,7 +1,6 @@
 const t = require("tcomb");
 const { compose } = require("ramda");
 const { cleanData, cleanMongoId } = require("../helper");
-const shortid = require("shortid");
 
 /*
 countryLinks:  {
@@ -20,7 +19,7 @@ countryLinks:  {
 const Study = t.struct(
   {
     _id: t.maybe(t.String),
-    shortId: t.String,
+    shortId: t.maybe(t.String),
     articleId: t.Object,
     userId: t.Object,
     type: t.String,
@@ -38,7 +37,6 @@ const Study = t.struct(
   },
   {
     defaultProps: {
-      shortId: shortid.generate(),
       status: "In progress",
       notInEnglish: false,
       noFreeFullText: false,

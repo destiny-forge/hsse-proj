@@ -1,6 +1,7 @@
 const { hseArticle, sseArticle } = require("src/domain/article");
 const Batch = require("src/domain/batch");
 const ObjectID = require("mongodb").ObjectID;
+const shortid = require("shortid");
 
 /**
  * Article creation
@@ -31,12 +32,14 @@ module.exports = ({ articleRepository, batchRepository }) => {
       language: article.language,
       uploaded: new Date(),
       harvested: new Date(),
+      shortId: shortid.generate(),
     };
 
     const newBatch = await batchRepository.create(Batch(batch));
 
     article.batchId = new ObjectID(newBatch._id);
     article.batchName = article.title;
+    article.shortId = shortid.generate();
 
     article.published = article.published
       ? new Date(article.published, 1, 1)

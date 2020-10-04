@@ -1,5 +1,4 @@
 const t = require("tcomb");
-const shortid = require("shortid");
 
 /* Not to be instantiated directly, used as the base Article
  * for all the shared fields between the HSEArticle and SSEArticle
@@ -10,7 +9,7 @@ const Article = t.struct(
     legacyId: t.maybe(t.String),
     batchId: t.maybe(t.Object),
     batchName: t.maybe(t.String),
-    shortId: t.String,
+    shortId: t.maybe(t.String),
 
     title: t.String,
     journal: t.String,
@@ -70,7 +69,6 @@ const Article = t.struct(
   },
   {
     defaultProps: {
-      shortId: shortid.generate(),
       source: "Single article from referrals",
       language: "English",
       complicated: false,
