@@ -332,7 +332,7 @@ module.exports = ({ database }) => {
           },
         },
       },
-      { multi: true, upsert: true }
+      { multi: true }
     );
     collection.updateMany(
       { status: { $exists: false } },
@@ -341,7 +341,7 @@ module.exports = ({ database }) => {
           status: "created",
         },
       },
-      { multi: true, upsert: true }
+      { multi: true }
     );
     collection.updateMany(
       { batchName: { $exists: false } },
@@ -350,7 +350,7 @@ module.exports = ({ database }) => {
           batchName: "",
         },
       },
-      { multi: true, upsert: true }
+      { multi: true }
     );
   };
 
