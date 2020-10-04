@@ -1,6 +1,6 @@
 const Study = require("src/domain/study");
 const ObjectID = require("mongodb").ObjectID;
-
+const shortid = require("shortid");
 /**
  * Linking study creation
  */
@@ -28,6 +28,7 @@ module.exports = ({ studyRepository, events }) => {
         delete study._id;
         result = await studyRepository.update(_id, study);
       } else {
+        study.shortId = shortid.generate();
         const entity = Study(study);
         result = await studyRepository.create(entity);
       }
