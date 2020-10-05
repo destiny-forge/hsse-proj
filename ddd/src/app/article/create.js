@@ -54,7 +54,6 @@ module.exports = ({ articleRepository, batchRepository }) => {
 
   const updateArticle = async (article) => {
     const entity = cleanArticle(article);
-    console.log(entity);
     return await articleRepository.update(article._id, entity);
   };
 

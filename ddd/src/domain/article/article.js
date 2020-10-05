@@ -24,6 +24,7 @@ const Article = t.struct(
 
     stages: t.maybe(t.Object),
     status: t.maybe(t.String),
+    deletedReason: t.maybe(t.String),
 
     // eligibility fields
     filters: t.maybe(t.Array),
@@ -34,8 +35,8 @@ const Article = t.struct(
     // appraisal fields
     rating: t.maybe(t.String), // related
     questions: t.maybe(t.Array),
-    amstarNumerator: t.maybe(t.String),
-    amstarDenominator: t.maybe(t.String),
+    amstarNumerator: t.maybe(t.Number),
+    amstarDenominator: t.maybe(t.Number),
     noFreeFullText: t.maybe(t.Boolean),
     notInEnglish: t.maybe(t.Boolean),
     complicated: t.Boolean,
@@ -53,11 +54,11 @@ const Article = t.struct(
     keywords: t.maybe(t.String),
     customKeywords: t.maybe(t.String),
 
-    volume: t.maybe(t.String),
-    issue: t.maybe(t.String),
-    pages: t.maybe(t.String),
-    startPage: t.maybe(t.String),
-    endPage: t.maybe(t.String),
+    volume: t.maybe(t.Number),
+    issue: t.maybe(t.Number),
+    pages: t.maybe(t.Number),
+    startPage: t.maybe(t.Number),
+    endPage: t.maybe(t.Number),
     editors: t.maybe(t.String),
 
     pubPlace: t.maybe(t.String),
@@ -68,8 +69,8 @@ const Article = t.struct(
     meshTerms: t.maybe(t.String),
     lastLitSearch: t.maybe(t.String),
     isCochrane: t.maybe(t.Boolean),
-    cochraneIssue: t.maybe(t.String),
-    cochraneYear: t.maybe(t.Integer),
+    cochraneIssue: t.maybe(t.Number),
+    cochraneYear: t.maybe(t.Number),
 
     isEpocReview: t.maybe(t.Boolean),
     isHotDocs: t.maybe(t.Boolean),

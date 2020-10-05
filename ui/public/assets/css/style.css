@@ -129,3 +129,7 @@ label {
 .clickable {
   cursor: pointer;
 }
+
+.sub-form-group {
+  margin-top: 1rem;
+}

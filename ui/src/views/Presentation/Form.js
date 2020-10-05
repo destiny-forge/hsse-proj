@@ -65,14 +65,14 @@ const AMSTAR_DENOMINATORS = [...Array(8)].map((_, i) => {
 });
 
 const ISSUES = [...Array(11)].map((_, i) => {
-  const text = `Issue ${i}`;
-  return { label: text, value: text };
+  const text = `Issue ${i + 1}`;
+  return { label: text, value: i + 1 };
 });
 
 const currentYear = new Date().getFullYear();
 const ISSUE_YEARS = [...Array(currentYear - 1995)].map((_, i) => {
   const year = `${currentYear - i}`;
-  return { label: year, value: year };
+  return { label: year, value: parseInt(year) };
 });
 
 const languages = { en: '', fr: '' };
@@ -314,6 +314,7 @@ class PresentationForm extends React.Component {
                   <textarea
                     className="form-control"
                     rows="5"
+                    name="title"
                     onChange={this.handleTextChange}
                     value={article.title}
                   />
@@ -325,6 +326,7 @@ class PresentationForm extends React.Component {
                   <textarea
                     className="form-control"
                     rows="5"
+                    name="authors"
                     onChange={this.handleTextChange}
                     value={article.authors}
                   />
@@ -334,7 +336,8 @@ class PresentationForm extends React.Component {
                 <label className="col-sm-2 col-form-label">Author Email</label>
                 <div className="col-sm-10">
                   <input
-                    name="authorEmail"
+                    type="email"
+                    name="authorAddress"
                     className="form-control"
                     value={article.authorAddress}
                     onChange={this.handleTextChange}
@@ -345,9 +348,9 @@ class PresentationForm extends React.Component {
                 <label className="col-sm-2 col-form-label">Pub Date</label>
                 <div className="col-sm-10">
                   <input
-                    name="pubDate"
+                    name="ePubDate"
                     className="form-control"
-                    text={article.ePubDate}
+                    value={article.ePubDate}
                     onChange={this.handleTextChange}
                   />
                 </div>
@@ -512,45 +515,56 @@ class PresentationForm extends React.Component {
               </div>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">AMSTAR</label>
-                <div className="col-sm-10">
+                <div className="col-sm-3">
                   <div>
                     <Select
                       value={AMSTAR_SOURCES.filter(
-                        (opt) => opt.value === article.amstarSource
+                        (opt) => opt.value === article.rating
                       )}
-                      name="amstarSource"
-                      onChange={() => {}}
+                      name="rating"
+                      placeholder="Select Rating Source"
+                      onChange={(opt) => this.handleChange('rating', opt.value)}
                       options={AMSTAR_SOURCES}
                       isSearchable
                       isRequired
                     />
                   </div>
-                  <div>
-                    Score:{' '}
-                    <Select
-                      value={AMSTAR_NUMERATORS.filter(
-                        (opt) => opt.value === article.amstarNumerator
-                      )}
-                      name="amstarNumerator"
-                      onChange={() => {}}
-                      options={AMSTAR_NUMERATORS}
-                      isSearchable
-                      isRequired
-                    />{' '}
-                    of{' '}
-                    <Select
-                      value={AMSTAR_DENOMINATORS.filter(
-                        (opt) => opt.value === article.amstarDenominator
-                      )}
-                      name="amstarDenominator"
-                      onChange={() => {}}
-                      options={AMSTAR_DENOMINATORS}
-                      isSearchable
-                      isRequired
-                    />
-                  </div>
+                </div>
+
+                <label className="col-sm-1 col-form-label">Score: </label>
+                <div className="col-sm-2">
+                  <Select
+                    value={AMSTAR_NUMERATORS.filter(
+                      (opt) => opt.value === article.amstarNumerator
+                    )}
+                    name="amstarNumerator"
+                    placeholder="Select Numerator"
+                    onChange={(opt) =>
+                      this.handleChange('amstarNumerator', opt.value)
+                    }
+                    options={AMSTAR_NUMERATORS}
+                    isSearchable
+                    isRequired
+                  />
+                </div>
+                <label className="col-sm-1 col-form-label">of </label>
+                <div className="col-sm-2">
+                  <Select
+                    value={AMSTAR_DENOMINATORS.filter(
+                      (opt) => opt.value === article.amstarDenominator
+                    )}
+                    name="amstarDenominator"
+                    placeholder="Select Denominator"
+                    onChange={(opt) =>
+                      this.handleChange('amstarDenominator', opt.value)
+                    }
+                    options={AMSTAR_DENOMINATORS}
+                    isSearchable
+                    isRequired
+                  />
                 </div>
               </div>
+
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">MeSH Terms</label>
                 <div className="col-sm-10">
@@ -567,7 +581,7 @@ class PresentationForm extends React.Component {
                 <label className="col-sm-2 col-form-label">
                   Last Lit Search
                 </label>
-                <div className="col-sm-10">
+                <div className="col-sm-4">
                   <DatePicker
                     className="form-control"
                     name="lastLitDate"
@@ -585,31 +599,45 @@ class PresentationForm extends React.Component {
                       checked={article.isCochrane}
                       type="checkbox"
                       className="form-check-input"
-                      name="cochrane"
+                      name="isCochrane"
                       onChange={this.handleCheckbox}
                     />{' '}
                     Cochrane
                   </label>
-                  <Select
-                    value={ISSUES.filter(
-                      (opt) => opt.value === article.cochraneIssue
-                    )}
-                    name="cochraneIssue"
-                    onChange={() => {}}
-                    options={ISSUES}
-                    isSearchable
-                    isRequired
-                  />{' '}
-                  <Select
-                    value={ISSUE_YEARS.filter(
-                      (opt) => opt.value === article.cochraneYear
-                    )}
-                    name="cochraneYear"
-                    onChange={() => {}}
-                    options={ISSUE_YEARS}
-                    isSearchable
-                    isRequired
-                  />
+                  <div className="form-group row sub-form-group">
+                    <div className="col-sm-3">
+                      <Select
+                        value={ISSUES.filter(
+                          (opt) => opt.value === article.cochraneIssue
+                        )}
+                        name="cochraneIssue"
+                        placeholder="Select Issue"
+                        onChange={(opt) =>
+                          this.handleChange('cochraneIssue', opt.value)
+                        }
+                        options={ISSUES}
+                        isSearchable
+                        isRequired
+                        isDisabled={!article.isCochrane}
+                      />
+                    </div>
+                    <div className="col-sm-3">
+                      <Select
+                        value={ISSUE_YEARS.filter(
+                          (opt) => opt.value === article.cochraneYear
+                        )}
+                        name="cochraneYear"
+                        placeholder="Select Year"
+                        onChange={(opt) =>
+                          this.handleChange('cochraneYear', opt.value)
+                        }
+                        options={ISSUE_YEARS}
+                        isSearchable
+                        isRequired
+                        isDisabled={!article.isCochrane}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="form-group row">
@@ -620,7 +648,7 @@ class PresentationForm extends React.Component {
                       checked={article.isEpocReview}
                       type="checkbox"
                       className="form-check-input"
-                      name="epocReview"
+                      name="isEpocReview"
                       onChange={this.handleCheckbox}
                     />{' '}
                     EPOC Review
@@ -651,7 +679,7 @@ class PresentationForm extends React.Component {
                       checked={article.isHotDocs}
                       type="checkbox"
                       className="form-check-input"
-                      name="hotDoc"
+                      name="isHotDocs"
                       onChange={this.handleCheckbox}
                     />{' '}
                     Check this box if this record is a 'hot doc'
@@ -714,26 +742,47 @@ class PresentationForm extends React.Component {
             </fieldset>
             <fieldset>
               <legend>Article Status</legend>
-              <Select
-                value={STATUSES.filter((opt) => opt.value === article.status)}
-                name="status"
-                onChange={(opt) => this.handleChange('status', opt.value)}
-                options={STATUSES}
-                isSearchable
-              />
-              New article = New, still having content added, not visible in
-              searches Data entry complete = All required content has been
-              added, still not visible in searches Live = Available for
-              searching/alerting Deleted = Removed from the system, not visible
-              in searches
-              <div>
-                If an article is deleted, please enter the reason for removal
-                (in case its removal is questioned later):
-                <textarea
-                  name="deletedReason"
-                  className="form-control"
-                  rows="5"
-                />
+              <div className="form-group row">
+                <div className="col-sm-6">
+                  <Select
+                    value={STATUSES.filter(
+                      (opt) => opt.value === article.status
+                    )}
+                    name="status"
+                    onChange={(opt) => this.handleChange('status', opt.value)}
+                    options={STATUSES}
+                    isSearchable
+                  />
+                  <br />
+                  <div>
+                    If an article is deleted, please enter the reason for
+                    removal (in case its removal is questioned later):
+                    <textarea
+                      name="deletedReason"
+                      value={article.deletedReason}
+                      className="form-control"
+                      rows="5"
+                      onChange={this.handleTextChange}
+                      disabled={article.status !== 'Deleted'}
+                    />
+                  </div>
+                </div>
+                <div className="col-sm-6">
+                  <ul>
+                    <li>
+                      <b>New article</b> - New, still having content added, not
+                      visible in searches
+                    </li>
+                    <li>
+                      <b>Data entry complete</b> - All required content has been
+                      added, still not visible in searches
+                    </li>
+                    <li>
+                      <b>Live</b> - Available for searching/alerting Deleted =
+                      Removed from the system, not visible in searches
+                    </li>
+                  </ul>
+                </div>
               </div>
             </fieldset>
             <button
