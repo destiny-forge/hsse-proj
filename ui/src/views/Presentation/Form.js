@@ -397,39 +397,44 @@ class PresentationForm extends React.Component {
                   />
                 </div>
               </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Journal</label>
-                <div className="col-sm-10">
-                  <input
-                    name="journal"
-                    className="form-control"
-                    value={article.journal}
-                    onChange={this.handleTextChange}
-                  />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Volume</label>
-                <div className="col-sm-10">
-                  <input
-                    name="volume"
-                    className="form-control"
-                    value={article.volume}
-                    onChange={this.handleTextChange}
-                  />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Issue</label>
-                <div className="col-sm-10">
-                  <input
-                    name="issue"
-                    className="form-control"
-                    value={article.issue}
-                    onChange={this.handleTextChange}
-                  />
-                </div>
-              </div>
+              {article.referenceType === 'Journal' && (
+                <React.Fragment>
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">Journal</label>
+                    <div className="col-sm-10">
+                      <input
+                        name="journal"
+                        className="form-control"
+                        value={article.journal}
+                        onChange={this.handleTextChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">Volume</label>
+                    <div className="col-sm-10">
+                      <input
+                        name="volume"
+                        className="form-control"
+                        value={article.volume}
+                        onChange={this.handleTextChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">Issue</label>
+                    <div className="col-sm-10">
+                      <input
+                        name="issue"
+                        className="form-control"
+                        value={article.issue}
+                        onChange={this.handleTextChange}
+                      />
+                    </div>
+                  </div>
+                </React.Fragment>
+              )}
+
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Start Page</label>
                 <div className="col-sm-10">
@@ -454,40 +459,44 @@ class PresentationForm extends React.Component {
                   />
                 </div>
               </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Editors</label>
-                <div className="col-sm-10">
-                  <textarea
-                    name="editors"
-                    className="form-control"
-                    rows="5"
-                    onChange={this.handleTextChange}
-                    value={article.editors}
-                  />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Pub Place</label>
-                <div className="col-sm-10">
-                  <input
-                    name="pubPlace"
-                    className="form-control"
-                    value={article.pubPlace}
-                    onChange={this.handleTextChange}
-                  />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Publisher</label>
-                <div className="col-sm-10">
-                  <input
-                    name="publisher"
-                    className="form-control"
-                    value={article.publisher}
-                    onChange={this.handleTextChange}
-                  />
-                </div>
-              </div>
+              {article.referenceType === 'Book (Chapter)' && (
+                <React.Fragment>
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">Editors</label>
+                    <div className="col-sm-10">
+                      <textarea
+                        name="editors"
+                        className="form-control"
+                        rows="5"
+                        onChange={this.handleTextChange}
+                        value={article.editors}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">Pub Place</label>
+                    <div className="col-sm-10">
+                      <input
+                        name="pubPlace"
+                        className="form-control"
+                        value={article.pubPlace}
+                        onChange={this.handleTextChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">Publisher</label>
+                    <div className="col-sm-10">
+                      <input
+                        name="publisher"
+                        className="form-control"
+                        value={article.publisher}
+                        onChange={this.handleTextChange}
+                      />
+                    </div>
+                  </div>
+                </React.Fragment>
+              )}
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Abstract</label>
                 <div className="col-sm-10">
@@ -500,95 +509,158 @@ class PresentationForm extends React.Component {
                   />
                 </div>
               </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">
-                  Unique ID (DOI)
-                </label>
-                <div className="col-sm-10">
-                  <input
-                    name="DOI"
-                    className="form-control"
-                    value={article.DOI}
-                    onChange={this.handleTextChange}
-                  />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">AMSTAR</label>
-                <div className="col-sm-3">
-                  <div>
-                    <Select
-                      value={AMSTAR_SOURCES.filter(
-                        (opt) => opt.value === article.rating
-                      )}
-                      name="rating"
-                      placeholder="Select Rating Source"
-                      onChange={(opt) => this.handleChange('rating', opt.value)}
-                      options={AMSTAR_SOURCES}
-                      isSearchable
-                      isRequired
-                    />
+
+              {article.documentType !== 'Systematic reviews being planned' && (
+                <React.Fragment>
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">
+                      Unique ID (DOI)
+                    </label>
+                    <div className="col-sm-10">
+                      <input
+                        name="DOI"
+                        className="form-control"
+                        value={article.DOI}
+                        onChange={this.handleTextChange}
+                      />
+                    </div>
                   </div>
-                </div>
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">
+                      MeSH Terms
+                    </label>
+                    <div className="col-sm-10">
+                      <textarea
+                        name="meshTerms"
+                        className="form-control"
+                        rows="5"
+                        onChange={this.handleTextChange}
+                        value={article.meshTerms}
+                      />
+                    </div>
+                  </div>
+                </React.Fragment>
+              )}
 
-                <label className="col-sm-1 col-form-label">Score: </label>
-                <div className="col-sm-2">
-                  <Select
-                    value={AMSTAR_NUMERATORS.filter(
-                      (opt) => opt.value === article.amstarNumerator
-                    )}
-                    name="amstarNumerator"
-                    placeholder="Select Numerator"
-                    onChange={(opt) =>
-                      this.handleChange('amstarNumerator', opt.value)
-                    }
-                    options={AMSTAR_NUMERATORS}
-                    isSearchable
-                    isRequired
-                  />
-                </div>
-                <label className="col-sm-1 col-form-label">of </label>
-                <div className="col-sm-2">
-                  <Select
-                    value={AMSTAR_DENOMINATORS.filter(
-                      (opt) => opt.value === article.amstarDenominator
-                    )}
-                    name="amstarDenominator"
-                    placeholder="Select Denominator"
-                    onChange={(opt) =>
-                      this.handleChange('amstarDenominator', opt.value)
-                    }
-                    options={AMSTAR_DENOMINATORS}
-                    isSearchable
-                    isRequired
-                  />
-                </div>
-              </div>
+              {(article.documentType === 'Overviews of systematic reviews' ||
+                article.documentType === 'Systematic reviews of effects' ||
+                article.documentType ===
+                  'Systematic reviews addressing other questions') && (
+                <React.Fragment>
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">AMSTAR</label>
+                    <div className="col-sm-3">
+                      <div>
+                        <Select
+                          value={AMSTAR_SOURCES.filter(
+                            (opt) => opt.value === article.rating
+                          )}
+                          name="rating"
+                          placeholder="Select Rating Source"
+                          onChange={(opt) =>
+                            this.handleChange('rating', opt.value)
+                          }
+                          options={AMSTAR_SOURCES}
+                          isSearchable
+                          isRequired
+                        />
+                      </div>
+                    </div>
+
+                    <label className="col-sm-1 col-form-label">Score: </label>
+                    <div className="col-sm-2">
+                      <Select
+                        value={AMSTAR_NUMERATORS.filter(
+                          (opt) => opt.value === article.amstarNumerator
+                        )}
+                        name="amstarNumerator"
+                        placeholder="Select Numerator"
+                        onChange={(opt) =>
+                          this.handleChange('amstarNumerator', opt.value)
+                        }
+                        options={AMSTAR_NUMERATORS}
+                        isSearchable
+                        isRequired
+                      />
+                    </div>
+                    <label className="col-sm-1 col-form-label">of </label>
+                    <div className="col-sm-2">
+                      <Select
+                        value={AMSTAR_DENOMINATORS.filter(
+                          (opt) => opt.value === article.amstarDenominator
+                        )}
+                        name="amstarDenominator"
+                        placeholder="Select Denominator"
+                        onChange={(opt) =>
+                          this.handleChange('amstarDenominator', opt.value)
+                        }
+                        options={AMSTAR_DENOMINATORS}
+                        isSearchable
+                        isRequired
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">
+                      Last Lit Search
+                    </label>
+                    <div className="col-sm-4">
+                      <DatePicker
+                        className="form-control"
+                        name="lastLitDate"
+                        selected={this.state.lastLitDate}
+                        onChange={this.handleDatePicker}
+                        value={article.lastLitDate}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">Hot Docs?</label>
+                    <div className="col-sm-10">
+                      <label className="form-check-label">
+                        <input
+                          checked={article.isHotDocs}
+                          type="checkbox"
+                          className="form-check-input"
+                          name="isHotDocs"
+                          onChange={this.handleCheckbox}
+                        />{' '}
+                        Check this box if this record is a 'hot doc'
+                      </label>
+                    </div>
+                  </div>
+                </React.Fragment>
+              )}
 
               <div className="form-group row">
-                <label className="col-sm-2 col-form-label">MeSH Terms</label>
+                <label className="col-sm-2 col-form-label">EPOC Review?</label>
                 <div className="col-sm-10">
-                  <textarea
-                    name="meshTerms"
-                    className="form-control"
-                    rows="5"
-                    onChange={this.handleTextChange}
-                    value={article.meshTerms}
-                  />
+                  <label className="form-check-label">
+                    <input
+                      checked={article.isEpocReview}
+                      type="checkbox"
+                      className="form-check-input"
+                      name="isEpocReview"
+                      onChange={this.handleCheckbox}
+                    />{' '}
+                    EPOC Review
+                  </label>
                 </div>
               </div>
               <div className="form-group row">
-                <label className="col-sm-2 col-form-label">
-                  Last Lit Search
-                </label>
-                <div className="col-sm-4">
-                  <DatePicker
-                    className="form-control"
-                    name="lastLitDate"
-                    selected={this.state.lastLitDate}
-                    onChange={this.handleDatePicker}
-                    value={article.lastLitDate}
-                  />
+                <label className="col-sm-2 col-form-label">General</label>
+                <div className="col-sm-10">
+                  <label className="form-check-label">
+                    <input
+                      checked={article.generalFocus}
+                      type="checkbox"
+                      className="form-check-input"
+                      name="generalFocus"
+                      onChange={this.handleCheckbox}
+                    />{' '}
+                    Check this box if record should be marked as General (versus
+                    the default of Specific)
+                  </label>
                 </div>
               </div>
               <div className="form-group row">
@@ -640,86 +712,50 @@ class PresentationForm extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">EPOC Review?</label>
-                <div className="col-sm-10">
-                  <label className="form-check-label">
-                    <input
-                      checked={article.isEpocReview}
-                      type="checkbox"
-                      className="form-check-input"
-                      name="isEpocReview"
-                      onChange={this.handleCheckbox}
-                    />{' '}
-                    EPOC Review
-                  </label>
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">General</label>
-                <div className="col-sm-10">
-                  <label className="form-check-label">
-                    <input
-                      checked={article.generalFocus}
-                      type="checkbox"
-                      className="form-check-input"
-                      name="generalFocus"
-                      onChange={this.handleCheckbox}
-                    />{' '}
-                    Check this box if record should be marked as General (versus
-                    the default of Specific)
-                  </label>
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Hot Docs?</label>
-                <div className="col-sm-10">
-                  <label className="form-check-label">
-                    <input
-                      checked={article.isHotDocs}
-                      type="checkbox"
-                      className="form-check-input"
-                      name="isHotDocs"
-                      onChange={this.handleCheckbox}
-                    />{' '}
-                    Check this box if this record is a 'hot doc'
-                  </label>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset>
-              <legend>PDF Text</legend>
-              <div>
-                Note: Let's make this it's own component - also add
-                multi-language support
-              </div>
-              <div>Upload PDF [Choose File] No file chosen [Upload]</div>
-              <div>
-                PDF Text | The current PDF text is 147492 characters long
-              </div>
             </fieldset>
 
-            <EditLinkTable
-              title="Hyperlinks"
-              field="hyperlinks"
-              items={Object.assign(languages, article.hyperlinks)}
-              onUpdate={this.handleLinkUpdate}
-              isTestable={true}
-            />
+            {article.documentType !== 'Systematic reviews being planned' && (
+              <React.Fragment>
+                <fieldset>
+                  <legend>PDF Text</legend>
+                  <div>
+                    Note: Let's make this it's own component - also add
+                    multi-language support
+                  </div>
+                  <div>Upload PDF [Choose File] No file chosen [Upload]</div>
+                  <div>
+                    PDF Text | The current PDF text is 147492 characters long
+                  </div>
+                </fieldset>
 
-            <EditLinkTable
-              title="Scientific Abstracts"
-              field="abstracts"
-              items={Object.assign(abstracts, article.abstracts)}
-              onUpdate={this.handleLinkUpdate}
-            />
+                <EditLinkTable
+                  title="Hyperlinks"
+                  field="hyperlinks"
+                  items={Object.assign(languages, article.hyperlinks)}
+                  onUpdate={this.handleLinkUpdate}
+                  isTestable={true}
+                />
+              </React.Fragment>
+            )}
 
-            <EditLinkTable
-              title="User Friendly Summaries"
-              field="summaries"
-              items={Object.assign(summaries, article.summaries)}
-              onUpdate={this.handleLinkUpdate}
-            />
+            {article.documentType !== 'Systematic reviews being planned' &&
+              article.documentType !== 'Systematic reviews in progress' && (
+                <React.Fragment>
+                  <EditLinkTable
+                    title="Scientific Abstracts"
+                    field="abstracts"
+                    items={Object.assign(abstracts, article.abstracts)}
+                    onUpdate={this.handleLinkUpdate}
+                  />
+
+                  <EditLinkTable
+                    title="User Friendly Summaries"
+                    field="summaries"
+                    items={Object.assign(summaries, article.summaries)}
+                    onUpdate={this.handleLinkUpdate}
+                  />
+                </React.Fragment>
+              )}
 
             <fieldset>
               <legend>Countries / Included Studies</legend>

@@ -120,6 +120,7 @@ const Article = t.struct(
       complicated: false,
       lost: false,
       status: "New Article",
+      rating: "AMSTAR rating from McMaster Health Forum",
       stages: {
         eligibility: { status: "New Article" },
         studies: { status: "New Article" },
