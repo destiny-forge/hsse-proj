@@ -269,7 +269,7 @@ class EligibilityForm extends React.Component {
       userId: user.id,
       role: this.getAssignmentRole(user, article),
       type: type,
-      action: 'relevance',
+      action: 'coding',
       relevant: relevant,
       selectedStatus: !relevant ? 'Data Entry Complete' : 'In Progress',
       generalFocus: false,
