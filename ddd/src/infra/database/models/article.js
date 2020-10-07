@@ -177,12 +177,14 @@ module.exports = ({ database }) => {
         complete: "$complete",
         created: "$created",
         name: "$batchName",
+        remaining: { $subtract: ["$total", "$complete"] },
       },
     };
 
     const sort = { $sort: { "batch.uploaded": -1 } };
+    const exclude = { $match: { remaining: { $gt: 0 } } };
 
-    let aggregates = [lookup, match, group, project, sort];
+    let aggregates = [lookup, match, group, project, exclude, sort];
 
     if (docTypes) {
       const matchDocType = {
@@ -190,7 +192,16 @@ module.exports = ({ database }) => {
           documentType: { $in: docTypes },
         },
       };
-      aggregates = [match, lookup, unwind, matchDocType, group, project, sort];
+      aggregates = [
+        match,
+        lookup,
+        unwind,
+        matchDocType,
+        group,
+        project,
+        exclude,
+        sort,
+      ];
     }
 
     try {

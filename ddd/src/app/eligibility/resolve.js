@@ -39,7 +39,7 @@ module.exports = ({ articleRepository, eligibilityRepository }) => {
         documentType,
         questionType,
         generalFocus,
-        filters: finalFilters,
+        filters: source.filters,
         //relevant?
       });
     } catch (error) {

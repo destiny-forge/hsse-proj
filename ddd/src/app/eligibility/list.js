@@ -10,7 +10,12 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      return await articleRepository.aggregate(type, "eligibility", status);
+      let statuses = [status, "Complete"];
+      if (status === "In Progress") {
+        statuses.push("Conflicted");
+      }
+
+      return await articleRepository.aggregate(type, "eligibility", statuses);
     } catch (error) {
       throw new Error(error);
     }

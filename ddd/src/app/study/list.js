@@ -21,10 +21,12 @@ module.exports = ({ articleRepository }) => {
         { "stages.appraisals.status": "Complete" },
       ];
 
+      let statuses = [status, "Complete"];
+
       return await articleRepository.aggregate(
         type,
         "studies",
-        status,
+        statuses,
         docTypes,
         matches
       );
