@@ -75,6 +75,7 @@ class Conflicts extends React.Component {
       articleId: article._id,
       userId: user.id,
       type: type,
+      action: 'resolving',
       [field]: value,
     };
 

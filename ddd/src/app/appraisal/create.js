@@ -29,13 +29,16 @@ module.exports = ({ appraisalRepository, events }) => {
         const _id = appraisal._id;
         delete appraisal._id;
         result = await appraisalRepository.update(_id, appraisal);
+        if (appraisal.action === "coding") {
+          events.emit("article.appraisals.coded", appraisal.articleId);
+        }
       } else {
         appraisal.shortId = shortid.generate();
         const entity = Appraisal(appraisal);
         result = await appraisalRepository.create(entity);
+        events.emit("article.appraisals.coded", appraisal.articleId);
       }
 
-      events.emit("article.appraisals.coded", appraisal.articleId);
       return result;
     } catch (error) {
       throw new Error(error);
