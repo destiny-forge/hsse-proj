@@ -142,6 +142,7 @@ class AppraisalForm extends React.Component {
 
     let formData = {
       type: type,
+      action: 'coding',
       userId: user.id,
       articleId: article._id,
       shortArticleId: article.shortId,
@@ -152,8 +153,6 @@ class AppraisalForm extends React.Component {
       noFreeFullText,
       complicated: notInEnglish || noFreeFullText,
     };
-
-    console.log(formData);
 
     if (_id != null) {
       formData._id = _id;
