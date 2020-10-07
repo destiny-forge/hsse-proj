@@ -218,6 +218,7 @@ class EligibilityForm extends React.Component {
 
     let formData = {
       type: type,
+      action: 'coding',
       userId: user.id,
       articleId: article._id,
       shortArticleId: article.shortId,
@@ -268,6 +269,7 @@ class EligibilityForm extends React.Component {
       userId: user.id,
       role: this.getAssignmentRole(user, article),
       type: type,
+      action: 'relevance',
       relevant: relevant,
       selectedStatus: !relevant ? 'Data Entry Complete' : 'In Progress',
       generalFocus: false,

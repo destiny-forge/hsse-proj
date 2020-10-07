@@ -29,7 +29,10 @@ module.exports = ({ eligibilityRepository, events }) => {
         eligibility.userId = new ObjectID(eligibility.userId);
 
         const result = await eligibilityRepository.update(_id, eligibility);
-        events.emit("article.eligibility.coded", eligibility.articleId);
+
+        if (eligibility.action === "coding") {
+          events.emit("article.eligibility.coded", eligibility.articleId);
+        }
 
         return result;
       } else {
