@@ -10,11 +10,10 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import ArticleService from '../../services/ArticleService';
 import StudyService from '../../services/StudyService';
 import ErrorMessage from '../../components/atoms/ErrorMessage';
-import { countries } from './data/countries';
+
+import CountryLinks from '../../components/molecules/CountryLinks';
 
 import validate from './validate';
-import validateLink from './validateLink';
-import CountryCountFocus from '../../components/molecules/CountryCountFocus';
 
 const STATUSES = [
   { value: 'In Progress', label: 'In Progress' },
@@ -37,9 +36,6 @@ class StudyForm extends React.Component {
       largeReview: false,
       countriesNotReported: false,
       countryNotFocus: false,
-      country: 0,
-      count: '',
-      focus: false,
       countryLinks: {},
       errors: {},
     };
@@ -66,102 +62,6 @@ class StudyForm extends React.Component {
 
     this.setState({
       [name]: checked,
-    });
-  };
-
-  handleAddCountry = (e) => {
-    e.preventDefault();
-    const { country, count, focus, countryLinks } = this.state;
-    let { label, value } = _.find(countries, { value: country });
-
-    if (label in countryLinks) {
-      alert('Cannot add the same country twice');
-      return;
-    }
-
-    let updated = _.clone(countryLinks);
-    updated[label] = {
-      id: value,
-      count,
-      focus,
-      links: [],
-    };
-
-    this.setState({
-      countryLinks: updated,
-      country: 0,
-      focus: false,
-    });
-  };
-
-  handleToggleFocus = (key) => {
-    const { countryLinks } = this.state;
-    let updated = _.clone(countryLinks);
-    let entry = updated[key];
-    entry.focus = !entry.focus;
-    this.setState({ countryLinks: updated });
-  };
-
-  handleRemoveCountry = (key) => {
-    let confirmed = window.confirm(
-      'Are you sure you want to remove this country and links?'
-    );
-    if (!confirmed) {
-      return;
-    }
-    const { countryLinks } = this.state;
-    let updated = _.clone(countryLinks);
-    delete updated[key];
-    this.setState({ countryLinks: updated });
-  };
-
-  handleLinkEdit = (key, field, value) => {
-    const { countryLinks } = this.state;
-    const updated = _.clone(countryLinks);
-    const country = updated[key];
-    _.set(country, `link.${field}`, value);
-
-    validateLink(country.link)
-      .then(() => {
-        country.errors = {};
-        country.valid = true;
-        this.setState({ countryLinks: updated });
-      })
-      .catch((errors) => {
-        country.errors = errors;
-        country.valid = false;
-        this.setState({ countryLinks: updated });
-      });
-  };
-
-  handleLinkAdd = (key) => {
-    const { countryLinks } = this.state;
-    const updated = _.clone(countryLinks);
-    const country = updated[key];
-    const { name, url } = country.link;
-
-    country.links.push({ name, url });
-    country.link = {};
-    country.valid = false;
-
-    this.setState({
-      countryLinks: updated,
-    });
-  };
-
-  handleLinkRemove = (key, name) => {
-    let confirmed = window.confirm(
-      'Are you sure you want to remove this link?'
-    );
-    if (!confirmed) {
-      return;
-    }
-    const { countryLinks } = this.state;
-    const updated = _.clone(countryLinks);
-    const country = updated[key];
-    country.links = country.links.filter((link) => link.name !== name);
-    this.setState({
-      countryLinks: updated,
     });
   };
 
@@ -208,6 +108,10 @@ class StudyForm extends React.Component {
   }
 
   notifyDone = () => toast.success('Study saved successfully.');
+
+  handleLinkChange = (countryLinks) => {
+    this.setState({ countryLinks });
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -281,9 +185,6 @@ class StudyForm extends React.Component {
       largeReview,
       countriesNotReported,
       countryNotFocus,
-      country,
-      focus,
-      countryLinks,
       errors,
     } = this.state;
 
@@ -370,180 +271,10 @@ class StudyForm extends React.Component {
               </div>
             </fieldset>
 
-            <div className="box">
-              <div className="box-header d-flex">
-                <h3>Add Countries</h3>
-              </div>
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Country</th>
-                    <th>Count</th>
-                    <th>Is a focus</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td style={{ width: '40%' }}>
-                      <Select
-                        value={countries.filter((opt) => opt.value === country)}
-                        name="status"
-                        onChange={(opt) =>
-                          this.handleChange('country', opt.value)
-                        }
-                        options={countries}
-                        isSearchable
-                      />
-                    </td>
-                    <td style={{ width: '20%' }}>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="count"
-                        onChange={this.handleTextChange}
-                        placeholder="Enter count"
-                        required
-                      />
-                    </td>
-                    <td style={{ width: '20%' }}>
-                      <input
-                        checked={focus}
-                        type="checkbox"
-                        name="focus"
-                        onChange={this.handleCheckbox}
-                      />
-                    </td>
-                    <td style={{ width: '20%' }}>
-                      <button
-                        type="submit"
-                        onClick={this.handleAddCountry}
-                        className="btn primary"
-                        disabled={country.toString() === '0'}
-                      >
-                        Add Country
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            {Object.keys(countryLinks).map((key) => {
-              const country = countryLinks[key];
-              const showLinks = country.id > 0;
-              return (
-                <div className="box" key={key}>
-                  <div className="box-header primary">
-                    <h2>
-                      {key}
-                      <CountryCountFocus
-                        count={country.count}
-                        text="focus"
-                        disabled={!showLinks}
-                        checked={country.focus}
-                      />
-                    </h2>
-                  </div>
-                  <div className="box-tool">
-                    <ul className="nav nav-xs">
-                      <li className="nav-item dropdown">
-                        <div className="nav-link" data-toggle="dropdown">
-                          <i className="fa fa-fw fa-ellipsis-v"></i>
-                        </div>
-                        <div className="dropdown-menu dropdown-menu-right">
-                          <div
-                            className="dropdown-item"
-                            onClick={() => this.handleToggleFocus(key)}
-                          >
-                            Toggle focus
-                          </div>
-                          <div
-                            className="dropdown-item"
-                            onClick={() => this.handleRemoveCountry(key)}
-                          >
-                            Remove country and links
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                  {showLinks && (
-                    <table className="table">
-                      <thead>
-                        <tr>
-                          <th>Name</th>
-                          <th>URL</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {country.links.map((link, i) => (
-                          <tr key={i}>
-                            <td>{link.name}</td>
-                            <td>{link.url}</td>
-                            <td>
-                              <i
-                                className="fa fa-times text-danger d-inline clickable"
-                                onClick={() =>
-                                  this.handleLinkRemove(key, link.name)
-                                }
-                              ></i>
-                            </td>
-                          </tr>
-                        ))}
-                        <tr>
-                          <td>
-                            <input
-                              type="text"
-                              className="form-control"
-                              name="linkName"
-                              value={_.get(country, 'link.name', '')}
-                              onChange={(e) =>
-                                this.handleLinkEdit(key, 'name', e.target.value)
-                              }
-                              placeholder="Enter name"
-                              required
-                            />
-                            <ErrorMessage
-                              errors={country.errors || {}}
-                              field="name"
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="text"
-                              className="form-control"
-                              name="linkURL"
-                              value={_.get(country, 'link.url', '')}
-                              onChange={(e) =>
-                                this.handleLinkEdit(key, 'url', e.target.value)
-                              }
-                              placeholder="Enter url"
-                              required
-                            />
-                            <ErrorMessage
-                              errors={country.errors || {}}
-                              field="url"
-                            />
-                          </td>
-                          <td>
-                            <button
-                              type="submit"
-                              onClick={() => this.handleLinkAdd(key)}
-                              className="btn primary"
-                              disabled={!country.valid}
-                            >
-                              Add link
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  )}
-                </div>
-              );
-            })}
+            <CountryLinks
+              initialLinks={this.state.countryLinks}
+              onChange={this.handleLinkChange}
+            />
 
             <fieldset>
               <legend>Linking Status</legend>

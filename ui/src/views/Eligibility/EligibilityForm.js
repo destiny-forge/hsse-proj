@@ -2,18 +2,15 @@ import _ from 'lodash';
 import React from 'react';
 import { withRouter } from 'react-router';
 import Select from 'react-select';
-import { Tree } from 'antd';
 import { toast } from 'react-toastify';
 import withAuth from '../withAuth';
 import ArticleService from '../../services/ArticleService';
 import EligibilityService from '../../services/EligibilityService';
 import { hse, sse } from './data';
 import ErrorMessage from '../../components/atoms/ErrorMessage';
-import 'antd/dist/antd.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 import validate from './validate';
-
-const { TreeNode } = Tree;
+import TreeView from '../../components/molecules/TreeView';
 
 const STATUSES = [
   { value: 'In Progress', label: 'In Progress' },
@@ -28,7 +25,7 @@ class EligibilityForm extends React.Component {
     this.types = type === 'hse' ? hse.types : sse.types || [];
     this.questionTypes =
       type === 'hse' ? hse.questionTypes : sse.questionTypes || [];
-    this.treeData = type === 'hse' ? hse.tree : sse.tree;
+    this.tree = type === 'hse' ? hse.tree : sse.tree;
 
     this.state = {
       loaded: false,
@@ -37,23 +34,14 @@ class EligibilityForm extends React.Component {
       article: '',
       generalFocus: false,
       selectedStatus: 'In Progress',
-      filters: this.getKeyArray(this.treeData),
       eligible: true,
       errors: {},
     };
 
     this.Article = ArticleService({ fetch: this.props.fetch });
     this.Eligibility = EligibilityService({ fetch: this.props.fetch });
+    this.handleTreeChange = this.handleTreeChange.bind(this);
   }
-
-  getKeyArray = (tree) => {
-    const filterState = {};
-    const keys = Object.keys(tree);
-    keys.forEach((key) => {
-      filterState[key] = [];
-    });
-    return filterState;
-  };
 
   handleDocumentType = (docType) => {
     this.handleChange('selectedDocumentType', docType);
@@ -82,25 +70,6 @@ class EligibilityForm extends React.Component {
     });
   };
 
-  handleTreeClick = (selectedKeys, evt) => {
-    let filters = Object.assign({}, this.state.filters);
-    filters[evt.node.props.name] = selectedKeys;
-    this.setState({
-      filters,
-    });
-  };
-
-  flatten(tree) {
-    let keys = [];
-    tree.forEach((item) => {
-      keys.push(item.key);
-      if (item.hasOwnProperty('children')) {
-        keys = keys.concat(this.flatten(item.children));
-      }
-    });
-    return keys;
-  }
-
   componentDidMount() {
     this.getData();
   }
@@ -108,9 +77,6 @@ class EligibilityForm extends React.Component {
   getData() {
     const { shortId } = this.props.match.params;
     const { user } = this.props;
-
-    let filters = Object.assign({}, this.state.filters);
-    const categories = Object.keys(this.treeData);
 
     this.Article.get(shortId)
       .then((res) => {
@@ -123,15 +89,6 @@ class EligibilityForm extends React.Component {
           this.Eligibility.get(shortId, user.id).then((result) => {
             const eligibility = result.data;
             if (!_.isNull(eligibility)) {
-              for (const category of categories) {
-                const keys = this.flatten(this.treeData[category].items);
-                keys.forEach((key) => {
-                  if (eligibility.filters.indexOf(key) >= 0) {
-                    filters[category].push(key);
-                  }
-                });
-              }
-
               this.setState({
                 _id: eligibility._id,
                 generalFocus: eligibility.generalFocus,
@@ -139,7 +96,7 @@ class EligibilityForm extends React.Component {
                 selectedStatus: eligibility.selectedStatus,
                 selectedDocumentType: eligibility.documentType,
                 relevant: eligibility.relevant,
-                filters,
+                filtersArray: eligibility.filters,
               });
 
               this.setStatusAndEligibility(eligibility.documentType || '');
@@ -152,45 +109,6 @@ class EligibilityForm extends React.Component {
       });
   }
 
-  renderTreeSection = (key) => {
-    const subTree = this.treeData[key].items;
-    const hasChildren = _.has(subTree[0], 'children');
-    const checkedKeyState = this.state.filters[key];
-    return (
-      <Tree
-        checkable
-        showLine={hasChildren}
-        showIcon={false}
-        defaultExpandAll={false}
-        autoExpandParent={true}
-        onCheck={this.handleTreeClick}
-        checkedKeys={checkedKeyState}
-      >
-        {this.renderTreeNodes(subTree, key)}
-      </Tree>
-    );
-  };
-
-  renderTreeNodes = (data, name) =>
-    data.map((item) => {
-      item.name = name;
-
-      if (item.children) {
-        return (
-          <TreeNode
-            name={item.name}
-            title={item.title}
-            key={item.key}
-            dataRef={item}
-            disableCheckbox={false}
-          >
-            {this.renderTreeNodes(item.children, name)}
-          </TreeNode>
-        );
-      }
-      return <TreeNode {...item} disableCheckbox={false} />;
-    });
-
   notifyDone = () => toast.success('Eligibility successfully saved!');
 
   getAssignmentRole(user, article) {
@@ -200,6 +118,10 @@ class EligibilityForm extends React.Component {
       juniorAssigned = eligibility.junior.email === user.email;
     }
     return juniorAssigned ? 'junior' : 'senior';
+  }
+
+  handleTreeChange(selectedItems) {
+    this.setState({ filters: selectedItems });
   }
 
   handleSubmit = (e) => {
@@ -432,13 +354,13 @@ class EligibilityForm extends React.Component {
                 )}
               </fieldset>
 
-              {eligible &&
-                Object.keys(this.treeData).map((key) => (
-                  <fieldset key={key}>
-                    <legend>{this.treeData[key].title}</legend>
-                    {this.renderTreeSection(key)}
-                  </fieldset>
-                ))}
+              {eligible && (
+                <TreeView
+                  tree={this.tree}
+                  selectedItems={this.state.filtersArray}
+                  onChange={this.handleTreeChange}
+                />
+              )}
 
               <fieldset>
                 <legend>Coding Status</legend>

@@ -34,14 +34,26 @@ module.exports = ({ articleRepository, appraisalRepository }) => {
       appraisalRepository.update(source._id, { completed: true });
       appraisalRepository.update(target._id, { completed: true });
 
-      return await articleRepository.updateStage(
-        source.articleId,
-        "appraisals",
-        {
-          status: "Complete",
-          data: source,
-        }
-      );
+      const {
+        _id,
+        questions,
+        complicated,
+        amstarNumerator,
+        amstarDenominator,
+        notInEnglish,
+        noFreeFullText,
+      } = source;
+
+      return await articleRepository.update(articleId, {
+        "stages.appraisals._id": new ObjectID(_id),
+        "stages.appraisals.status": "Complete",
+        questions,
+        complicated,
+        amstarNumerator,
+        amstarDenominator,
+        notInEnglish,
+        noFreeFullText,
+      });
     } catch (error) {
       console.log(error);
       throw new Error(error);

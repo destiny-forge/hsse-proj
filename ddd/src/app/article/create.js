@@ -2,6 +2,7 @@ const { hseArticle, sseArticle } = require("src/domain/article");
 const Batch = require("src/domain/batch");
 const ObjectID = require("mongodb").ObjectID;
 const shortid = require("shortid");
+const _ = require("lodash");
 
 /**
  * Article creation
@@ -52,10 +53,21 @@ module.exports = ({ articleRepository, batchRepository }) => {
   };
 
   const updateArticle = async (article) => {
-    const entity = Object.assign({}, article);
-    delete entity._id;
-
+    const entity = cleanArticle(article);
     return await articleRepository.update(article._id, entity);
+  };
+
+  const cleanArticle = (article) => {
+    const fieldsToOmit = [
+      "_id",
+      "stages",
+      "type",
+      "batchId",
+      "batchName",
+      "shortId",
+      "lost",
+    ];
+    return _.omit(article, fieldsToOmit);
   };
 
   return {

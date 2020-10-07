@@ -10,7 +10,10 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      var filters = status; //status.split(",")
+      let statuses = [status, "Complete"];
+      if (status === "In Progress") {
+        statuses.push("Conflicted");
+      }
 
       const docTypes = [
         "Overviews of systematic reviews",
@@ -20,7 +23,7 @@ module.exports = ({ articleRepository }) => {
       return await articleRepository.aggregate(
         type,
         "appraisals",
-        filters,
+        statuses,
         docTypes
       );
     } catch (error) {

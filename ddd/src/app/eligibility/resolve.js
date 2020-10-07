@@ -32,14 +32,16 @@ module.exports = ({ articleRepository, eligibilityRepository }) => {
       eligibilityRepository.update(source._id, { completed: true });
       eligibilityRepository.update(target._id, { completed: true });
 
-      return await articleRepository.updateStage(
-        source.articleId,
-        "eligibility",
-        {
-          status: "Complete",
-          data: source,
-        }
-      );
+      const { _id, documentType, questionType, generalFocus } = source;
+      return await articleRepository.update(articleId, {
+        "stages.eligibility._id": new ObjectID(_id),
+        "stages.eligibility.status": "Complete",
+        documentType,
+        questionType,
+        generalFocus,
+        filters: source.filters,
+        //relevant?
+      });
     } catch (error) {
       throw new Error(error);
     }

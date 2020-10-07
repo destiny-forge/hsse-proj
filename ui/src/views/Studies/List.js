@@ -64,6 +64,7 @@ class StudiesList extends React.Component {
 
     const assignment = {
       articleId,
+      isFull: true,
       type: role,
       stage,
     };
