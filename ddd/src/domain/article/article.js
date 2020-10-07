@@ -67,7 +67,7 @@ const Article = t.struct(
     DOI: t.maybe(t.String),
 
     meshTerms: t.maybe(t.String),
-    lastLitSearch: t.maybe(t.String),
+    lastLitSearch: t.maybe(t.Date),
     isCochrane: t.maybe(t.Boolean),
     cochraneIssue: t.maybe(t.Number),
     cochraneYear: t.maybe(t.Number),

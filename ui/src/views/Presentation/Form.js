@@ -3,6 +3,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
+import { parseISO, formatISO } from 'date-fns';
 import { toast } from 'react-toastify';
 import withAuth from '../withAuth';
 
@@ -121,6 +122,10 @@ class PresentationForm extends React.Component {
       }
     });
   }
+
+  handleDatePicker = (date) => {
+    this.handleChange('lastLitSearch', formatISO(date));
+  };
 
   handleChange = (field, value) => {
     this.setState({
@@ -607,10 +612,10 @@ class PresentationForm extends React.Component {
                     <div className="col-sm-4">
                       <DatePicker
                         className="form-control"
-                        name="lastLitDate"
-                        selected={this.state.lastLitDate}
+                        name="lastLitSearch"
+                        selected={parseISO(article.lastLitSearch)}
                         onChange={this.handleDatePicker}
-                        value={article.lastLitDate}
+                        value={article.lastLitSearch}
                       />
                     </div>
                   </div>
