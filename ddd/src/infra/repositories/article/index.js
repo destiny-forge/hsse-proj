@@ -34,6 +34,17 @@ module.exports = ({ model }) => {
     }
   };
 
+  const findByDocType = async (...args) => {
+    try {
+      const articles = await model.findByDocType(...args);
+      return articles.map((article) => {
+        return toEntity(article);
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const findByBatch = async (...args) => {
     try {
       const articles = await model.findByBatch(...args);
@@ -146,6 +157,7 @@ module.exports = ({ model }) => {
     findByType,
     findByBatch,
     findByBatchAndDocTypes,
+    findByDocType,
     aggregate,
     find,
     assign,

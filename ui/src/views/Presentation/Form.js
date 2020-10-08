@@ -249,18 +249,7 @@ class PresentationForm extends React.Component {
               </div>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Live Date</label>
-                <div className="col-sm-4">
-                  {/*<Select
-                    value={this.types.filter(
-                      (opt) => opt.value === this.state.selectedDocumentType
-                    )}
-                    name="selectedDocumentType"
-                    onChange={(opt) => this.handleDocumentType(opt.value)}
-                    options={this.types}
-                    isSearchable
-                    isRequired
-                  />*/}
-                </div>
+                <div className="col-sm-4">{}</div>
                 <div className="col-sm-4"></div>
               </div>
               <div className="form-group row">

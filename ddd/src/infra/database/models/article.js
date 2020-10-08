@@ -51,6 +51,23 @@ module.exports = ({ database }) => {
     }
   };
 
+  const findByDocType = async (type, documentType, status) => {
+    const filters = Array.isArray(status) ? { $in: status } : status;
+    try {
+      return await database
+        .get()
+        .collection("articles")
+        .find({
+          type: { $eq: type },
+          documentType: { $eq: documentType },
+          status: filters,
+        })
+        .toArray();
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const findByBatch = async (batchId, stage, status) => {
     const filters = Array.isArray(status) ? { $in: status } : status;
     try {
@@ -370,6 +387,7 @@ module.exports = ({ database }) => {
     getAll,
     findById,
     findByType,
+    findByDocType,
     findOne,
     find,
     assign,

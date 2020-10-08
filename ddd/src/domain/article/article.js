@@ -15,7 +15,7 @@ const Article = t.struct(
     source: t.String,
     language: t.String,
     lost: t.Boolean,
-    published: t.Date,
+    published: t.maybe(t.Date),
     harvested: t.maybe(t.Date),
 
     title: t.String,

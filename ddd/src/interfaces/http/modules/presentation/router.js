@@ -36,10 +36,10 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/", (req, res) => {
-    const { type, status } = req.query;
+  router.get("/list/doc-type", (req, res) => {
+    const { type, documentType, filter } = req.query;
     listUseCase
-      .list(type, status)
+      .listByDocType(type, documentType, filter)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
