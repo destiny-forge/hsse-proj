@@ -6,9 +6,9 @@ module.exports = ({ articleRepository }) => {
     try {
       let statuses = [];
       if (filter === "all") {
-        statuses = ["New Article", "In Progress", "Live"];
+        statuses = ["New Article", "Data Entry Complete", "Live", "Deleted"];
       } else {
-        statuses = ["In Progress"];
+        statuses = ["New Article"];
       }
       return await articleRepository.findByDocType(
         type,
