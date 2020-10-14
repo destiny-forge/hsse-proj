@@ -2,7 +2,7 @@ const axios = require("axios");
 const AWS = require("aws-sdk");
 const uuid = require("uuid/v1");
 
-module.exports = ({ bucket, accessKeyId, secretAccessKey }) => {
+module.exports = ({ bucket, accessKeyId, secretAccessKey, contentType }) => {
   const s3 = new AWS.S3({ accessKeyId, secretAccessKey });
 
   getSignedUrl = async () => {
@@ -12,8 +12,8 @@ module.exports = ({ bucket, accessKeyId, secretAccessKey }) => {
         "putObject",
         {
           Bucket: bucket,
-          ContentType: "text/plain",
-          Key: key
+          ContentType: contentType || "text/plain",
+          Key: key,
         },
         (err, url) => {
           if (err) {
@@ -26,7 +26,7 @@ module.exports = ({ bucket, accessKeyId, secretAccessKey }) => {
     });
   };
 
-  getFile = async url => {
+  getFile = async (url) => {
     //const result = await axios.get(`https://s3.amazonaws.com/${bucket}/${url}`);
     const file = url.split("?")[0];
     const result = await axios.get(file);
@@ -35,6 +35,6 @@ module.exports = ({ bucket, accessKeyId, secretAccessKey }) => {
 
   return {
     getSignedUrl,
-    getFile
+    getFile,
   };
 };

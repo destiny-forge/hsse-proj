@@ -11,10 +11,10 @@ const BatchService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
-  const signedUrl = async ({ type }) => {
+  const signedUrl = async ({ type, contentType }) => {
     const res = await fetch('/batches/signed-url', {
       method: 'POST',
-      body: JSON.stringify({ type }),
+      body: JSON.stringify({ type, contentType }),
     });
     return Promise.resolve(res);
   };

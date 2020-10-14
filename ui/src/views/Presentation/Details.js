@@ -8,7 +8,6 @@ import List from './List';
 import { toast } from 'react-toastify';
 import { hse, sse } from '../Eligibility/data';
 import 'react-toastify/dist/ReactToastify.min.css';
-import { times } from 'lodash';
 
 class PresentationDetails extends React.Component {
   constructor(props) {

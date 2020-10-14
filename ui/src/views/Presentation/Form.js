@@ -20,6 +20,7 @@ import ErrorMessage from '../../components/atoms/ErrorMessage';
 
 import 'react-toastify/dist/ReactToastify.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import PDFUploadLinks from '../../components/atoms/PDFUploadLinks';
 
 const STATUSES = [
   { value: 'New Article', label: 'New Article' },
@@ -99,6 +100,7 @@ class PresentationForm extends React.Component {
     this.Article = ArticleService({ fetch: this.props.fetch });
     this.Eligibility = EligibilityService({ fetch: this.props.fetch });
     this.handleLinkUpdate = this.handleLinkUpdate.bind(this);
+    this.handlePDFLinks = this.handlePDFLinks.bind(this);
     this.handleTreeChange = this.handleTreeChange.bind(this);
     //this.Monthly = MonthlyService({fetch: this.props.fetch });
   }
@@ -167,6 +169,10 @@ class PresentationForm extends React.Component {
 
   handleLinkChange = (countryLinks) => {
     this.handleChange('countryLinks', countryLinks);
+  };
+
+  handlePDFLinks = (field, pdfLinks) => {
+    this.handleChange(field, pdfLinks);
   };
 
   handleTreeChange(selectedItems) {
@@ -710,17 +716,14 @@ class PresentationForm extends React.Component {
 
             {article.documentType !== 'Systematic reviews being planned' && (
               <React.Fragment>
-                <fieldset>
-                  <legend>PDF Text</legend>
-                  <div>
-                    Note: Let's make this it's own component - also add
-                    multi-language support
-                  </div>
-                  <div>Upload PDF [Choose File] No file chosen [Upload]</div>
-                  <div>
-                    PDF Text | The current PDF text is 147492 characters long
-                  </div>
-                </fieldset>
+                <PDFUploadLinks
+                  title="PDF Links"
+                  field="pdfLinks"
+                  type={article.type}
+                  items={article.pdfLinks || {}}
+                  onUpdate={this.handlePDFLinks}
+                  svcFetch={this.props.fetch}
+                />
 
                 <EditLinkTable
                   title="Hyperlinks"

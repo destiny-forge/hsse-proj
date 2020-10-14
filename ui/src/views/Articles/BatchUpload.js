@@ -111,6 +111,7 @@ class BatchUpload extends Component {
     if (status === 'done' && this.state.article.type) {
       this.Batch.signedUrl({
         type: this.state.article.type,
+        contentType: 'text/plain',
       })
         .then((res) => {
           fetch(

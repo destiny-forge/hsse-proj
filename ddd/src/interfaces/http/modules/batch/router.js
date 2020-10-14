@@ -157,9 +157,9 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.post("/signed-url", (req, res) => {
-    const { type } = req.body;
+    const { type, contentType } = req.body;
     signatureUseCase
-      .getSignature(type)
+      .getSignature(type, contentType)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
