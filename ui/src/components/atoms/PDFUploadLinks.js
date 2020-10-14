@@ -12,14 +12,7 @@ const LANGUAGES = [
   { value: 'PT', label: 'Portugese' },
 ];
 
-const PDFUploadLinks = ({
-  title,
-  type,
-  field,
-  items = {},
-  svcFetch,
-  onUpdate,
-}) => {
+const PDFUploadLinks = ({ title, type, items = {}, svcFetch, onUpdate }) => {
   const [language, setLanguage] = useState(LANGUAGES[0].value);
 
   const Batch = BatchService({ fetch: svcFetch });
@@ -29,20 +22,29 @@ const PDFUploadLinks = ({
   };
 
   const remove = (key) => {
-    const clone = { ...items };
-    const updatedItems = delete clone[key];
-    onUpdate(field, updatedItems);
+    const updatedItems = Object.assign({}, items);
+    delete updatedItems[key];
+    onUpdate(updatedItems);
   };
 
-  const add = (link) => {
+  const add = (name, link) => {
     const updatedItems = {
       ...items,
-      [language]: link,
+      [language]: {
+        name,
+        link,
+      },
     };
-    onUpdate(field, updatedItems);
+    onUpdate(updatedItems);
   };
 
-  const handleFileUpload = ({ file, meta: { name } }, status) => {
+  const clean = (link) => {
+    let parts = link.split('?');
+    let url = parts[0].split('/');
+    return url[url.length - 1].replace('.txt', '.pdf');
+  };
+
+  const handleFileUpload = ({ file, meta: { name }, remove }, status) => {
     if (status === 'done') {
       Batch.signedUrl({
         type,
@@ -59,8 +61,8 @@ const PDFUploadLinks = ({
             })
           ).then((res) => {
             if (res.ok) {
-              add(res.url);
-              console.log(file);
+              add(name, res.url);
+              remove();
             }
           });
         })
@@ -112,18 +114,13 @@ const PDFUploadLinks = ({
         </thead>
         <tbody>
           {Object.keys(items).map((key) => {
-            const url = items[key];
             return (
               <tr key={key}>
                 <td>
                   <button onClick={() => remove(key)}>Remove</button>
                 </td>
                 <td>{key}</td>
-                <td>
-                  <a href={url} target="_blank" rel="noopener noreferrer">
-                    {url}
-                  </a>
-                </td>
+                <td>{items[key].name}</td>
               </tr>
             );
           })}

@@ -171,8 +171,8 @@ class PresentationForm extends React.Component {
     this.handleChange('countryLinks', countryLinks);
   };
 
-  handlePDFLinks = (field, pdfLinks) => {
-    this.handleChange(field, pdfLinks);
+  handlePDFLinks = (pdfLinks) => {
+    this.handleChange('pdfLinks', pdfLinks);
   };
 
   handleTreeChange(selectedItems) {
@@ -192,8 +192,6 @@ class PresentationForm extends React.Component {
     const formData = this.cleanData({
       ...article,
     });
-
-    console.log(formData);
 
     validate(formData)
       .then(() => {
@@ -250,7 +248,9 @@ class PresentationForm extends React.Component {
                     options={[]}
                     isSearchable
                     isRequired
+                    isDisabled={true}
                   />
+                  Note: Currently disabled until monthly update is implemented.
                 </div>
               </div>
               <div className="form-group row">
@@ -718,7 +718,6 @@ class PresentationForm extends React.Component {
               <React.Fragment>
                 <PDFUploadLinks
                   title="PDF Links"
-                  field="pdfLinks"
                   type={article.type}
                   items={article.pdfLinks || {}}
                   onUpdate={this.handlePDFLinks}

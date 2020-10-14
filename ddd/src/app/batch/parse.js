@@ -47,7 +47,6 @@ const clean = (fields) => {
   const article = Object.assign.apply({}, fields);
   ["volume", "issue", "pages"].forEach((field) => {
     if (article[field] === "[NOT USED]") {
-      console.log("cleaned article field", field, article);
       delete article[field];
     } else {
       const parsed = parseInt(article[field]);
@@ -73,9 +72,6 @@ const clean = (fields) => {
       delete article[field];
     }
   });
-
-  console.log(article);
-
   return article;
 };
 
