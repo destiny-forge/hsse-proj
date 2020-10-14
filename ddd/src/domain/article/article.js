@@ -15,7 +15,7 @@ const Article = t.struct(
     source: t.String,
     language: t.String,
     lost: t.Boolean,
-    published: t.Date,
+    published: t.maybe(t.Date),
     harvested: t.maybe(t.Date),
 
     title: t.String,
@@ -75,7 +75,7 @@ const Article = t.struct(
     isEpocReview: t.maybe(t.Boolean),
     isHotDocs: t.maybe(t.Boolean),
 
-    pdfTexts: t.maybe(t.Object), // {"en": "S3 file upload url"}
+    pdfLinks: t.maybe(t.Object), // {"en": "S3 file upload url"}
     hyperlinks: t.maybe(t.Object), // {"en": "http url to pdf"}
 
     abstracts: t.maybe(t.Object), // {{"PubMed", ""}, {"Cochrane Library", ""}, ...}

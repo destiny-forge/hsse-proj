@@ -44,7 +44,7 @@ module.exports = {
   generalFocus: false,
   isHotDocs: false,
 
-  pdfTexts: null,
+  pdfLinks: null,
   hyperlinks: null,
 
   // URL: null,

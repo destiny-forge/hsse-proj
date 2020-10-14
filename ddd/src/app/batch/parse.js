@@ -40,10 +40,42 @@ const journalFields = [
   "translatedTitle",
   "nameOfDatabase",
   "databaseProvider",
-  "language"
+  "language",
 ];
 
-const parse = csv => {
+const clean = (fields) => {
+  const article = Object.assign.apply({}, fields);
+  ["volume", "issue", "pages"].forEach((field) => {
+    if (article[field] === "[NOT USED]") {
+      delete article[field];
+    } else {
+      const parsed = parseInt(article[field]);
+      if (isNaN(parsed)) {
+        delete article[field];
+      } else {
+        article[field] = parsed;
+      }
+    }
+  });
+
+  ["startPage", "endPage"].forEach((field) => {
+    const parsed = parseInt(article[field]);
+    if (isNaN(parsed)) {
+      delete article[field];
+    } else {
+      article[field] = parsed;
+    }
+  });
+
+  ["databaseProvider", "language"].forEach((field) => {
+    if (article[field] === undefined) {
+      delete article[field];
+    }
+  });
+  return article;
+};
+
+const parse = (csv) => {
   let fields = [];
 
   // Split batchfile into lines (each line contain an article)
@@ -52,17 +84,14 @@ const parse = csv => {
   // Last Array is always empty (removing here)
   const trimmed = lines.slice(0, lines.length - 1);
 
-  const articles = trimmed.map(line => {
+  const articles = trimmed.map((line) => {
     fields = line.split("\t");
-    return Object.assign.apply(
-      {},
-      journalFields.map((v, i) => ({ [v]: fields[i] }))
-    );
+    return clean(journalFields.map((v, i) => ({ [v]: fields[i] })));
   });
 
   return articles;
 };
 
 module.exports = {
-  parse
+  parse,
 };

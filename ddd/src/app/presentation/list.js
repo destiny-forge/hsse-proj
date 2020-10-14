@@ -2,21 +2,25 @@
  * Presentation / Article list
  */
 module.exports = ({ articleRepository }) => {
-  const list = async (type, status) => {
+  const listByDocType = async (type, documentType, filter) => {
     try {
-      if (!type || (type !== "sse" && type !== "hse")) {
-        return {
-          error: "A valid article type is required",
-        };
+      let statuses = [];
+      if (filter === "all") {
+        statuses = ["New Article", "Data Entry Complete", "Live", "Deleted"];
+      } else {
+        statuses = ["New Article"];
       }
-
-      return await articleRepository.find(type, stage, status);
+      return await articleRepository.findByDocType(
+        type,
+        documentType,
+        statuses
+      );
     } catch (error) {
       throw new Error(error);
     }
   };
 
   return {
-    list,
+    listByDocType,
   };
 };
