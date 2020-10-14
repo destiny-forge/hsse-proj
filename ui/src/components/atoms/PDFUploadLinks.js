@@ -38,12 +38,6 @@ const PDFUploadLinks = ({ title, type, items = {}, svcFetch, onUpdate }) => {
     onUpdate(updatedItems);
   };
 
-  const clean = (link) => {
-    let parts = link.split('?');
-    let url = parts[0].split('/');
-    return url[url.length - 1].replace('.txt', '.pdf');
-  };
-
   const handleFileUpload = ({ file, meta: { name }, remove }, status) => {
     if (status === 'done') {
       Batch.signedUrl({
