@@ -608,10 +608,7 @@ class PresentationForm extends React.Component {
                       <DatePicker
                         className="form-control"
                         name="lastLitSearch"
-                        selected={
-                          article.lastLitSearch &&
-                          parseISO(article.lastLitSearch)
-                        }
+                        selected={parseISO(article.lastLitSearch)}
                         onChange={this.handleDatePicker}
                         value={article.lastLitSearch}
                       />

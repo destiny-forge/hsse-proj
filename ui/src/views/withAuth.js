@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AuthService from '../services/AuthService';
+import { LanguageChooser } from '../components/molecules/Language';
 
 export default function withAuth(AuthComponent) {
   const Auth = new AuthService(process.env.BACKEND_SERVER);
@@ -139,9 +140,12 @@ export default function withAuth(AuthComponent) {
                       <path d="M80 304h352v16H80zM80 248h352v16H80zM80 192h352v16H80z" />
                     </svg>
                   </a>
-                  <div className="navbar-text nav-title flex" id="pageTitle">
-                    Blank
+                  <div className="navbar-text nav-title flex"></div>
+
+                  <div style={{ width: '120px' }}>
+                    <LanguageChooser />
                   </div>
+
                   <ul className="nav flex-row order-lg-2">
                     <li className="dropdown d-flex align-items-center">
                       <a
@@ -204,21 +208,7 @@ export default function withAuth(AuthComponent) {
                     className="collapse navbar-collapse no-grow order-lg-1"
                     id="navbarToggler"
                   >
-                    <form className="input-group m-2 my-lg-0">
-                      <span className="input-group-btn">
-                        <button
-                          type="button"
-                          className="btn no-border no-bg no-shadow"
-                        >
-                          <i className="fa fa-search"></i>
-                        </button>
-                      </span>
-                      <input
-                        type="text"
-                        className="form-control no-border no-bg no-shadow"
-                        placeholder="Search projects..."
-                      />
-                    </form>
+                    <form className="input-group m-2 my-lg-0"></form>
                   </div>
                 </div>
               </div>

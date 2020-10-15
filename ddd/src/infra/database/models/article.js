@@ -68,6 +68,24 @@ module.exports = ({ database }) => {
     }
   };
 
+  const findByLanguage = async (type, language, priority, status) => {
+    const filters = Array.isArray(status) ? { $in: status } : status;
+    try {
+      return await database
+        .get()
+        .collection("articles")
+        .find({
+          type: { $eq: type },
+          //titles: { [language]: { $eq: language }, approved: false },
+          priorioty: { $eq: priority },
+          status: filters,
+        })
+        .toArray();
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const findByBatch = async (batchId, stage, status) => {
     const filters = Array.isArray(status) ? { $in: status } : status;
     try {
@@ -396,6 +414,7 @@ module.exports = ({ database }) => {
     updateStageCoderStatus,
     findByBatch,
     findByBatchAndDocTypes,
+    findByLanguage,
     aggregate,
     createIndexes,
     migrate,
