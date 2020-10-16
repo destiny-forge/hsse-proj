@@ -8,7 +8,10 @@ export default (eligibility) =>
       errors.documentType = 'Document type is required';
     }
 
-    if (!eligibility.questionType) {
+    if (
+      !eligibility.questionType &&
+      eligibility.documentType.indexOf('No,') === -1
+    ) {
       errors.questionType = 'Question type is required';
     }
 
