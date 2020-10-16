@@ -44,8 +44,8 @@ const questionTypes = [
     value: 'Effectiveness',
   },
   {
-    label: 'Not Effectiveness',
-    value: 'Not Effectiveness',
+    label: 'Not effectiveness',
+    value: 'Not effectiveness',
   },
   {
     label:
