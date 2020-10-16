@@ -55,7 +55,7 @@ class PresentationDetails extends React.Component {
   }
 
   render() {
-    const { filter, articles } = this.state;
+    const { priority, articles } = this.state;
     return (
       <LanguageConsumer>
         {({ language }) => (
@@ -72,7 +72,7 @@ class PresentationDetails extends React.Component {
                             type="radio"
                             name="filterOptions"
                             value="all"
-                            checked={filter === 'all'}
+                            checked={priority === 'high'}
                             onChange={() => this.handleRadio(language, 'high')}
                           />{' '}
                           High priority
@@ -85,7 +85,7 @@ class PresentationDetails extends React.Component {
                             type="radio"
                             name="filterOptions"
                             value="only"
-                            checked={filter === 'only'}
+                            checked={priority === 'low'}
                             onChange={() => this.handleRadio(language, 'low')}
                           />{' '}
                           Low priority
