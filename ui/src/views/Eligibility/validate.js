@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-export default (eligibility) =>
+export default (eligibility, filters) =>
   new Promise((resolve, reject) => {
     const errors = {};
 
@@ -16,6 +16,9 @@ export default (eligibility) =>
     }
 
     if (eligibility.type === 'hse') {
+      HSE_VALIDATIONS.forEach((validation) => {
+        validateKeyFilters(filters, validation, errors);
+      });
     }
 
     if (eligibility.type === 'sse') {
@@ -43,6 +46,13 @@ const validateFilters = (filters, validation, errors) => {
   }
 };
 
+const validateKeyFilters = (filters, validation, errors) => {
+  const { key, msg } = validation;
+  if (filters[key].length === 0) {
+    errors[key] = msg;
+  }
+};
+
 const SSE_VALIDATIONS = [
   {
     key: 'programsServices',
@@ -51,5 +61,12 @@ const SSE_VALIDATIONS = [
   {
     key: 'sustainableDevelopmentGoals',
     msg: 'At least 1 Sustainable development goal is required',
+  },
+];
+
+const HSE_VALIDATIONS = [
+  {
+    key: 'checkedKeysHST',
+    msg: 'At least 1 Health System Topic is required',
   },
 ];
