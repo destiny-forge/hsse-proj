@@ -27,18 +27,6 @@ const types = [
   { value: 'Health reform descriptions', label: 'Health reform descriptions' },
   { value: 'Health system descriptions', label: 'Health system descriptions' },
   {
-    value: 'Intergovernmental organizations’ health systems documents',
-    label: 'Intergovernmental organizations’ health systems documents',
-  },
-  {
-    value: 'Canada’s health systems documents',
-    label: 'Canada’s health systems documents',
-  },
-  {
-    value: 'Ontario’s health system documents',
-    label: 'Ontario’s health system documents',
-  },
-  {
     value:
       'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.',
     label:
