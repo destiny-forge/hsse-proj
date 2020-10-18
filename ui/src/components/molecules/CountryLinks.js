@@ -12,6 +12,9 @@ const CountryLinks = ({ initialLinks, onChange }) => {
   const [focus, setFocus] = useState(false);
   const [count, setCount] = useState(0);
 
+  const linkName = React.createRef();
+  const linkURL = React.createRef();
+
   useEffect(() => {
     setLinks(initialLinks);
     onChange(initialLinks);
@@ -103,6 +106,8 @@ const CountryLinks = ({ initialLinks, onChange }) => {
     country.valid = false;
     setLinks(updated);
     onChange(updated);
+    linkURL.current.value = '';
+    linkName.current.value = '';
   };
 
   const handleLinkRemove = (key, name) => {
@@ -245,7 +250,7 @@ const CountryLinks = ({ initialLinks, onChange }) => {
                         type="text"
                         className="form-control"
                         name="linkName"
-                        value={_.get(country, 'link.name', '')}
+                        ref={linkName}
                         onChange={(e) =>
                           handleLinkEdit(key, 'name', e.target.value)
                         }
@@ -262,7 +267,7 @@ const CountryLinks = ({ initialLinks, onChange }) => {
                         type="text"
                         className="form-control"
                         name="linkURL"
-                        value={_.get(country, 'link.url', '')}
+                        ref={linkURL}
                         onChange={(e) =>
                           handleLinkEdit(key, 'url', e.target.value)
                         }
