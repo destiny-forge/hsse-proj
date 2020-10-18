@@ -251,7 +251,11 @@ const CountryLinks = ({ initialLinks, onChange }) => {
                   {country.links.map((link, i) => (
                     <tr key={i}>
                       <td>{link.name}</td>
-                      <td>{link.url}</td>
+                      <td>
+                        <a href={link.url} target="_blank">
+                          {link.url}
+                        </a>
+                      </td>
                       <td>
                         <i
                           className="fa fa-times text-danger d-inline clickable"
