@@ -124,6 +124,22 @@ const CountryLinks = ({ initialLinks, onChange }) => {
     onChange(updated);
   };
 
+  const showEdit = (country) => {
+    if (country.count === '') {
+      return true;
+    }
+
+    const plus = country.count.indexOf('+') >= 0;
+    const strCount = country.count.replace('+', '');
+    const count = parseInt(strCount);
+
+    if (isNaN(count) || plus) {
+      return true;
+    }
+
+    return !(country.links.length === count);
+  };
+
   return (
     <React.Fragment>
       <div className="box">
@@ -244,49 +260,54 @@ const CountryLinks = ({ initialLinks, onChange }) => {
                       </td>
                     </tr>
                   ))}
-                  <tr>
-                    <td>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="linkName"
-                        ref={linkName}
-                        onChange={(e) =>
-                          handleLinkEdit(key, 'name', e.target.value)
-                        }
-                        placeholder="Enter name"
-                        required
-                      />
-                      <ErrorMessage
-                        errors={country.errors || {}}
-                        field="name"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="linkURL"
-                        ref={linkURL}
-                        onChange={(e) =>
-                          handleLinkEdit(key, 'url', e.target.value)
-                        }
-                        placeholder="Enter url"
-                        required
-                      />
-                      <ErrorMessage errors={country.errors || {}} field="url" />
-                    </td>
-                    <td>
-                      <button
-                        type="submit"
-                        onClick={() => handleLinkAdd(key)}
-                        className="btn primary"
-                        disabled={!country.valid}
-                      >
-                        Add link
-                      </button>
-                    </td>
-                  </tr>
+                  {showEdit(country) && (
+                    <tr>
+                      <td>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="linkName"
+                          ref={linkName}
+                          onChange={(e) =>
+                            handleLinkEdit(key, 'name', e.target.value)
+                          }
+                          placeholder="Enter name"
+                          required
+                        />
+                        <ErrorMessage
+                          errors={country.errors || {}}
+                          field="name"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="linkURL"
+                          ref={linkURL}
+                          onChange={(e) =>
+                            handleLinkEdit(key, 'url', e.target.value)
+                          }
+                          placeholder="Enter url"
+                          required
+                        />
+                        <ErrorMessage
+                          errors={country.errors || {}}
+                          field="url"
+                        />
+                      </td>
+                      <td>
+                        <button
+                          type="submit"
+                          onClick={() => handleLinkAdd(key)}
+                          className="btn primary"
+                          disabled={!country.valid}
+                        >
+                          Add link
+                        </button>
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             )}
