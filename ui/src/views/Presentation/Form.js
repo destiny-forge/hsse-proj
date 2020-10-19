@@ -2,8 +2,6 @@ import _ from 'lodash';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Select from 'react-select';
-import DatePicker from 'react-datepicker';
-import { parseISO, formatISO } from 'date-fns';
 import { toast } from 'react-toastify';
 import withAuth from '../withAuth';
 
@@ -18,8 +16,13 @@ import TreeView from '../../components/molecules/TreeView';
 import CountryLinks from '../../components/molecules/CountryLinks';
 import ErrorMessage from '../../components/atoms/ErrorMessage';
 
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import { DateUtils } from 'react-day-picker';
+import dateFnsFormat from 'date-fns/format';
+import dateFnsParse from 'date-fns/parse';
+import 'react-day-picker/lib/style.css';
+
 import 'react-toastify/dist/ReactToastify.min.css';
-import 'react-datepicker/dist/react-datepicker.css';
 import PDFUploadLinks from '../../components/atoms/PDFUploadLinks';
 
 const STATUSES = [
@@ -79,6 +82,19 @@ const ISSUE_YEARS = [...Array(currentYear - 1995)].map((_, i) => {
 
 const languages = { en: '', fr: '' };
 
+function parseDate(str, format, locale) {
+  const parsed = dateFnsParse(str, format, new Date(), { locale });
+  if (DateUtils.isDate(parsed)) {
+    return parsed;
+  }
+  return undefined;
+}
+
+function formatDate(date, format, locale) {
+  return dateFnsFormat(date, format, { locale });
+}
+const DATE_FORMAT = 'yyyy-MM-dd';
+
 class PresentationForm extends React.Component {
   constructor(props) {
     super(props);
@@ -126,7 +142,7 @@ class PresentationForm extends React.Component {
   }
 
   handleDatePicker = (date) => {
-    this.handleChange('lastLitSearch', formatISO(date));
+    this.handleChange('lastLitSearch', date);
   };
 
   handleChange = (field, value) => {
@@ -332,7 +348,8 @@ class PresentationForm extends React.Component {
                   />
                 </div>
               </div>
-              <div className="form-group row">
+
+              {/* <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Author Email</label>
                 <div className="col-sm-10">
                   <input
@@ -343,7 +360,8 @@ class PresentationForm extends React.Component {
                     onChange={this.handleTextChange}
                   />
                 </div>
-              </div>
+              </div> */}
+
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Pub Date</label>
                 <div className="col-sm-10">
@@ -367,7 +385,8 @@ class PresentationForm extends React.Component {
                   />
                 </div>
               </div>
-              <div className="form-group row">
+
+              {/* <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Citation (FR)</label>
                 <div className="col-sm-10">
                   <textarea
@@ -378,25 +397,8 @@ class PresentationForm extends React.Component {
                     value={(article.citations && article.citations['fr']) || ''}
                   />
                 </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Keywords</label>
-                <div className="col-sm-10">{article.keywords}</div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">
-                  Custom Keywords
-                </label>
-                <div className="col-sm-10">
-                  <textarea
-                    name="customKeywords"
-                    className="form-control"
-                    rows="5"
-                    onChange={this.handleTextChange}
-                    value={article.customKeywords}
-                  />
-                </div>
-              </div>
+              </div> */}
+
               {article.referenceType === 'Journal' && (
                 <React.Fragment>
                   <div className="form-group row">
@@ -510,6 +512,25 @@ class PresentationForm extends React.Component {
                 </div>
               </div>
 
+              <div className="form-group row">
+                <label className="col-sm-2 col-form-label">Keywords</label>
+                <div className="col-sm-10">{article.keywords}</div>
+              </div>
+              <div className="form-group row">
+                <label className="col-sm-2 col-form-label">
+                  Custom Keywords
+                </label>
+                <div className="col-sm-10">
+                  <textarea
+                    name="customKeywords"
+                    className="form-control"
+                    rows="5"
+                    onChange={this.handleTextChange}
+                    value={article.customKeywords}
+                  />
+                </div>
+              </div>
+
               {article.documentType !== 'Systematic reviews being planned' && (
                 <React.Fragment>
                   <div className="form-group row">
@@ -605,16 +626,31 @@ class PresentationForm extends React.Component {
                       Last Lit Search
                     </label>
                     <div className="col-sm-4">
-                      <DatePicker
+                      <DayPickerInput
+                        className="form-control"
+                        formatDate={formatDate}
+                        format={DATE_FORMAT}
+                        parseDate={parseDate}
+                        placeholder={`${dateFnsFormat(
+                          new Date(),
+                          DATE_FORMAT
+                        )}`}
+                        onDayChange={this.handleDatePicker}
+                        value={parseDate(article.lastLitSearch, DATE_FORMAT)}
+                      />
+
+                      {/* <DatePicker
                         className="form-control"
                         name="lastLitSearch"
+                        dateFormat="yyyy/MM/dd"
                         selected={
-                          article.lastLitSearch &&
-                          parseISO(article.lastLitSearch)
+                          (article.lastLitSearch &&
+                            new Date(article.lastLitSearch)) ||
+                          new Date()
                         }
                         onChange={this.handleDatePicker}
                         value={article.lastLitSearch}
-                      />
+                      /> */}
                     </div>
                   </div>
                   <div className="form-group row">
@@ -635,7 +671,7 @@ class PresentationForm extends React.Component {
                 </React.Fragment>
               )}
 
-              <div className="form-group row">
+              {/* <div className="form-group row">
                 <label className="col-sm-2 col-form-label">EPOC Review?</label>
                 <div className="col-sm-10">
                   <label className="form-check-label">
@@ -649,7 +685,8 @@ class PresentationForm extends React.Component {
                     EPOC Review
                   </label>
                 </div>
-              </div>
+              </div> */}
+
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">General</label>
                 <div className="col-sm-10">
@@ -770,11 +807,6 @@ class PresentationForm extends React.Component {
               onChange={this.handleTreeChange}
             />
 
-            <fieldset>
-              <legend>Information for evidence briefs</legend>
-              Note: I don't think this fieldset is even required - refer to the
-              document
-            </fieldset>
             <fieldset>
               <legend>Article Status</legend>
               <div className="form-group row">
