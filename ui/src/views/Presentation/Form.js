@@ -276,8 +276,6 @@ class PresentationForm extends React.Component {
     this.handleChange('citations', newCitations);
   };
 
-  createCitation = (field, separator) => {};
-
   cleanData(article) {
     const fieldsToOmit = [
       'stages',
@@ -662,7 +660,7 @@ class PresentationForm extends React.Component {
                         name="year"
                         type="number"
                         className="form-control"
-                        value={article.lastLitSearch.year || ''}
+                        value={_.get(article.lastLitSearch, 'year', '')}
                         onChange={this.handleDayMonthYear}
                         placeholder="yyyy"
                       />
@@ -672,7 +670,7 @@ class PresentationForm extends React.Component {
                         name="month"
                         type="number"
                         className="form-control"
-                        value={article.lastLitSearch.month || ''}
+                        value={_.get(article.lastLitSearch, 'month', '')}
                         onChange={this.handleDayMonthYear}
                         placeholder="MM"
                         min="1"
@@ -684,7 +682,7 @@ class PresentationForm extends React.Component {
                         name="day"
                         type="number"
                         className="form-control"
-                        value={article.lastLitSearch.day || ''}
+                        value={_.get(article.lastLitSearch, 'day', '')}
                         onChange={this.handleDayMonthYear}
                         placeholder="dd"
                         min="1"
