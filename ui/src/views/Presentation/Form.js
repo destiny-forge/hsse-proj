@@ -237,6 +237,47 @@ class PresentationForm extends React.Component {
       .catch((errors) => this.setState({ errors, valid: false }));
   };
 
+  buildCitation = (language) => {
+    //book|chapter = Authors. Title. Editors. Pub place, Publishers, Pub date: Start page-End page
+    //journal|article = Authors. Title. Journal. Pub date; Volume (Issue): Start page-End page.
+    const {
+      referenceType,
+      authors,
+      title,
+      journal,
+      editors,
+      pubPlace,
+      publisher,
+      ePubDate,
+      volume,
+      issue,
+      startPage,
+      endPage,
+      citations,
+    } = this.state.article;
+
+    const bookCitation = `${authors || '[authors]'}. ${title || '[title]'}. ${
+      editors || '[editors]'
+    }. ${pubPlace || '[pubPlace]'}, ${publisher || '[publisher]'}, ${
+      ePubDate || '[ePubDate]'
+    }; ${startPage || '[startPage]'}-${endPage || '[endPage]'}`;
+    const journalCitation = `${authors || '[authors]'}. ${
+      title || '[title]'
+    }. ${journal || '[journal]'}. ${ePubDate || '[ePubDate]'}; ${
+      volume || '[volume]'
+    } (${issue || '[issue]'}): ${startPage || '[startPage]'}-${
+      endPage || '[endPage]'
+    }`;
+
+    const newCitations = {
+      ...citations,
+      [language]: referenceType === 'Journal' ? journalCitation : bookCitation,
+    };
+    this.handleChange('citations', newCitations);
+  };
+
+  createCitation = (field, separator) => {};
+
   cleanData(article) {
     const fieldsToOmit = [
       'stages',
@@ -373,7 +414,12 @@ class PresentationForm extends React.Component {
                 </div>
               </div>
               <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Citation (EN)</label>
+                <label className="col-sm-2 col-form-label">
+                  Citation (EN)
+                  <button onClick={() => this.buildCitation('en')}>
+                    build
+                  </button>
+                </label>
                 <div className="col-sm-10">
                   <textarea
                     name="citation-en"
