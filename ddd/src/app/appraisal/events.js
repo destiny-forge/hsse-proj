@@ -11,6 +11,7 @@ module.exports = ({ events, appraisalRepository, articleRepository }) => {
 
   events.on("article.appraisals.coded", async (articleId) => {
     const appraisals = await appraisalRepository.findByArticleId(articleId);
+    const cleanQuestions = _.clone(appraisals[0].cleanQuestions);
     let status = "In Progress";
 
     if (appraisals.length === 2) {
@@ -23,7 +24,6 @@ module.exports = ({ events, appraisalRepository, articleRepository }) => {
         if (status === "Complete") {
           const {
             _id,
-            questions,
             complicated,
             amstarNumerator,
             amstarDenominator,
@@ -32,7 +32,7 @@ module.exports = ({ events, appraisalRepository, articleRepository }) => {
           } = first;
           articleRepository.update(articleId, {
             "stages.appraisals._id": new ObjectID(_id),
-            questions,
+            questions: cleanQuestions,
             complicated,
             amstarNumerator,
             amstarDenominator,

@@ -162,7 +162,7 @@ class EligibilityForm extends React.Component {
       });
     });
 
-    validate(formData)
+    validate(formData, filters)
       .then(() => {
         this.setState({ valid: true, errors: {} });
 

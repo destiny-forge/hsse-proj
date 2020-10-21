@@ -2,8 +2,6 @@ import _ from 'lodash';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Select from 'react-select';
-import DatePicker from 'react-datepicker';
-import { parseISO, formatISO } from 'date-fns';
 import { toast } from 'react-toastify';
 import withAuth from '../withAuth';
 
@@ -17,9 +15,7 @@ import EligibilityService from '../../services/EligibilityService';
 import TreeView from '../../components/molecules/TreeView';
 import CountryLinks from '../../components/molecules/CountryLinks';
 import ErrorMessage from '../../components/atoms/ErrorMessage';
-
 import 'react-toastify/dist/ReactToastify.min.css';
-import 'react-datepicker/dist/react-datepicker.css';
 import PDFUploadLinks from '../../components/atoms/PDFUploadLinks';
 
 const STATUSES = [
@@ -125,8 +121,17 @@ class PresentationForm extends React.Component {
     });
   }
 
-  handleDatePicker = (date) => {
-    this.handleChange('lastLitSearch', formatISO(date));
+  handleDayMonthYear = (e) => {
+    const { name, value } = e.target;
+    let lastLitSearch = this.state.article.lastLitSearch;
+    if (typeof lastLitSearch !== 'object' || lastLitSearch === null) {
+      lastLitSearch = {};
+    }
+    lastLitSearch = {
+      ...lastLitSearch,
+      [name]: parseInt(value),
+    };
+    this.handleChange('lastLitSearch', lastLitSearch);
   };
 
   handleChange = (field, value) => {
@@ -146,6 +151,23 @@ class PresentationForm extends React.Component {
   handleCheckbox = (e) => {
     const { name, checked } = e.target;
     this.handleChange(name, checked);
+  };
+
+  handleProducerChange = (field, value) => {
+    let producer = {
+      ...this.state.article.producer,
+      [field]: value,
+    };
+    this.handleChange('producer', producer);
+  };
+
+  handleProducerCheckbox = (e) => {
+    const { name, checked } = e.target;
+    let producer = {
+      ...this.state.article.producer,
+      [name]: checked,
+    };
+    this.handleChange('producer', producer);
   };
 
   handleCitationChange = (e) => {
@@ -207,6 +229,45 @@ class PresentationForm extends React.Component {
           });
       })
       .catch((errors) => this.setState({ errors, valid: false }));
+  };
+
+  buildCitation = (language) => {
+    //book|chapter = Authors. Title. Editors. Pub place, Publishers, Pub date: Start page-End page
+    //journal|article = Authors. Title. Journal. Pub date; Volume (Issue): Start page-End page.
+    const {
+      referenceType,
+      authors,
+      title,
+      journal,
+      editors,
+      pubPlace,
+      publisher,
+      ePubDate,
+      volume,
+      issue,
+      startPage,
+      endPage,
+      citations,
+    } = this.state.article;
+
+    const bookCitation = `${authors || '[authors]'}. ${title || '[title]'}. ${
+      editors || '[editors]'
+    }. ${pubPlace || '[pubPlace]'}, ${publisher || '[publisher]'}, ${
+      ePubDate || '[ePubDate]'
+    }; ${startPage || '[startPage]'}-${endPage || '[endPage]'}`;
+    const journalCitation = `${authors || '[authors]'}. ${
+      title || '[title]'
+    }. ${journal || '[journal]'}. ${ePubDate || '[ePubDate]'}; ${
+      volume || '[volume]'
+    } (${issue || '[issue]'}): ${startPage || '[startPage]'}-${
+      endPage || '[endPage]'
+    }`;
+
+    const newCitations = {
+      ...citations,
+      [language]: referenceType === 'Journal' ? journalCitation : bookCitation,
+    };
+    this.handleChange('citations', newCitations);
   };
 
   cleanData(article) {
@@ -332,18 +393,7 @@ class PresentationForm extends React.Component {
                   />
                 </div>
               </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Author Email</label>
-                <div className="col-sm-10">
-                  <input
-                    type="email"
-                    name="authorAddress"
-                    className="form-control"
-                    value={article.authorAddress}
-                    onChange={this.handleTextChange}
-                  />
-                </div>
-              </div>
+
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Pub Date</label>
                 <div className="col-sm-10">
@@ -356,7 +406,12 @@ class PresentationForm extends React.Component {
                 </div>
               </div>
               <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Citation (EN)</label>
+                <label className="col-sm-2 col-form-label">
+                  Citation (EN)
+                  <button onClick={() => this.buildCitation('en')}>
+                    build
+                  </button>
+                </label>
                 <div className="col-sm-10">
                   <textarea
                     name="citation-en"
@@ -367,36 +422,7 @@ class PresentationForm extends React.Component {
                   />
                 </div>
               </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Citation (FR)</label>
-                <div className="col-sm-10">
-                  <textarea
-                    name="citation-fr"
-                    className="form-control"
-                    rows="5"
-                    onChange={this.handleCitationChange}
-                    value={(article.citations && article.citations['fr']) || ''}
-                  />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Keywords</label>
-                <div className="col-sm-10">{article.keywords}</div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">
-                  Custom Keywords
-                </label>
-                <div className="col-sm-10">
-                  <textarea
-                    name="customKeywords"
-                    className="form-control"
-                    rows="5"
-                    onChange={this.handleTextChange}
-                    value={article.customKeywords}
-                  />
-                </div>
-              </div>
+
               {article.referenceType === 'Journal' && (
                 <React.Fragment>
                   <div className="form-group row">
@@ -510,6 +536,25 @@ class PresentationForm extends React.Component {
                 </div>
               </div>
 
+              <div className="form-group row">
+                <label className="col-sm-2 col-form-label">Keywords</label>
+                <div className="col-sm-10">{article.keywords}</div>
+              </div>
+              <div className="form-group row">
+                <label className="col-sm-2 col-form-label">
+                  Custom Keywords
+                </label>
+                <div className="col-sm-10">
+                  <textarea
+                    name="customKeywords"
+                    className="form-control"
+                    rows="5"
+                    onChange={this.handleTextChange}
+                    value={article.customKeywords}
+                  />
+                </div>
+              </div>
+
               {article.documentType !== 'Systematic reviews being planned' && (
                 <React.Fragment>
                   <div className="form-group row">
@@ -604,16 +649,38 @@ class PresentationForm extends React.Component {
                     <label className="col-sm-2 col-form-label">
                       Last Lit Search
                     </label>
-                    <div className="col-sm-4">
-                      <DatePicker
+                    <div className="col-sm-2">
+                      <input
+                        name="year"
+                        type="number"
                         className="form-control"
-                        name="lastLitSearch"
-                        selected={
-                          article.lastLitSearch &&
-                          parseISO(article.lastLitSearch)
-                        }
-                        onChange={this.handleDatePicker}
-                        value={article.lastLitSearch}
+                        value={_.get(article.lastLitSearch, 'year', '')}
+                        onChange={this.handleDayMonthYear}
+                        placeholder="yyyy"
+                      />
+                    </div>
+                    <div className="col-sm-2">
+                      <input
+                        name="month"
+                        type="number"
+                        className="form-control"
+                        value={_.get(article.lastLitSearch, 'month', '')}
+                        onChange={this.handleDayMonthYear}
+                        placeholder="MM"
+                        min="1"
+                        max="12"
+                      />
+                    </div>
+                    <div className="col-sm-2">
+                      <input
+                        name="day"
+                        type="number"
+                        className="form-control"
+                        value={_.get(article.lastLitSearch, 'day', '')}
+                        onChange={this.handleDayMonthYear}
+                        placeholder="dd"
+                        min="1"
+                        max="31"
                       />
                     </div>
                   </div>
@@ -636,21 +703,6 @@ class PresentationForm extends React.Component {
               )}
 
               <div className="form-group row">
-                <label className="col-sm-2 col-form-label">EPOC Review?</label>
-                <div className="col-sm-10">
-                  <label className="form-check-label">
-                    <input
-                      checked={article.isEpocReview}
-                      type="checkbox"
-                      className="form-check-input"
-                      name="isEpocReview"
-                      onChange={this.handleCheckbox}
-                    />{' '}
-                    EPOC Review
-                  </label>
-                </div>
-              </div>
-              <div className="form-group row">
                 <label className="col-sm-2 col-form-label">General</label>
                 <div className="col-sm-10">
                   <label className="form-check-label">
@@ -667,49 +719,68 @@ class PresentationForm extends React.Component {
                 </div>
               </div>
               <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Cochrane?</label>
+                <label className="col-sm-2 col-form-label">Producer?</label>
                 <div className="col-sm-10">
                   <label className="form-check-label">
                     <input
-                      checked={article.isCochrane}
+                      checked={_.get(article, 'producer.cochrane', false)}
                       type="checkbox"
                       className="form-check-input"
-                      name="isCochrane"
-                      onChange={this.handleCheckbox}
+                      name="cochrane"
+                      onChange={this.handleProducerCheckbox}
                     />{' '}
                     Cochrane
+                  </label>
+                  <br />
+                  <label className="form-check-label">
+                    <input
+                      checked={_.get(article, 'producer.campbell', false)}
+                      type="checkbox"
+                      className="form-check-input"
+                      name="campbell"
+                      onChange={this.handleProducerCheckbox}
+                    />{' '}
+                    Cambell Library
                   </label>
                   <div className="form-group row sub-form-group">
                     <div className="col-sm-3">
                       <Select
                         value={ISSUES.filter(
-                          (opt) => opt.value === article.cochraneIssue
+                          (opt) =>
+                            opt.value === _.get(article, 'producer.issue', null)
                         )}
-                        name="cochraneIssue"
+                        name="issue"
                         placeholder="Select Issue"
                         onChange={(opt) =>
-                          this.handleChange('cochraneIssue', opt.value)
+                          this.handleProducerChange('issue', opt.value)
                         }
                         options={ISSUES}
                         isSearchable
                         isRequired
-                        isDisabled={!article.isCochrane}
+                        isDisabled={
+                          !_.get(article, 'producer.cochrane', false) &&
+                          !_.get(article, 'producer.campbell', false)
+                        }
                       />
                     </div>
                     <div className="col-sm-3">
                       <Select
                         value={ISSUE_YEARS.filter(
-                          (opt) => opt.value === article.cochraneYear
+                          (opt) =>
+                            opt.value === _.get(article, 'producer.year', null)
                         )}
-                        name="cochraneYear"
+                        name="year"
                         placeholder="Select Year"
                         onChange={(opt) =>
-                          this.handleChange('cochraneYear', opt.value)
+                          this.handleProducerChange('year', opt.value)
                         }
                         options={ISSUE_YEARS}
                         isSearchable
                         isRequired
-                        isDisabled={!article.isCochrane}
+                        isDisabled={
+                          !_.get(article, 'producer.cochrane', false) &&
+                          !_.get(article, 'producer.campbell', false)
+                        }
                       />
                     </div>
                   </div>
@@ -770,11 +841,6 @@ class PresentationForm extends React.Component {
               onChange={this.handleTreeChange}
             />
 
-            <fieldset>
-              <legend>Information for evidence briefs</legend>
-              Note: I don't think this fieldset is even required - refer to the
-              document
-            </fieldset>
             <fieldset>
               <legend>Article Status</legend>
               <div className="form-group row">

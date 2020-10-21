@@ -9,6 +9,7 @@ import { Tree } from 'antd';
 import 'antd/dist/antd.css';
 import { hse, sse } from '../Eligibility/data';
 import { toast } from 'react-toastify';
+import Radio from '../../components/atoms/Radio';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 const { TreeNode } = Tree;
@@ -43,6 +44,7 @@ class Conflicts extends React.Component {
 
     this.Article = ArticleService({ fetch: this.props.fetch });
     this.Eligibility = EligibilityService({ fetch: this.props.fetch });
+    this.updateRelevance = this.updateRelevance.bind(this);
   }
 
   getKeyArray = (tree) => {
@@ -77,6 +79,10 @@ class Conflicts extends React.Component {
 
     this.updateEligibility('filters', allKeys);
   };
+
+  updateRelevance(name, value) {
+    this.updateEligibility(name, value === 'Yes' ? true : false);
+  }
 
   updateEligibility(field, value) {
     const { user } = this.props;
@@ -317,10 +323,15 @@ class Conflicts extends React.Component {
   }
 
   render() {
-    const { article, left, right } = this.state;
+    const { article, left, right, type } = this.state;
     if (!left.eligibility) {
       return null;
     }
+
+    let q1 =
+      type === 'hse'
+        ? 'Is the document relevant to health system governance, financial or delivery arrangements (or implementation strategies)?'
+        : 'Is the document relevant to social systems program and service areas?';
 
     return (
       <div className="padding">
@@ -346,129 +357,178 @@ class Conflicts extends React.Component {
               <div className="col-sm-6">
                 <h2>Mine</h2>
                 <fieldset>
-                  <legend>General Information</legend>
+                  <legend>Relevance</legend>
                   <div className="form-group">
-                    <label>Document type</label>
-                    <Select
-                      value={this.types.filter(
-                        (opt) => opt.value === left.eligibility.documentType
-                      )}
-                      name="documentType"
-                      onChange={(value) =>
-                        this.handleChange('documentType', value)
-                      }
-                      options={this.types}
-                      isSearchable
+                    {left.eligibility.relevant}
+                    <label>{q1}</label>
+                    <br />
+
+                    <Radio
+                      name="relevant"
+                      handleChange={this.updateRelevance}
+                      value={left.eligibility.relevant ? 'Yes' : 'No'}
+                      radioValues={['Yes', 'No']}
                     />
-                  </div>
-                  <div className="form-group">
-                    <label>Question type</label>
-                    <Select
-                      value={this.questionTypes.filter(
-                        (opt) => opt.value === left.eligibility.questionType
-                      )}
-                      name="documentType"
-                      onChange={(value) =>
-                        this.handleChange('questionType', value)
-                      }
-                      options={this.questionTypes}
-                      isSearchable
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>General focus?</label>
-                    <label
-                      style={{ fontWeight: 'normal', padding: '0px 20px' }}
-                    >
-                      <input
-                        checked={left.eligibility.generalFocus}
-                        type="checkbox"
-                        className="form-check-input"
-                        name="generalFocus"
-                        onChange={this.handleCheckbox}
-                      />{' '}
-                      Yes, this article has a general focus (review definition
-                      and code accordingly, nothing that the default is set to
-                      specific)
-                    </label>
                   </div>
                 </fieldset>
+                {left.eligibility.relevant && right.eligibility.relevant && (
+                  <React.Fragment>
+                    <fieldset>
+                      <legend>General Information</legend>
+                      <div className="form-group">
+                        <label>Document type</label>
+                        <Select
+                          value={this.types.filter(
+                            (opt) => opt.value === left.eligibility.documentType
+                          )}
+                          name="documentType"
+                          onChange={(value) =>
+                            this.handleChange('documentType', value)
+                          }
+                          options={this.types}
+                          isSearchable
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label>Question type</label>
+                        <Select
+                          value={this.questionTypes.filter(
+                            (opt) => opt.value === left.eligibility.questionType
+                          )}
+                          name="documentType"
+                          onChange={(value) =>
+                            this.handleChange('questionType', value)
+                          }
+                          options={this.questionTypes}
+                          isSearchable
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label>General focus?</label>
+                        <label
+                          style={{ fontWeight: 'normal', padding: '0px 20px' }}
+                        >
+                          <input
+                            checked={left.eligibility.generalFocus}
+                            type="checkbox"
+                            className="form-check-input"
+                            name="generalFocus"
+                            onChange={this.handleCheckbox}
+                          />{' '}
+                          Yes, this article has a general focus (review
+                          definition and code accordingly, nothing that the
+                          default is set to specific)
+                        </label>
+                      </div>
+                    </fieldset>
 
-                {Object.keys(this.treeData).map((key) => (
-                  <fieldset key={key}>
-                    <legend>{this.treeData[key].title}</legend>
-                    {this.renderTreeSection(key, 'left')}
-                  </fieldset>
-                ))}
+                    {Object.keys(this.treeData).map((key) => (
+                      <fieldset key={key}>
+                        <legend>{this.treeData[key].title}</legend>
+                        {this.renderTreeSection(key, 'left')}
+                      </fieldset>
+                    ))}
+                  </React.Fragment>
+                )}
               </div>
               <div className="col-sm-6">
                 <h2>Theirs</h2>
                 <fieldset>
-                  <legend>General Information</legend>
+                  <legend>Relevance</legend>
                   <div className="form-group">
-                    <label
-                      style={{ background: this.getConflictBG('documentType') }}
-                    >
-                      Document type
-                    </label>
-                    <Select
-                      value={this.types.filter(
-                        (opt) => opt.value === right.eligibility.documentType
-                      )}
-                      name="documentType"
-                      options={this.types}
-                      isDisabled={true}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label
-                      style={{ background: this.getConflictBG('questionType') }}
-                    >
-                      Question type
-                    </label>
-                    <Select
-                      value={this.questionTypes.filter(
-                        (opt) => opt.value === right.eligibility.questionType
-                      )}
-                      name="documentType"
-                      options={this.questionTypes}
-                      isDisabled={true}
-                      isSearchable
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>General focus?</label>
                     <label
                       style={{
-                        fontWeight: 'normal',
-                        padding: '0px 20px',
+                        background: this.getConflictBG('relevant'),
                       }}
                     >
-                      <input
-                        checked={right.eligibility.generalFocus}
-                        type="checkbox"
-                        className="form-check-input"
-                        name="generalFocus"
-                        disabled={true}
-                      />{' '}
-                      <div
-                        style={{
-                          background: this.getConflictBG('generalFocus'),
-                        }}
-                      >
-                        Yes, this article has a general focus (review definition
-                        and code accordingly, nothing that the default is set to
-                        specific)
-                      </div>
+                      {q1}
                     </label>
+                    <br />
+                    <Radio
+                      name="relevant"
+                      handleChange={() => {}}
+                      value={right.eligibility.relevant ? 'Yes' : 'No'}
+                      radioValues={['Yes', 'No']}
+                      disabled="true"
+                    />
                   </div>
                 </fieldset>
-                {Object.keys(this.treeData).map((key) => (
-                  <fieldset key={key}>
-                    <legend>{this.treeData[key].title}</legend>
-                    {this.renderTreeSection(key, 'right')}
-                  </fieldset>
-                ))}
+                {left.eligibility.relevant && right.eligibility.relevant && (
+                  <React.Fragment>
+                    <fieldset>
+                      <legend>General Information</legend>
+                      <div className="form-group">
+                        <label
+                          style={{
+                            background: this.getConflictBG('documentType'),
+                          }}
+                        >
+                          Document type
+                        </label>
+                        <Select
+                          value={this.types.filter(
+                            (opt) =>
+                              opt.value === right.eligibility.documentType
+                          )}
+                          name="documentType"
+                          options={this.types}
+                          isDisabled={true}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label
+                          style={{
+                            background: this.getConflictBG('questionType'),
+                          }}
+                        >
+                          Question type
+                        </label>
+                        <Select
+                          value={this.questionTypes.filter(
+                            (opt) =>
+                              opt.value === right.eligibility.questionType
+                          )}
+                          name="documentType"
+                          options={this.questionTypes}
+                          isDisabled={true}
+                          isSearchable
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label>General focus?</label>
+                        <label
+                          style={{
+                            fontWeight: 'normal',
+                            padding: '0px 20px',
+                          }}
+                        >
+                          <input
+                            checked={right.eligibility.generalFocus}
+                            type="checkbox"
+                            className="form-check-input"
+                            name="generalFocus"
+                            disabled={true}
+                          />{' '}
+                          <div
+                            style={{
+                              background: this.getConflictBG('generalFocus'),
+                            }}
+                          >
+                            Yes, this article has a general focus (review
+                            definition and code accordingly, nothing that the
+                            default is set to specific)
+                          </div>
+                        </label>
+                      </div>
+                    </fieldset>
+                    {Object.keys(this.treeData).map((key) => (
+                      <fieldset key={key}>
+                        <legend>{this.treeData[key].title}</legend>
+                        {this.renderTreeSection(key, 'right')}
+                      </fieldset>
+                    ))}
+                  </React.Fragment>
+                )}
               </div>
             </div>
             <button

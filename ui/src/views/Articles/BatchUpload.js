@@ -267,7 +267,7 @@ class BatchUpload extends Component {
                     />
                   </div>
                 </div>
-                <div className="dropzone white b-a b-3x b-dashed b-primary p-a rounded p-5 text-center mb-3">
+                <div className="dropzone white b-a b-3x b-dashed b-primary p-a rounded text-center mb-3">
                   <Dropzone
                     maxFiles={1}
                     accept={'text/csv,text/plain,application/vnd.ms-excel'}
@@ -275,7 +275,10 @@ class BatchUpload extends Component {
                     validate={this.validateFileInput}
                     autoUpload={false}
                     submitButtonDisabled={true}
-                    styles={{ dropzone: { minHeight: 10, maxHeight: 30 } }}
+                    styles={{
+                      dropzone: { minHeight: 200, maxHeight: 200 },
+                      inputLabel: { paddingTop: '80px' },
+                    }}
                   />
                 </div>
                 <button

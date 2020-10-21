@@ -67,10 +67,8 @@ const Article = t.struct(
     DOI: t.maybe(t.String),
 
     meshTerms: t.maybe(t.String),
-    lastLitSearch: t.maybe(t.Date),
-    isCochrane: t.maybe(t.Boolean),
-    cochraneIssue: t.maybe(t.Number),
-    cochraneYear: t.maybe(t.Number),
+    lastLitSearch: t.maybe(t.Object), // {"day": 12, "month": 1, "year": 2020}
+    producer: t.maybe(t.Object), //{"cochrane": true, "campbell": true, issue: 2, year: 3}
 
     isEpocReview: t.maybe(t.Boolean),
     isHotDocs: t.maybe(t.Boolean),
@@ -131,6 +129,7 @@ const Article = t.struct(
         appraisals: { status: "New Article" },
         prioritizing: { status: "New Article" },
       },
+      producer: {},
       filters: [],
       questions: [],
       countryLinks: {},
