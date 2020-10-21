@@ -47,18 +47,28 @@ module.exports = ({ eligibilityRepository }) => {
     source.filters = mapFilters(source.filters);
     target.filters = mapFilters(target.filters);
 
+    let excludes = [
+      "_id",
+      "shortId",
+      "userId",
+      "action",
+      "completed",
+      "complicated",
+      "role",
+      "selectedStatus",
+    ];
+
+    if (!source.relevant || !target.relevant) {
+      excludes = excludes.concat([
+        "generalFocus",
+        "questionType",
+        "documentType",
+        "filters",
+      ]);
+    }
+
     const filter = (path, key) =>
-      path.length === 0 &&
-      ~[
-        "_id",
-        "shortId",
-        "userId",
-        "relevance",
-        "completed",
-        "complicated",
-        "role",
-        "selectedStatus",
-      ].indexOf(key) < 0;
+      path.length === 0 && ~excludes.indexOf(key) < 0;
 
     const diffs = diff(source, target, filter);
     const differences = diffs || [];

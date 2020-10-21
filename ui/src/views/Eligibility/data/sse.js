@@ -1599,7 +1599,7 @@ const tree = {
                     key: 'serviceProviderStaffSupport',
                   },
                   {
-                    title: 'Staff workload/workflow/intensity',
+                    title: 'Staff - Workload/workflow/intensity',
                     key: 'serviceProviderStaffWorkloadWorkflowIntensity',
                   },
                   {

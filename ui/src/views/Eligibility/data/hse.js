@@ -27,18 +27,6 @@ const types = [
   { value: 'Health reform descriptions', label: 'Health reform descriptions' },
   { value: 'Health system descriptions', label: 'Health system descriptions' },
   {
-    value: 'Intergovernmental organizations’ health systems documents',
-    label: 'Intergovernmental organizations’ health systems documents',
-  },
-  {
-    value: 'Canada’s health systems documents',
-    label: 'Canada’s health systems documents',
-  },
-  {
-    value: 'Ontario’s health system documents',
-    label: 'Ontario’s health system documents',
-  },
-  {
     value:
       'No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in HSE.',
     label:
@@ -56,8 +44,8 @@ const questionTypes = [
     value: 'Effectiveness',
   },
   {
-    label: 'Not Effectiveness',
-    value: 'Not Effectiveness',
+    label: 'Not effectiveness',
+    value: 'Not effectiveness',
   },
   {
     label:
@@ -76,35 +64,35 @@ const tree = {
     title: 'Health Systems Topic',
     items: [
       {
-        title: 'Government arrangement',
-        key: 'government',
+        title: 'Governance arrangements',
+        key: 'governance',
         children: [
           {
             title: 'Policy authority',
-            key: 'governmentPolicy',
+            key: 'governancePolicy',
             children: [
               {
                 title: 'Centralization/decentralization of policy authority',
-                key: 'governmentPolicyCentralization',
+                key: 'governancePolicyCentralization',
               },
               {
                 title:
                   "Accountability of the state sector's role in financing & delivery",
-                key: 'governmentPolicyAccountability',
+                key: 'governancePolicyAccountability',
               },
               {
                 title:
                   "Stewardship of the non-state sector's role in financing & delivery",
-                key: 'governmentPolicyStewardship',
+                key: 'governancePolicyStewardship',
               },
               {
                 title:
                   'Decision-making authority about who is covered and what can or must be provided to them',
-                key: 'governmentPolicyDecisionMaking',
+                key: 'governancePolicyDecisionMaking',
               },
               {
                 title: 'Corruption protections',
-                key: 'governmentPolicyCorruptionProtections',
+                key: 'governancePolicyCorruptionProtections',
               },
             ],
           },

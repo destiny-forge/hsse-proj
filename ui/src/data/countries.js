@@ -34,11 +34,11 @@ const countries = [
   },
   {
     value: '250',
-    label: 'Africa, Asia &amp; Middle East',
+    label: 'Africa, Asia & Middle East',
   },
   {
     value: '232',
-    label: 'Africa, Asia, Australia &amp; Europe',
+    label: 'Africa, Asia, Australia & Europe',
   },
   {
     value: '2',
@@ -86,15 +86,15 @@ const countries = [
   },
   {
     value: '231',
-    label: 'Asia &amp; Europe',
+    label: 'Asia & Europe',
   },
   {
     value: '242',
-    label: 'Asia &amp; Middle East',
+    label: 'Asia & Middle East',
   },
   {
     value: '248',
-    label: 'Asia, Australasia &amp; Europe',
+    label: 'Asia, Australasia & Europe',
   },
   {
     value: '215',
@@ -110,7 +110,7 @@ const countries = [
   },
   {
     value: '249',
-    label: 'Australia, New Zealand &amp; Oceania',
+    label: 'Australia, New Zealand & Oceania',
   },
   {
     value: '10',
@@ -118,7 +118,7 @@ const countries = [
   },
   {
     value: '227',
-    label: 'Austria, Germany &amp; Switzerland',
+    label: 'Austria, Germany & Switzerland',
   },
   {
     value: '11',
@@ -182,7 +182,7 @@ const countries = [
   },
   {
     value: '241',
-    label: 'Brazil &amp; South Africa',
+    label: 'Brazil & South Africa',
   },
   {
     value: '268',
@@ -230,7 +230,7 @@ const countries = [
   },
   {
     value: '226',
-    label: 'Caribbean &amp; Latin America',
+    label: 'Caribbean & Latin America',
   },
   {
     value: '269',
@@ -242,7 +242,7 @@ const countries = [
   },
   {
     value: '251',
-    label: 'Central America, Mexico &amp; South America',
+    label: 'Central America, Mexico & South America',
   },
   {
     value: '34',
@@ -390,7 +390,7 @@ const countries = [
   },
   {
     value: '234',
-    label: 'France, Italy, Spain &amp; UK',
+    label: 'France, Italy, Spain & UK',
   },
   {
     value: '271',
@@ -454,7 +454,7 @@ const countries = [
   },
   {
     value: '229',
-    label: 'Guinea &amp; Kenya',
+    label: 'Guinea & Kenya',
   },
   {
     value: '71',
@@ -490,7 +490,7 @@ const countries = [
   },
   {
     value: '240',
-    label: 'India, Paraguay, Tanzania &amp; Uganda',
+    label: 'India, Paraguay, Tanzania & Uganda',
   },
   {
     value: '78',
@@ -510,11 +510,11 @@ const countries = [
   },
   {
     value: '246',
-    label: 'Ireland &amp; UK',
+    label: 'Ireland & UK',
   },
   {
     value: '208',
-    label: 'Ireland &amp; UK (Northern Ireland)',
+    label: 'Ireland & UK (Northern Ireland)',
   },
   {
     value: '82',
@@ -546,7 +546,7 @@ const countries = [
   },
   {
     value: '239',
-    label: 'Kenya &amp; Tanzania',
+    label: 'Kenya & Tanzania',
   },
   {
     value: '89',
@@ -726,7 +726,7 @@ const countries = [
   },
   {
     value: '245',
-    label: 'Netherlands &amp; UK',
+    label: 'Netherlands & UK',
   },
   {
     value: '258',
@@ -922,7 +922,7 @@ const countries = [
   },
   {
     value: '235',
-    label: 'South Africa &amp; Zimbabwe',
+    label: 'South Africa & Zimbabwe',
   },
   {
     value: '213',
@@ -938,7 +938,7 @@ const countries = [
   },
   {
     value: '238',
-    label: 'Spain &amp; UK',
+    label: 'Spain & UK',
   },
   {
     value: '161',
@@ -1038,11 +1038,11 @@ const countries = [
   },
   {
     value: '237',
-    label: 'UK &amp; USA',
+    label: 'UK & USA',
   },
   {
     value: '243',
-    label: 'UK (England &amp; Wales)',
+    label: 'UK (England & Wales)',
   },
   {
     value: '201',
