@@ -54,9 +54,6 @@ module.exports = ({ articleRepository, batchRepository }) => {
 
   const updateArticle = async (article) => {
     let entity = cleanArticle(article);
-    if (entity.lastLitSearch) {
-      entity.lastLitSearch = new Date(entity.lastLitSearch);
-    }
     entity = article.type === "sse" ? sseArticle(entity) : hseArticle(entity);
     return await articleRepository.update(article._id, entity);
   };

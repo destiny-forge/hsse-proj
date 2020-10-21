@@ -16,7 +16,6 @@ import TreeView from '../../components/molecules/TreeView';
 import CountryLinks from '../../components/molecules/CountryLinks';
 import ErrorMessage from '../../components/atoms/ErrorMessage';
 
-import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { DateUtils } from 'react-day-picker';
 import dateFnsFormat from 'date-fns/format';
 import dateFnsParse from 'date-fns/parse';
@@ -82,19 +81,6 @@ const ISSUE_YEARS = [...Array(currentYear - 1995)].map((_, i) => {
 
 const languages = { en: '', fr: '' };
 
-function parseDate(str, format, locale) {
-  const parsed = dateFnsParse(str, format, new Date(), { locale });
-  if (DateUtils.isDate(parsed)) {
-    return parsed;
-  }
-  return undefined;
-}
-
-function formatDate(date, format, locale) {
-  return dateFnsFormat(date, format, { locale });
-}
-const DATE_FORMAT = 'yyyy-MM-dd';
-
 class PresentationForm extends React.Component {
   constructor(props) {
     super(props);
@@ -141,8 +127,17 @@ class PresentationForm extends React.Component {
     });
   }
 
-  handleDatePicker = (date) => {
-    this.handleChange('lastLitSearch', date);
+  handleDayMonthYear = (e) => {
+    const { name, value } = e.target;
+    let lastLitSearch = this.state.article.lastLitSearch;
+    if (typeof lastLitSearch !== 'object' || lastLitSearch === null) {
+      lastLitSearch = {};
+    }
+    lastLitSearch = {
+      ...lastLitSearch,
+      [name]: parseInt(value),
+    };
+    this.handleChange('lastLitSearch', lastLitSearch);
   };
 
   handleChange = (field, value) => {
@@ -366,19 +361,6 @@ class PresentationForm extends React.Component {
                 </div>
               </div>
 
-              {/* <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Author Email</label>
-                <div className="col-sm-10">
-                  <input
-                    type="email"
-                    name="authorAddress"
-                    className="form-control"
-                    value={article.authorAddress}
-                    onChange={this.handleTextChange}
-                  />
-                </div>
-              </div> */}
-
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Pub Date</label>
                 <div className="col-sm-10">
@@ -402,19 +384,6 @@ class PresentationForm extends React.Component {
                   />
                 </div>
               </div>
-
-              {/* <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Citation (FR)</label>
-                <div className="col-sm-10">
-                  <textarea
-                    name="citation-fr"
-                    className="form-control"
-                    rows="5"
-                    onChange={this.handleCitationChange}
-                    value={(article.citations && article.citations['fr']) || ''}
-                  />
-                </div>
-              </div> */}
 
               {article.referenceType === 'Journal' && (
                 <React.Fragment>
@@ -642,32 +611,39 @@ class PresentationForm extends React.Component {
                     <label className="col-sm-2 col-form-label">
                       Last Lit Search
                     </label>
-                    <div className="col-sm-4">
-                      <DayPickerInput
+                    <div className="col-sm-2">
+                      <input
+                        name="year"
+                        type="number"
                         className="form-control"
-                        formatDate={formatDate}
-                        format={DATE_FORMAT}
-                        parseDate={parseDate}
-                        placeholder={`${dateFnsFormat(
-                          new Date(),
-                          DATE_FORMAT
-                        )}`}
-                        onDayChange={this.handleDatePicker}
-                        value={parseDate(article.lastLitSearch, DATE_FORMAT)}
+                        value={article.lastLitSearch.year || ''}
+                        onChange={this.handleDayMonthYear}
+                        placeholder="yyyy"
                       />
-
-                      {/* <DatePicker
+                    </div>
+                    <div className="col-sm-2">
+                      <input
+                        name="month"
+                        type="number"
                         className="form-control"
-                        name="lastLitSearch"
-                        dateFormat="yyyy/MM/dd"
-                        selected={
-                          (article.lastLitSearch &&
-                            new Date(article.lastLitSearch)) ||
-                          new Date()
-                        }
-                        onChange={this.handleDatePicker}
-                        value={article.lastLitSearch}
-                      /> */}
+                        value={article.lastLitSearch.month || ''}
+                        onChange={this.handleDayMonthYear}
+                        placeholder="MM"
+                        min="1"
+                        max="12"
+                      />
+                    </div>
+                    <div className="col-sm-2">
+                      <input
+                        name="day"
+                        type="number"
+                        className="form-control"
+                        value={article.lastLitSearch.day || ''}
+                        onChange={this.handleDayMonthYear}
+                        placeholder="dd"
+                        min="1"
+                        max="31"
+                      />
                     </div>
                   </div>
                   <div className="form-group row">
@@ -687,22 +663,6 @@ class PresentationForm extends React.Component {
                   </div>
                 </React.Fragment>
               )}
-
-              {/* <div className="form-group row">
-                <label className="col-sm-2 col-form-label">EPOC Review?</label>
-                <div className="col-sm-10">
-                  <label className="form-check-label">
-                    <input
-                      checked={article.isEpocReview}
-                      type="checkbox"
-                      className="form-check-input"
-                      name="isEpocReview"
-                      onChange={this.handleCheckbox}
-                    />{' '}
-                    EPOC Review
-                  </label>
-                </div>
-              </div> */}
 
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">General</label>
