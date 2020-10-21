@@ -164,6 +164,23 @@ class PresentationForm extends React.Component {
     this.handleChange(name, checked);
   };
 
+  handleProducerChange = (field, value) => {
+    let producer = {
+      ...this.state.article.producer,
+      [field]: value,
+    };
+    this.handleChange('producer', producer);
+  };
+
+  handleProducerCheckbox = (e) => {
+    const { name, checked } = e.target;
+    let producer = {
+      ...this.state.article.producer,
+      [name]: checked,
+    };
+    this.handleChange('producer', producer);
+  };
+
   handleCitationChange = (e) => {
     const { name, value } = e.target;
     let language = name.split('-')[1];
@@ -704,49 +721,68 @@ class PresentationForm extends React.Component {
                 </div>
               </div>
               <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Cochrane?</label>
+                <label className="col-sm-2 col-form-label">Producer?</label>
                 <div className="col-sm-10">
                   <label className="form-check-label">
                     <input
-                      checked={article.isCochrane}
+                      checked={_.get(article, 'producer.cochrane', false)}
                       type="checkbox"
                       className="form-check-input"
-                      name="isCochrane"
-                      onChange={this.handleCheckbox}
+                      name="cochrane"
+                      onChange={this.handleProducerCheckbox}
                     />{' '}
                     Cochrane
+                  </label>
+                  <br />
+                  <label className="form-check-label">
+                    <input
+                      checked={_.get(article, 'producer.campbell', false)}
+                      type="checkbox"
+                      className="form-check-input"
+                      name="campbell"
+                      onChange={this.handleProducerCheckbox}
+                    />{' '}
+                    Cambell Library
                   </label>
                   <div className="form-group row sub-form-group">
                     <div className="col-sm-3">
                       <Select
                         value={ISSUES.filter(
-                          (opt) => opt.value === article.cochraneIssue
+                          (opt) =>
+                            opt.value === _.get(article, 'producer.issue', null)
                         )}
-                        name="cochraneIssue"
+                        name="issue"
                         placeholder="Select Issue"
                         onChange={(opt) =>
-                          this.handleChange('cochraneIssue', opt.value)
+                          this.handleProducerChange('issue', opt.value)
                         }
                         options={ISSUES}
                         isSearchable
                         isRequired
-                        isDisabled={!article.isCochrane}
+                        isDisabled={
+                          !_.get(article, 'producer.cochrane', false) &&
+                          !_.get(article, 'producer.campbell', false)
+                        }
                       />
                     </div>
                     <div className="col-sm-3">
                       <Select
                         value={ISSUE_YEARS.filter(
-                          (opt) => opt.value === article.cochraneYear
+                          (opt) =>
+                            opt.value === _.get(article, 'producer.year', null)
                         )}
-                        name="cochraneYear"
+                        name="year"
                         placeholder="Select Year"
                         onChange={(opt) =>
-                          this.handleChange('cochraneYear', opt.value)
+                          this.handleProducerChange('year', opt.value)
                         }
                         options={ISSUE_YEARS}
                         isSearchable
                         isRequired
-                        isDisabled={!article.isCochrane}
+                        isDisabled={
+                          !_.get(article, 'producer.cochrane', false) &&
+                          !_.get(article, 'producer.campbell', false)
+                        }
                       />
                     </div>
                   </div>
