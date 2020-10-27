@@ -82,6 +82,7 @@ module.exports = ({
       ...body,
       approvedBy: user._id,
     };
+    console.log(translation);
     createUseCase
       .create(translation)
       .then((data) => {

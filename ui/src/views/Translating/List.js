@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Translation = ({ article, language, edit }) => (
+const Translation = ({ article, text, edit }) => (
   <tr key={article.shortId}>
     <td>
-      <button onClick={() => edit(article.shortId)}>Edit</button>
+      <button onClick={() => edit(article._id, text)}>Edit</button>
     </td>
     <td>{article.shortId}</td>
     <td>{article.title}</td>
-    <td>{article.titles[language]}</td>
+    <td>{text}</td>
     <td>{article.title.split(' ').length}</td>
   </tr>
 );
 
-const EditTranslation = ({ article, language, change, cancel, update }) => (
+const EditTranslation = ({ article, text, change, cancel, update }) => (
   <tr key={article.shortId}>
     <td>
       <button onClick={() => cancel()}>Cancel</button>
@@ -24,7 +24,7 @@ const EditTranslation = ({ article, language, change, cancel, update }) => (
         className="form-control"
         rows="5"
         onChange={change}
-        value={article.titles[language]}
+        value={text}
       />
       <div
         style={{
@@ -41,18 +41,25 @@ const EditTranslation = ({ article, language, change, cancel, update }) => (
   </tr>
 );
 
-const List = ({ articles = [], language, onUpdate }) => {
+const List = ({ articles = [], language, priority, onUpdate, onSearch }) => {
   const [active, setActive] = useState(null);
   const [text, setText] = useState('');
 
-  const edit = (shortId) => setActive(shortId);
+  const edit = (articleId, text) => {
+    setText(text);
+    setActive(articleId);
+  };
   const cancel = () => setActive(null);
   const change = (e) => setText(e.target.value);
 
   const update = (approve) => {
-    onUpdate(active, text, approve);
     cancel(active);
+    onUpdate(active, language, text, approve);
   };
+
+  useEffect(() => {
+    onSearch(language);
+  }, [language, priority]);
 
   return (
     <div className="box">
@@ -69,10 +76,13 @@ const List = ({ articles = [], language, onUpdate }) => {
           </thead>
           <tbody>
             {articles.map((article) => {
-              return article.shortId === active ? (
+              const translatedTitle =
+                (article.titles[language] && article.titles[language].text) ||
+                '';
+              return article._id === active ? (
                 <EditTranslation
                   article={article}
-                  language={language}
+                  text={text}
                   change={change}
                   cancel={cancel}
                   update={update}
@@ -81,7 +91,7 @@ const List = ({ articles = [], language, onUpdate }) => {
               ) : (
                 <Translation
                   article={article}
-                  language={language}
+                  text={translatedTitle}
                   edit={edit}
                   key={article.shortId}
                 />

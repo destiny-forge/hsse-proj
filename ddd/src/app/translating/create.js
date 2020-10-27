@@ -3,14 +3,7 @@
  */
 module.exports = ({ articleRepository }) => {
   const create = async (translation) => {
-    const {
-      articleId,
-      language,
-      text,
-      title,
-      approved,
-      approvedBy,
-    } = translation;
+    const { articleId, language, text, approved, approvedBy } = translation;
     try {
       if (!articleId) {
         return {
@@ -30,13 +23,7 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      if (!title) {
-        return {
-          error: "A valid title is required",
-        };
-      }
-
-      if (!approved) {
+      if (approved === null) {
         return {
           error: "A valid approved boolean is required",
         };
@@ -56,7 +43,7 @@ module.exports = ({ articleRepository }) => {
         approvedBy
       );
     } catch (error) {
-      //console.log(error);
+      console.log(error);
       throw new Error(error);
     }
   };

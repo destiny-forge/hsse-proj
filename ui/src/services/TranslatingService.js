@@ -16,7 +16,16 @@ const TranslatingService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
+  const create = async (articleId, language, text, approved) => {
+    const res = await fetch('/translating', {
+      method: 'POST',
+      body: JSON.stringify({ articleId, language, text, approved }),
+    });
+    return Promise.resolve(res);
+  };
+
   return {
+    create,
     list,
   };
 };

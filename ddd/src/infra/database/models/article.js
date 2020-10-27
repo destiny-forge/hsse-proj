@@ -69,10 +69,6 @@ module.exports = ({ database }) => {
   };
 
   const findByLanguage = async (type, language, priority, status) => {
-    console.log("type=" + type);
-    console.log("language=" + language);
-    console.log("priority=" + priority);
-    console.log("status=" + status);
     const filters = Array.isArray(status) ? { $in: status } : status;
     try {
       return await database
@@ -80,9 +76,12 @@ module.exports = ({ database }) => {
         .collection("articles")
         .find({
           type: { $eq: type },
-          //titles: { [language]: { $eq: language }, approved: false },
           priority: { $eq: priority },
           status: filters,
+          $or: [
+            { [`titles.${language}`]: { $exists: false } },
+            { [`titles.${language}.approved`]: false },
+          ],
         })
         .toArray();
     } catch (e) {
@@ -358,6 +357,8 @@ module.exports = ({ database }) => {
           approvedBy: approved ? ObjectID(approvedBy) : null,
         },
       };
+
+      console.log(fields);
 
       const cmdResult = await database
         .get()

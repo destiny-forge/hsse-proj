@@ -18,10 +18,13 @@ class PresentationDetails extends React.Component {
       type,
       articles: [],
       priority: 'high',
+      language: null,
     };
 
     this.Article = ArticleService({ fetch: this.props.fetch });
     this.Translating = TranslatingService({ fetch: this.props.fetch });
+    this.updateTranslation = this.updateTranslation.bind(this);
+    this.search = this.search.bind(this);
   }
 
   handleChange = (e) => {
@@ -33,29 +36,52 @@ class PresentationDetails extends React.Component {
   };
 
   handleRadio(language, priority) {
-    const { type } = this.state;
     this.setState({ priority });
-    console.log(language, priority);
-    this.search(type, language, priority);
+    this.search(language);
   }
 
-  handleDocType(documentType) {
-    const { type, filter } = this.state;
-    this.setState({ documentType });
-    this.searchByDocType(type, filter, documentType);
+  search(language) {
+    // we don't need to edit translations for english docs
+    if (language !== 'en') {
+      const { type, priority } = this.state;
+      this.Translating.list(type, language, priority).then((res) => {
+        if (res.data != null) {
+          const articles = res.data;
+          this.setState({ articles });
+        }
+      });
+    }
   }
 
-  search(type, language, priority) {
-    this.Translating.list(type, language, priority).then((res) => {
+  updateTranslation(articleId, language, text, approved) {
+    this.Translating.create(articleId, language, text, approved).then((res) => {
       if (res.data != null) {
-        const articles = res.data;
+        let articles = [...this.state.articles];
+
+        if (!approved) {
+          const article = articles.find((article) => article._id === articleId);
+
+          if (article.titles.hasOwnProperty(language)) {
+            article.titles[language].text = text;
+          } else {
+            article.titles = {
+              ...article.titles,
+              [language]: {
+                text,
+              },
+            };
+          }
+        } else {
+          articles = articles.filter((article) => article._id !== articleId);
+        }
+
         this.setState({ articles });
       }
     });
   }
 
   render() {
-    const { priority, articles } = this.state;
+    const { type, priority, articles } = this.state;
     return (
       <LanguageConsumer>
         {({ language }) => (
@@ -98,17 +124,17 @@ class PresentationDetails extends React.Component {
               </div>
             </div>
 
-            {articles && articles.length > 0 && (
-              <div className="box">
-                <div className="box-body">
-                  <List
-                    articles={articles}
-                    language={language}
-                    onUpdate={console.log}
-                  />
-                </div>
+            <div className="box">
+              <div className="box-body">
+                <List
+                  articles={articles}
+                  language={language}
+                  priority={priority}
+                  onUpdate={this.updateTranslation}
+                  onSearch={this.search}
+                />
               </div>
-            )}
+            </div>
           </div>
         )}
       </LanguageConsumer>
