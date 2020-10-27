@@ -15,12 +15,6 @@ import EligibilityService from '../../services/EligibilityService';
 import TreeView from '../../components/molecules/TreeView';
 import CountryLinks from '../../components/molecules/CountryLinks';
 import ErrorMessage from '../../components/atoms/ErrorMessage';
-
-import { DateUtils } from 'react-day-picker';
-import dateFnsFormat from 'date-fns/format';
-import dateFnsParse from 'date-fns/parse';
-import 'react-day-picker/lib/style.css';
-
 import 'react-toastify/dist/ReactToastify.min.css';
 import PDFUploadLinks from '../../components/atoms/PDFUploadLinks';
 

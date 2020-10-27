@@ -24,11 +24,13 @@ import StudyForm from './views/Studies/Form';
 import StudyList from './views/Studies/List';
 import PresentationDetails from './views/Presentation/Details';
 import PresentationForm from './views/Presentation/Form';
+import TranslatingDetails from './views/Translating/Details';
+import { LanguageProvider } from './components/molecules/Language';
 
 class App extends Component {
   render() {
     return (
-      <React.Fragment>
+      <LanguageProvider>
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -69,6 +71,7 @@ class App extends Component {
             <Route path="/:type/appraisals" component={TabView} />
             <Route path="/:type/studies" component={TabView} />
             <Route path="/:type/presentation" component={PresentationDetails} />
+            <Route path="/:type/translating" component={TranslatingDetails} />
 
             <Route
               path="/eligibility/:type/:shortId"
@@ -95,7 +98,7 @@ class App extends Component {
             <Route path="/notes" component={Notes} />
           </Switch>
         </Router>
-      </React.Fragment>
+      </LanguageProvider>
     );
   }
 }

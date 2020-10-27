@@ -68,6 +68,27 @@ module.exports = ({ database }) => {
     }
   };
 
+  const findByLanguage = async (type, language, priority, status) => {
+    const filters = Array.isArray(status) ? { $in: status } : status;
+    try {
+      return await database
+        .get()
+        .collection("articles")
+        .find({
+          type: { $eq: type },
+          priority: { $eq: priority },
+          status: filters,
+          $or: [
+            { [`titles.${language}`]: { $exists: false } },
+            { [`titles.${language}.approved`]: false },
+          ],
+        })
+        .toArray();
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const findByBatch = async (batchId, stage, status) => {
     const filters = Array.isArray(status) ? { $in: status } : status;
     try {
@@ -320,6 +341,36 @@ module.exports = ({ database }) => {
     }
   };
 
+  const updateTranslation = async (
+    articleId,
+    language,
+    text,
+    approved,
+    approvedBy
+  ) => {
+    try {
+      const key = `titles.${language}`;
+      const fields = {
+        [key]: {
+          text,
+          approved,
+          approvedBy: approved ? ObjectID(approvedBy) : null,
+        },
+      };
+
+      console.log(fields);
+
+      const cmdResult = await database
+        .get()
+        .collection("articles")
+        .updateOne({ _id: { $eq: ObjectID(articleId) } }, { $set: fields });
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const update = async (id, fields) => {
     try {
       const cmdResult = await database
@@ -394,8 +445,10 @@ module.exports = ({ database }) => {
     update,
     updateStage,
     updateStageCoderStatus,
+    updateTranslation,
     findByBatch,
     findByBatchAndDocTypes,
+    findByLanguage,
     aggregate,
     createIndexes,
     migrate,

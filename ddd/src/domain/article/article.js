@@ -110,26 +110,32 @@ const Article = t.struct(
     translatedTitle: t.maybe(t.String),
     nameOfDatabase: t.maybe(t.String),
     databaseProvider: t.maybe(t.String),
+
+    priority: t.maybe(t.String),
+
+    // translating fields
+    titles: t.maybe(t.Object),
   },
   {
     defaultProps: {
       source: "Single article from referrals",
-      language: "English",
+      language: "en",
       complicated: false,
       lost: false,
       status: "New Article",
       rating: "AMSTAR rating from McMaster Health Forum",
+      priority: "low",
       stages: {
         eligibility: { status: "New Article" },
         studies: { status: "New Article" },
         appraisals: { status: "New Article" },
         prioritizing: { status: "New Article" },
-        translations: { status: "New Article" },
       },
       producer: {},
       filters: [],
       questions: [],
       countryLinks: {},
+      titles: {},
     },
   }
 );

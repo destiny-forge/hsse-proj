@@ -4,12 +4,12 @@ import Dropzone from 'react-dropzone-uploader';
 import BatchService from '../../services/BatchService';
 
 const LANGUAGES = [
-  { value: 'EN', label: 'English' },
-  { value: 'AR', label: 'Arabic' },
-  { value: 'CN', label: 'Chinese' },
-  { value: 'ES', label: 'Spanish' },
-  { value: 'FR', label: 'French' },
-  { value: 'PT', label: 'Portugese' },
+  { value: 'en', label: 'English' },
+  { value: 'ar', label: 'Arabic' },
+  { value: 'cn', label: 'Chinese' },
+  { value: 'es', label: 'Spanish' },
+  { value: 'fr', label: 'French' },
+  { value: 'pt', label: 'Portugese' },
 ];
 
 const PDFUploadLinks = ({ title, type, items = {}, svcFetch, onUpdate }) => {
