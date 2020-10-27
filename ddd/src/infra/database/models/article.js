@@ -371,24 +371,6 @@ module.exports = ({ database }) => {
     }
   };
 
-  const approveTranslation = async (articleId, language, approvedBy) => {
-    try {
-      const fields = [
-        { [`titles.${language}.approved`]: true },
-        { [`titles.${language}.approvedBy`]: ObjectID(approvedBy) },
-      ];
-
-      const cmdResult = await database
-        .get()
-        .collection("articles")
-        .updateOne({ _id: { $eq: ObjectID(articleId) } }, { $set: fields });
-      const { result } = cmdResult.toJSON();
-      return result;
-    } catch (e) {
-      throw e;
-    }
-  };
-
   const update = async (id, fields) => {
     try {
       const cmdResult = await database
@@ -464,7 +446,6 @@ module.exports = ({ database }) => {
     updateStage,
     updateStageCoderStatus,
     updateTranslation,
-    approveTranslation,
     findByBatch,
     findByBatchAndDocTypes,
     findByLanguage,

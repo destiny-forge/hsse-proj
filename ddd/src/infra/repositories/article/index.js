@@ -137,14 +137,6 @@ module.exports = ({ model }) => {
     }
   };
 
-  const approveTranslation = async (...args) => {
-    try {
-      return model.approveTranslation(...args);
-    } catch (err) {
-      throw new Error(err);
-    }
-  };
-
   const updateStageCoderStatus = async (...args) => {
     try {
       return model.updateStageCoderStatus(...args);
@@ -191,7 +183,6 @@ module.exports = ({ model }) => {
     findByBatchAndDocTypes,
     findByDocType,
     findByLanguage,
-    approveTranslation,
     updateTranslation,
     aggregate,
     find,
