@@ -27,7 +27,7 @@ const Batch = t.struct(
       language: "English",
       uploaded: new Date(),
       harvested: new Date(),
-      priority: "LOW",
+      priority: "low",
       stages: {
         eligibility: {},
         studies: {},

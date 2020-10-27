@@ -12,7 +12,7 @@ const TranslatingService = ({ fetch }) => {
         priority,
       },
     };
-    const res = await fetch('/translating/list', params);
+    const res = await fetch('/translating', params);
     return Promise.resolve(res);
   };
 

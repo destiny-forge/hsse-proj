@@ -36,7 +36,7 @@ class PresentationDetails extends React.Component {
     const { type } = this.state;
     this.setState({ priority });
     console.log(language, priority);
-    //this.search(type, language, priority);
+    this.search(type, language, priority);
   }
 
   handleDocType(documentType) {
@@ -65,6 +65,7 @@ class PresentationDetails extends React.Component {
                 <div>
                   <div className="row">
                     <div className="col-sm-10">
+                      Select articles to list:
                       <div className="form-check">
                         <label className="form-check-label">
                           <input
@@ -100,7 +101,11 @@ class PresentationDetails extends React.Component {
             {articles && articles.length > 0 && (
               <div className="box">
                 <div className="box-body">
-                  <List articles={articles} onEdit={this.loadEditForm} />
+                  <List
+                    articles={articles}
+                    language={language}
+                    onUpdate={console.log}
+                  />
                 </div>
               </div>
             )}

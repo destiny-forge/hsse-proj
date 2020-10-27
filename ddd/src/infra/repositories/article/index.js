@@ -71,6 +71,22 @@ module.exports = ({ model }) => {
     }
   };
 
+  const findByLanguage = async (type, language, priority, status) => {
+    try {
+      const articles = await model.findByLanguage(
+        type,
+        language,
+        priority,
+        status
+      );
+      return articles.map((article) => {
+        return toEntity(article);
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const aggregate = async (type, stage, status, docTypes, optMatches) => {
     try {
       const articles = await model.aggregate(
@@ -108,6 +124,22 @@ module.exports = ({ model }) => {
   const updateStage = async (...args) => {
     try {
       return model.updateStage(...args);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
+  const updateTranslation = async (...args) => {
+    try {
+      return model.updateTranslation(...args);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
+  const approveTranslation = async (...args) => {
+    try {
+      return model.approveTranslation(...args);
     } catch (err) {
       throw new Error(err);
     }
@@ -158,6 +190,9 @@ module.exports = ({ model }) => {
     findByBatch,
     findByBatchAndDocTypes,
     findByDocType,
+    findByLanguage,
+    approveTranslation,
+    updateTranslation,
     aggregate,
     find,
     assign,

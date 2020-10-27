@@ -111,6 +111,8 @@ const Article = t.struct(
     nameOfDatabase: t.maybe(t.String),
     databaseProvider: t.maybe(t.String),
 
+    priority: t.maybe(t.String),
+
     // translating fields
     titles: t.maybe(t.Object),
   },

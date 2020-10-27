@@ -69,6 +69,10 @@ module.exports = ({ database }) => {
   };
 
   const findByLanguage = async (type, language, priority, status) => {
+    console.log("type=" + type);
+    console.log("language=" + language);
+    console.log("priority=" + priority);
+    console.log("status=" + status);
     const filters = Array.isArray(status) ? { $in: status } : status;
     try {
       return await database
@@ -77,7 +81,7 @@ module.exports = ({ database }) => {
         .find({
           type: { $eq: type },
           //titles: { [language]: { $eq: language }, approved: false },
-          priorioty: { $eq: priority },
+          priority: { $eq: priority },
           status: filters,
         })
         .toArray();
@@ -338,6 +342,52 @@ module.exports = ({ database }) => {
     }
   };
 
+  const updateTranslation = async (
+    articleId,
+    language,
+    text,
+    approved,
+    approvedBy
+  ) => {
+    try {
+      const key = `titles.${language}`;
+      const fields = {
+        [key]: {
+          text,
+          approved,
+          approvedBy: approved ? ObjectID(approvedBy) : null,
+        },
+      };
+
+      const cmdResult = await database
+        .get()
+        .collection("articles")
+        .updateOne({ _id: { $eq: ObjectID(articleId) } }, { $set: fields });
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const approveTranslation = async (articleId, language, approvedBy) => {
+    try {
+      const fields = [
+        { [`titles.${language}.approved`]: true },
+        { [`titles.${language}.approvedBy`]: ObjectID(approvedBy) },
+      ];
+
+      const cmdResult = await database
+        .get()
+        .collection("articles")
+        .updateOne({ _id: { $eq: ObjectID(articleId) } }, { $set: fields });
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const update = async (id, fields) => {
     try {
       const cmdResult = await database
@@ -412,6 +462,8 @@ module.exports = ({ database }) => {
     update,
     updateStage,
     updateStageCoderStatus,
+    updateTranslation,
+    approveTranslation,
     findByBatch,
     findByBatchAndDocTypes,
     findByLanguage,
