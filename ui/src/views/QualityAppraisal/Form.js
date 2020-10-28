@@ -165,7 +165,7 @@ class AppraisalForm extends React.Component {
         this.Appraisal.create(formData)
           .then((res) => {
             this.props.history.replace(
-              `/batch/articles/appraisals/${article.batchId}`
+              `/batch/articles/appraisals/${article.batchId}?t=${Date.now()}`
             );
             this.notifyDone();
           })
