@@ -358,8 +358,6 @@ module.exports = ({ database }) => {
         },
       };
 
-      console.log(fields);
-
       const cmdResult = await database
         .get()
         .collection("articles")
