@@ -48,6 +48,8 @@ class PresentationDetails extends React.Component {
           this.setState({ articles });
         }
       });
+    } else {
+      this.setState({ articles: [] });
     }
   }
 
