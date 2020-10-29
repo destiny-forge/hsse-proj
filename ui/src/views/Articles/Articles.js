@@ -44,6 +44,10 @@ class Articles extends React.Component {
   };
 
   componentDidMount() {
+    this.getData();
+  }
+
+  getData() {
     const { shortId, stage } = this.props.match.params;
 
     this.Article.getArticlesByBatch(shortId, stage)

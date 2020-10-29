@@ -175,8 +175,9 @@ class Conflicts extends React.Component {
     this.Appraisal.resolve(article._id).then((_result) => {
       this.notifyDone();
       this.props.history.replace(
-        `/batch/articles/appraisals/${article.batchId}?t=${Date.now()}`
+        `/batch/articles/appraisals/${article.batchId}`
       );
+      window.location.reload();
     });
   };
 
