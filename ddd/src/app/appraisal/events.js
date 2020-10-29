@@ -1,6 +1,7 @@
 const Stage = require("../article/stage");
 const Diff = require("./compare");
 const ObjectID = require("mongodb").ObjectID;
+const _ = require("lodash");
 
 /**
  * Appraisal related event handlers

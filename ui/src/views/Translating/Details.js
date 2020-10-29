@@ -4,9 +4,7 @@ import withAuth from '../withAuth';
 import ArticleService from '../../services/ArticleService';
 import TranslatingService from '../../services/TranslatingService';
 import List from './List';
-import { toast } from 'react-toastify';
 import { LanguageConsumer } from '../../components/molecules/Language';
-import 'react-toastify/dist/ReactToastify.min.css';
 
 class PresentationDetails extends React.Component {
   constructor(props) {
@@ -81,7 +79,7 @@ class PresentationDetails extends React.Component {
   }
 
   render() {
-    const { type, priority, articles } = this.state;
+    const { priority, articles } = this.state;
     return (
       <LanguageConsumer>
         {({ language }) => (
