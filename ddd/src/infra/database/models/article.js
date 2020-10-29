@@ -77,7 +77,7 @@ module.exports = ({ database }) => {
         .find({
           type: { $eq: type },
           priority: { $eq: priority },
-          status: filters,
+          ["stages.eligibility.status"]: "Complete",
           $or: [
             { [`titles.${language}`]: { $exists: false } },
             { [`titles.${language}.approved`]: false },
