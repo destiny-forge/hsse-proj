@@ -2,8 +2,8 @@ sudo: required
 services:
   - docker
 
-# before_install:
-#   - docker build -t destinyforge/hsse-admin-client-test -f ./ui/Dockerfile ./ui
+before_install:
+  - docker build -t destinyforge/hsse-admin-client-test -f ./ui/Dockerfile ./ui
 
 script:
   - docker ps -a
