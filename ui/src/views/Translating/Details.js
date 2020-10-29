@@ -81,7 +81,7 @@ class PresentationDetails extends React.Component {
   }
 
   render() {
-    const { type, priority, articles } = this.state;
+    const { priority, articles } = this.state;
     return (
       <LanguageConsumer>
         {({ language }) => (
