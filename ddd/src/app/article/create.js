@@ -43,7 +43,7 @@ module.exports = ({ articleRepository, batchRepository }) => {
     article.shortId = shortid.generate();
 
     article.published = article.published
-      ? new Date(article.published, 1, 1)
+      ? new Date(article.published)
       : new Date();
 
     const entity =
@@ -54,6 +54,7 @@ module.exports = ({ articleRepository, batchRepository }) => {
 
   const updateArticle = async (article) => {
     let entity = cleanArticle(article);
+
     if (entity.published) {
       entity.published = new Date(entity.published);
     }

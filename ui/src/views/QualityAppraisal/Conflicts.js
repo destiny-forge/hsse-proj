@@ -177,6 +177,7 @@ class Conflicts extends React.Component {
       this.props.history.replace(
         `/batch/articles/appraisals/${article.batchId}`
       );
+      window.location.reload();
     });
   };
 

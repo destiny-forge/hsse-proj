@@ -171,6 +171,7 @@ class EligibilityForm extends React.Component {
             this.props.history.replace(
               `/batch/articles/eligibility/${article.batchId}`
             );
+            window.location.reload();
             this.notifyDone();
           })
           .catch((err) => {
@@ -205,6 +206,7 @@ class EligibilityForm extends React.Component {
         this.props.history.replace(
           `/batch/articles/eligibility/${article.batchId}`
         );
+        window.location.reload();
         this.notifyDone();
       } else {
         this.getData();

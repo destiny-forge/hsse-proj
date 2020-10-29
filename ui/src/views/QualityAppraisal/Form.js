@@ -167,6 +167,7 @@ class AppraisalForm extends React.Component {
             this.props.history.replace(
               `/batch/articles/appraisals/${article.batchId}`
             );
+            window.location.reload();
             this.notifyDone();
           })
           .catch((err) => {

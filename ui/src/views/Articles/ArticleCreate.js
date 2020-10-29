@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import YearPicker from 'react-year-picker';
+import DatePicker from 'react-datepicker';
 import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import ArticleService from '../../services/ArticleService';
 import validate from './validate';
 import { toast } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.min.css';
+import 'react-datepicker/dist/react-datepicker.css';
+
+const CustomDatePickerInput = ({ value, onClick }) => (
+  <input className="form-control" onClick={onClick} value={value} />
+);
 
 class ArticleCreate extends Component {
   constructor(props) {
@@ -18,7 +24,7 @@ class ArticleCreate extends Component {
         journal: '',
         type: '',
         source: 'Single article from referrals',
-        published: new Date().getFullYear(),
+        published: new Date(),
       },
       errors: [],
     };
@@ -39,9 +45,10 @@ class ArticleCreate extends Component {
     });
   };
 
-  handlePublished = (year) => {
+  handlePublished = (date) => {
+    const published = new Date(date.getFullYear(), 0, 1);
     this.setState({
-      article: { ...this.state.article, published: year },
+      article: { ...this.state.article, published },
     });
   };
 
@@ -71,7 +78,7 @@ class ArticleCreate extends Component {
   };
 
   render() {
-    const { source } = this.state.article;
+    const { source, published } = this.state.article;
 
     return (
       <div className="padding">
@@ -115,7 +122,7 @@ class ArticleCreate extends Component {
                 </div>
               </div>
               <div className="form-group form-row">
-                <div className="col-md-2">
+                <div className="col-md-3">
                   <label htmlFor="source" className="d-block">
                     Type
                   </label>
@@ -135,9 +142,16 @@ class ArticleCreate extends Component {
                 </div>
               </div>
               <div className="form-group form-row">
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <label htmlFor="published">Published Year</label>
-                  <YearPicker name="year" onChange={this.handlePublished} />
+                  <DatePicker
+                    name="year"
+                    selected={published}
+                    onChange={this.handlePublished}
+                    showYearPicker
+                    dateFormat="yyyy"
+                    customInput={<CustomDatePickerInput />}
+                  />
                 </div>
               </div>
               <div className="form-group form-row">
