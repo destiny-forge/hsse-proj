@@ -395,40 +395,39 @@ module.exports = ({ database }) => {
   };
 
   const migrate = () => {
-    const collection = database.get().collection("articles");
-    collection.updateMany(
-      { stages: { $exists: false } },
-      {
-        $set: {
-          stages: {
-            eligibility: { status: "New Article" },
-            studies: { status: "New Article" },
-            appraisals: { status: "New Article" },
-            prioritizing: { status: "New Article" },
-            translations: { status: "New Article" },
-          },
-        },
-      },
-      { multi: true }
-    );
-    collection.updateMany(
-      { status: { $exists: false } },
-      {
-        $set: {
-          status: "New Article",
-        },
-      },
-      { multi: true }
-    );
-    collection.updateMany(
-      { batchName: { $exists: false } },
-      {
-        $set: {
-          batchName: "",
-        },
-      },
-      { multi: true }
-    );
+    // Sample migration - not currently needed
+    // const collection = database.get().collection("articles");
+    // collection.updateMany(
+    //   { stages: { $exists: false } },
+    //   {
+    //     $set: {
+    //       stages: {
+    //         eligibility: { status: "New Article" },
+    //         studies: { status: "New Article" },
+    //         appraisals: { status: "New Article" },
+    //       },
+    //     },
+    //   },
+    //   { multi: true }
+    // );
+    // collection.updateMany(
+    //   { status: { $exists: false } },
+    //   {
+    //     $set: {
+    //       status: "New Article",
+    //     },
+    //   },
+    //   { multi: true }
+    // );
+    // collection.updateMany(
+    //   { batchName: { $exists: false } },
+    //   {
+    //     $set: {
+    //       batchName: "",
+    //     },
+    //   },
+    //   { multi: true }
+    // );
   };
 
   return {

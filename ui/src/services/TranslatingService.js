@@ -1,5 +1,5 @@
 /*
- * Presentation service for interacting with the API backend
+ * Translating service for interacting with the backend REST API
  */
 
 const TranslatingService = ({ fetch }) => {

@@ -129,7 +129,6 @@ const Article = t.struct(
         eligibility: { status: "New Article" },
         studies: { status: "New Article" },
         appraisals: { status: "New Article" },
-        prioritizing: { status: "New Article" },
       },
       producer: {},
       filters: [],
