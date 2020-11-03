@@ -40,8 +40,8 @@ const EditLinkTable = ({
         <thead>
           <tr>
             <th></th>
-            <th>Link Name</th>
-            <th>Link URL</th>
+            <th>Name</th>
+            <th>URL</th>
           </tr>
         </thead>
         <tbody>

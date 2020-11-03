@@ -405,23 +405,6 @@ class PresentationForm extends React.Component {
                   />
                 </div>
               </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">
-                  Citation (EN)
-                  <button onClick={() => this.buildCitation('en')}>
-                    build
-                  </button>
-                </label>
-                <div className="col-sm-10">
-                  <textarea
-                    name="citation-en"
-                    className="form-control"
-                    rows="5"
-                    onChange={this.handleCitationChange}
-                    value={(article.citations && article.citations['en']) || ''}
-                  />
-                </div>
-              </div>
 
               {article.referenceType === 'Journal' && (
                 <React.Fragment>
@@ -485,6 +468,7 @@ class PresentationForm extends React.Component {
                   />
                 </div>
               </div>
+
               {article.referenceType === 'Book (Chapter)' && (
                 <React.Fragment>
                   <div className="form-group row">
@@ -523,6 +507,25 @@ class PresentationForm extends React.Component {
                   </div>
                 </React.Fragment>
               )}
+
+              <div className="form-group row">
+                <label className="col-sm-2 col-form-label">
+                  Citation (EN)
+                  <button onClick={() => this.buildCitation('en')}>
+                    build
+                  </button>
+                </label>
+                <div className="col-sm-10">
+                  <textarea
+                    name="citation-en"
+                    className="form-control"
+                    rows="5"
+                    onChange={this.handleCitationChange}
+                    value={(article.citations && article.citations['en']) || ''}
+                  />
+                </div>
+              </div>
+
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Abstract</label>
                 <div className="col-sm-10">
@@ -799,7 +802,7 @@ class PresentationForm extends React.Component {
                 />
 
                 <EditLinkTable
-                  title="Hyperlinks"
+                  title="Full Text Report"
                   field="hyperlinks"
                   items={Object.assign(languages, article.hyperlinks)}
                   onUpdate={this.handleLinkUpdate}
@@ -816,6 +819,7 @@ class PresentationForm extends React.Component {
                     field="abstracts"
                     items={Object.assign(abstracts, article.abstracts)}
                     onUpdate={this.handleLinkUpdate}
+                    isTestable={true}
                   />
 
                   <EditLinkTable
@@ -823,6 +827,7 @@ class PresentationForm extends React.Component {
                     field="summaries"
                     items={Object.assign(summaries, article.summaries)}
                     onUpdate={this.handleLinkUpdate}
+                    isTestable={true}
                   />
                 </React.Fragment>
               )}
