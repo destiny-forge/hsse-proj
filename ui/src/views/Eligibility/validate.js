@@ -15,16 +15,18 @@ export default (eligibility, filters) =>
       errors.questionType = 'Question type is required';
     }
 
-    if (eligibility.type === 'hse') {
-      HSE_VALIDATIONS.forEach((validation) => {
-        validateKeyFilters(filters, validation, errors);
-      });
-    }
+    if (eligibility.documentType.indexOf('No,') === -1) {
+      if (eligibility.type === 'hse') {
+        HSE_VALIDATIONS.forEach((validation) => {
+          validateKeyFilters(filters, validation, errors);
+        });
+      }
 
-    if (eligibility.type === 'sse') {
-      SSE_VALIDATIONS.forEach((validation) => {
-        validateFilters(eligibility.filters, validation, errors);
-      });
+      if (eligibility.type === 'sse') {
+        SSE_VALIDATIONS.forEach((validation) => {
+          validateFilters(eligibility.filters, validation, errors);
+        });
+      }
     }
 
     if (_.isEmpty(errors)) {
