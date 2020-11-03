@@ -383,6 +383,18 @@ class PresentationForm extends React.Component {
                 </div>
               </div>
               <div className="form-group row">
+                <label className="col-sm-2 col-form-label">Notes</label>
+                <div className="col-sm-10">
+                  <textarea
+                    className="form-control"
+                    rows="5"
+                    name="notes"
+                    onChange={this.handleTextChange}
+                    value={article.notes}
+                  />
+                </div>
+              </div>
+              <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Authors</label>
                 <div className="col-sm-10">
                   <textarea
