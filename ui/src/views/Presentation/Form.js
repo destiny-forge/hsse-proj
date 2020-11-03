@@ -254,14 +254,15 @@ class PresentationForm extends React.Component {
       editors || '[editors]'
     }. ${pubPlace || '[pubPlace]'}, ${publisher || '[publisher]'}, ${
       ePubDate || '[ePubDate]'
-    }; ${startPage || '[startPage]'}-${endPage || '[endPage]'}`;
+    }; ${startPage || '[startPage]'}-${endPage || '[endPage]'}.`;
+
     const journalCitation = `${authors || '[authors]'}. ${
       title || '[title]'
     }. ${journal || '[journal]'}. ${ePubDate || '[ePubDate]'}; ${
       volume || '[volume]'
     } (${issue || '[issue]'}): ${startPage || '[startPage]'}-${
       endPage || '[endPage]'
-    }`;
+    }.`;
 
     const newCitations = {
       ...citations,
