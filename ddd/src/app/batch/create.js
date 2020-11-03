@@ -25,10 +25,13 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
         };
       }
 
+      const language = getLanguage(batch.language);
+
       // Create batch
       batch.uploaded = new Date();
       batch.harvested = new Date(batch.harvested);
       batch.shortId = shortid.generate();
+      batch.name = `${batch.name} [${language}]`;
 
       const entity = Batch(batch);
       const newBatch = await batchRepository.create(entity);
@@ -42,11 +45,9 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
         return shortid.generate();
       });
 
-      const language = getLanguage(batch.language);
-
       const result = articles.map(async (article, index) => {
         article.batchId = new ObjectID(newBatch._id);
-        article.batchName = `${batch.name} [${language}]`;
+        article.batchName = batch.name;
         article.published = new Date(batch.uploaded);
         article.harvested = new Date(batch.harvested);
         article.status = "New Article";
