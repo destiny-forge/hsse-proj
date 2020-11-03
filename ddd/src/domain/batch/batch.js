@@ -24,7 +24,7 @@ const Batch = t.struct(
   },
   {
     defaultProps: {
-      language: "English",
+      language: "en",
       uploaded: new Date(),
       harvested: new Date(),
       priority: "low",
@@ -32,8 +32,6 @@ const Batch = t.struct(
         eligibility: {},
         studies: {},
         appraisals: {},
-        prioritizing: {},
-        translations: {},
       },
     },
   }
