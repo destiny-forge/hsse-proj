@@ -67,6 +67,14 @@ const ISSUES = [...Array(11)].map((_, i) => {
   return { label: text, value: i + 1 };
 });
 
+const MONTHS = [...Array(12)].map((_, i) => {
+  return { label: i + 1, value: i + 1 };
+});
+
+const DAYS = [...Array(31)].map((_, i) => {
+  return { label: i + 1, value: i + 1 };
+});
+
 const currentYear = new Date().getFullYear();
 const ISSUE_YEARS = [...Array(currentYear - 1995)].map((_, i) => {
   const year = `${currentYear - i}`;
@@ -681,27 +689,39 @@ class PresentationForm extends React.Component {
                       />
                     </div>
                     <div className="col-sm-2">
-                      <input
+                      <Select
+                        value={MONTHS.filter(
+                          (opt) =>
+                            opt.value ===
+                            _.get(article.lastLitSearch, 'month', '')
+                        )}
                         name="month"
-                        type="number"
-                        className="form-control"
-                        value={_.get(article.lastLitSearch, 'month', '')}
-                        onChange={this.handleDayMonthYear}
                         placeholder="MM"
-                        min="1"
-                        max="12"
+                        onChange={(opt) =>
+                          this.handleDayMonthYear({
+                            target: { name: 'month', value: opt.value },
+                          })
+                        }
+                        options={MONTHS}
+                        isRequired
                       />
                     </div>
                     <div className="col-sm-2">
-                      <input
+                      <Select
+                        value={DAYS.filter(
+                          (opt) =>
+                            opt.value ===
+                            _.get(article.lastLitSearch, 'day', '')
+                        )}
                         name="day"
-                        type="number"
-                        className="form-control"
-                        value={_.get(article.lastLitSearch, 'day', '')}
-                        onChange={this.handleDayMonthYear}
                         placeholder="dd"
-                        min="1"
-                        max="31"
+                        onChange={(opt) =>
+                          this.handleDayMonthYear({
+                            target: { name: 'day', value: opt.value },
+                          })
+                        }
+                        options={DAYS}
+                        isRequired
                       />
                     </div>
                   </div>
