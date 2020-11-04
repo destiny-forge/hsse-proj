@@ -580,19 +580,6 @@ class PresentationForm extends React.Component {
                 <React.Fragment>
                   <div className="form-group row">
                     <label className="col-sm-2 col-form-label">
-                      Unique ID (DOI)
-                    </label>
-                    <div className="col-sm-10">
-                      <input
-                        name="DOI"
-                        className="form-control"
-                        value={article.DOI}
-                        onChange={this.handleTextChange}
-                      />
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    <label className="col-sm-2 col-form-label">
                       MeSH Terms
                     </label>
                     <div className="col-sm-10">
@@ -602,6 +589,19 @@ class PresentationForm extends React.Component {
                         rows="5"
                         onChange={this.handleTextChange}
                         value={article.meshTerms}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">
+                      Unique ID (DOI)
+                    </label>
+                    <div className="col-sm-10">
+                      <input
+                        name="DOI"
+                        className="form-control"
+                        value={article.DOI}
+                        onChange={this.handleTextChange}
                       />
                     </div>
                   </div>
