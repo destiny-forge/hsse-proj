@@ -5,6 +5,7 @@ const shortid = require("shortid");
 
 const { parse } = require("./parse");
 const file = require("./file");
+const { getLanguage } = require("./language");
 
 /**
  * Batch creation
@@ -24,10 +25,16 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
         };
       }
 
+      const language = getLanguage(batch.language);
+
       // Create batch
       batch.uploaded = new Date();
       batch.harvested = new Date(batch.harvested);
       batch.shortId = shortid.generate();
+
+      if (batch.language !== "en") {
+        batch.name = `${batch.name} [${language}]`;
+      }
 
       const entity = Batch(batch);
       const newBatch = await batchRepository.create(entity);

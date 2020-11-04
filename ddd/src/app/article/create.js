@@ -63,6 +63,7 @@ module.exports = ({ articleRepository, batchRepository }) => {
       entity.harvested = new Date(entity.harvested);
     }
     entity = article.type === "sse" ? sseArticle(entity) : hseArticle(entity);
+    delete entity.stages; // tcomb defaults stages which overwrites the value
     return await articleRepository.update(article._id, entity);
   };
 
@@ -74,7 +75,6 @@ module.exports = ({ articleRepository, batchRepository }) => {
       "batchId",
       "batchName",
       "shortId",
-      "lost",
     ];
     return _.omit(article, fieldsToOmit);
   };
