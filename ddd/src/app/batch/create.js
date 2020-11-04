@@ -31,7 +31,10 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
       batch.uploaded = new Date();
       batch.harvested = new Date(batch.harvested);
       batch.shortId = shortid.generate();
-      batch.name = `${batch.name} [${language}]`;
+
+      if (batch.language !== "en") {
+        batch.name = `${batch.name} [${language}]`;
+      }
 
       const entity = Batch(batch);
       const newBatch = await batchRepository.create(entity);
