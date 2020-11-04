@@ -482,44 +482,49 @@ class PresentationForm extends React.Component {
                 </div>
               </div>
 
-              {article.referenceType === 'Book (Chapter)' && (
-                <React.Fragment>
-                  <div className="form-group row">
-                    <label className="col-sm-2 col-form-label">Editors</label>
-                    <div className="col-sm-10">
-                      <textarea
-                        name="editors"
-                        className="form-control"
-                        rows="5"
-                        onChange={this.handleTextChange}
-                        value={article.editors}
-                      />
+              {article.referenceType === 'Book (Chapter)' ||
+                (article.referenceType === 'Book (Whole)' && (
+                  <React.Fragment>
+                    <div className="form-group row">
+                      <label className="col-sm-2 col-form-label">Editors</label>
+                      <div className="col-sm-10">
+                        <textarea
+                          name="editors"
+                          className="form-control"
+                          rows="5"
+                          onChange={this.handleTextChange}
+                          value={article.editors}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-group row">
-                    <label className="col-sm-2 col-form-label">Pub Place</label>
-                    <div className="col-sm-10">
-                      <input
-                        name="pubPlace"
-                        className="form-control"
-                        value={article.pubPlace}
-                        onChange={this.handleTextChange}
-                      />
+                    <div className="form-group row">
+                      <label className="col-sm-2 col-form-label">
+                        Pub Place
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          name="pubPlace"
+                          className="form-control"
+                          value={article.pubPlace}
+                          onChange={this.handleTextChange}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-group row">
-                    <label className="col-sm-2 col-form-label">Publisher</label>
-                    <div className="col-sm-10">
-                      <input
-                        name="publisher"
-                        className="form-control"
-                        value={article.publisher}
-                        onChange={this.handleTextChange}
-                      />
+                    <div className="form-group row">
+                      <label className="col-sm-2 col-form-label">
+                        Publisher
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          name="publisher"
+                          className="form-control"
+                          value={article.publisher}
+                          onChange={this.handleTextChange}
+                        />
+                      </div>
                     </div>
-                  </div>
-                </React.Fragment>
-              )}
+                  </React.Fragment>
+                ))}
 
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">
