@@ -5,6 +5,7 @@ const EditLinkTable = ({
   field,
   items,
   isTestable = false,
+  nameTitle = 'Name',
   onUpdate,
 }) => {
   const [activeKey, setActiveKey] = useState('');
@@ -40,7 +41,7 @@ const EditLinkTable = ({
         <thead>
           <tr>
             <th></th>
-            <th>Name</th>
+            <th>{nameTitle}</th>
             <th>URL</th>
           </tr>
         </thead>

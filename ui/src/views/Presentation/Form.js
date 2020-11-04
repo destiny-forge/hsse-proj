@@ -860,6 +860,7 @@ class PresentationForm extends React.Component {
                 <EditLinkTable
                   title="Full-text report"
                   field="hyperlinks"
+                  nameTitle="Language"
                   items={Object.assign(languages, article.hyperlinks)}
                   onUpdate={this.handleLinkUpdate}
                   isTestable={true}
