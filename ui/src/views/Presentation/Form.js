@@ -804,6 +804,24 @@ class PresentationForm extends React.Component {
                         }
                       />
                     </div>
+                    <div className="col-sm-3">
+                      <input
+                        value={_.get(article, 'producer.articleNumber', '')}
+                        name="articleNumber"
+                        className="form-control"
+                        placeholder="Article #"
+                        onChange={(e) =>
+                          this.handleProducerChange(
+                            'articleNumber',
+                            e.target.value
+                          )
+                        }
+                        disabled={
+                          !_.get(article, 'producer.cochrane', false) &&
+                          !_.get(article, 'producer.campbell', false)
+                        }
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
