@@ -99,6 +99,7 @@ class PresentationForm extends React.Component {
       type,
       loaded: false,
       article: null,
+      errors: {},
     };
 
     this.Article = ArticleService({ fetch: this.props.fetch });
@@ -236,7 +237,10 @@ class PresentationForm extends React.Component {
             console.log(err);
           });
       })
-      .catch((errors) => this.setState({ errors, valid: false }));
+      .catch((errors) => {
+        console.log(errors);
+        this.setState({ errors, valid: false });
+      });
   };
 
   buildCitation = (language) => {
@@ -948,6 +952,21 @@ class PresentationForm extends React.Component {
                 </div>
               </div>
             </fieldset>
+            {Object.keys(errors).length > 0 && (
+              <fieldset>
+                <legend style={{ color: 'red' }}>
+                  Missing Required Fields
+                </legend>
+                <div>Please complete all required fields and re-submit.</div>
+                <div className="box-body">
+                  {Object.keys(errors).map((key) => (
+                    <div key={key}>
+                      <ErrorMessage errors={errors} field={key} />
+                    </div>
+                  ))}
+                </div>
+              </fieldset>
+            )}
             <button
               type="submit"
               onClick={this.handleSave}

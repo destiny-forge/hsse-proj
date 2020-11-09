@@ -79,8 +79,6 @@ const Article = t.struct(
     abstracts: t.maybe(t.Object), // {{"PubMed", ""}, {"Cochrane Library", ""}, ...}
     summaries: t.maybe(t.Object), // {{"Australasian Cochrane Centre Policy Liaison Initiative", ""}, {"Cochrane Library", ""}, ...}
 
-    deletedReason: t.maybe(t.String),
-
     year: t.maybe(t.String),
     date: t.maybe(t.String),
     typeOfArticle: t.maybe(t.String),
