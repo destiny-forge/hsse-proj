@@ -238,7 +238,6 @@ class PresentationForm extends React.Component {
           });
       })
       .catch((errors) => {
-        console.log(errors);
         this.setState({ errors, valid: false });
       });
   };
