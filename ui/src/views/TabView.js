@@ -21,8 +21,8 @@ class TabView extends Component {
       priority,
     })
       .then((res) => {
-        const { type, tab, reload } = this.props;
-        reload(type, tab);
+        const { type, status, reload } = this.props;
+        reload(type, status);
       })
       .catch((err) => {
         console.log(err);
