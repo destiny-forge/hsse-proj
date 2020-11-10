@@ -32,10 +32,19 @@ const BatchService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
+  const prioritize = async (assignment) => {
+    const res = await fetch('/batches/prioritize', {
+      method: 'POST',
+      body: JSON.stringify(assignment),
+    });
+    return Promise.resolve(res);
+  };
+
   return {
     signedUrl,
     create,
     list,
+    prioritize,
   };
 };
 

@@ -48,6 +48,14 @@ module.exports = ({ model }) => {
     }
   };
 
+  const prioritize = async (...args) => {
+    try {
+      return model.prioritize(...args);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const findById = async (...args) => {
     try {
       const batch = await model.findById(...args);
@@ -71,6 +79,7 @@ module.exports = ({ model }) => {
     create,
     update,
     assign,
+    prioritize,
     findById,
     findByType,
     findOne,

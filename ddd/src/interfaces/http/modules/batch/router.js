@@ -4,6 +4,7 @@ const { Router } = require("express");
 module.exports = ({
   createUseCase,
   assignUseCase,
+  prioritizeUseCase,
   listUseCase,
   signatureUseCase,
   logger,
@@ -122,6 +123,47 @@ module.exports = ({
     };
     assignUseCase
       .assign(assignment)
+      .then((data) => {
+        res.status(Status.OK).json(Success(data));
+      })
+      .catch((error) => {
+        logger.error(error); // we still need to log every error for debugging
+        res.status(Status.BAD_REQUEST).json(Fail(error.message));
+      });
+  });
+
+  /**
+   * @swagger
+   * /:
+   *   post:
+   *     tags:
+   *       - Article
+   *     description: Batch prioritization
+   *     consumes:
+   *       - application/json
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: body
+   *         description: Batch prioritization
+   *         in: body
+   *         required: true
+   *         type: string
+   *         schema:
+   *           $ref: '#/definitions/batch/assign'
+   *     responses:
+   *       200:
+   *         description: Successfully created
+   *       400:
+   *         $ref: '#/responses/BadRequest'
+   */
+  router.post("/prioritize", (req, res) => {
+    const { body } = req;
+    const assignment = {
+      ...body,
+    };
+    prioritizeUseCase
+      .prioritize(assignment)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

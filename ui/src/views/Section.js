@@ -15,6 +15,8 @@ const withSection = (WrappedComponent) => {
     const parms = queryString.parse(history.location.search);
     const uid = parms['t'] || false;
 
+    let selectedTab = 'New Article';
+
     function fetchData(type, tab) {
       Batch.list(type, stage, tab)
         .then((res) => {
@@ -28,10 +30,11 @@ const withSection = (WrappedComponent) => {
     }
 
     useEffect(() => {
-      fetchData(type, 'New Article');
+      fetchData(type, selectedTab);
     }, [type, stage, uid]);
 
     const trackTab = (type, tab) => {
+      selectedTab = tab;
       if (type && tab) {
         fetchData(type, tab);
       }
@@ -42,6 +45,8 @@ const withSection = (WrappedComponent) => {
         trackTab={trackTab}
         batches={batches}
         type={type}
+        tab={selectedTab}
+        reload={fetchData}
         stage={stage}
         {...props}
       />

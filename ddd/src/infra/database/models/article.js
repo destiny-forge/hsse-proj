@@ -203,6 +203,7 @@ module.exports = ({ database }) => {
           },
         },
         batchName: { $first: "$batchName" },
+        priority: { $first: "$batch.priority" },
       },
     };
 
@@ -215,6 +216,7 @@ module.exports = ({ database }) => {
         complete: "$complete",
         created: "$created",
         name: "$batchName",
+        priority: "$priority",
         remaining: { $subtract: ["$total", "$complete"] },
       },
     };
@@ -299,6 +301,23 @@ module.exports = ({ database }) => {
         .get()
         .collection("articles")
         .updateOne({ [key]: { $eq: ObjectID(id) } }, { $set: fields });
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const prioritize = async (assignment) => {
+    const { batchId, priority } = assignment;
+    try {
+      const cmdResult = await database
+        .get()
+        .collection("articles")
+        .updateMany(
+          { batchId: { $eq: ObjectID(batchId) } },
+          { $set: { priority: priority } }
+        );
       const { result } = cmdResult.toJSON();
       return result;
     } catch (e) {
@@ -439,6 +458,7 @@ module.exports = ({ database }) => {
     findOne,
     find,
     assign,
+    prioritize,
     update,
     updateStage,
     updateStageCoderStatus,
