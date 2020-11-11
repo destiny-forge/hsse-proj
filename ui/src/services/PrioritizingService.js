@@ -4,24 +4,48 @@
 
 const PrioritizationService = ({ fetch }) => {
   const assign = async (batchId) => {
-    const res = await fetch('/prioritizing', {
+    const d = new Date();
+    const monthlyUpdateDate = `${d.getFullYear()}-${d.getMonth() + 1}`;
+    const res = await fetch('/prioritizing/assign', {
       method: 'POST',
-      body: JSON.stringify({ batchId, priority: 'high' }),
+      body: JSON.stringify({ batchId, monthlyUpdateDate }),
     });
     return Promise.resolve(res);
   };
 
-  const remove = async (batchId) => {
+  const list = async (type) => {
     const res = await fetch('/prioritizing', {
+      method: 'GET',
+      data: {
+        type,
+      },
+    });
+    return Promise.resolve(res);
+  };
+
+  const makeLive = async (batchId) => {
+    const res = await fetch('/prioritizing/make-live', {
       method: 'POST',
-      body: JSON.stringify({ batchId, priority: 'low' }),
+      body: JSON.stringify({ batchId }),
+    });
+    return Promise.resolve(res);
+  };
+
+  const goLive = async () => {
+    const d = new Date();
+    const monthlyUpdateDate = `${d.getFullYear()}-${d.getMonth() + 1}`;
+    const res = await fetch('/prioritizing/go-live', {
+      method: 'POST',
+      body: JSON.stringify({ monthlyUpdateDate }),
     });
     return Promise.resolve(res);
   };
 
   return {
     assign,
-    remove,
+    list,
+    makeLive,
+    goLive,
   };
 };
 

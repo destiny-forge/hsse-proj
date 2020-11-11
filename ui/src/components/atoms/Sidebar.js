@@ -47,9 +47,9 @@ const Sidebar = (props) => {
           </li>
           <li className="list-item">
             <div className="list-body">
-              <a href="#!" className="text-primary">
+              <Link to={`/${props.type}/prioritizing`} className="text-primary">
                 Tracking &amp; Prioritizing
-              </a>
+              </Link>
             </div>
           </li>
         </ul>

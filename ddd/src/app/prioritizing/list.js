@@ -2,11 +2,11 @@
  * Prioritizing
  */
 module.exports = ({ articleRepository }) => {
-  const list = async () => {
+  const list = async (type) => {
     try {
-      let statuses = ["New Article", "Data Entry Complete", "Live"];
-      return await articleRepository.aggregateMonthlyUpdate(type, statuses);
+      return await articleRepository.aggregateMonthlyUpdates(type);
     } catch (error) {
+      console.log(error);
       throw new Error(error);
     }
   };
