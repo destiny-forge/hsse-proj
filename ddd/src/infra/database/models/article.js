@@ -203,6 +203,7 @@ module.exports = ({ database }) => {
           },
         },
         batchName: { $first: "$batchName" },
+        priority: { $first: "$batch.priority" },
       },
     };
 
@@ -215,6 +216,7 @@ module.exports = ({ database }) => {
         complete: "$complete",
         created: "$created",
         name: "$batchName",
+        priority: "$priority",
         remaining: { $subtract: ["$total", "$complete"] },
       },
     };
@@ -249,6 +251,139 @@ module.exports = ({ database }) => {
         .aggregate(aggregates)
         .toArray();
       //console.log(results);
+      return results;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const aggregateMonthlyUpdates = async (type) => {
+    const match = {
+      $match: {
+        type: { $eq: type },
+        monthlyUpdateDate: { $ne: "" },
+      },
+    };
+    const group = {
+      $group: {
+        _id: "$monthlyUpdateDate",
+        total: { $sum: 1 },
+        needing_data: {
+          $sum: {
+            $cond: [{ $eq: [`$status`, "In Progress"] }, 1, 0],
+          },
+        },
+        needing_arabic: {
+          $sum: {
+            $cond: [
+              {
+                $or: [
+                  { "titles.ar": { $exists: false } },
+                  { "titles.ar.approved": false },
+                ],
+              },
+              1,
+              0,
+            ],
+          },
+        },
+        needing_chinese: {
+          $sum: {
+            $cond: [
+              {
+                $or: [
+                  { "titles.ch": { $exists: false } },
+                  { "titles.ch.approved": false },
+                ],
+              },
+              1,
+              0,
+            ],
+          },
+        },
+        needing_french: {
+          $sum: {
+            $cond: [
+              {
+                $or: [
+                  { "titles.fr": { $exists: false } },
+                  { "titles.fr.approved": false },
+                ],
+              },
+              1,
+              0,
+            ],
+          },
+        },
+        needing_portugese: {
+          $sum: {
+            $cond: [
+              {
+                $or: [
+                  { "titles.pt": { $exists: false } },
+                  { "titles.pt.approved": false },
+                ],
+              },
+              1,
+              0,
+            ],
+          },
+        },
+        needing_russian: {
+          $sum: {
+            $cond: [
+              {
+                $or: [
+                  { "titles.ru": { $exists: false } },
+                  { "titles.ru.approved": false },
+                ],
+              },
+              1,
+              0,
+            ],
+          },
+        },
+        needing_spanish: {
+          $sum: {
+            $cond: [
+              {
+                $or: [
+                  { "titles.es": { $exists: false } },
+                  { "titles.es.approved": false },
+                ],
+              },
+              1,
+              0,
+            ],
+          },
+        },
+      },
+    };
+
+    const project = {
+      $project: {
+        _id: "$_id",
+        total: "$total",
+        needing_data: "$needing_data",
+        needing_arabic: "$needing_arabic",
+        needing_chinese: "$needing_chinese",
+        needing_french: "$needing_french",
+        needing_portugese: "$needing_portugese",
+        needing_russian: "$needing_russian",
+        needing_spanish: "$needing_spanish",
+        needing_arabic: "$needing_arabic",
+      },
+    };
+
+    let aggregates = [match, group, project];
+
+    try {
+      const results = await database
+        .get()
+        .collection("articles")
+        .aggregate(aggregates)
+        .toArray();
+      console.log(results);
       return results;
     } catch (e) {
       throw e;
@@ -299,6 +434,23 @@ module.exports = ({ database }) => {
         .get()
         .collection("articles")
         .updateOne({ [key]: { $eq: ObjectID(id) } }, { $set: fields });
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const prioritize = async (assignment) => {
+    const { batchId, priority } = assignment;
+    try {
+      const cmdResult = await database
+        .get()
+        .collection("articles")
+        .updateMany(
+          { batchId: { $eq: ObjectID(batchId) } },
+          { $set: { priority: priority } }
+        );
       const { result } = cmdResult.toJSON();
       return result;
     } catch (e) {
@@ -358,8 +510,6 @@ module.exports = ({ database }) => {
         },
       };
 
-      console.log(fields);
-
       const cmdResult = await database
         .get()
         .collection("articles")
@@ -397,40 +547,39 @@ module.exports = ({ database }) => {
   };
 
   const migrate = () => {
-    const collection = database.get().collection("articles");
-    collection.updateMany(
-      { stages: { $exists: false } },
-      {
-        $set: {
-          stages: {
-            eligibility: { status: "New Article" },
-            studies: { status: "New Article" },
-            appraisals: { status: "New Article" },
-            prioritizing: { status: "New Article" },
-            translations: { status: "New Article" },
-          },
-        },
-      },
-      { multi: true }
-    );
-    collection.updateMany(
-      { status: { $exists: false } },
-      {
-        $set: {
-          status: "New Article",
-        },
-      },
-      { multi: true }
-    );
-    collection.updateMany(
-      { batchName: { $exists: false } },
-      {
-        $set: {
-          batchName: "",
-        },
-      },
-      { multi: true }
-    );
+    // Sample migration - not currently needed
+    // const collection = database.get().collection("articles");
+    // collection.updateMany(
+    //   { stages: { $exists: false } },
+    //   {
+    //     $set: {
+    //       stages: {
+    //         eligibility: { status: "New Article" },
+    //         studies: { status: "New Article" },
+    //         appraisals: { status: "New Article" },
+    //       },
+    //     },
+    //   },
+    //   { multi: true }
+    // );
+    // collection.updateMany(
+    //   { status: { $exists: false } },
+    //   {
+    //     $set: {
+    //       status: "New Article",
+    //     },
+    //   },
+    //   { multi: true }
+    // );
+    // collection.updateMany(
+    //   { batchName: { $exists: false } },
+    //   {
+    //     $set: {
+    //       batchName: "",
+    //     },
+    //   },
+    //   { multi: true }
+    // );
   };
 
   return {
@@ -442,6 +591,7 @@ module.exports = ({ database }) => {
     findOne,
     find,
     assign,
+    prioritize,
     update,
     updateStage,
     updateStageCoderStatus,
@@ -450,6 +600,7 @@ module.exports = ({ database }) => {
     findByBatchAndDocTypes,
     findByLanguage,
     aggregate,
+    aggregateMonthlyUpdates,
     createIndexes,
     migrate,
   };

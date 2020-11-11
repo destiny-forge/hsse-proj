@@ -26,6 +26,7 @@ import PresentationDetails from './views/Presentation/Details';
 import PresentationForm from './views/Presentation/Form';
 import TranslatingDetails from './views/Translating/Details';
 import { LanguageProvider } from './components/molecules/Language';
+import PrioritizingList from './views/Prioritizing/List';
 
 class App extends Component {
   render() {
@@ -72,6 +73,7 @@ class App extends Component {
             <Route path="/:type/studies" component={TabView} />
             <Route path="/:type/presentation" component={PresentationDetails} />
             <Route path="/:type/translating" component={TranslatingDetails} />
+            <Route path="/:type/prioritizing" component={PrioritizingList} />
 
             <Route
               path="/eligibility/:type/:shortId"

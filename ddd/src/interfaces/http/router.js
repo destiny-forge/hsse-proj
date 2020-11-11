@@ -57,6 +57,7 @@ module.exports = ({ config, logger }) => {
   apiRouter.use("/studies", controller("study").router);
   apiRouter.use("/presentation", controller("presentation").router);
   apiRouter.use("/translating", controller("translating").router);
+  apiRouter.use("/prioritizing", controller("prioritizing").router);
 
   router.use("", apiRouter);
 

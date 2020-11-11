@@ -12,6 +12,8 @@ const Article = t.struct(
     shortId: t.maybe(t.String),
     type: t.String,
 
+    monthlyUpdateDate: t.maybe(t.String),
+
     source: t.String,
     language: t.String,
     lost: t.Boolean,
@@ -123,11 +125,11 @@ const Article = t.struct(
       status: "New Article",
       rating: "AMSTAR rating from McMaster Health Forum",
       priority: "low",
+      monthlyUpdateDate: "",
       stages: {
         eligibility: { status: "New Article" },
         studies: { status: "New Article" },
         appraisals: { status: "New Article" },
-        prioritizing: { status: "New Article" },
       },
       producer: {},
       filters: [],

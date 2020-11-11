@@ -67,15 +67,17 @@ const Sidebar = (props) => {
                 className="nav-link"
               >
                 Translating Titles
-              </Link>
-            </li>
-            <li className="nav-item">
-              <a href="#!" className="nav-link">
-                Tracking &amp; Prioritizing
               </a>
-            </li>
-          </ul>
-        </div>
+            </div>
+          </li>
+          <li className="list-item">
+            <div className="list-body">
+              <Link to={`/${props.type}/prioritizing`} className="text-primary">
+                Tracking &amp; Prioritizing
+              </Link>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   );

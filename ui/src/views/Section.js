@@ -6,6 +6,7 @@ const withSection = (WrappedComponent) => {
   const Section = ({ history, fetch }) => {
     const props = { history, fetch };
     const [batches, setBatches] = useState([]);
+    const [status, setStatus] = useState('New Article');
     const Batch = BatchService({ fetch });
     const paths = history.location.pathname.split('/');
 
@@ -15,8 +16,10 @@ const withSection = (WrappedComponent) => {
     const parms = queryString.parse(history.location.search);
     const uid = parms['t'] || false;
 
-    function fetchData(type, tab) {
-      Batch.list(type, stage, tab)
+    let selectedTab = 'New Article';
+
+    function fetchData(type, status) {
+      Batch.list(type, stage, status)
         .then((res) => {
           if (res.success) {
             setBatches(res.data);
@@ -28,12 +31,13 @@ const withSection = (WrappedComponent) => {
     }
 
     useEffect(() => {
-      fetchData(type, 'New Article');
+      fetchData(type, status);
     }, [type, stage, uid]);
 
-    const trackTab = (type, tab) => {
-      if (type && tab) {
-        fetchData(type, tab);
+    const trackTab = (type, status) => {
+      setStatus(status);
+      if (type && status) {
+        fetchData(type, status);
       }
     };
 
@@ -42,6 +46,8 @@ const withSection = (WrappedComponent) => {
         trackTab={trackTab}
         batches={batches}
         type={type}
+        status={status}
+        reload={fetchData}
         stage={stage}
         {...props}
       />

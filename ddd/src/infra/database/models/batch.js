@@ -95,6 +95,23 @@ module.exports = ({ database }) => {
     }
   };
 
+  const prioritize = async (assignment) => {
+    const { batchId, priority } = assignment;
+    try {
+      const cmdResult = await database
+        .get()
+        .collection("batches")
+        .updateMany(
+          { _id: { $eq: ObjectID(batchId) } },
+          { $set: { priority: priority } }
+        );
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const createIndexes = () => {
     const collection = database.get().collection("batches");
     collection.createIndex("shortId");
@@ -109,6 +126,7 @@ module.exports = ({ database }) => {
     findOne,
     update,
     assign,
+    prioritize,
     createIndexes,
   };
 };

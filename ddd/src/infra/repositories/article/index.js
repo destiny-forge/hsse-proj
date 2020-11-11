@@ -104,6 +104,17 @@ module.exports = ({ model }) => {
     }
   };
 
+  const aggregateMonthlyUpdates = async (type) => {
+    try {
+      const articles = await model.aggregateMonthlyUpdates(type);
+      return articles.map((article) => {
+        return article;
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const create = async (...args) => {
     try {
       const article = await model.create(...args);
@@ -153,6 +164,14 @@ module.exports = ({ model }) => {
     }
   };
 
+  const prioritize = async (...args) => {
+    try {
+      return model.prioritize(...args);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const findById = async (...args) => {
     try {
       const article = await model.findById(...args);
@@ -185,8 +204,10 @@ module.exports = ({ model }) => {
     findByLanguage,
     updateTranslation,
     aggregate,
+    aggregateMonthlyUpdates,
     find,
     assign,
+    prioritize,
     findOne,
   };
 };
