@@ -1,7 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const Sidebar = (props) => {
+  const isActive = (node) => {
+    console.log(props, node);
+  };
   return (
     <div className="col-sm-4 col-lg-3">
       <div className="box">
@@ -9,38 +12,60 @@ const Sidebar = (props) => {
           <h2>Actions</h2>
         </div>
         <div className="box-divider"></div>
-        <ul className="list">
-          <li className="list-item">
-            <div className="list-body">
-              <Link to={`/${props.type}/eligibility`} className="text-primary">
+        <div className="nav-active-border b-primary left box">
+          <ul className="nav flex-column">
+            <li className="nav-item">
+              <NavLink
+                to={`/${props.type}/eligibility`}
+                isActive={(match) => {
+                  return match && match.isExact;
+                }}
+                className="nav-link"
+              >
                 Eligibility &amp; Filters
-              </Link>
-            </div>
-          </li>
-          <li className="list-item">
-            <div className="list-body">
-              <Link to={`/${props.type}/appraisals`} className="text-primary">
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to={`/${props.type}/appraisals`}
+                isActive={(match) => {
+                  return match && match.isExact;
+                }}
+                className="nav-link"
+              >
                 Quality Appraisals
-              </Link>
-            </div>
-          </li>
-          <li className="list-item">
-            <div className="list-body">
-              <a href={`/${props.type}/studies`} className="text-primary">
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <Link
+                to={`/${props.type}/studies`}
+                isActive={(match) => {
+                  return match && match.isExact;
+                }}
+                className="nav-link"
+              >
                 Linking Studies
-              </a>
-            </div>
-          </li>
-          <li className="list-item">
-            <div className="list-body">
-              <a href={`/${props.type}/presentation`} className="text-primary">
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                to={`/${props.type}/presentation`}
+                isActive={(match) => {
+                  return match && match.isExact;
+                }}
+                className="nav-link"
+              >
                 Presentation Details
-              </a>
-            </div>
-          </li>
-          <li className="list-item">
-            <div className="list-body">
-              <a href={`/${props.type}/translating`} className="text-primary">
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                to={`/${props.type}/translating`}
+                isActive={(match) => {
+                  return match && match.isExact;
+                }}
+                className="nav-link"
+              >
                 Translating Titles
               </a>
             </div>

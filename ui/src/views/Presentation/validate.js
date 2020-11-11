@@ -12,19 +12,27 @@ export default (article) =>
       errors.questionType = 'Question type is required';
     }
 
-    if (article.type === 'hse') {
-    }
-
-    if (article.type === 'sse') {
-      SSE_VALIDATIONS.forEach((validation) => {
-        validateFilters(article.filters, validation, errors);
-      });
-    }
-
-    if (article.status === 'Deleted' && article.deletedReason === '') {
+    if (
+      article.status === 'Deleted' &&
+      (!article.deletedReason || article.deletedReason === '')
+    ) {
       errors.deletedReason =
         'You must enter a reason for marking status as deleted';
     }
+
+    // if (article.documentType && article.documentType.indexOf('No,') === -1) {
+    //   if (article.type === 'hse') {
+    //     HSE_VALIDATIONS.forEach((validation) => {
+    //       validateKeyFilters(article.filters, validation, errors);
+    //     });
+    //   }
+
+    //   if (article.type === 'sse') {
+    //     SSE_VALIDATIONS.forEach((validation) => {
+    //       validateFilters(article.filters, validation, errors);
+    //     });
+    //   }
+    // }
 
     if (_.isEmpty(errors)) {
       resolve();
@@ -33,25 +41,39 @@ export default (article) =>
     }
   });
 
-const validateFilters = (filters, validation, errors) => {
-  const { key, msg } = validation;
+// const validateKeyFilters = (filters, validation, errors) => {
+//   const { key, msg } = validation;
+//   if (filters[key] && filters[key].length === 0) {
+//     errors[key] = msg;
+//   }
+// };
 
-  const results = _.filter(filters, (filter) => {
-    return filter.indexOf(key) >= 0;
-  });
+// const validateFilters = (filters, validation, errors) => {
+//   const { key, msg } = validation;
 
-  if (results.length === 0) {
-    errors[key] = msg;
-  }
-};
+//   const results = _.filter(filters, (filter) => {
+//     return filter.indexOf(key) >= 0;
+//   });
 
-const SSE_VALIDATIONS = [
-  {
-    key: 'programsServices',
-    msg: 'At least 1 Program & Service is required',
-  },
-  {
-    key: 'sustainableDevelopmentGoals',
-    msg: 'At least 1 Sustainable development goal is required',
-  },
-];
+//   if (results.length === 0) {
+//     errors[key] = msg;
+//   }
+// };
+
+// const SSE_VALIDATIONS = [
+//   {
+//     key: 'programsServices',
+//     msg: 'At least 1 Program & Service is required',
+//   },
+//   {
+//     key: 'sustainableDevelopmentGoals',
+//     msg: 'At least 1 Sustainable development goal is required',
+//   },
+// ];
+
+// const HSE_VALIDATIONS = [
+//   {
+//     key: 'checkedKeysHST',
+//     msg: 'At least 1 Health System Topic is required',
+//   },
+// ];
