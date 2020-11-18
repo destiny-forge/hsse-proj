@@ -13,8 +13,18 @@ const PrioritizationService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
-  const list = async (type) => {
-    const res = await fetch('/prioritizing', {
+  const listGoLive = async (type) => {
+    const res = await fetch('/prioritizing/go-live', {
+      method: 'GET',
+      data: {
+        type,
+      },
+    });
+    return Promise.resolve(res);
+  };
+
+  const listWaiting = async (type) => {
+    const res = await fetch('/prioritizing/waiting', {
       method: 'GET',
       data: {
         type,
@@ -43,7 +53,8 @@ const PrioritizationService = ({ fetch }) => {
 
   return {
     assign,
-    list,
+    listGoLive,
+    listWaiting,
     makeLive,
     goLive,
   };

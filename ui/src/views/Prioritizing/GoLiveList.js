@@ -24,7 +24,6 @@ const GoLiveList = ({ items, onGoLive }) => {
               {items &&
                 items.map((item) => (
                   <tr key={Math.random()}>
-                    <td></td>
                     <td>{item.monthlyUpdateDate}</td>
                     <td>{item.total}</td>
                     <td>{item.needing_data}</td>

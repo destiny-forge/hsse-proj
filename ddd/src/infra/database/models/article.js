@@ -258,6 +258,7 @@ module.exports = ({ database }) => {
   };
 
   const aggregateMonthlyUpdates = async (type) => {
+    const languages = ["ar", "ch", "fr", "pt", "ru", "es"];
     const match = {
       $match: {
         type: { $eq: type },
@@ -270,108 +271,40 @@ module.exports = ({ database }) => {
         total: { $sum: 1 },
         needing_data: {
           $sum: {
-            $cond: [{ $eq: [`$status`, "In Progress"] }, 1, 0],
-          },
-        },
-        needing_arabic: {
-          $sum: {
-            $cond: [
-              {
-                $or: [
-                  { "titles.ar": { $exists: false } },
-                  { "titles.ar.approved": false },
-                ],
-              },
-              1,
-              0,
-            ],
-          },
-        },
-        needing_chinese: {
-          $sum: {
-            $cond: [
-              {
-                $or: [
-                  { "titles.ch": { $exists: false } },
-                  { "titles.ch.approved": false },
-                ],
-              },
-              1,
-              0,
-            ],
-          },
-        },
-        needing_french: {
-          $sum: {
-            $cond: [
-              {
-                $or: [
-                  { "titles.fr": { $exists: false } },
-                  { "titles.fr.approved": false },
-                ],
-              },
-              1,
-              0,
-            ],
-          },
-        },
-        needing_portugese: {
-          $sum: {
-            $cond: [
-              {
-                $or: [
-                  { "titles.pt": { $exists: false } },
-                  { "titles.pt.approved": false },
-                ],
-              },
-              1,
-              0,
-            ],
-          },
-        },
-        needing_russian: {
-          $sum: {
-            $cond: [
-              {
-                $or: [
-                  { "titles.ru": { $exists: false } },
-                  { "titles.ru.approved": false },
-                ],
-              },
-              1,
-              0,
-            ],
-          },
-        },
-        needing_spanish: {
-          $sum: {
-            $cond: [
-              {
-                $or: [
-                  { "titles.es": { $exists: false } },
-                  { "titles.es.approved": false },
-                ],
-              },
-              1,
-              0,
-            ],
+            $cond: [{ $eq: ["$status", "In Progress"] }, 1, 0],
           },
         },
       },
     };
+
+    languages.forEach((language) => {
+      group.$group[`needing_${language}`] = {
+        $sum: {
+          $cond: [
+            {
+              $or: [
+                { $eq: [{ $type: `$titles.${language}` }, "missing"] },
+                { $eq: [`$titles.${language}.approved`, false] },
+              ],
+            },
+            1,
+            0,
+          ],
+        },
+      };
+    });
 
     const project = {
       $project: {
         _id: "$_id",
         total: "$total",
         needing_data: "$needing_data",
-        needing_arabic: "$needing_arabic",
-        needing_chinese: "$needing_chinese",
-        needing_french: "$needing_french",
-        needing_portugese: "$needing_portugese",
-        needing_russian: "$needing_russian",
-        needing_spanish: "$needing_spanish",
-        needing_arabic: "$needing_arabic",
+        needing_arabic: "$needing_ar",
+        needing_chinese: "$needing_ch",
+        needing_french: "$needing_fr",
+        needing_portugese: "$needing_pt",
+        needing_russian: "$needing_ru",
+        needing_spanish: "$needing_es",
       },
     };
 
@@ -383,7 +316,71 @@ module.exports = ({ database }) => {
         .collection("articles")
         .aggregate(aggregates)
         .toArray();
-      console.log(results);
+      return results;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const aggregateBatchMonthlyUpdates = async (type) => {
+    const languages = ["ar", "ch", "fr", "pt", "ru", "es"];
+    const match = {
+      $match: {
+        type: { $eq: type },
+        monthlyUpdateDate: { $eq: "" },
+      },
+    };
+    const group = {
+      $group: {
+        _id: "$batchId",
+        total: { $sum: 1 },
+        needing_data: {
+          $sum: {
+            $cond: [{ $eq: ["$status", "In Progress"] }, 1, 0],
+          },
+        },
+      },
+    };
+
+    languages.forEach((language) => {
+      group.$group[`needing_${language}`] = {
+        $sum: {
+          $cond: [
+            {
+              $or: [
+                { $eq: [{ $type: `$titles.${language}` }, "missing"] },
+                { $eq: [`$titles.${language}.approved`, false] },
+              ],
+            },
+            1,
+            0,
+          ],
+        },
+      };
+    });
+
+    const project = {
+      $project: {
+        _id: "$_id",
+        total: "$total",
+        needing_data: "$needing_data",
+        needing_arabic: "$needing_ar",
+        needing_chinese: "$needing_ch",
+        needing_french: "$needing_fr",
+        needing_portugese: "$needing_pt",
+        needing_russian: "$needing_ru",
+        needing_spanish: "$needing_es",
+      },
+    };
+
+    let aggregates = [match, group, project];
+
+    try {
+      const results = await database
+        .get()
+        .collection("articles")
+        .aggregate(aggregates)
+        .toArray();
       return results;
     } catch (e) {
       throw e;
@@ -434,6 +431,38 @@ module.exports = ({ database }) => {
         .get()
         .collection("articles")
         .updateOne({ [key]: { $eq: ObjectID(id) } }, { $set: fields });
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const assignMonthlyUpdate = async (batchId, monthlyUpdateDate) => {
+    try {
+      const cmdResult = await database
+        .get()
+        .collection("articles")
+        .updateMany(
+          { batchId: { $eq: ObjectID(batchId) } },
+          { $set: { monthlyUpdateDate, priority: "high" } }
+        );
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const makeLiveMonthlyUpdate = async (batchId) => {
+    try {
+      const cmdResult = await database
+        .get()
+        .collection("articles")
+        .updateMany(
+          { batchId: { $eq: ObjectID(batchId) } },
+          { $set: { status: "live" } }
+        );
       const { result } = cmdResult.toJSON();
       return result;
     } catch (e) {
@@ -601,6 +630,9 @@ module.exports = ({ database }) => {
     findByLanguage,
     aggregate,
     aggregateMonthlyUpdates,
+    aggregateBatchMonthlyUpdates,
+    assignMonthlyUpdate,
+    makeLiveMonthlyUpdate,
     createIndexes,
     migrate,
   };

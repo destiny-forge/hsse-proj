@@ -2,16 +2,24 @@
  * Prioritizing
  */
 module.exports = ({ articleRepository }) => {
-  const list = async (type) => {
+  const listGoLive = async (type) => {
     try {
       return await articleRepository.aggregateMonthlyUpdates(type);
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
+    }
+  };
+
+  const listWaiting = async (type) => {
+    try {
+      return await articleRepository.aggregateBatchMonthlyUpdates(type);
+    } catch (error) {
       throw new Error(error);
     }
   };
 
   return {
-    list,
+    listGoLive,
+    listWaiting,
   };
 };

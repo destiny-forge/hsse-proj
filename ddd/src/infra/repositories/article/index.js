@@ -115,6 +115,17 @@ module.exports = ({ model }) => {
     }
   };
 
+  const aggregateBatchMonthlyUpdates = async (type) => {
+    try {
+      const articles = await model.aggregateBatchMonthlyUpdates(type);
+      return articles.map((article) => {
+        return article;
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const create = async (...args) => {
     try {
       const article = await model.create(...args);
@@ -205,6 +216,7 @@ module.exports = ({ model }) => {
     updateTranslation,
     aggregate,
     aggregateMonthlyUpdates,
+    aggregateBatchMonthlyUpdates,
     find,
     assign,
     prioritize,
