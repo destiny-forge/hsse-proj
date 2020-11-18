@@ -244,7 +244,7 @@ class BatchUpload extends Component {
                 <div className="form-group form-row">
                   <div className="col-md-6">
                     <label htmlFor="inputState" className="d-block">
-                      Languages
+                      Language
                     </label>
                     <Select
                       value={selectedLanguage}

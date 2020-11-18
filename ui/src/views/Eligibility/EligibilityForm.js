@@ -352,6 +352,18 @@ class EligibilityForm extends React.Component {
                         </label>
                       </div>
                     </div>
+                    <div className="form-group row">
+                      <label className="col-sm-2 col-form-label">Notes</label>
+                      <div className="col-sm-6">
+                        <textarea
+                          className="form-control"
+                          rows="5"
+                          name="notes"
+                          value={article.notes}
+                          disabled={true}
+                        />
+                      </div>
+                    </div>
                   </div>
                 )}
               </fieldset>

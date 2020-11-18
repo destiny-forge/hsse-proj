@@ -67,6 +67,14 @@ const ISSUES = [...Array(11)].map((_, i) => {
   return { label: text, value: i + 1 };
 });
 
+const MONTHS = [...Array(12)].map((_, i) => {
+  return { label: i + 1, value: i + 1 };
+});
+
+const DAYS = [...Array(31)].map((_, i) => {
+  return { label: i + 1, value: i + 1 };
+});
+
 const currentYear = new Date().getFullYear();
 const ISSUE_YEARS = [...Array(currentYear - 1995)].map((_, i) => {
   const year = `${currentYear - i}`;
@@ -91,6 +99,7 @@ class PresentationForm extends React.Component {
       type,
       loaded: false,
       article: null,
+      errors: {},
     };
 
     this.Article = ArticleService({ fetch: this.props.fetch });
@@ -228,7 +237,9 @@ class PresentationForm extends React.Component {
             console.log(err);
           });
       })
-      .catch((errors) => this.setState({ errors, valid: false }));
+      .catch((errors) => {
+        this.setState({ errors, valid: false });
+      });
   };
 
   buildCitation = (language) => {
@@ -254,14 +265,15 @@ class PresentationForm extends React.Component {
       editors || '[editors]'
     }. ${pubPlace || '[pubPlace]'}, ${publisher || '[publisher]'}, ${
       ePubDate || '[ePubDate]'
-    }; ${startPage || '[startPage]'}-${endPage || '[endPage]'}`;
+    }; ${startPage || '[startPage]'}-${endPage || '[endPage]'}.`;
+
     const journalCitation = `${authors || '[authors]'}. ${
       title || '[title]'
     }. ${journal || '[journal]'}. ${ePubDate || '[ePubDate]'}; ${
       volume || '[volume]'
     } (${issue || '[issue]'}): ${startPage || '[startPage]'}-${
       endPage || '[endPage]'
-    }`;
+    }.`;
 
     const newCitations = {
       ...citations,
@@ -382,6 +394,18 @@ class PresentationForm extends React.Component {
                 </div>
               </div>
               <div className="form-group row">
+                <label className="col-sm-2 col-form-label">Notes</label>
+                <div className="col-sm-10">
+                  <textarea
+                    className="form-control"
+                    rows="5"
+                    name="notes"
+                    onChange={this.handleTextChange}
+                    value={article.notes}
+                  />
+                </div>
+              </div>
+              <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Authors</label>
                 <div className="col-sm-10">
                   <textarea
@@ -402,23 +426,6 @@ class PresentationForm extends React.Component {
                     className="form-control"
                     value={article.ePubDate}
                     onChange={this.handleTextChange}
-                  />
-                </div>
-              </div>
-              <div className="form-group row">
-                <label className="col-sm-2 col-form-label">
-                  Citation (EN)
-                  <button onClick={() => this.buildCitation('en')}>
-                    build
-                  </button>
-                </label>
-                <div className="col-sm-10">
-                  <textarea
-                    name="citation-en"
-                    className="form-control"
-                    rows="5"
-                    onChange={this.handleCitationChange}
-                    value={(article.citations && article.citations['en']) || ''}
                   />
                 </div>
               </div>
@@ -485,44 +492,69 @@ class PresentationForm extends React.Component {
                   />
                 </div>
               </div>
-              {article.referenceType === 'Book (Chapter)' && (
-                <React.Fragment>
-                  <div className="form-group row">
-                    <label className="col-sm-2 col-form-label">Editors</label>
-                    <div className="col-sm-10">
-                      <textarea
-                        name="editors"
-                        className="form-control"
-                        rows="5"
-                        onChange={this.handleTextChange}
-                        value={article.editors}
-                      />
+
+              {article.referenceType === 'Book (Chapter)' ||
+                (article.referenceType === 'Book (Whole)' && (
+                  <React.Fragment>
+                    <div className="form-group row">
+                      <label className="col-sm-2 col-form-label">Editors</label>
+                      <div className="col-sm-10">
+                        <textarea
+                          name="editors"
+                          className="form-control"
+                          rows="5"
+                          onChange={this.handleTextChange}
+                          value={article.editors}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-group row">
-                    <label className="col-sm-2 col-form-label">Pub Place</label>
-                    <div className="col-sm-10">
-                      <input
-                        name="pubPlace"
-                        className="form-control"
-                        value={article.pubPlace}
-                        onChange={this.handleTextChange}
-                      />
+                    <div className="form-group row">
+                      <label className="col-sm-2 col-form-label">
+                        Pub Place
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          name="pubPlace"
+                          className="form-control"
+                          value={article.pubPlace}
+                          onChange={this.handleTextChange}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="form-group row">
-                    <label className="col-sm-2 col-form-label">Publisher</label>
-                    <div className="col-sm-10">
-                      <input
-                        name="publisher"
-                        className="form-control"
-                        value={article.publisher}
-                        onChange={this.handleTextChange}
-                      />
+                    <div className="form-group row">
+                      <label className="col-sm-2 col-form-label">
+                        Publisher
+                      </label>
+                      <div className="col-sm-10">
+                        <input
+                          name="publisher"
+                          className="form-control"
+                          value={article.publisher}
+                          onChange={this.handleTextChange}
+                        />
+                      </div>
                     </div>
-                  </div>
-                </React.Fragment>
-              )}
+                  </React.Fragment>
+                ))}
+
+              <div className="form-group row">
+                <label className="col-sm-2 col-form-label">
+                  Citation (EN)
+                  <button onClick={() => this.buildCitation('en')}>
+                    build
+                  </button>
+                </label>
+                <div className="col-sm-10">
+                  <textarea
+                    name="citation-en"
+                    className="form-control"
+                    rows="5"
+                    onChange={this.handleCitationChange}
+                    value={(article.citations && article.citations['en']) || ''}
+                  />
+                </div>
+              </div>
+
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Abstract</label>
                 <div className="col-sm-10">
@@ -559,19 +591,6 @@ class PresentationForm extends React.Component {
                 <React.Fragment>
                   <div className="form-group row">
                     <label className="col-sm-2 col-form-label">
-                      Unique ID (DOI)
-                    </label>
-                    <div className="col-sm-10">
-                      <input
-                        name="DOI"
-                        className="form-control"
-                        value={article.DOI}
-                        onChange={this.handleTextChange}
-                      />
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    <label className="col-sm-2 col-form-label">
                       MeSH Terms
                     </label>
                     <div className="col-sm-10">
@@ -581,6 +600,19 @@ class PresentationForm extends React.Component {
                         rows="5"
                         onChange={this.handleTextChange}
                         value={article.meshTerms}
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label className="col-sm-2 col-form-label">
+                      Unique ID (DOI)
+                    </label>
+                    <div className="col-sm-10">
+                      <input
+                        name="DOI"
+                        className="form-control"
+                        value={article.DOI}
+                        onChange={this.handleTextChange}
                       />
                     </div>
                   </div>
@@ -660,27 +692,39 @@ class PresentationForm extends React.Component {
                       />
                     </div>
                     <div className="col-sm-2">
-                      <input
+                      <Select
+                        value={MONTHS.filter(
+                          (opt) =>
+                            opt.value ===
+                            _.get(article.lastLitSearch, 'month', '')
+                        )}
                         name="month"
-                        type="number"
-                        className="form-control"
-                        value={_.get(article.lastLitSearch, 'month', '')}
-                        onChange={this.handleDayMonthYear}
                         placeholder="MM"
-                        min="1"
-                        max="12"
+                        onChange={(opt) =>
+                          this.handleDayMonthYear({
+                            target: { name: 'month', value: opt.value },
+                          })
+                        }
+                        options={MONTHS}
+                        isRequired
                       />
                     </div>
                     <div className="col-sm-2">
-                      <input
+                      <Select
+                        value={DAYS.filter(
+                          (opt) =>
+                            opt.value ===
+                            _.get(article.lastLitSearch, 'day', '')
+                        )}
                         name="day"
-                        type="number"
-                        className="form-control"
-                        value={_.get(article.lastLitSearch, 'day', '')}
-                        onChange={this.handleDayMonthYear}
                         placeholder="dd"
-                        min="1"
-                        max="31"
+                        onChange={(opt) =>
+                          this.handleDayMonthYear({
+                            target: { name: 'day', value: opt.value },
+                          })
+                        }
+                        options={DAYS}
+                        isRequired
                       />
                     </div>
                   </div>
@@ -783,6 +827,24 @@ class PresentationForm extends React.Component {
                         }
                       />
                     </div>
+                    <div className="col-sm-3">
+                      <input
+                        value={_.get(article, 'producer.articleNumber', '')}
+                        name="articleNumber"
+                        className="form-control"
+                        placeholder="Article #"
+                        onChange={(e) =>
+                          this.handleProducerChange(
+                            'articleNumber',
+                            e.target.value
+                          )
+                        }
+                        disabled={
+                          !_.get(article, 'producer.cochrane', false) &&
+                          !_.get(article, 'producer.campbell', false)
+                        }
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -799,8 +861,9 @@ class PresentationForm extends React.Component {
                 />
 
                 <EditLinkTable
-                  title="Hyperlinks"
+                  title="Full-text report"
                   field="hyperlinks"
+                  nameTitle="Language"
                   items={Object.assign(languages, article.hyperlinks)}
                   onUpdate={this.handleLinkUpdate}
                   isTestable={true}
@@ -816,6 +879,7 @@ class PresentationForm extends React.Component {
                     field="abstracts"
                     items={Object.assign(abstracts, article.abstracts)}
                     onUpdate={this.handleLinkUpdate}
+                    isTestable={true}
                   />
 
                   <EditLinkTable
@@ -823,6 +887,7 @@ class PresentationForm extends React.Component {
                     field="summaries"
                     items={Object.assign(summaries, article.summaries)}
                     onUpdate={this.handleLinkUpdate}
+                    isTestable={true}
                   />
                 </React.Fragment>
               )}
@@ -886,6 +951,21 @@ class PresentationForm extends React.Component {
                 </div>
               </div>
             </fieldset>
+            {Object.keys(errors).length > 0 && (
+              <fieldset>
+                <legend style={{ color: 'red' }}>
+                  Missing Required Fields
+                </legend>
+                <div>Please complete all required fields and re-submit.</div>
+                <div className="box-body">
+                  {Object.keys(errors).map((key) => (
+                    <div key={key}>
+                      <ErrorMessage errors={errors} field={key} />
+                    </div>
+                  ))}
+                </div>
+              </fieldset>
+            )}
             <button
               type="submit"
               onClick={this.handleSave}
