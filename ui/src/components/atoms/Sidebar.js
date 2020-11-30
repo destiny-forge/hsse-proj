@@ -2,9 +2,6 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
 const Sidebar = (props) => {
-  const isActive = (node) => {
-    console.log(props, node);
-  };
   return (
     <div className="col-sm-4 col-lg-3">
       <div className="box">
@@ -67,17 +64,20 @@ const Sidebar = (props) => {
                 className="nav-link"
               >
                 Translating Titles
-              </a>
-            </div>
-          </li>
-          <li className="list-item">
-            <div className="list-body">
-              <Link to={`/${props.type}/prioritizing`} className="text-primary">
-                Tracking &amp; Prioritizing
               </Link>
-            </div>
-          </li>
-        </ul>
+            </li>
+            <li className="list-item">
+              <div className="list-body">
+                <Link
+                  to={`/${props.type}/prioritizing`}
+                  className="text-primary"
+                >
+                  Tracking &amp; Prioritizing
+                </Link>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );

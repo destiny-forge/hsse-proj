@@ -115,6 +115,17 @@ module.exports = ({ model }) => {
     }
   };
 
+  const aggregateBatchMonthlyUpdates = async (type) => {
+    try {
+      const articles = await model.aggregateBatchMonthlyUpdates(type);
+      return articles.map((article) => {
+        return article;
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const create = async (...args) => {
     try {
       const article = await model.create(...args);
@@ -172,6 +183,30 @@ module.exports = ({ model }) => {
     }
   };
 
+  const assignMonthlyUpdate = async (batchId, monthlyUpdateDate) => {
+    try {
+      return model.assignMonthlyUpdate(batchId, monthlyUpdateDate);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
+  const makeLiveWithoutMonthlyUpdate = async (batchId) => {
+    try {
+      return model.makeLiveWithoutMonthlyUpdate(batchId);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
+  const goLive = async (monthlyUpdateDate) => {
+    try {
+      return model.goLive(monthlyUpdateDate);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const findById = async (...args) => {
     try {
       const article = await model.findById(...args);
@@ -205,8 +240,12 @@ module.exports = ({ model }) => {
     updateTranslation,
     aggregate,
     aggregateMonthlyUpdates,
+    aggregateBatchMonthlyUpdates,
     find,
     assign,
+    assignMonthlyUpdate,
+    makeLiveWithoutMonthlyUpdate,
+    goLive,
     prioritize,
     findOne,
   };

@@ -18,15 +18,17 @@ const WaitingList = ({ batches, onAssign, onMakeLive }) => {
                 <th># needing Portugese</th>
                 <th># needing Russian</th>
                 <th># needing Spanish</th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               {batches &&
                 batches.map((batch) => (
                   <tr key={Math.random()}>
-                    <td>{batch.title}</td>
+                    <td>{batch.batchName}</td>
                     <td>
-                      {batch.total}({batch.remaining})
+                      {batch.total}({batch.live})
                     </td>
                     <td>{batch.needing_data}</td>
                     <td>{batch.needing_arabic}</td>
@@ -36,14 +38,26 @@ const WaitingList = ({ batches, onAssign, onMakeLive }) => {
                     <td>{batch.needing_russian}</td>
                     <td>{batch.needing_spanish}</td>
                     <td>
-                      <button onClick={onAssign}>
+                      <a
+                        href="#!"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          onAssign(batch._id);
+                        }}
+                      >
                         Assign to this months update
-                      </button>
+                      </a>
                     </td>
                     <td>
-                      <button onClick={onMakeLive}>
+                      <a
+                        href="#!"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          onMakeLive(batch.batchId);
+                        }}
+                      >
                         Make live w/o monthly update
-                      </button>
+                      </a>
                     </td>
                   </tr>
                 ))}

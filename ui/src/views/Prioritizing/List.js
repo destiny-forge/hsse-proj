@@ -12,11 +12,28 @@ const PrioritizingList = ({ fetch, match }) => {
   const [waitingBatches, setWaitingBatches] = useState([]);
 
   const Prioritizing = PrioritizingService({ fetch });
-  //const Batch = BatchService({ fetch });
   const { type } = match.params;
 
+  const assign = (batchId) => {
+    Prioritizing.assign(batchId);
+    loadData();
+  };
+
+  const makeLive = (batchId) => {
+    Prioritizing.makeLive(batchId);
+    loadData();
+  };
+
+  const goLive = () => {
+    Prioritizing.goLive();
+  };
+
   useEffect(() => {
-    Prioritizing.list(type)
+    loadData();
+  }, [type]);
+
+  const loadData = () => {
+    Prioritizing.listGoLive(type)
       .then((res) => {
         if (res.success) {
           setMonthlyUpdates(res.data);
@@ -26,21 +43,25 @@ const PrioritizingList = ({ fetch, match }) => {
         console.log(err);
       });
 
-    // Batch.list(type)
-    // .then((res) => {
-    //   if (res.success) {
-    //     setBatches(res.data);
-    //   }
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // });
-  });
+    Prioritizing.listWaiting(type)
+      .then((res) => {
+        if (res.success) {
+          setWaitingBatches(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="padding">
-      <GoLiveList items={monthlyUpdates} />
-      <WaitingList items={waitingBatches} />
+      <GoLiveList items={monthlyUpdates} onGoLive={goLive} />
+      <WaitingList
+        batches={waitingBatches}
+        onAssign={assign}
+        onMakeLive={makeLive}
+      />
     </div>
   );
 };
