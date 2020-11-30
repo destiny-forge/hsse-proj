@@ -95,38 +95,6 @@ module.exports = ({ database }) => {
     }
   };
 
-  const assignMonthlyUpdate = async (batchId, monthlyUpdateDate) => {
-    try {
-      const cmdResult = await database
-        .get()
-        .collection("batches")
-        .updateOne(
-          { _id: { $eq: ObjectID(batchId) } },
-          { $set: { monthlyUpdateDate, priority: "high" } }
-        );
-      const { result } = cmdResult.toJSON();
-      return result;
-    } catch (e) {
-      throw e;
-    }
-  };
-
-  const makeLiveMonthlyUpdate = async (batchId) => {
-    try {
-      const cmdResult = await database
-        .get()
-        .collection("batches")
-        .updateOne(
-          { _id: { $eq: ObjectID(batchId) } },
-          { $set: { status: "live" } }
-        );
-      const { result } = cmdResult.toJSON();
-      return result;
-    } catch (e) {
-      throw e;
-    }
-  };
-
   const prioritize = async (assignment) => {
     const { batchId, priority } = assignment;
     try {
@@ -158,8 +126,6 @@ module.exports = ({ database }) => {
     findOne,
     update,
     assign,
-    assignMonthlyUpdate,
-    makeLiveMonthlyUpdate,
     prioritize,
     createIndexes,
   };

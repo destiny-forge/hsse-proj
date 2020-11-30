@@ -3,26 +3,24 @@ const { list, assign, live } = require("src/app/prioritizing");
 
 module.exports = () => {
   const {
-    repository: { articleRepository, batchRepository },
+    repository: { articleRepository },
   } = container.cradle;
+
+  const assignUseCase = assign({
+    articleRepository,
+  });
 
   const listUseCase = list({
     articleRepository,
   });
 
-  const assignUseCase = assign({
-    articleRepository,
-    batchRepository,
-  });
-
   const liveUseCase = live({
     articleRepository,
-    batchRepository,
   });
 
   return {
-    listUseCase,
     assignUseCase,
+    listUseCase,
     liveUseCase,
   };
 };

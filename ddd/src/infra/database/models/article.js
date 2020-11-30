@@ -263,6 +263,7 @@ module.exports = ({ database }) => {
       $match: {
         type: { $eq: type },
         monthlyUpdateDate: { $ne: "" },
+        status: { $ne: "Live" },
       },
     };
     const group = {
@@ -334,6 +335,11 @@ module.exports = ({ database }) => {
       $group: {
         _id: "$batchId",
         total: { $sum: 1 },
+        live: {
+          $sum: {
+            $cond: [{ $eq: ["$status", "Live"] }, 1, 0],
+          },
+        },
         needing_data: {
           $sum: {
             $cond: [{ $eq: ["$status", "In Progress"] }, 1, 0],
@@ -363,6 +369,7 @@ module.exports = ({ database }) => {
       $project: {
         _id: "$_id",
         total: "$total",
+        live: "$live",
         needing_data: "$needing_data",
         needing_arabic: "$needing_ar",
         needing_chinese: "$needing_ch",
@@ -454,14 +461,30 @@ module.exports = ({ database }) => {
     }
   };
 
-  const makeLiveMonthlyUpdate = async (batchId) => {
+  const makeLiveWithoutMonthlyUpdate = async (batchId) => {
     try {
       const cmdResult = await database
         .get()
         .collection("articles")
         .updateMany(
           { batchId: { $eq: ObjectID(batchId) } },
-          { $set: { status: "live" } }
+          { $set: { status: "Live" } }
+        );
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  const goLive = async (monthlyUpdateDate) => {
+    try {
+      const cmdResult = await database
+        .get()
+        .collection("articles")
+        .updateMany(
+          { monthlyUpdateDate: { $eq: monthlyUpdateDate } },
+          { $set: { status: "Live" } }
         );
       const { result } = cmdResult.toJSON();
       return result;
@@ -632,7 +655,8 @@ module.exports = ({ database }) => {
     aggregateMonthlyUpdates,
     aggregateBatchMonthlyUpdates,
     assignMonthlyUpdate,
-    makeLiveMonthlyUpdate,
+    makeLiveWithoutMonthlyUpdate,
+    goLive,
     createIndexes,
     migrate,
   };

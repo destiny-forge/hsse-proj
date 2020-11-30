@@ -16,8 +16,6 @@ const withSection = (WrappedComponent) => {
     const parms = queryString.parse(history.location.search);
     const uid = parms['t'] || false;
 
-    let selectedTab = 'New Article';
-
     function fetchData(type, status) {
       Batch.list(type, stage, status)
         .then((res) => {

@@ -1,11 +1,10 @@
 /**
  * Prioritizing assign to go live
  */
-module.exports = ({ articleRepository, batchRepository }) => {
-  const assign = async (batchId) => {
+module.exports = ({ articleRepository }) => {
+  const assign = async (batchId, monthlyUpdateDate) => {
     try {
-      articleRepository.assignMonthlyUpdate(batchId, monthlyUpdateDate);
-      return await batchRepository.assignMonthlyUpdate(
+      return await articleRepository.assignMonthlyUpdate(
         batchId,
         monthlyUpdateDate
       );

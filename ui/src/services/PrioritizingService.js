@@ -3,16 +3,6 @@
  */
 
 const PrioritizationService = ({ fetch }) => {
-  const assign = async (batchId) => {
-    const d = new Date();
-    const monthlyUpdateDate = `${d.getFullYear()}-${d.getMonth() + 1}`;
-    const res = await fetch('/prioritizing/assign', {
-      method: 'POST',
-      body: JSON.stringify({ batchId, monthlyUpdateDate }),
-    });
-    return Promise.resolve(res);
-  };
-
   const listGoLive = async (type) => {
     const res = await fetch('/prioritizing/go-live', {
       method: 'GET',
@@ -29,6 +19,16 @@ const PrioritizationService = ({ fetch }) => {
       data: {
         type,
       },
+    });
+    return Promise.resolve(res);
+  };
+
+  const assign = async (batchId) => {
+    const d = new Date();
+    const monthlyUpdateDate = `${d.getFullYear()}-${d.getMonth() + 1}`;
+    const res = await fetch('/prioritizing/assign', {
+      method: 'POST',
+      body: JSON.stringify({ batchId, monthlyUpdateDate }),
     });
     return Promise.resolve(res);
   };

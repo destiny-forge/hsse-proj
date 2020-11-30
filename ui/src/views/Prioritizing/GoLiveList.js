@@ -24,7 +24,7 @@ const GoLiveList = ({ items, onGoLive }) => {
               {items &&
                 items.map((item) => (
                   <tr key={Math.random()}>
-                    <td>{item.monthlyUpdateDate}</td>
+                    <td>{item._id}</td>
                     <td>{item.total}</td>
                     <td>{item.needing_data}</td>
                     <td>{item.needing_arabic}</td>
@@ -34,9 +34,15 @@ const GoLiveList = ({ items, onGoLive }) => {
                     <td>{item.needing_russian}</td>
                     <td>{item.needing_spanish}</td>
                     <td>
-                      <button onClick={onGoLive}>
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          onGoLive();
+                        }}
+                      >
                         Go Live! (w/o translations)
-                      </button>
+                      </a>
                     </td>
                   </tr>
                 ))}

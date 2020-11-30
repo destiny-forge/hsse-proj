@@ -16,13 +16,23 @@ const PrioritizingList = ({ fetch, match }) => {
 
   const assign = (batchId) => {
     Prioritizing.assign(batchId);
+    loadData();
   };
 
   const makeLive = (batchId) => {
-    Prioritizing.goLive(batchId);
+    Prioritizing.makeLive(batchId);
+    loadData();
+  };
+
+  const goLive = () => {
+    Prioritizing.goLive();
   };
 
   useEffect(() => {
+    loadData();
+  }, [type]);
+
+  const loadData = () => {
     Prioritizing.listGoLive(type)
       .then((res) => {
         if (res.success) {
@@ -42,11 +52,11 @@ const PrioritizingList = ({ fetch, match }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [type]);
+  };
 
   return (
     <div className="padding">
-      <GoLiveList items={monthlyUpdates} />
+      <GoLiveList items={monthlyUpdates} onGoLive={goLive} />
       <WaitingList
         batches={waitingBatches}
         onAssign={assign}
