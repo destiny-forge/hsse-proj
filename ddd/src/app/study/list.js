@@ -23,6 +23,10 @@ module.exports = ({ articleRepository }) => {
 
       let statuses = [status, "Complete"];
 
+      if (status === "Complicated") {
+        statuses.push("In Progress");
+      }
+
       return await articleRepository.aggregate(
         type,
         "studies",
