@@ -11,8 +11,19 @@ module.exports = ({ articleRepository }) => {
       }
 
       let statuses = [status, "Complete"];
+
       if (status === "In Progress") {
         statuses.push("Conflicted");
+      }
+
+      if (status === "Complicated") {
+        statuses = [
+          "New Article",
+          "In Progress",
+          "Complete",
+          "Conflicted",
+          "Complicated",
+        ];
       }
 
       const docTypes = [

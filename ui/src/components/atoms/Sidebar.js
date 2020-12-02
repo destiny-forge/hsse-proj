@@ -34,7 +34,7 @@ const Sidebar = (props) => {
               </NavLink>
             </li>
             <li className="nav-item">
-              <Link
+              <NavLink
                 to={`/${props.type}/studies`}
                 isActive={(match) => {
                   return match && match.isExact;
@@ -42,10 +42,10 @@ const Sidebar = (props) => {
                 className="nav-link"
               >
                 Linking Studies
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link
+              <NavLink
                 to={`/${props.type}/presentation`}
                 isActive={(match) => {
                   return match && match.isExact;
@@ -53,10 +53,10 @@ const Sidebar = (props) => {
                 className="nav-link"
               >
                 Presentation Details
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link
+              <NavLink
                 to={`/${props.type}/translating`}
                 isActive={(match) => {
                   return match && match.isExact;
@@ -64,16 +64,19 @@ const Sidebar = (props) => {
                 className="nav-link"
               >
                 Translating Titles
-              </Link>
+              </NavLink>
             </li>
             <li className="list-item">
               <div className="list-body">
-                <Link
+                <NavLink
                   to={`/${props.type}/prioritizing`}
+                  isActive={(match) => {
+                    return match && match.isExact;
+                  }}
                   className="text-primary"
                 >
                   Tracking &amp; Prioritizing
-                </Link>
+                </NavLink>
               </div>
             </li>
           </ul>

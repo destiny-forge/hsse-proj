@@ -152,6 +152,7 @@ module.exports = ({ database }) => {
 
   const aggregate = async (type, stage, status, docTypes, optMatches) => {
     const filters = Array.isArray(status) ? { $in: status } : status;
+    const complicated = status.indexOf("Complicated") >= 0;
 
     const lookup = {
       $lookup: {
@@ -171,6 +172,7 @@ module.exports = ({ database }) => {
         batchId: { $ne: null },
         type: { $eq: type },
         [`stages.${stage}.status`]: filters,
+        complicated: { $eq: complicated },
       },
     };
 

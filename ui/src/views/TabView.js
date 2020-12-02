@@ -11,7 +11,6 @@ import BatchService from '../services/BatchService';
 class TabView extends Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.Batch = BatchService({ fetch: props.fetch });
     this.prioritize = this.prioritize.bind(this);
   }
@@ -27,6 +26,15 @@ class TabView extends Component {
       .catch((err) => {
         console.log(err);
       });
+  }
+
+  filter(priority) {
+    const { batches } = this.props;
+    return batches.filter((batch) =>
+      Array.isArray(batch.priority)
+        ? batch.priority[0] === priority
+        : batch.priority === priority
+    );
   }
 
   render() {
@@ -49,18 +57,14 @@ class TabView extends Component {
               <div className="tab-content">
                 <div className="tab-pane fade show active" id="tab_1">
                   <BatchesTable
-                    batches={batches.filter(
-                      (batch) => batch.priority[0] === 'high'
-                    )}
+                    batches={this.filter('high')}
                     title="High priority"
                     type={type}
                     stage={stage}
                     onPrioritize={this.prioritize}
                   />
                   <BatchesTable
-                    batches={batches.filter(
-                      (batch) => batch.priority[0] === 'low'
-                    )}
+                    batches={this.filter('low')}
                     title="Low priority"
                     type={type}
                     stage={stage}
@@ -70,18 +74,14 @@ class TabView extends Component {
 
                 <div className="tab-pane fade" id="tab_2">
                   <BatchesTable
-                    batches={batches.filter(
-                      (batch) => batch.priority[0] === 'high'
-                    )}
+                    batches={this.filter('high')}
                     title="High priority"
                     type={type}
                     stage={stage}
                     onPrioritize={this.prioritize}
                   />
                   <BatchesTable
-                    batches={batches.filter(
-                      (batch) => batch.priority[0] === 'low'
-                    )}
+                    batches={this.filter('low')}
                     title="Low priority"
                     type={type}
                     stage={stage}
@@ -90,7 +90,20 @@ class TabView extends Component {
                 </div>
 
                 <div className="tab-pane fade" id="tab_3">
-                  Third tab (complicated)... this one is in progress
+                  <BatchesTable
+                    batches={this.filter('high')}
+                    title="High priority"
+                    type={type}
+                    stage={stage}
+                    onPrioritize={this.prioritize}
+                  />
+                  <BatchesTable
+                    batches={this.filter('low')}
+                    title="Low priority"
+                    type={type}
+                    stage={stage}
+                    onPrioritize={this.prioritize}
+                  />
                 </div>
               </div>
             </div>
