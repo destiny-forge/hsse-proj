@@ -27,6 +27,7 @@ import PresentationForm from './views/Presentation/Form';
 import TranslatingDetails from './views/Translating/Details';
 import { LanguageProvider } from './components/molecules/Language';
 import PrioritizingList from './views/Prioritizing/List';
+import EmailManager from './views/EmailManager/Form';
 
 class App extends Component {
   render() {
@@ -98,6 +99,7 @@ class App extends Component {
             />
             <Route path="/upload" component={BatchUpload} />
             <Route path="/notes" component={Notes} />
+            <Route path="/email-manager" component={EmailManager} />
           </Switch>
         </Router>
       </LanguageProvider>
