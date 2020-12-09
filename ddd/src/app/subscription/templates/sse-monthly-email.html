@@ -1,0 +1,478 @@
+<html>
+  <body>
+    <div style="color: #818181">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td colspan="2" align="center" style="padding-bottom: 10px">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tbody>
+                  <tr>
+                    <td
+                      colspan="2"
+                      style="background-color: #ed2124; color: white"
+                    >
+                      <table
+                        border="0"
+                        cellpadding="0"
+                        cellspacing="0"
+                        width="100%"
+                      >
+                        <tbody>
+                          <tr>
+                            <td
+                              align="left"
+                              valign="bottom"
+                              style="padding: 16px 0px 16px 16px"
+                            >
+                              <h1
+                                style="
+                                  float: left;
+                                  color: white;
+                                  font-family: 'Open Sans', 'Helvetica Neue',
+                                    Helvetica, Arial, sans-serif;
+                                  font-size: 24pt;
+                                  margin: 0px 10px 0 0;
+                                "
+                              >
+                                SOCIAL SYSTEMS EVIDENCE SERVICE
+                              </h1>
+                            </td>
+                            <td></td>
+                            <td
+                              align="right"
+                              valign="bottom"
+                              style="padding: 16px"
+                            >
+                              <h1
+                                style="
+                                  color: white;
+                                  font-family: 'Gill Sans', 'Gill Sans MT',
+                                    Calibri, 'Trebuchet MS', sans-serif;
+                                  font-size: 16pt;
+                                  font-weight: normal;
+                                  margin: 0px 10px 0 0;
+                                "
+                              >
+                                <%= month %> <%= year %>
+                              </h1>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td
+              id="m_-3991892845636654270x_hotDoc"
+              colspan="2"
+              style="
+                font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial,
+                  sans-serif;
+                font-size: 11pt;
+              "
+            >
+              In this month's evidence service we have identified a few
+              documents that will be of interest to a broad array of
+              policymakers and stakeholders. This month's 'hot docs' include:
+            </td>
+          </tr>
+          <tr>
+            <td
+              id="m_-3991892845636654270x_doc_title"
+              colspan="2"
+              style="
+                font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial,
+                  sans-serif;
+                font-size: 11pt;
+              "
+            >
+              <ul
+                style="
+                  color: rgb(0, 112, 150);
+                  color: #666666;
+                  padding-top: 3px;
+                  padding-bottom: 6px;
+                "
+              >
+                <% hotdocs.forEach(function(article){ %>
+                <li style="color: rgb(0, 112, 150); margin: 3px 0">
+                  <a
+                    style="
+                      text-decoration: none;
+                      color: rgb(0, 112, 150) !important;
+                      color: #007096;
+                    "
+                    href="<%= article.href %>"
+                    data-saferedirecturl="<%= article.safeHREF %>"
+                    target="_blank"
+                  >
+                    <%= article.title %>
+                  </a>
+                </li>
+                <% }); %>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <td
+              id="m_-3991892845636654270x_art_ttl"
+              colspan="2"
+              style="
+                font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial,
+                  sans-serif;
+                font-size: 11pt;
+              "
+            >
+              <p style="margin: 1em 0 0 0">&nbsp;</p>
+              <h2
+                style="
+                  color: #ed2124;
+                  font-family: Verdana, Arial, Helvetica, sans-serif;
+                  font-size: 16pt;
+                  font-weight: bold;
+                  margin: 0;
+                "
+              >
+                Evidence service (1 of 2)
+              </h2>
+              <p style="margin: 0.5em 0 0 0">&nbsp;</p>
+              During the past month, the following documents that match your
+              interests based on the following subscribed search were added to
+              Social Systems Evidence:
+              <p style="margin-top: 2em; margin-bottom: 1em">
+                <strong>Keywords: *</strong>
+              </p>
+              <p style="margin-top: 1em; margin-bottom: 2em">
+                <strong>
+                  Filters: <% keywords = filters.map(function(f) { return '"' +
+                  f + '"'; }) -%> <%- keywords.join(",") %>
+                </strong>
+              </p>
+              To change the searches you have subscribed to, log in to your
+              Social Systems Evidence account and click on ‘saved searches’ in
+              your account’s drop-down menu. The documents are presented below
+              with the ones with a more general* focus appearing earlier in the
+              list and those with a specific focus later in the list, as well as
+              with the more recent** ones appearing earlier in the list and the
+              older ones later in the list. <% types.forEach(function(type){ %>
+              <h3
+                style="
+                  color: #ed2124;
+                  margin-top: 14px;
+                  margin-bottom: 8px;
+                  font-size: 14pt;
+                  font-weight: bold;
+                "
+              >
+                <%= type %>
+              </h3>
+              <% subtypes.forEach(function(subtype){ %>
+              <h3 style="color: #848484; font-size: 10pt; font-weight: bold">
+                <%= subtype %>
+              </h3>
+              <ul
+                style="
+                  color: rgb(0, 112, 150);
+                  color: #666666;
+                  padding-top: 3px;
+                  padding-bottom: 6px;
+                "
+              >
+                <% articles.filter(function(article) { %>
+                <li style="color: rgb(0, 112, 150); margin: 3px 0">
+                  <a
+                    style="
+                      text-decoration: none;
+                      color: rgb(0, 112, 150) !important;
+                      color: #007096;
+                    "
+                    href="<%= article.href %>"
+                    data-saferedirecturl="<%= article.safeHREF %>"
+                    target="_blank"
+                  >
+                    <%= article.title %>
+                  </a>
+                  <% }); %>
+                </li>
+              </ul>
+
+              <% }); %> <% }); %>
+            </td>
+          </tr>
+          <tr>
+            <td
+              id="m_-3991892845636654270x_asterisk"
+              colspan="2"
+              style="
+                font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial,
+                  sans-serif;
+                font-size: 8pt;
+              "
+            >
+              <br />
+              <br />
+              *General is defined in terms of applicability to broader program
+              and service areas and social system arrangements, and not to a
+              specific social condition, population or setting.<br />
+              **Recent is defined either in terms of the last year the
+              literature was searched (for syntheses) or the year it was
+              published (for other types of documents).
+            </td>
+          </tr>
+          <tr>
+            <td
+              id="m_-3991892845636654270x_ftr"
+              colspan="2"
+              align="left"
+              style="
+                text-align: center;
+                font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial,
+                  sans-serif;
+              "
+            >
+              <br />
+              <hr />
+              <br />
+              <p style="margin: 0px; font-size: 8pt; font-size: 8pt">
+                <br />
+                <span style="font-size: 10pt; font-weight: bold"
+                  >Social Systems Evidence is an initiative of
+                  <a
+                    href="https://www.mcmasterforum.org/lets-collaborate/forumplus"
+                    style="
+                      text-decoration: none;
+                      color: rgb(0, 112, 150) !important;
+                    "
+                    target="_blank"
+                    data-saferedirecturl="https://www.google.com/url?q=https://www.mcmasterforum.org/lets-collaborate/forumplus&amp;source=gmail&amp;ust=1606919853695000&amp;usg=AFQjCNEF17UskrEvyVCReFuMN0UTxXsGDw"
+                  >
+                    McMaster's Forum+</a
+                  >
+                  and the
+                  <a
+                    href="https://www.monash.edu/sustainable-development"
+                    style="
+                      text-decoration: none;
+                      color: rgb(0, 112, 150) !important;
+                    "
+                    target="_blank"
+                    data-saferedirecturl="https://www.google.com/url?q=https://www.monash.edu/sustainable-development&amp;source=gmail&amp;ust=1606919853695000&amp;usg=AFQjCNHFbo6QDDcgBMtmJOQ6Id9jKlmAWQ"
+                  >
+                    Monash Sustainable Development Institute.</a
+                  ></span
+                ><br />
+                <br />
+                <span style="font-size: 10pt"
+                  >Funding for the development and maintenance of Social Systems
+                  Evidence (and for the
+                  <a
+                    href="https://www.mcmasteroptimalaging.org/"
+                    style="
+                      text-decoration: none;
+                      color: rgb(0, 112, 150) !important;
+                    "
+                    target="_blank"
+                    data-saferedirecturl="https://www.google.com/url?q=https://www.mcmasteroptimalaging.org/&amp;source=gmail&amp;ust=1606919853695000&amp;usg=AFQjCNG4kHM6NRtD13rzYCdVyFb7WLfvDg"
+                  >
+                    McMaster Optimal Aging Portal</a
+                  >’s content on social aspects of aging that it supports) is
+                  provided by McMaster University through the Faculty of Health
+                  Sciences, the
+                  <a
+                    href="http://optimalaging.mcmaster.ca/"
+                    style="
+                      text-decoration: none;
+                      color: rgb(0, 112, 150) !important;
+                    "
+                    target="_blank"
+                    data-saferedirecturl="https://www.google.com/url?q=http://optimalaging.mcmaster.ca/&amp;source=gmail&amp;ust=1606919853695000&amp;usg=AFQjCNEYgnBtwmY-P4wjia2kQIW9ETocKg"
+                  >
+                    Labarge Optimal Aging Initiative</a
+                  >, the
+                  <a
+                    href="https://mira.mcmaster.ca/"
+                    style="
+                      text-decoration: none;
+                      color: rgb(0, 112, 150) !important;
+                    "
+                    target="_blank"
+                    data-saferedirecturl="https://www.google.com/url?q=https://mira.mcmaster.ca/&amp;source=gmail&amp;ust=1606919853695000&amp;usg=AFQjCNEk9apsNAakO3qBSrrfEJZw3B4xug"
+                  >
+                    McMaster Institute for Research on Aging</a
+                  >, and the Provost’s Strategic Alignment Fund. Funding for the
+                  addition of content related to SDGs 7, 13-15 and support for
+                  marketing/communications is provided by the
+                  <a
+                    href="https://www.monash.edu/sustainable-development"
+                    style="
+                      text-decoration: none;
+                      color: rgb(0, 112, 150) !important;
+                    "
+                    target="_blank"
+                    data-saferedirecturl="https://www.google.com/url?q=https://www.monash.edu/sustainable-development&amp;source=gmail&amp;ust=1606919853695000&amp;usg=AFQjCNHFbo6QDDcgBMtmJOQ6Id9jKlmAWQ"
+                  >
+                    Monash Sustainable Development Institute</a
+                  >.</span
+                >
+              </p>
+              <br />
+              <br />
+              <p style="margin: 0px; font-size: 8pt; font-size: 8pt">
+                You are receiving this message because you have subscribed to
+                the Social Systems Evidence customizable alerts on topics of
+                interest to you. You may withdraw your consent to receive these
+                emails at any time by clicking
+                <a
+                  href="https://www.socialsystemsevidence.org/unsubscribe?x=nixomtfedfztmipcmmog&amp;r=ues"
+                  style="
+                    text-decoration: none;
+                    color: rgb(0, 112, 150) !important;
+                    color: #d9783e;
+                  "
+                  target="_blank"
+                  data-saferedirecturl="https://www.google.com/url?q=https://www.socialsystemsevidence.org/unsubscribe?x%3Dnixomtfedfztmipcmmog%26r%3Dues&amp;source=gmail&amp;ust=1606919853695000&amp;usg=AFQjCNFHIda9STVcbVtGq2jCJQpz1hBeZg"
+                >
+                  unsubscribe</a
+                >. You can also
+                <a
+                  href="https://www.socialsystemsevidence.org/profile?x=nixomtfedfztmipcmmog&amp;r=ep"
+                  style="
+                    text-decoration: none;
+                    color: rgb(0, 112, 150) !important;
+                    color: #d9783e;
+                  "
+                  target="_blank"
+                  data-saferedirecturl="https://www.google.com/url?q=https://www.socialsystemsevidence.org/profile?x%3Dnixomtfedfztmipcmmog%26r%3Dep&amp;source=gmail&amp;ust=1606919853695000&amp;usg=AFQjCNGucq0EE1XKKzjLlGXGRHVVn5vzWQ"
+                >
+                  update your profile</a
+                >
+                at any time.<br />
+                <br />
+              </p>
+              <div style="line-height: 22px">
+                Contact us at: Social Systems Evidence,
+                <a
+                  href="mailto:sse@mcmaster.ca"
+                  style="
+                    text-decoration: none;
+                    color: rgb(0, 112, 150) !important;
+                    color: #d9783e;
+                  "
+                  target="_blank"
+                >
+                  sse@mcmaster­.ca</a
+                >, or at:<br />
+                McMaster Health Forum<br />
+                1280 Main St. West, MML-417, Hamilton, ON, Canada L8S 4L6<br />
+                <a
+                  style="
+                    text-decoration: none;
+                    color: rgb(0, 112, 150) !important;
+                    color: #040400;
+                    text-decoration: none;
+                  "
+                  >1-905-525-9140, ext. 22121</a
+                >
+              </div>
+              <br />
+              <p style="margin: 0px; font-size: 8pt"></p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" height="50px">
+              <br />
+              <br />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" align="center" style="padding-bottom: 15px">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <tbody>
+                  <tr>
+                    <td align="right" style="padding-right: 80px">
+                      <div
+                        style="
+                          font-size: 12px;
+                          color: #868686;
+                          text-align: center;
+                          width: 222px;
+                          height: 100px;
+                          font-family: 'Open Sans', 'Helvetica Neue', Helvetica,
+                            Arial, sans-serif;
+                        "
+                      >
+                        <img
+                          width="160"
+                          height="50"
+                          border="0"
+                          src="https://mail.google.com/mail/u/0?ui=2&amp;ik=6c42cb7e2e&amp;attid=0.1&amp;permmsgid=msg-f:1684883590671106488&amp;th=1761e8b2e5d601b8&amp;view=fimg&amp;sz=s0-l75-ft&amp;attbid=ANGjdJ9h66x5LsnkBDnISMFw8PPMoUg5UtIgrwSuGqD40BTtIzTMGjN-WmQ0JMHyk8Hd6wnxAhyVA_z93zGvBf2eV5XpVm3VdinSiUUUa0vnJIyuK_-O_51jUVHm1Xg&amp;disp=emb"
+                          data-image-whitelisted=""
+                          class="CToWUd"
+                        />
+                        <div style="margin-top: 10px">
+                          A partner of Sustainable Development Solutions Network
+                          (SDSN) Canada
+                        </div>
+                      </div>
+                    </td>
+                    <td align="center" width="1px"></td>
+                    <td align="left" style="padding-left: 80px">
+                      <div
+                        style="
+                          font-size: 12px;
+                          color: #868686;
+                          text-align: center;
+                          width: 222px;
+                          height: 100px;
+                          font-family: 'Open Sans', 'Helvetica Neue', Helvetica,
+                            Arial, sans-serif;
+                        "
+                      >
+                        <img
+                          width="172"
+                          height="35"
+                          border="0"
+                          src="https://mail.google.com/mail/u/0?ui=2&amp;ik=6c42cb7e2e&amp;attid=0.2&amp;permmsgid=msg-f:1684883590671106488&amp;th=1761e8b2e5d601b8&amp;view=fimg&amp;sz=s0-l75-ft&amp;attbid=ANGjdJ_yqJ3D6YrCQTH_Kl-3AXdooCa_DA4D8KqVFs-F_6QZdlMgFT-od9uaGx-kpemFFkdm65RuxjS34dziIrrWhoE6LfXhiZVYzP8FV8iktmy44x5P_R7OWpFaVe0&amp;disp=emb"
+                          data-image-whitelisted=""
+                          class="CToWUd"
+                        />
+                        <div style="margin-top: 25px">
+                          Host organization for Sustainable Development
+                          Solutions Network (SDSN) Australia, New Zealand &amp;
+                          Pacific
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" align="center">
+                      <br />
+                      <a
+                        href="https://www.socialsystemsevidence.org/terms"
+                        style="
+                          text-decoration: none;
+                          color: rgb(0, 112, 150) !important;
+                          color: #007096;
+                          font-family: 'Open Sans', 'Helvetica Neue', Helvetica,
+                            Arial, sans-serif;
+                        "
+                        target="_blank"
+                        data-saferedirecturl="https://www.google.com/url?q=https://www.socialsystemsevidence.org/terms&amp;source=gmail&amp;ust=1606919853695000&amp;usg=AFQjCNFBcD8m6zV9OGz0vfQ-7MhxN2DMBg"
+                        >Terms of use</a
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

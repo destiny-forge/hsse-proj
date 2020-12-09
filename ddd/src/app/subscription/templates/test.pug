@@ -1,0 +1,12 @@
+<h1 style="float:left;color:white;font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24pt;margin:0px 10px 0 0">
+SOCIAL SYSTEMS EVIDENCE SERVICE</h1>
+
+<h1 style="color:white;font-family:'Gill Sans','Gill Sans MT',Calibri,'Trebuchet MS',sans-serif;font-size:16pt;font-weight:normal;margin:0px 10px 0 0">
+#{month} #{year}</h1>
+
+<ul style="color:rgb(0,112,150);color:#666666;padding-top:3px;padding-bottom:6px">
+  each article in hotdocs
+    li(style="color:rgb(0,112,150);margin:3px 0")
+      a(href=article.href style='text-decoration:none;color:rgb(0,112,150)!important;color:#007096' target='_blank' data-saferedirecturl=article.safeHREF)=article.title
+</ul>
+
