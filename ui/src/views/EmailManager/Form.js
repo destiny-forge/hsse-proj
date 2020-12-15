@@ -127,6 +127,7 @@ const EmailManager = () => {
               </div>
 
               <div className="col-sm-12">
+                <br />
                 <button
                   type="submit"
                   onClick={sendTest}
