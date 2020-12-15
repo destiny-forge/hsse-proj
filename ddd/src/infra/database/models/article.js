@@ -331,6 +331,8 @@ module.exports = ({ database }) => {
       $match: {
         type: { $eq: type },
         monthlyUpdateDate: { $eq: "" },
+        ["stages.eligibility.status"]: "Complete",
+        ["stages.appraisals.status"]: "Complete",
       },
     };
     const group = {
