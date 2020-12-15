@@ -84,6 +84,11 @@ const ISSUE_YEARS = [...Array(currentYear - 1995)].map((_, i) => {
   return { label: year, value: parseInt(year) };
 });
 
+const LAST_LIT_YEARS = [...Array(currentYear - 1999)].map((_, i) => {
+  const year = `${currentYear - i}`;
+  return { label: year, value: parseInt(year) };
+});
+
 const languages = { en: '', fr: '' };
 
 class PresentationForm extends React.Component {
@@ -687,13 +692,22 @@ class PresentationForm extends React.Component {
                       Last Lit Search
                     </label>
                     <div className="col-sm-2">
-                      <input
+                      <Select
+                        value={ISSUE_YEARS.filter(
+                          (opt) =>
+                            opt.value ===
+                            _.get(article.lastLitSearch, 'year', '')
+                        )}
                         name="year"
-                        type="number"
-                        className="form-control"
-                        value={_.get(article.lastLitSearch, 'year', '')}
-                        onChange={this.handleDayMonthYear}
-                        placeholder="yyyy"
+                        placeholder="Select year"
+                        onChange={(opt) =>
+                          this.handleDayMonthYear({
+                            target: { name: 'year', value: opt.value },
+                          })
+                        }
+                        options={LAST_LIT_YEARS}
+                        isSearchable
+                        isRequired
                       />
                     </div>
                     <div className="col-sm-2">
@@ -704,7 +718,7 @@ class PresentationForm extends React.Component {
                             _.get(article.lastLitSearch, 'month', '')
                         )}
                         name="month"
-                        placeholder="MM"
+                        placeholder="Select month"
                         onChange={(opt) =>
                           this.handleDayMonthYear({
                             target: { name: 'month', value: opt.value },
@@ -722,7 +736,7 @@ class PresentationForm extends React.Component {
                             _.get(article.lastLitSearch, 'day', '')
                         )}
                         name="day"
-                        placeholder="dd"
+                        placeholder="Select day"
                         onChange={(opt) =>
                           this.handleDayMonthYear({
                             target: { name: 'day', value: opt.value },
