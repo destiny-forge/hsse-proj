@@ -1,11 +1,21 @@
 const container = require("src/container");
-const { subscribe, unsubscribe, test, send } = require("src/app/subscription");
+const {
+  get,
+  subscribe,
+  unsubscribe,
+  test,
+  send,
+} = require("src/app/subscription");
 
 module.exports = () => {
   const {
     repository: { articleRepository, subscriptionRepository },
     mailer,
   } = container.cradle;
+
+  const getUseCase = get({
+    subscriptionRepository,
+  });
 
   const subscribeUseCase = subscribe({
     subscriptionRepository,
@@ -15,6 +25,12 @@ module.exports = () => {
     subscriptionRepository,
   });
 
+  const testUseCase = send({
+    subscriptionRepository,
+    articleRepository,
+    mailer,
+  });
+
   const sendUseCase = send({
     subscriptionRepository,
     articleRepository,
@@ -22,8 +38,10 @@ module.exports = () => {
   });
 
   return {
+    getUseCase,
     subscribeUseCase,
     unsubscribeUseCase,
     sendUseCase,
+    testUseCase,
   };
 };
