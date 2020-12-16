@@ -8,7 +8,7 @@ const User = t.struct({
   confirmed: t.Boolean,
   email: t.String,
   password: t.String,
-  roles: t.list(t.String),
+  role: t.String,
   createdAt: t.maybe(t.Date),
   updatedAt: t.maybe(t.Date),
 });

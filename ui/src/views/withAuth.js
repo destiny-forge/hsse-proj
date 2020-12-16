@@ -120,6 +120,14 @@ export default function withAuth(AuthComponent) {
                             <span className="nav-text">Email Manager</span>
                           </a>
                         </li>
+                        <li>
+                          <a href="/user-manager">
+                            <span className="nav-icon">
+                              <i className="fa fa-users fa-align-left"></i>
+                            </span>
+                            <span className="nav-text">User Manager</span>
+                          </a>
+                        </li>
                         <li className="pb-2 hidden-folded"></li>
                       </ul>
                     </div>

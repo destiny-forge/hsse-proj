@@ -9,7 +9,7 @@ const Translation = ({ article, text, edit, approve }) => (
     <td>{article.title}</td>
     <td>
       {text}
-      {text != '' && (
+      {text !== '' && (
         <button onClick={() => approve(article._id, text)}>Approve</button>
       )}
     </td>

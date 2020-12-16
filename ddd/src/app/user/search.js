@@ -1,17 +1,17 @@
 /**
- * User update
+ * User search by email or role
  */
 
 module.exports = ({ userRepository }) => {
-  const update = async ({ _id, email, role }) => {
+  const search = async (email, role) => {
     try {
-      return await userRepository.update(_id, { email, role });
+      return await userRepository.search(email, role);
     } catch (error) {
       throw new Error(error);
     }
   };
 
   return {
-    update,
+    search,
   };
 };

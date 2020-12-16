@@ -19,9 +19,9 @@ module.exports = ({ userRepository }) => {
     }
   };
 
-  const update = async (userId, roles) => {
+  const update = async (userId, role) => {
     try {
-      return userRepository.setRoles(userId, roles);
+      return userRepository.setRole(userId, role);
     } catch (error) {
       throw new Error(error);
     }
@@ -30,6 +30,6 @@ module.exports = ({ userRepository }) => {
   return {
     add,
     remove,
-    update
+    update,
   };
 };

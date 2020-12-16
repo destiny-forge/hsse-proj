@@ -14,7 +14,7 @@ module.exports = ({ userRepository, events }) => {
 
       const data = {
         id: user._id,
-        email: user.email
+        email: user.email,
       };
 
       events.emit("account.registered", data);
@@ -25,7 +25,7 @@ module.exports = ({ userRepository, events }) => {
   };
 
   return {
-    register
+    register,
   };
 };
 
@@ -37,19 +37,8 @@ const stubUser = ({ email, password }) => {
     password,
     confirmed: false,
     // @todo - Lock down the roles!
-    roles: [
-      "user",
-      "uploader",
-      "detailer",
-      "linker",
-      "juniorappraiser",
-      "seniorappraiser",
-      "juniorfilterer",
-      "seniorfilterer",
-      "prioritizer",
-      "administrator"
-    ],
+    role: "user",
     createdAt: now,
-    updatedAt: now
+    updatedAt: now,
   };
 };
