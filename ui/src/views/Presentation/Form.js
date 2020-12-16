@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
 import Select from 'react-select';
 import { toast } from 'react-toastify';
 import withAuth from '../withAuth';
@@ -15,8 +16,10 @@ import EligibilityService from '../../services/EligibilityService';
 import TreeView from '../../components/molecules/TreeView';
 import CountryLinks from '../../components/molecules/CountryLinks';
 import ErrorMessage from '../../components/atoms/ErrorMessage';
-import 'react-toastify/dist/ReactToastify.min.css';
 import PDFUploadLinks from '../../components/atoms/PDFUploadLinks';
+import CustomDatePickerInput from '../../components/atoms/CustomDatePickerInput';
+
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const STATUSES = [
   { value: 'New Article', label: 'New Article' },
@@ -77,6 +80,11 @@ const DAYS = [...Array(31)].map((_, i) => {
 
 const currentYear = new Date().getFullYear();
 const ISSUE_YEARS = [...Array(currentYear - 1995)].map((_, i) => {
+  const year = `${currentYear - i}`;
+  return { label: year, value: parseInt(year) };
+});
+
+const LAST_LIT_YEARS = [...Array(currentYear - 1999)].map((_, i) => {
   const year = `${currentYear - i}`;
   return { label: year, value: parseInt(year) };
 });
@@ -216,6 +224,11 @@ class PresentationForm extends React.Component {
     this.handleChange('filters', filters);
   }
 
+  handlePublished = (date) => {
+    const published = new Date(date.getFullYear(), 0, 1);
+    this.handleChange('published', published);
+  };
+
   handleSave = (e) => {
     e.preventDefault();
     const { type, article } = this.state;
@@ -253,7 +266,7 @@ class PresentationForm extends React.Component {
       editors,
       pubPlace,
       publisher,
-      ePubDate,
+      published,
       volume,
       issue,
       startPage,
@@ -264,12 +277,12 @@ class PresentationForm extends React.Component {
     const bookCitation = `${authors || '[authors]'}. ${title || '[title]'}. ${
       editors || '[editors]'
     }. ${pubPlace || '[pubPlace]'}, ${publisher || '[publisher]'}, ${
-      ePubDate || '[ePubDate]'
+      published || '[published]'
     }; ${startPage || '[startPage]'}-${endPage || '[endPage]'}.`;
 
     const journalCitation = `${authors || '[authors]'}. ${
       title || '[title]'
-    }. ${journal || '[journal]'}. ${ePubDate || '[ePubDate]'}; ${
+    }. ${journal || '[journal]'}. ${published || '[published]'}; ${
       volume || '[volume]'
     } (${issue || '[issue]'}): ${startPage || '[startPage]'}-${
       endPage || '[endPage]'
@@ -283,14 +296,7 @@ class PresentationForm extends React.Component {
   };
 
   cleanData(article) {
-    const fieldsToOmit = [
-      'stages',
-      'batchId',
-      'batchName',
-      'shortId',
-      'lost',
-      'published',
-    ];
+    const fieldsToOmit = ['stages', 'batchId', 'batchName', 'shortId', 'lost'];
     return _.omit(article, fieldsToOmit);
   }
 
@@ -419,13 +425,17 @@ class PresentationForm extends React.Component {
               </div>
 
               <div className="form-group row">
-                <label className="col-sm-2 col-form-label">Pub Date</label>
+                <label className="col-sm-2 col-form-label">
+                  Publication Year
+                </label>
                 <div className="col-sm-10">
-                  <input
-                    name="ePubDate"
-                    className="form-control"
-                    value={article.ePubDate}
-                    onChange={this.handleTextChange}
+                  <DatePicker
+                    name="year"
+                    selected={new Date(article.published)}
+                    onChange={this.handlePublished}
+                    showYearPicker
+                    dateFormat="yyyy"
+                    customInput={<CustomDatePickerInput />}
                   />
                 </div>
               </div>
@@ -682,13 +692,22 @@ class PresentationForm extends React.Component {
                       Last Lit Search
                     </label>
                     <div className="col-sm-2">
-                      <input
+                      <Select
+                        value={ISSUE_YEARS.filter(
+                          (opt) =>
+                            opt.value ===
+                            _.get(article.lastLitSearch, 'year', '')
+                        )}
                         name="year"
-                        type="number"
-                        className="form-control"
-                        value={_.get(article.lastLitSearch, 'year', '')}
-                        onChange={this.handleDayMonthYear}
-                        placeholder="yyyy"
+                        placeholder="Select year"
+                        onChange={(opt) =>
+                          this.handleDayMonthYear({
+                            target: { name: 'year', value: opt.value },
+                          })
+                        }
+                        options={LAST_LIT_YEARS}
+                        isSearchable
+                        isRequired
                       />
                     </div>
                     <div className="col-sm-2">
@@ -699,7 +718,7 @@ class PresentationForm extends React.Component {
                             _.get(article.lastLitSearch, 'month', '')
                         )}
                         name="month"
-                        placeholder="MM"
+                        placeholder="Select month"
                         onChange={(opt) =>
                           this.handleDayMonthYear({
                             target: { name: 'month', value: opt.value },
@@ -717,7 +736,7 @@ class PresentationForm extends React.Component {
                             _.get(article.lastLitSearch, 'day', '')
                         )}
                         name="day"
-                        placeholder="dd"
+                        placeholder="Select day"
                         onChange={(opt) =>
                           this.handleDayMonthYear({
                             target: { name: 'day', value: opt.value },

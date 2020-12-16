@@ -49,7 +49,6 @@ const Article = t.struct(
     // Presentation fields
     referenceType: t.maybe(t.String),
     authorAddress: t.maybe(t.String),
-    ePubDate: t.maybe(t.String),
 
     citations: t.maybe(t.Object), // {{"en" : "x,y,z"}}
     abstract: t.maybe(t.String),

@@ -2,10 +2,10 @@ const { toEntity } = require("./transform");
 const { comparePassword, encryptPassword } = require("../../encryption");
 
 module.exports = ({ model }) => {
-  const getAll = async (...args) => {
+  const search = async (...args) => {
     try {
-      const users = await model.getAll(...args);
-      return users.map(user => {
+      const users = await model.search(...args);
+      return users.map((user) => {
         return toEntity(user);
       });
     } catch (err) {
@@ -39,15 +39,6 @@ module.exports = ({ model }) => {
     }
   };
 
-  const findOne = async (...args) => {
-    try {
-      const user = await model.findOne(...args);
-      return toEntity(user);
-    } catch (err) {
-      throw new Error(err);
-    }
-  };
-
   const findByEmail = async (...args) => {
     try {
       const user = await model.findByEmail(...args);
@@ -57,17 +48,16 @@ module.exports = ({ model }) => {
     }
   };
 
-  const validatePassword = endcodedPassword => password =>
+  const validatePassword = (endcodedPassword) => (password) =>
     comparePassword(password, endcodedPassword);
 
   return {
-    getAll,
     create,
+    search,
     update,
     findById,
     findByEmail,
-    findOne,
     validatePassword,
-    encryptPassword
+    encryptPassword,
   };
 };

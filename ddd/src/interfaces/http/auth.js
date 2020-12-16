@@ -16,7 +16,7 @@ module.exports = ({ config, repository: { userRepository } }) => {
     userRepository
       .findById(payload.id)
       .then((user) => {
-        done(null, _.pick(user, "_id", "email", "roles"));
+        done(null, _.pick(user, "_id", "email", "role"));
       })
       .catch((error) => done(error, null));
   });

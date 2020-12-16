@@ -4,6 +4,7 @@ import _ from 'lodash';
 import 'antd/dist/antd.css';
 
 const { TreeNode } = Tree;
+let globalKeys = [];
 
 const getKeyArray = (tree) => {
   const newTree = {};
@@ -17,6 +18,7 @@ const getKeyArray = (tree) => {
 const flatten = (tree) => {
   let keys = [];
   tree.forEach((item) => {
+    globalKeys = globalKeys.concat(item);
     keys.push(item.key);
     if (item.hasOwnProperty('children')) {
       keys = keys.concat(flatten(item.children));
@@ -40,6 +42,7 @@ const TreeView = ({ tree, selectedItems = [], onChange }) => {
         }
       });
     }
+    console.log(JSON.stringify(globalKeys));
     setTreeSelections(selections);
     onChange(selections);
   }, [selectedItems]);

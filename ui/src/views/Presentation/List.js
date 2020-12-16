@@ -24,7 +24,7 @@ const List = ({ articles = [], onEdit }) => (
               <td>{article.shortId}</td>
               <td>{article.title}</td>
               <td>{article.generalFocus ? 'General' : 'Specific'}</td>
-              <td>{article.ePubDate}</td>
+              <td>{article.published}</td>
               <td>{article.authors}</td>
               <td>{article.abstract}</td>
             </tr>

@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
-const Translation = ({ article, text, edit }) => (
+const Translation = ({ article, text, edit, approve }) => (
   <tr key={article.shortId}>
     <td>
       <button onClick={() => edit(article._id, text)}>Edit</button>
     </td>
     <td>{article.shortId}</td>
     <td>{article.title}</td>
-    <td>{text}</td>
+    <td>
+      {text}
+      {text !== '' && (
+        <button onClick={() => approve(article._id, text)}>Approve</button>
+      )}
+    </td>
     <td>{article.title.split(' ').length}</td>
   </tr>
 );
@@ -57,6 +62,10 @@ const List = ({ articles = [], language, priority, onUpdate, onSearch }) => {
     onUpdate(active, language, text, approve);
   };
 
+  const approve = (articleId, translation) => {
+    onUpdate(articleId, language, translation, true);
+  };
+
   useEffect(() => {
     onSearch(language);
   }, [language, priority]);
@@ -93,6 +102,7 @@ const List = ({ articles = [], language, priority, onUpdate, onSearch }) => {
                   article={article}
                   text={translatedTitle}
                   edit={edit}
+                  approve={approve}
                   key={article.shortId}
                 />
               );

@@ -5,13 +5,10 @@ import { withRouter } from 'react-router';
 import ArticleService from '../../services/ArticleService';
 import validate from './validate';
 import { toast } from 'react-toastify';
+import CustomDatePickerInput from './../../components/atoms/CustomDatePickerInput';
 
 import 'react-toastify/dist/ReactToastify.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
-
-const CustomDatePickerInput = ({ value, onClick }) => (
-  <input className="form-control" onClick={onClick} value={value} />
-);
 
 class ArticleCreate extends Component {
   constructor(props) {

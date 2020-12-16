@@ -72,6 +72,10 @@ const clean = (fields) => {
       delete article[field];
     }
   });
+
+  article.published = article.ePubDate;
+  delete article.ePubDate;
+
   return article;
 };
 

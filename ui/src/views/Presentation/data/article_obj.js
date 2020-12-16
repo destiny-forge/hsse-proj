@@ -12,6 +12,7 @@ module.exports = {
 
   authorAddress: null,
   ePubDate: null,
+  published: null,
 
   citations: null,
   abstract: null,

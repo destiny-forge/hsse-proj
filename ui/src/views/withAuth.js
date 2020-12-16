@@ -91,7 +91,7 @@ export default function withAuth(AuthComponent) {
                         <li>
                           <a href="/upload">
                             <span className="nav-icon">
-                              <i className="fa fa-align-left"></i>
+                              <i className="fa fa-upload fa-align-left"></i>
                             </span>
                             <span className="nav-text">Batch Upload</span>
                           </a>
@@ -99,7 +99,7 @@ export default function withAuth(AuthComponent) {
                         <li>
                           <a href="/hse/eligibility">
                             <span className="nav-icon">
-                              <i className="fa fa-align-left"></i>
+                              <i className="fa fa-medkit fa-align-left"></i>
                             </span>
                             <span className="nav-text">Health Systems</span>
                           </a>
@@ -107,9 +107,25 @@ export default function withAuth(AuthComponent) {
                         <li>
                           <a href="/sse/eligibility">
                             <span className="nav-icon">
-                              <i className="fa fa-align-left"></i>
+                              <i className="fa fa-users fa-align-left"></i>
                             </span>
                             <span className="nav-text">Social Systems</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="/email-manager">
+                            <span className="nav-icon">
+                              <i className="fa fa-send fa-align-left"></i>
+                            </span>
+                            <span className="nav-text">Email Manager</span>
+                          </a>
+                        </li>
+                        <li>
+                          <a href="/user-manager">
+                            <span className="nav-icon">
+                              <i className="fa fa-users fa-align-left"></i>
+                            </span>
+                            <span className="nav-text">User Manager</span>
                           </a>
                         </li>
                         <li className="pb-2 hidden-folded"></li>
