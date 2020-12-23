@@ -1,12 +1,18 @@
 const { toEntity } = require("./transform");
 const { comparePassword, encryptPassword } = require("../../encryption");
+const _ = require("lodash");
 
 module.exports = ({ model }) => {
   const search = async (...args) => {
     try {
-      const users = await model.search(...args);
+      let users = await model.search(...args);
       return users.map((user) => {
-        return toEntity(user);
+        return _.omit(toEntity(user), [
+          "password",
+          "createdAt",
+          "updatedAt",
+          "confirmed",
+        ]);
       });
     } catch (err) {
       throw new Error(err);
@@ -18,6 +24,7 @@ module.exports = ({ model }) => {
       const user = await model.create(...args);
       return toEntity(user);
     } catch (err) {
+      console.log(err);
       throw new Error(err);
     }
   };
@@ -26,6 +33,7 @@ module.exports = ({ model }) => {
     try {
       return model.update(...args);
     } catch (err) {
+      console.log(err);
       throw new Error(err);
     }
   };
