@@ -11,11 +11,11 @@ const User = ({ user, edit }) => (
       <button onClick={() => edit(user)}>Edit</button>
     </td>
     <td>{user.email}</td>
-    <td>{user.role}</td>
+    <td>{_.get(_.find(USER_ROLES, { value: user.role }), 'label')}</td>
     <td>
       <div>
         Suspend max 50 search result limit:
-        <b> {_.get(user, 'limit_search', 'No')}</b>
+        <b> {user.limit_search ? 'Yes' : 'No'}</b>
       </div>
       <div>
         Expire on (yyyy/mm/dd):{' '}
@@ -80,7 +80,11 @@ const EditUser = ({ user, change, cancel, update }) => (
       <div>
         <DatePicker
           name="limit_search_expires"
-          selected={_.get(user, 'limit_search_expires', '')}
+          selected={
+            user.limit_search_expires !== ''
+              ? new Date(user.limit_search_expires)
+              : null
+          }
           onChange={(date) =>
             change({
               target: { name: 'limit_search_expires', value: date },

@@ -4,6 +4,8 @@ import Select from 'react-select';
 import withAuth from '../withAuth';
 import UserService from '../../services/UserService';
 import List from './List';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import USER_ROLES from './data/roles';
 
 const ROLES = [{ label: 'All roles', value: '*' }].concat(USER_ROLES);
@@ -52,11 +54,13 @@ class UserManager extends React.Component {
   updateUser(user) {
     this.User.create(user).then((res) => {
       if (res.data != null) {
-        let users = [...this.state.users];
-        this.setState({ users });
+        this.doSearch();
+        this.notifySuccess();
       }
     });
   }
+
+  notifySuccess = () => toast.success('User successfully updated!');
 
   render() {
     const { users, email, role } = this.state;
