@@ -73,9 +73,11 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.post("/", (req, res) => {
-    const { _id, email, role, settings } = req.body;
+    const { _id, email, role, limit_search, limit_search_expires } = req.body;
+    console.log(req.body);
+
     updateUseCase
-      .update({ _id, email, role, settings })
+      .update(_id, { email, role, limit_search, limit_search_expires })
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

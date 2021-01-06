@@ -4,19 +4,11 @@ import Select from 'react-select';
 import withAuth from '../withAuth';
 import UserService from '../../services/UserService';
 import List from './List';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
+import USER_ROLES from './data/roles';
 
-const ROLES = [
-  { value: 'user', label: 'User' },
-  { value: 'uploader', label: 'Uploader' },
-  { value: 'linker', label: 'Linker' },
-  { value: 'detailer', label: 'Detailer' },
-  { value: 'prioritizer', label: 'Prioritizer' },
-  { value: 'junior_filterer', label: 'Junior filterer' },
-  { value: 'senior_filterer', label: 'Senior filterer' },
-  { value: 'junior_appraiser', label: 'Junior appraiser' },
-  { value: 'senior_appraiser', label: 'Senior appraiser' },
-  { value: 'administrator', label: 'Administrator' },
-];
+const ROLES = [{ label: 'All roles', value: '*' }].concat(USER_ROLES);
 
 class UserManager extends React.Component {
   constructor(props) {
@@ -59,14 +51,16 @@ class UserManager extends React.Component {
     this.search(email, role);
   };
 
-  updateUser(userId, user) {
-    this.User.create(userId, user).then((res) => {
+  updateUser(user) {
+    this.User.create(user).then((res) => {
       if (res.data != null) {
-        let users = [...this.state.users];
-        this.setState({ users });
+        this.doSearch();
+        this.notifySuccess();
       }
     });
   }
+
+  notifySuccess = () => toast.success('User successfully updated!');
 
   render() {
     const { users, email, role } = this.state;

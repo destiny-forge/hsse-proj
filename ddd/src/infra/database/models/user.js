@@ -16,10 +16,14 @@ module.exports = ({ database }) => {
 
   const search = async (email, role) => {
     try {
-      const query = { role: { $eq: role } };
+      const query = {};
 
       if (email !== "") {
-        query.email = email.trim();
+        query.email = { $regex: email.trim() };
+      }
+
+      if (role !== "*") {
+        query.role = { $eq: role };
       }
 
       return await database.get().collection("users").find(query).toArray();
