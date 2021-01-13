@@ -23,7 +23,7 @@ module.exports = ({ database }) => {
       }
 
       if (role !== "*") {
-        query.role = { $eq: role };
+        query.roles = { $in: [role] };
       }
 
       return await database.get().collection("users").find(query).toArray();

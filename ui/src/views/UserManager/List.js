@@ -11,7 +11,11 @@ const User = ({ user, edit }) => (
       <button onClick={() => edit(user)}>Edit</button>
     </td>
     <td>{user.email}</td>
-    <td>{_.get(_.find(USER_ROLES, { value: user.role }), 'label')}</td>
+    <td>
+      {user.roles
+        .map((r) => _.get(_.find(USER_ROLES, { value: r }), 'label'))
+        .join(',')}
+    </td>
     <td>
       <div>
         Suspend max 50 search result limit:
@@ -41,16 +45,20 @@ const EditUser = ({ user, change, cancel, update }) => (
     </td>
     <td>
       <Select
-        value={USER_ROLES.filter((opt) => opt.value === user.role)}
+        value={user.roles.map((r) => _.find(USER_ROLES, { value: r }))}
         name="role"
         placeholder="Select role"
-        onChange={(opt) =>
+        onChange={(roles) =>
           change({
-            target: { name: 'role', value: opt.value },
+            target: {
+              name: 'roles',
+              value: (roles && roles.map((r) => r.value)) || [],
+            },
           })
         }
         options={USER_ROLES}
-        isSearchable
+        className="basic-multi-select"
+        isMulti
       />
       <div
         style={{
@@ -133,7 +141,7 @@ const List = ({ users = [], onUpdate, onBecome, onSearch }) => {
           <tr>
             <th></th>
             <th>Email</th>
-            <th>Role</th>
+            <th>Roles</th>
             <th>Search</th>
             <th></th>
           </tr>

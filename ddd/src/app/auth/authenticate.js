@@ -23,8 +23,9 @@ module.exports = ({ userRepository, webToken }) => {
       return {
         token: signIn({
           id: user._id,
-          email: user.email
-        })
+          email: user.email,
+          roles: user.roles,
+        }),
       };
     } catch (error) {
       throw new Error(error);
@@ -32,6 +33,6 @@ module.exports = ({ userRepository, webToken }) => {
   };
 
   return {
-    authenticate
+    authenticate,
   };
 };

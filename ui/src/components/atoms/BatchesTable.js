@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import perms from '../../utils/permissions';
 
-const BatchesTable = ({ title, stage, batches, onPrioritize }) => {
+const BatchesTable = ({ user, title, stage, batches, onPrioritize }) => {
   const actionText = () => {
     let text = '';
     switch (stage) {
@@ -65,9 +66,13 @@ const BatchesTable = ({ title, stage, batches, onPrioritize }) => {
                         {batch.name}
                       </Link>
                       <br />
-                      <button onClick={() => onPrioritize(batch._id, priority)}>
-                        {priorityText}
-                      </button>
+                      {perms.can_prioritize(user) && (
+                        <button
+                          onClick={() => onPrioritize(batch._id, priority)}
+                        >
+                          {priorityText}
+                        </button>
+                      )}
                     </td>
                     <td>{batch.total}</td>
                     <td>

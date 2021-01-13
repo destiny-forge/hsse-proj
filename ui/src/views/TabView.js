@@ -38,7 +38,7 @@ class TabView extends Component {
   }
 
   render() {
-    const { trackTab, batches, type, stage } = this.props;
+    const { trackTab, type, stage } = this.props;
     return (
       <React.Fragment>
         <Header type={type} />
@@ -61,6 +61,7 @@ class TabView extends Component {
                     title="High priority"
                     type={type}
                     stage={stage}
+                    user={this.props.user}
                     onPrioritize={this.prioritize}
                   />
                   <BatchesTable
@@ -68,6 +69,7 @@ class TabView extends Component {
                     title="Low priority"
                     type={type}
                     stage={stage}
+                    user={this.props.user}
                     onPrioritize={this.prioritize}
                   />
                 </div>
@@ -78,6 +80,7 @@ class TabView extends Component {
                     title="High priority"
                     type={type}
                     stage={stage}
+                    user={this.props.user}
                     onPrioritize={this.prioritize}
                   />
                   <BatchesTable
@@ -85,6 +88,7 @@ class TabView extends Component {
                     title="Low priority"
                     type={type}
                     stage={stage}
+                    user={this.props.user}
                     onPrioritize={this.prioritize}
                   />
                 </div>
@@ -95,6 +99,7 @@ class TabView extends Component {
                     title="High priority"
                     type={type}
                     stage={stage}
+                    user={this.props.user}
                     onPrioritize={this.prioritize}
                   />
                   <BatchesTable
@@ -102,12 +107,13 @@ class TabView extends Component {
                     title="Low priority"
                     type={type}
                     stage={stage}
+                    user={this.props.user}
                     onPrioritize={this.prioritize}
                   />
                 </div>
               </div>
             </div>
-            <Sidebar type={type} />
+            <Sidebar type={type} user={this.props.user} />
           </div>
         </div>
       </React.Fragment>
