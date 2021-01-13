@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AuthService from '../services/AuthService';
 import { LanguageChooser } from '../components/molecules/Language';
+import perms from '../utils/permissions';
 
 export default function withAuth(AuthComponent) {
   const Auth = new AuthService(process.env.BACKEND_SERVER);
@@ -66,20 +67,22 @@ export default function withAuth(AuthComponent) {
                   <div className="scroll">
                     <div className="nav-border b-primary" data-nav>
                       <ul className="nav bg">
-                        <li className="nav-header">
-                          <div className="py-3">
-                            <a
-                              href="/article"
-                              className="btn btn-sm success theme-accent btn-block"
-                            >
-                              <i className="fa fa-fw fa-plus"></i>
-                              <span className="hidden-folded d-inline">
-                                New Article
-                              </span>
-                            </a>
-                          </div>
-                          <span className="text-xs hidden-folded">Main</span>
-                        </li>
+                        {perms.can_upload(user) && (
+                          <li className="nav-header">
+                            <div className="py-3">
+                              <a
+                                href="/article"
+                                className="btn btn-sm success theme-accent btn-block"
+                              >
+                                <i className="fa fa-fw fa-plus"></i>
+                                <span className="hidden-folded d-inline">
+                                  New Article
+                                </span>
+                              </a>
+                            </div>
+                            <span className="text-xs hidden-folded">Main</span>
+                          </li>
+                        )}
                         <li>
                           <a href="/dashboard">
                             <span className="nav-icon">
@@ -88,14 +91,16 @@ export default function withAuth(AuthComponent) {
                             <span className="nav-text">Dashboard</span>
                           </a>
                         </li>
-                        <li>
-                          <a href="/upload">
-                            <span className="nav-icon">
-                              <i className="fa fa-upload fa-align-left"></i>
-                            </span>
-                            <span className="nav-text">Batch Upload</span>
-                          </a>
-                        </li>
+                        {perms.can_upload(user) && (
+                          <li>
+                            <a href="/upload">
+                              <span className="nav-icon">
+                                <i className="fa fa-upload fa-align-left"></i>
+                              </span>
+                              <span className="nav-text">Batch Upload</span>
+                            </a>
+                          </li>
+                        )}
                         <li>
                           <a href="/hse/eligibility">
                             <span className="nav-icon">
@@ -112,22 +117,26 @@ export default function withAuth(AuthComponent) {
                             <span className="nav-text">Social Systems</span>
                           </a>
                         </li>
-                        <li>
-                          <a href="/email-manager">
-                            <span className="nav-icon">
-                              <i className="fa fa-send fa-align-left"></i>
-                            </span>
-                            <span className="nav-text">Email Manager</span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="/user-manager">
-                            <span className="nav-icon">
-                              <i className="fa fa-user fa-align-left"></i>
-                            </span>
-                            <span className="nav-text">User Manager</span>
-                          </a>
-                        </li>
+                        {perms.can_prioritize(user) && (
+                          <li>
+                            <a href="/email-manager">
+                              <span className="nav-icon">
+                                <i className="fa fa-send fa-align-left"></i>
+                              </span>
+                              <span className="nav-text">Email Manager</span>
+                            </a>
+                          </li>
+                        )}
+                        {perms.can_admin(user) && (
+                          <li>
+                            <a href="/user-manager">
+                              <span className="nav-icon">
+                                <i className="fa fa-user fa-align-left"></i>
+                              </span>
+                              <span className="nav-text">User Manager</span>
+                            </a>
+                          </li>
+                        )}
                         <li className="pb-2 hidden-folded"></li>
                       </ul>
                     </div>

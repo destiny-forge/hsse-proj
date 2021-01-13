@@ -3,7 +3,7 @@ import BatchService from '../services/BatchService';
 import queryString from 'query-string';
 
 const withSection = (WrappedComponent) => {
-  const Section = ({ history, fetch }) => {
+  const Section = ({ history, fetch, user }) => {
     const props = { history, fetch };
     const [batches, setBatches] = useState([]);
     const [status, setStatus] = useState('New Article');
@@ -47,6 +47,7 @@ const withSection = (WrappedComponent) => {
         status={status}
         reload={fetchData}
         stage={stage}
+        user={user}
         {...props}
       />
     );

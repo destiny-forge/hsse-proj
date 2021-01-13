@@ -8,6 +8,7 @@ let ROLES = [
   { value: 'senior_filterer', label: 'Senior filterer' },
   { value: 'junior_appraiser', label: 'Junior appraiser' },
   { value: 'senior_appraiser', label: 'Senior appraiser' },
+  { value: 'translator', label: 'Translator' },
   { value: 'administrator', label: 'Administrator' },
 ];
 

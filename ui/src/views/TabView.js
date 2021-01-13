@@ -38,7 +38,7 @@ class TabView extends Component {
   }
 
   render() {
-    const { trackTab, batches, type, stage } = this.props;
+    const { trackTab, type, stage } = this.props;
     return (
       <React.Fragment>
         <Header type={type} />
@@ -107,7 +107,7 @@ class TabView extends Component {
                 </div>
               </div>
             </div>
-            <Sidebar type={type} />
+            <Sidebar type={type} user={this.props.user} />
           </div>
         </div>
       </React.Fragment>
