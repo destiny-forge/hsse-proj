@@ -9,7 +9,7 @@ const User = t.struct(
     confirmed: t.Boolean,
     email: t.String,
     password: t.String,
-    role: t.String,
+    roles: t.Array,
     limit_search: t.Boolean,
     limit_search_expires: t.String,
     createdAt: t.maybe(t.Date),
@@ -17,6 +17,7 @@ const User = t.struct(
   },
   {
     defaultProps: {
+      roles: ["user"],
       limit_search: false,
       limit_search_expires: "",
     },

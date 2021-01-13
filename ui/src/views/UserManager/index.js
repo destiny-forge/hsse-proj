@@ -90,7 +90,6 @@ class UserManager extends React.Component {
                     })
                   }
                   options={ROLES}
-                  isSearchable
                 />
               </div>
               <div className="col-sm-6">
