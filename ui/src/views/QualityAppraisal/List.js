@@ -8,6 +8,7 @@ import withAuth from '../withAuth';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { AssignHeader } from '../../components/Assignment';
+import perms from '../../utils/permissions';
 
 class AppraisalList extends React.Component {
   constructor(props) {
@@ -125,6 +126,11 @@ class AppraisalList extends React.Component {
   getAction(article, stageName) {
     const stage = article.stages[stageName];
     const { status } = stage;
+    const { user } = this.props;
+
+    if (!perms.can_appraise(user)) {
+      return null;
+    }
 
     if (!this.isAssigned(stage) || status === 'Complete') {
       return null;

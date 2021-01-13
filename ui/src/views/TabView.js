@@ -61,6 +61,7 @@ class TabView extends Component {
                     title="High priority"
                     type={type}
                     stage={stage}
+                    user={this.props.user}
                     onPrioritize={this.prioritize}
                   />
                   <BatchesTable
@@ -68,6 +69,7 @@ class TabView extends Component {
                     title="Low priority"
                     type={type}
                     stage={stage}
+                    user={this.props.user}
                     onPrioritize={this.prioritize}
                   />
                 </div>
@@ -78,6 +80,7 @@ class TabView extends Component {
                     title="High priority"
                     type={type}
                     stage={stage}
+                    user={this.props.user}
                     onPrioritize={this.prioritize}
                   />
                   <BatchesTable
@@ -85,6 +88,7 @@ class TabView extends Component {
                     title="Low priority"
                     type={type}
                     stage={stage}
+                    user={this.props.user}
                     onPrioritize={this.prioritize}
                   />
                 </div>
@@ -95,6 +99,7 @@ class TabView extends Component {
                     title="High priority"
                     type={type}
                     stage={stage}
+                    user={this.props.user}
                     onPrioritize={this.prioritize}
                   />
                   <BatchesTable
@@ -102,6 +107,7 @@ class TabView extends Component {
                     title="Low priority"
                     type={type}
                     stage={stage}
+                    user={this.props.user}
                     onPrioritize={this.prioritize}
                   />
                 </div>

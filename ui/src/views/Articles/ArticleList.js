@@ -2,8 +2,9 @@ import _ from 'lodash';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { AssignHeader } from '../../components/Assignment';
+import perms from '../../utils/permissions';
 
-const ArticleList = ({ title, stage, articles = [], user, assign }) => {
+const ArticleList = ({ stage, articles = [], user, assign }) => {
   const showEmail = (stage, type) => {
     if (!_.isUndefined(stage[type])) {
       return stage[type].email;
@@ -44,6 +45,10 @@ const ArticleList = ({ title, stage, articles = [], user, assign }) => {
   const getAction = (article, stageName) => {
     const stage = article.stages[stageName];
     const { status } = stage;
+
+    if (!perms.can_filter(user)) {
+      return null;
+    }
 
     if (!isAssigned(stage) || status === 'Complete') {
       return null;
