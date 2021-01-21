@@ -19,6 +19,8 @@ import ErrorMessage from '../../components/atoms/ErrorMessage';
 import PDFUploadLinks from '../../components/atoms/PDFUploadLinks';
 import CustomDatePickerInput from '../../components/atoms/CustomDatePickerInput';
 
+import { formatDate } from '../../utils/format';
+
 import 'react-toastify/dist/ReactToastify.min.css';
 
 const STATUSES = [
@@ -273,10 +275,6 @@ class PresentationForm extends React.Component {
       endPage,
       citations,
     } = this.state.article;
-
-    const formatDate = (date) => {
-      return (date && date.split('T')[0]) || null;
-    };
 
     const bookCitation = `${authors || '[authors]'}. ${title || '[title]'}. ${
       editors || '[editors]'
