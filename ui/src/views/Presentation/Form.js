@@ -888,6 +888,7 @@ class PresentationForm extends React.Component {
                   field="hyperlinks"
                   nameTitle="Language"
                   items={Object.assign(languages, article.hyperlinks)}
+                  keyMaps={{ en: 'English', fr: 'French' }}
                   onUpdate={this.handleLinkUpdate}
                   isTestable={true}
                 />
