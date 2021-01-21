@@ -274,15 +274,19 @@ class PresentationForm extends React.Component {
       citations,
     } = this.state.article;
 
+    const formatDate = (date) => {
+      return (date && date.split('T')[0]) || null;
+    };
+
     const bookCitation = `${authors || '[authors]'}. ${title || '[title]'}. ${
       editors || '[editors]'
     }. ${pubPlace || '[pubPlace]'}, ${publisher || '[publisher]'}, ${
-      published || '[published]'
+      formatDate(published) || '[published]'
     }; ${startPage || '[startPage]'}-${endPage || '[endPage]'}.`;
 
     const journalCitation = `${authors || '[authors]'}. ${
       title || '[title]'
-    }. ${journal || '[journal]'}. ${published || '[published]'}; ${
+    }. ${journal || '[journal]'}. ${formatDate(published) || '[published]'}; ${
       volume || '[volume]'
     } (${issue || '[issue]'}): ${startPage || '[startPage]'}-${
       endPage || '[endPage]'
