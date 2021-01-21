@@ -1,7 +1,7 @@
-const formatDate = (date) => {
-  return (date && date.split('T')[0]) || null;
+const getYear = (date) => {
+  return new Date(Date.parse(date)).getFullYear();
 };
 
 module.exports = {
-  formatDate,
+  getYear,
 };

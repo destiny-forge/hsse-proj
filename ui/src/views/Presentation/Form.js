@@ -19,7 +19,7 @@ import ErrorMessage from '../../components/atoms/ErrorMessage';
 import PDFUploadLinks from '../../components/atoms/PDFUploadLinks';
 import CustomDatePickerInput from '../../components/atoms/CustomDatePickerInput';
 
-import { formatDate } from '../../utils/format';
+import { getYear } from '../../utils/format';
 
 import 'react-toastify/dist/ReactToastify.min.css';
 
@@ -279,14 +279,14 @@ class PresentationForm extends React.Component {
     const bookCitation = `${authors || '[authors]'}. ${title || '[title]'}. ${
       editors || '[editors]'
     }. ${pubPlace || '[pubPlace]'}, ${publisher || '[publisher]'}, ${
-      formatDate(published) || '[published]'
+      getYear(published) || '[published]'
     }; ${startPage || '[startPage]'}-${endPage || '[endPage]'}.`;
 
     const journalCitation = `${authors || '[authors]'}. ${
       title || '[title]'
-    }. ${journal || '[journal]'}. ${formatDate(published) || '[published]'}; ${
+    }. ${journal || '[journal]'}. ${getYear(published) || '[published]'};${
       volume || '[volume]'
-    } (${issue || '[issue]'}): ${startPage || '[startPage]'}-${
+    }(${issue || '[issue]'}):${startPage || '[startPage]'}-${
       endPage || '[endPage]'
     }.`;
 
