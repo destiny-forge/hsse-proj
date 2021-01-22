@@ -3,6 +3,7 @@ import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import CustomDatePickerInput from '../../components/atoms/CustomDatePickerInput';
 import USER_ROLES from './data/roles';
+import { yearMonthDay } from '../../utils/format';
 import _ from 'lodash';
 
 const User = ({ user, edit }) => (
@@ -23,7 +24,7 @@ const User = ({ user, edit }) => (
       </div>
       <div>
         Expire on (yyyy/mm/dd):{' '}
-        <b>{_.get(user, 'limit_search_expires', 'No')}</b>
+        <b>{yearMonthDay(_.get(user, 'limit_search_expires', 'No'))}</b>
       </div>
     </td>
     <td></td>

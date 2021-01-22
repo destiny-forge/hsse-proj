@@ -1,4 +1,5 @@
 import React from 'react';
+import { getYear } from '../../utils/format';
 
 const List = ({ articles = [], onEdit }) => (
   <div className="box">
@@ -24,7 +25,7 @@ const List = ({ articles = [], onEdit }) => (
               <td>{article.shortId}</td>
               <td>{article.title}</td>
               <td>{article.generalFocus ? 'General' : 'Specific'}</td>
-              <td>{article.published}</td>
+              <td>{getYear(article.published)}</td>
               <td>{article.authors}</td>
               <td>{article.abstract}</td>
             </tr>

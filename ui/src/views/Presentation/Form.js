@@ -19,6 +19,8 @@ import ErrorMessage from '../../components/atoms/ErrorMessage';
 import PDFUploadLinks from '../../components/atoms/PDFUploadLinks';
 import CustomDatePickerInput from '../../components/atoms/CustomDatePickerInput';
 
+import { getYear } from '../../utils/format';
+
 import 'react-toastify/dist/ReactToastify.min.css';
 
 const STATUSES = [
@@ -277,14 +279,14 @@ class PresentationForm extends React.Component {
     const bookCitation = `${authors || '[authors]'}. ${title || '[title]'}. ${
       editors || '[editors]'
     }. ${pubPlace || '[pubPlace]'}, ${publisher || '[publisher]'}, ${
-      published || '[published]'
+      getYear(published) || '[published]'
     }; ${startPage || '[startPage]'}-${endPage || '[endPage]'}.`;
 
     const journalCitation = `${authors || '[authors]'}. ${
       title || '[title]'
-    }. ${journal || '[journal]'}. ${published || '[published]'}; ${
+    }. ${journal || '[journal]'}. ${getYear(published) || '[published]'};${
       volume || '[volume]'
-    } (${issue || '[issue]'}): ${startPage || '[startPage]'}-${
+    }(${issue || '[issue]'}):${startPage || '[startPage]'}-${
       endPage || '[endPage]'
     }.`;
 
@@ -884,6 +886,7 @@ class PresentationForm extends React.Component {
                   field="hyperlinks"
                   nameTitle="Language"
                   items={Object.assign(languages, article.hyperlinks)}
+                  keyMaps={{ en: 'English', fr: 'French' }}
                   onUpdate={this.handleLinkUpdate}
                   isTestable={true}
                 />

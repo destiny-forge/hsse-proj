@@ -4,6 +4,7 @@ const EditLinkTable = ({
   title,
   field,
   items,
+  keyMaps = {},
   isTestable = false,
   nameTitle = 'Name',
   onUpdate,
@@ -54,7 +55,7 @@ const EditLinkTable = ({
                   <td>
                     <button onClick={deactivate}>Cancel</button>
                   </td>
-                  <td>{key}</td>
+                  <td>{(keyMaps && keyMaps[key]) || key}</td>
                   <td>
                     <input
                       className="form-control"
@@ -71,7 +72,7 @@ const EditLinkTable = ({
                 <td>
                   <button onClick={() => activate(key, url)}>Edit</button>
                 </td>
-                <td>{key}</td>
+                <td>{(keyMaps && keyMaps[key]) || key}</td>
                 <td>
                   {isTestable && url.indexOf('http') !== -1 && (
                     <button onClick={() => test(url)}>Test</button>
