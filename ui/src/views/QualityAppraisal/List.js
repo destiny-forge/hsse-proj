@@ -148,6 +148,7 @@ class AppraisalList extends React.Component {
 
   render() {
     const { stage } = this.state;
+    const { user } = this.props;
     return (
       <div className="box">
         <div className="table-responsive">
@@ -186,53 +187,49 @@ class AppraisalList extends React.Component {
                       */}
 
                       {this.showEmail(article.stages[stage], 'junior') ||
-                        (!this.isAssignedAs(
-                          article.stages[stage],
-                          'senior'
-                        ) && (
-                          <button
-                            className="md-btn md-flat mb-2 w-xs text-success"
-                            onClick={() => {
-                              if (
-                                window.confirm(
-                                  'Are you sure you want to assign this article to your assigned quality appraisals list?'
+                        (!this.isAssignedAs(article.stages[stage], 'senior') &&
+                          perms.can_appraise_junior(user) && (
+                            <button
+                              className="md-btn md-flat mb-2 w-xs text-success"
+                              onClick={() => {
+                                if (
+                                  window.confirm(
+                                    'Are you sure you want to assign this article to your assigned quality appraisals list?'
+                                  )
                                 )
-                              )
-                                this.assign(
-                                  'junior',
-                                  article._id,
-                                  article.stages[stage]
-                                );
-                            }}
-                          >
-                            Assign
-                          </button>
-                        ))}
+                                  this.assign(
+                                    'junior',
+                                    article._id,
+                                    article.stages[stage]
+                                  );
+                              }}
+                            >
+                              Assign
+                            </button>
+                          ))}
                     </td>
                     <td>
                       {this.showEmail(article.stages[stage], 'senior') ||
-                        (!this.isAssignedAs(
-                          article.stages[stage],
-                          'junior'
-                        ) && (
-                          <button
-                            className="md-btn md-flat mb-2 w-xs text-success"
-                            onClick={() => {
-                              if (
-                                window.confirm(
-                                  'Are you sure you want to assign this article to your assigned quality appraisals list?'
+                        (!this.isAssignedAs(article.stages[stage], 'junior') &&
+                          perms.can_appraise_senior(user) && (
+                            <button
+                              className="md-btn md-flat mb-2 w-xs text-success"
+                              onClick={() => {
+                                if (
+                                  window.confirm(
+                                    'Are you sure you want to assign this article to your assigned quality appraisals list?'
+                                  )
                                 )
-                              )
-                                this.assign(
-                                  'senior',
-                                  article._id,
-                                  article.stages[stage]
-                                );
-                            }}
-                          >
-                            Assign
-                          </button>
-                        ))}
+                                  this.assign(
+                                    'senior',
+                                    article._id,
+                                    article.stages[stage]
+                                  );
+                              }}
+                            >
+                              Assign
+                            </button>
+                          ))}
                     </td>
                     <td>{this.getMyStatus(article.stages[stage])}</td>
                     <td>{this.getStatus(article, stage)}</td>
