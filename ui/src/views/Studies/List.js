@@ -134,6 +134,7 @@ class StudiesList extends React.Component {
 
   render() {
     const { stage } = this.state;
+    const { user } = this.props;
     return (
       <div className="box">
         <div className="table-responsive">
@@ -160,24 +161,22 @@ class StudiesList extends React.Component {
                     <td>{article.authors}</td>
                     <td>
                       {this.showEmail(article.stages[stage], 'senior') ||
-                        (!this.isAssignedAs(
-                          article.stages[stage],
-                          'junior'
-                        ) && (
-                          <button
-                            className="md-btn md-flat mb-2 w-xs text-success"
-                            onClick={() => {
-                              if (
-                                window.confirm(
-                                  'Are you sure you want to assign this article to your assigned linking studies list?'
+                        (!this.isAssignedAs(article.stages[stage], 'junior') &&
+                          perms.can_link(user) && (
+                            <button
+                              className="md-btn md-flat mb-2 w-xs text-success"
+                              onClick={() => {
+                                if (
+                                  window.confirm(
+                                    'Are you sure you want to assign this article to your assigned linking studies list?'
+                                  )
                                 )
-                              )
-                                this.assign('senior', article._id);
-                            }}
-                          >
-                            Assign
-                          </button>
-                        ))}
+                                  this.assign('senior', article._id);
+                              }}
+                            >
+                              Assign
+                            </button>
+                          ))}
                     </td>
                     <td>{this.getMyStatus(article.stages[stage])}</td>
                     <td>{this.getStatus(article, stage)}</td>

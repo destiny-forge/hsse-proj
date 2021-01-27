@@ -103,47 +103,49 @@ const ArticleList = ({ stage, articles = [], user, assign }) => {
                       */}
 
                     {showEmail(article.stages[stage], 'junior') ||
-                      (!isAssignedAs(article.stages[stage], 'senior') && (
-                        <button
-                          className="md-btn md-flat mb-2 w-xs text-success"
-                          onClick={() => {
-                            if (
-                              window.confirm(
-                                'Are you sure you want to assign this article to your assigned quality appraisals list?'
+                      (!isAssignedAs(article.stages[stage], 'senior') &&
+                        perms.can_filter_junior(user) && (
+                          <button
+                            className="md-btn md-flat mb-2 w-xs text-success"
+                            onClick={() => {
+                              if (
+                                window.confirm(
+                                  'Are you sure you want to assign this article to your assigned quality appraisals list?'
+                                )
                               )
-                            )
-                              assign(
-                                'junior',
-                                article._id,
-                                article.stages[stage]
-                              );
-                          }}
-                        >
-                          Assign
-                        </button>
-                      ))}
+                                assign(
+                                  'junior',
+                                  article._id,
+                                  article.stages[stage]
+                                );
+                            }}
+                          >
+                            Assign
+                          </button>
+                        ))}
                   </td>
                   <td>
                     {showEmail(article.stages[stage], 'senior') ||
-                      (!isAssignedAs(article.stages[stage], 'junior') && (
-                        <button
-                          className="md-btn md-flat mb-2 w-xs text-success"
-                          onClick={() => {
-                            if (
-                              window.confirm(
-                                'Are you sure you want to assign this article to your assigned quality appraisals list?'
+                      (!isAssignedAs(article.stages[stage], 'junior') &&
+                        perms.can_filter_senior(user) && (
+                          <button
+                            className="md-btn md-flat mb-2 w-xs text-success"
+                            onClick={() => {
+                              if (
+                                window.confirm(
+                                  'Are you sure you want to assign this article to your assigned quality appraisals list?'
+                                )
                               )
-                            )
-                              assign(
-                                'senior',
-                                article._id,
-                                article.stages[stage]
-                              );
-                          }}
-                        >
-                          Assign
-                        </button>
-                      ))}
+                                assign(
+                                  'senior',
+                                  article._id,
+                                  article.stages[stage]
+                                );
+                            }}
+                          >
+                            Assign
+                          </button>
+                        ))}
                   </td>
                   <td>{getMyStatus(article.stages[stage])}</td>
                   <td>{getStatus(article, stage)}</td>

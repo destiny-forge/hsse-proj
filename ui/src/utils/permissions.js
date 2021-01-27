@@ -21,10 +21,26 @@ export default {
       this.has_role(user, ['junior_appraiser', 'senior_appraiser'])
     );
   },
+  can_appraise_junior(user) {
+    return this.can_filter(user) || this.has_role(user, ['junior_appraiser']);
+  },
+  can_appraise_senior(user) {
+    return this.can_filter(user) || this.has_role(user, ['senior_appraiser']);
+  },
   can_filter(user) {
     return (
       this.can_prioritize(user) ||
       this.has_role(user, ['junior_filterer', 'senior_filterer'])
+    );
+  },
+  can_filter_junior(user) {
+    return (
+      this.can_prioritize(user) || this.has_role(user, ['junior_filterer'])
+    );
+  },
+  can_filter_senior(user) {
+    return (
+      this.can_prioritize(user) || this.has_role(user, ['senior_filterer'])
     );
   },
   can_prioritize(user) {
