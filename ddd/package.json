@@ -57,6 +57,7 @@
     "deep-diff": "^1.0.2",
     "dotenv": "6.2.0",
     "ejs": "^3.1.5",
+    "elasticsearch": "^16.7.2",
     "express": "4.16.4",
     "express-status-monitor": "1.2.3",
     "faker": "4.1.0",
