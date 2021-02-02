@@ -299,6 +299,21 @@ class PresentationForm extends React.Component {
 
   cleanData(article) {
     const fieldsToOmit = ['stages', 'batchId', 'batchName', 'shortId', 'lost'];
+    if (article.volume) {
+      article.volume = parseInt(article.volume);
+    }
+    if (article.issue) {
+      article.issue = parseInt(article.issue);
+    }
+    if (article.pages) {
+      article.pages = parseInt(article.pages);
+    }
+    if (article.startPage) {
+      article.startPage = parseInt(article.startPage);
+    }
+    if (article.endPage) {
+      article.endPage = parseInt(article.endPage);
+    }
     return _.omit(article, fieldsToOmit);
   }
 
