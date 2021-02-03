@@ -5,11 +5,11 @@ module.exports = {
   logging: {
     maxsize: 100 * 1024, // 100mb
     maxFiles: 2,
-    colorize: false
+    colorize: false,
   },
   authSecret: process.env.SECRET,
   authSession: {
-    session: false
+    session: false,
   },
   frontend: process.env.FRONTEND_SERVER,
   mail: {
@@ -17,12 +17,15 @@ module.exports = {
     settings: {
       accessKeyId: process.env.HSSE_SES_ACCESS_KEY,
       secretAccessKey: process.env.HSSE_SES_SECRET_KEY,
-      region: process.env.REGION
-    }
+      region: process.env.REGION,
+    },
   },
   s3: {
     bucket: process.env.HSSE_S3_Bucket,
     accessKeyId: process.env.HSSE_S3_ACCESS_KEY,
-    secretAccessKey: process.env.HSSE_S3_SECRET_KEY
-  }
+    secretAccessKey: process.env.HSSE_S3_SECRET_KEY,
+  },
+  elasticsearch: {
+    nodes: ["http://localhost:9200"],
+  },
 };
