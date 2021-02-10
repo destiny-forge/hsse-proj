@@ -3,7 +3,7 @@ module.exports = {
   'Cochrane Library (plain language summaries)': '',
   'Database of Review of Effects': '',
   'Effective Health Care Research Programme Consortium': '',
-  'Health-Evidence.ca': '',
+  'Health-Evidence-ca': '',
   'Health Knowledge Network': '',
   'International Initiative for Impact Evaluation': '',
   'Reproductive Health Library': '',

@@ -22,7 +22,9 @@ const List = ({ articles = [], onEdit }) => (
               <td>
                 <button onClick={() => onEdit(article.shortId)}>Edit</button>
               </td>
-              <td>{article.shortId}</td>
+              <td>
+                {article.shortId} {article.legacyId && `(${article.legacyId})`}
+              </td>
               <td>{article.title}</td>
               <td>{article.generalFocus ? 'General' : 'Specific'}</td>
               <td>{getYear(article.published)}</td>

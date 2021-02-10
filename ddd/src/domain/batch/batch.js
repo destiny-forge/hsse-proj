@@ -5,7 +5,7 @@ const { cleanData, cleanMongoId } = require("../helper");
 const Batch = t.struct(
   {
     _id: t.maybe(t.String),
-    legacyId: t.maybe(t.String),
+    legacyId: t.maybe(t.Number),
     shortId: t.String,
     name: t.maybe(t.String),
 
@@ -19,7 +19,7 @@ const Batch = t.struct(
     language: t.String,
 
     uploaded: t.Date,
-    harvested: t.Date,
+    harvested: t.maybe(t.Date),
     stages: t.maybe(t.Object),
   },
   {

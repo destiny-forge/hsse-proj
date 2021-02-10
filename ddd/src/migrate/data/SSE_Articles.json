@@ -1,0 +1,370 @@
+[
+	{
+		"legacy_id": 255696,
+		"legacy_batch_id": 4185,
+		"batchName": "sse_WoS_SR_2019-02-28b",
+		"shortId": "",
+		"type": "sse",
+		"monthlyUpdateDate": "2019-04-01",
+		"source": "",
+		"language": "en",
+		"lost": false,
+		"uploaded": "2019-02-28T15:38:08.230Z",
+		"published": "2019-04-29T19:12:01.847Z",
+		"title": "The effect of team-based learning on content knowledge: A meta-analysis",
+		"journal": "Active Learning in Higher Education",
+		"authors": "Swanson E;McCulley LV;Osman DJ;Lewis NS;Solis M;",
+		"stages": {
+			"eligibility": null,
+			"studies": null,
+			"appraisals": null
+		},
+		"status": "Completed",
+		"filters": [
+			"programsServicesEducation",
+			"programsServicesEducationTertiary",
+			"sustainableDevelopmentGoals",
+			"sustainableDevelopmentGoalsQualityEducation",
+			"outcomesProvider",
+			"programsServicesEducation"
+		],
+		"rating": "AMSTAR rating from McMaster Health Forum",
+		"questions": [],
+		"complicated": true,
+		"countryLinks": {
+			"India": {
+				"id": "77",
+				"count": "1",
+				"focus": false,
+				"links": []
+			},
+			"Lebanon": {
+				"id": "94",
+				"count": "1",
+				"focus": false,
+				"links": []
+			},
+			"Oman": {
+				"id": "127",
+				"count": "1",
+				"focus": false,
+				"links": []
+			},
+			"Tanzania (United Republic of)": {
+				"id": "183",
+				"count": "1",
+				"focus": false,
+				"links": []
+			},
+			"United States": {
+				"id": "184",
+				"count": "7",
+				"focus": false,
+				"links": []
+			}
+		},
+		"producer": {
+			"cochrane": false,
+			"campbell": false,
+			"issue": 0,
+			"year": 0
+		},
+		"notes": "",
+		"priority": "",
+		"titles": {
+			"fr": {
+				"title": "L'effet de l'apprentissage en équipe sur la connaissance du contenu: une méta-analyse"
+			}
+		},
+		"documentType": "Systematic reviews of effects",
+		"generalFocus": false,
+		"questionType": "Effectiveness",
+		"amstarDenominator": 7,
+		"amstarNumerator": 11,
+		"noFreeFullText": false,
+		"notInEnglish": false,
+		"abstracts": {
+			"PubMed": "",
+			"Cochrane Library": "",
+			"Publisher": "https://journals.sagepub.com/doi/10.1177/1469787417731201"
+		},
+		"hyperlinks": {
+			"en": ""
+		},
+		"summaries": {
+			"Australasian Cochrane Centre Policy Liaison Initiative": "",
+			"Cochrane Library (plain language summaries)": "",
+			"Database of Review of Effects": "",
+			"Effective Health Care Research Programme Consortium": "",
+			"Health-Evidence.ca": "",
+			"Health Knowledge Network": "",
+			"International Initiative for Impact Evaluation": "",
+			"Reproductive Health Library": "",
+			"Rx for Change": "",
+			"SUPPORT": "",
+			"European Observatory on Health Systems and Policies": "",
+			"SHARE": "",
+			"Evidence for Equity (E4E)": ""
+		}
+	},
+	{
+		"legacy_id": 257589,
+		"legacy_batch_id": 4229,
+		"batchName": "sse_WoS_SR_2019-03-13a",
+		"shortId": "",
+		"type": "sse",
+		"monthlyUpdateDate": "2019-09-01",
+		"source": "",
+		"language": "en",
+		"lost": false,
+		"uploaded": "2019-03-19T16:53:05.907Z",
+		"published": "2019-09-18T14:34:20.293Z",
+		"title": "School green space and its impact on academic performance: A systematic literature review",
+		"journal": "International Journal of Environmental Research and Public Health",
+		"authors": "Browning M;Rigolon A;",
+		"stages": {
+			"eligibility": null,
+			"studies": null,
+			"appraisals": null
+		},
+		"status": "Completed",
+		"filters": [
+			"programsServicesChildren",
+			"programsServicesEducation",
+			"programsServicesChildrenStudentSupport",
+			"recreation",
+			"recreationPublicSpaces",
+			"programsServicesEducationPrimary",
+			"programsServicesEducationSecondary",
+			"programsServicesEducationTertiary",
+			"sustainableDevelopmentGoals",
+			"sustainableDevelopmentGoalsGoodHealth",
+			"sustainableDevelopmentGoalsQualityEducation",
+			"sustainableDevelopmentGoalsReducedInequalities",
+			"sustainableDevelopmentGoalsSustainableCitiesCommunities",
+			"perspectivesPopulations",
+			"outcomesProvider",
+			"perspectivesPopulationChildrenYouth",
+			"programsServicesEducation",
+			"outcomesProviderWellBeing"
+		],
+		"rating": "AMSTAR rating from McMaster Health Forum",
+		"questions": [],
+		"complicated": true,
+		"countryLinks": {
+			"Canada": {
+				"id": "31",
+				"count": "1",
+				"focus": false,
+				"links": []
+			},
+			"Germany": {
+				"id": "65",
+				"count": "1",
+				"focus": false,
+				"links": []
+			},
+			"New Zealand": {
+				"id": "122",
+				"count": "1",
+				"focus": false,
+				"links": []
+			},
+			"United States": {
+				"id": "184",
+				"count": "10",
+				"focus": false,
+				"links": []
+			}
+		},
+		"producer": {
+			"cochrane": false,
+			"campbell": false,
+			"issue": 0,
+			"year": 0
+		},
+		"notes": "",
+		"priority": "",
+		"titles": {
+			"fr": {
+				"title": "Les espaces verts scolaires et leur impact sur les performances scolaires: une revue systématique de la littérature"
+			}
+		},
+		"documentType": "Systematic reviews of effects",
+		"generalFocus": false,
+		"questionType": "Effectiveness",
+		"amstarDenominator": 6,
+		"amstarNumerator": 10,
+		"noFreeFullText": false,
+		"notInEnglish": false,
+		"abstracts": {
+			"PubMed": "http://www.ncbi.nlm.nih.gov/pubmed/30717301",
+			"Cochrane Library": "",
+			"Publisher": "https://www.mdpi.com/1660-4601/16/3/429"
+		},
+		"hyperlinks": {
+			"en": "https://www.mdpi.com/1660-4601/16/3/429/htm"
+		},
+		"summaries": {
+			"Australasian Cochrane Centre Policy Liaison Initiative": "",
+			"Cochrane Library (plain language summaries)": "",
+			"Database of Review of Effects": "",
+			"Effective Health Care Research Programme Consortium": "",
+			"Health-Evidence.ca": "",
+			"Health Knowledge Network": "",
+			"International Initiative for Impact Evaluation": "",
+			"Reproductive Health Library": "",
+			"Rx for Change": "",
+			"SUPPORT": "",
+			"European Observatory on Health Systems and Policies": "",
+			"SHARE": "",
+			"Evidence for Equity (E4E)": ""
+		}
+	},
+	{
+		"legacy_id": 270745,
+		"legacy_batch_id": 4606,
+		"batchName": "sse_WoS_SR_2019-09-04c",
+		"shortId": "",
+		"type": "sse",
+		"monthlyUpdateDate": "2020-01-01",
+		"source": "",
+		"language": "en",
+		"lost": false,
+		"uploaded": "2019-09-05T17:33:31.943Z",
+		"published": "2020-01-30T13:53:12.557Z",
+		"title": "The transition to retirement experiences of academics in \"Higher Education\": A meta-ethnography",
+		"journal": "The Gerontologist",
+		"authors": "Cahill M;Pettigrew J;Robinson K;Galvin R",
+		"stages": {
+			"eligibility": null,
+			"studies": null,
+			"appraisals": null
+		},
+		"status": "Completed",
+		"filters": [
+			"programsServicesEmployment",
+			"programsServicesEducation",
+			"programsServicesEmploymentConditions",
+			"programsServicesEducationTertiary",
+			"sustainableDevelopmentGoals",
+			"sustainableDevelopmentGoalsNoPoverty",
+			"sustainableDevelopmentGoalsGoodHealth",
+			"sustainableDevelopmentGoalsQualityEducation",
+			"sustainableDevelopmentGoalsDecentWorkEconomicGrowth",
+			"themeOptimalAging",
+			"perspectivesPopulations",
+			"outcomesProvider",
+			"perspectivesPopulationOlderAdults",
+			"outcomesProviderWellBeing"
+		],
+		"rating": "AMSTAR rating from McMaster Health Forum",
+		"questions": [],
+		"complicated": true,
+		"countryLinks": {
+			"Australia": {
+				"id": "9",
+				"count": "1",
+				"focus": false,
+				"links": []
+			},
+			"Canada": {
+				"id": "31",
+				"count": "5",
+				"focus": false,
+				"links": []
+			},
+			"Italy": {
+				"id": "83",
+				"count": "1",
+				"focus": false,
+				"links": []
+			},
+			"New Zealand": {
+				"id": "122",
+				"count": "2",
+				"focus": false,
+				"links": []
+			},
+			"Philippines": {
+				"id": "134",
+				"count": "1",
+				"focus": false,
+				"links": []
+			},
+			"Switzerland": {
+				"id": "165",
+				"count": "1",
+				"focus": false,
+				"links": []
+			},
+			"United States": {
+				"id": "184",
+				"count": "14",
+				"focus": false,
+				"links": []
+			},
+			"Hong Kong": {
+				"id": "195",
+				"count": "1",
+				"focus": false,
+				"links": []
+			},
+			"United Kingdom (England)": {
+				"id": "201",
+				"count": "2",
+				"focus": false,
+				"links": []
+			},
+			"United Kingdom (Scotland)": {
+				"id": "203",
+				"count": "1",
+				"focus": false,
+				"links": []
+			}
+		},
+		"producer": {
+			"cochrane": false,
+			"campbell": false,
+			"issue": 0,
+			"year": 0
+		},
+		"notes": "",
+		"priority": "",
+		"titles": {
+			"fr": {
+				"title": "La transition vers les expériences de retraite des universitaires dans \"l'enseignement supérieur\": une méta-ethnographie"
+			}
+		},
+		"documentType": "Systematic reviews addressing other questions ",
+		"generalFocus": false,
+		"questionType": "Not effectiveness",
+		"amstarDenominator": 6,
+		"amstarNumerator": 9,
+		"noFreeFullText": false,
+		"notInEnglish": false,
+		"abstracts": {
+			"PubMed": "http://www.ncbi.nlm.nih.gov/pubmed/29385494",
+			"Cochrane Library": "",
+			"Publisher": "https://academic.oup.com/gerontologist/article/59/3/e177/4827825"
+		},
+		"hyperlinks": {
+			"en": ""
+		},
+		"summaries": {
+			"Australasian Cochrane Centre Policy Liaison Initiative": "",
+			"Cochrane Library (plain language summaries)": "",
+			"Database of Review of Effects": "",
+			"Effective Health Care Research Programme Consortium": "",
+			"Health-Evidence.ca": "",
+			"Health Knowledge Network": "",
+			"International Initiative for Impact Evaluation": "",
+			"Reproductive Health Library": "",
+			"Rx for Change": "",
+			"SUPPORT": "",
+			"European Observatory on Health Systems and Policies": "",
+			"SHARE": "",
+			"Evidence for Equity (E4E)": ""
+		}
+	}
+]

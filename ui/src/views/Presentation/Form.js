@@ -332,7 +332,10 @@ class PresentationForm extends React.Component {
               <legend>General Information</legend>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Ref ID</label>
-                <div className="col-sm-10">{article.shortId}</div>
+                <div className="col-sm-10">
+                  {article.shortId}{' '}
+                  {article.legacyId && `(${article.legacyId})`}
+                </div>
               </div>
               <div className="form-group row">
                 <label className="col-sm-2 col-form-label">Update Date</label>
