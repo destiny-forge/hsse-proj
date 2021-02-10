@@ -3,15 +3,18 @@ const migrate = require("src/migrate");
 const app = container.resolve("app");
 
 app
-  .start(() => {
+  .start()
+  .then(() => {
     const sites = ["hse", "sse"];
     sites.forEach((site) => {
-      migrate.users(site);
+      //app.logger.log(`importing legacy data for site = ${site}`);
+      //migrate.users(site);
       migrate.batches(site);
       migrate.articles(site);
     });
   })
   .catch((error) => {
-    app.logger.error(error.stack);
+    console.log(error);
+    //app.logger.error(error.stack);
     process.exit();
   });

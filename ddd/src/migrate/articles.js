@@ -8,9 +8,6 @@ module.exports = (site) => {
 
   const loadUseCase = load({ articleRepository });
 
-  const articles = require(`${site.toUpperCase()}_Articles.json`);
-  const result = articles.map((article) => loadUseCase(article));
-  console.log(result);
-  return result;
-  // load data from the filesystem, prep, import and return
+  const articles = require(`./data/${site.toUpperCase()}_Articles.json`);
+  articles.map((article) => loadUseCase.load(article));
 };

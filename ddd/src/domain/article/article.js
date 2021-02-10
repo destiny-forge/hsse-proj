@@ -6,7 +6,8 @@ const t = require("tcomb");
 const Article = t.struct(
   {
     _id: t.maybe(t.String),
-    legacyId: t.maybe(t.String),
+    legacyId: t.maybe(t.Number),
+    legacyBatchId: t.maybe(t.Number),
     batchId: t.maybe(t.Object),
     batchName: t.maybe(t.String),
     shortId: t.maybe(t.String),

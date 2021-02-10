@@ -8,8 +8,6 @@ module.exports = (site) => {
 
   const loadUseCase = load({ batchRepository });
 
-  const batches = require(`${site.toUpperCase()}_Batches.json`);
-  const result = batches.map((batch) => loadUseCase(batch));
-  console.log(result);
-  return result;
+  const batches = require(`./data/${site.toUpperCase()}_Batches.json`);
+  batches.map((batch) => loadUseCase.load(batch));
 };
