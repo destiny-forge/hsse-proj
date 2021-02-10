@@ -13,6 +13,7 @@ const date = require("./infra/support/date");
 const repository = require("./infra/repositories");
 const events = require("./infra/events");
 const mailer = require("./infra/mailer");
+const search = require("./infra/search");
 const container = createContainer();
 
 // SYSTEM
@@ -29,7 +30,8 @@ container.register({
   date: asFunction(date).singleton(),
   config: asValue(config),
   repository: asFunction(repository).singleton(),
-  mailer: asClass(mailer).singleton()
+  mailer: asClass(mailer).singleton(),
+  search: asClass(search).singleton(),
 });
 
 module.exports = container;

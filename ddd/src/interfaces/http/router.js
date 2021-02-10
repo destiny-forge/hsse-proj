@@ -60,6 +60,8 @@ module.exports = ({ config, logger }) => {
   apiRouter.use("/translating", controller("translating").router);
   apiRouter.use("/prioritizing", controller("prioritizing").router);
 
+  apiRouter.use("/search", controller("search").router);
+
   router.use("", apiRouter);
 
   router.use(partialRight(errorHandler, [logger, config]));
