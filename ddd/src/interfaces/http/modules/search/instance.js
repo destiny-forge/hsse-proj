@@ -4,5 +4,6 @@ const article = require("src/app/article");
 module.exports = () => {
   const { search } = container.cradle;
   const searchUseCase = article.search({ search });
-  return { searchUseCase };
+  const suggestUseCase = article.suggest({ search });
+  return { searchUseCase, suggestUseCase };
 };

@@ -4,10 +4,14 @@ const assign = require("./assign");
 const get = require("./get");
 const load = require("./load");
 const search = require("./search");
+const detail = require("./detail");
+const latest = require("./latest");
 
 module.exports = {
-  create,
   get,
+  latest,
+  detail,
+  create,
   list,
   assign,
   load,
