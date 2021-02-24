@@ -131,6 +131,7 @@ module.exports = ({ model }) => {
       const article = await model.create(...args);
       return toEntity(article);
     } catch (err) {
+      console.log(err);
       throw new Error(err);
     }
   };

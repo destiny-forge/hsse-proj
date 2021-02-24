@@ -1,20 +1,12 @@
 /**
- * Article search using elasticsearch
+ * Article suggest using elasticsearch?
  */
 module.exports = ({ searchRepository }) => {
-  const search = async (opts) => {
-    const {
-      lang,
-      q,
-      applied_filters,
-      sort_by,
-      page,
-      monthly_update,
-      related_article_id,
-    } = opts;
+  const suggest = async (opts) => {
+    const { lang } = opts;
 
     try {
-      const results = await searchRepository.search();
+      const results = await searchRepository.suggest();
 
       // we'll need to translate the articles into the proper format for
       // consumption on the API / legacy frontends
@@ -26,6 +18,6 @@ module.exports = ({ searchRepository }) => {
   };
 
   return {
-    search,
+    suggest,
   };
 };

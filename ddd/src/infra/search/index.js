@@ -1,8 +1,9 @@
 const { Client } = require("@elastic/elasticsearch");
+const client = new Client({
+  node: process.env.ELASTIC_SEARCH_URL || "http://localhost:9200",
+});
 
 module.exports = () => {
-  const client = new Client({ node: process.env.elasticsearch.nodes });
-
   const search = (query) => {
     const result = client.search(query);
     // we should filter out any ES related search things and instead

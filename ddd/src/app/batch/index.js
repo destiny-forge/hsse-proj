@@ -3,7 +3,6 @@ const list = require("./list");
 const signature = require("./signature");
 const assign = require("./assign");
 const prioritize = require("./prioritize");
-const load = require("./load");
 
 module.exports = {
   create,
@@ -11,5 +10,4 @@ module.exports = {
   assign,
   prioritize,
   signature,
-  load,
 };

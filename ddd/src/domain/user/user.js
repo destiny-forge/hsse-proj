@@ -9,6 +9,10 @@ const User = t.struct(
     confirmed: t.Boolean,
     email: t.String,
     password: t.String,
+    salt: t.maybe(t.String),
+    firstName: t.maybe(t.String),
+    lastName: t.maybe(t.String),
+    language: t.maybe(t.String),
     roles: t.Array,
     limit_search: t.Boolean,
     limit_search_expires: t.String,
@@ -20,6 +24,9 @@ const User = t.struct(
       roles: ["user"],
       limit_search: false,
       limit_search_expires: "",
+      firstName: "",
+      lastName: "",
+      language: "EN",
     },
   }
 );

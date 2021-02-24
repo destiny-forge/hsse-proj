@@ -4,7 +4,7 @@ const mongo = {
   config: null,
   client: null,
   db: null,
-  models: {}
+  models: {},
 };
 
 const init = ({ config, models }) =>
@@ -27,7 +27,7 @@ const connect = () =>
     if (client === null) {
       return reject("The mongodb client has not been initialized");
     }
-    client.connect(err => {
+    client.connect((err) => {
       if (err) {
         console.error(err);
         return reject(err);
@@ -48,7 +48,7 @@ const configure = () => {
     }
     try {
       // loop through models and setIndexes
-      Object.keys(models).forEach(key => {
+      Object.keys(models).forEach((key) => {
         const Model = models[key]({ database: { get } });
         if (Model.hasOwnProperty("createIndexes")) {
           Model.createIndexes();
@@ -89,5 +89,5 @@ module.exports = {
   init,
   connect,
   configure,
-  close
+  close,
 };

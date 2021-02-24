@@ -12,32 +12,32 @@ module.exports = {
     name: "hsse",
     options: {
       useNewUrlParser: true,
-      useUnifiedTopology: true
-    }
+      useUnifiedTopology: true,
+    },
   },
   test: {
     url: process.env.DATABASE_URL_TEST,
     name: "hsse_test",
     options: {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     },
-    logging: false
+    logging: false,
   },
   staging: {
     url: process.env.DATABASE_URL_STAGING,
     name: "hsse_staging",
     options: {
       useNewUrlParser: true,
-      useUnifiedTopology: true
-    }
+      useUnifiedTopology: true,
+    },
   },
   production: {
     url: process.env.DATABASE_URL_PRODUCTION,
     name: "hsse_prod",
     options: {
       useNewUrlParser: true,
-      useUnifiedTopology: true
-    }
-  }
+      useUnifiedTopology: true,
+    },
+  },
 };

@@ -26,6 +26,9 @@ module.exports = ({ bucket, accessKeyId, secretAccessKey, contentType }) => {
     });
   };
 
+  // @TODO - This needs to be modified to use the secret access key permissions
+  // to be able to fetch the file from AWS s3 bucket so that we can remove public
+  // access to the bucket
   getFile = async (url) => {
     //const result = await axios.get(`https://s3.amazonaws.com/${bucket}/${url}`);
     const file = url.split("?")[0];

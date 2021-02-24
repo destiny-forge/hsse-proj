@@ -31,7 +31,7 @@ container.register({
   config: asValue(config),
   repository: asFunction(repository).singleton(),
   mailer: asClass(mailer).singleton(),
-  search: asClass(search).singleton(),
+  search: asFunction(search).singleton(),
 });
 
 module.exports = container;
