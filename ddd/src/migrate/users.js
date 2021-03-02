@@ -1,12 +1,10 @@
 const shortid = require("shortid");
 const db = require("./db");
 
-// load the extracts from disk
 const extract = (site) => {
   return require(`./data/${site.toUpperCase()}_Users.json`);
 };
 
-// clean up data and add shortId
 const transform = (users) => {
   return users.map((user) => {
     let role = "user";
@@ -18,13 +16,31 @@ const transform = (users) => {
         role = "user";
         break;
       case "Office lead":
-        role = "";
+        role = "admin";
         break;
       case "Coder - advanced":
-        role = "";
+        role = "senior_filterer";
         break;
       case "Coder - trainee":
-        role = "";
+        role = "junior_filterer";
+        break;
+      case "Quality rater":
+        role = "senior_appraiser";
+        break;
+      case "Information adder":
+        role = "detailer";
+        break;
+      case "Title Translator":
+        role = "translator";
+        break;
+      case "Site Translator":
+        role = "admin";
+        break;
+      case "Translator Admin":
+        role = "admin";
+        break;
+      case "Trusted User":
+        role = "trusted_user";
         break;
       default:
         role = "user";
@@ -32,8 +48,6 @@ const transform = (users) => {
     }
 
     user.roles = [role];
-    user.legacyId = user.legacy_id;
-    delete user.legacy_id;
     return user;
   });
 };

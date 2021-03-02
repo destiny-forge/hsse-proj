@@ -11,7 +11,6 @@ const transform = (batches) => {
   return batches.map((batch) => {
     batch.name = batch.batch_name;
     batch.shortId = shortid.generate();
-    batch.legacyId = batch.legacy_id;
     batch.uploaded = new Date(batch.uploaded);
 
     delete batch.legacy_id;

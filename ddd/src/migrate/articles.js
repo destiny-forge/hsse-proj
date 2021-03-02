@@ -11,8 +11,6 @@ const extract = (site) => {
 const transform = (articles) => {
   return articles.map((article) => {
     article.shortId = shortid.generate();
-    article.legacyId = article.legacy_id;
-    article.legacyBatchId = article.legacy_batch_id;
 
     if (article.published !== "") {
       article.published = new Date(article.published);

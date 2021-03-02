@@ -15,7 +15,7 @@ const bulkWrite = async (collection_name, docs) => {
     for (const doc of docs) {
       ops.push({ insertOne: { document: doc } });
 
-      if (ops.length === 1000) {
+      if (ops.length === 500) {
         const result = await collection.bulkWrite(ops);
         results.push(result);
         ops = [];
