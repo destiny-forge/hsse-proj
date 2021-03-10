@@ -1,6 +1,7 @@
-const { hseArticle, sseArticle } = require("../domain/article");
 const shortid = require("shortid");
-const db = require("./db");
+const mongodb = require("./mongodb");
+const esdb = require("./esdb");
+require("array.prototype.flatmap").shim();
 
 // load the extracts from disk
 const extract = (site) => {
@@ -35,12 +36,34 @@ const transform = (articles) => {
 
 // batch write to mongodb
 const load = (transforms) => {
-  db.bulkWrite("articles", transforms);
+  mongodb.bulkWrite("articles", transforms);
+};
+
+// index the articles in elasticsearch
+const index = (transforms) => {
+  const fields = {
+    id: { type: "integer" },
+    text: { type: "text" },
+    user: { type: "keyword" },
+    time: { type: "date" },
+  };
+  const iresult = esdb.index("articles", fields);
+
+  console.log(iresult);
+
+  const articles = transforms.flatMap((doc) => [
+    { index: { _index: "articles" } },
+    doc,
+  ]);
+
+  esdb.bulk(articles);
+  esdb.count(articles);
 };
 
 module.exports = (site) => {
   const extracts = extract(site);
   const transforms = transform(extracts);
   const results = load(transforms);
+  index(transforms);
   return results;
 };

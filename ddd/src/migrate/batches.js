@@ -1,5 +1,5 @@
 const shortid = require("shortid");
-const db = require("./db");
+const mongodb = require("./mongodb");
 
 // load the extracts from disk
 const extract = (site) => {
@@ -25,7 +25,7 @@ const transform = (batches) => {
 };
 
 const load = (transforms) => {
-  db.bulkWrite("batches", transforms);
+  mongodb.bulkWrite("batches", transforms);
 };
 
 module.exports = (site) => {

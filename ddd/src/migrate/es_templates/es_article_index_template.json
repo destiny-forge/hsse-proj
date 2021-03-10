@@ -1,0 +1,451 @@
+{
+  "settings": {
+    "index": {
+      "analysis": {
+        "analyzer": {
+          "nGram_analyzer": {
+            "tokenizer": "whitespace",
+            "filter": [
+              "lowercase",
+              "asciifolding",
+              "nGram_filter"
+            ],
+            "type": "custom"
+          },
+          "whitespace_analyzer": {
+            "tokenizer": "whitespace",
+            "filter": [
+              "lowercase",
+              "asciifolding"
+            ],
+            "type": "custom"
+          },
+          "autocmp": {
+            "tokenizer": "edgeNGram",
+            "filter": [
+              "lowercase"
+            ],
+            "type": "custom"
+          },
+          "splcharanalyzer": {
+            "tokenizer": "keyword",
+            "filter": [
+              "splcharfilter",
+              "lowercase"
+            ],
+            "type": "custom"
+          }
+        },
+        "filter": {
+          "nGram_filter": {
+            "token_chars": [
+              "letter",
+              "digit",
+              "punctuation",
+              "symbol"
+            ],
+            "min_gram": 1,
+            "max_gram": 20,
+            "type": "nGram"
+          },
+          "splcharfilter": {
+            "patterns": [
+              "([?/])"
+            ],
+            "preserve_original": true,
+            "type": "pattern_capture"
+          }
+        },
+        "tokenizer": {
+          "edgeNGram": {
+            "min_gram": 1,
+            "max_gram": 20,
+            "type": "edgeNGram"
+          }
+        }
+      }
+    }
+  },
+  "mappings": {
+    "article": {
+      "properties": {
+        "applied_filters": {
+          "type": "nested",
+          "include_in_all": false,
+          "properties": {
+            "fid": {
+              "index": "not_analyzed",
+              "type": "string"
+            }
+          }
+        },
+        "insertDate": {
+          "type": "date",
+          "include_in_all": false
+        },
+        "articleYear": {
+          "type": "double",
+          "include_in_all": false
+        },
+        "lastYearLiteratureSearched": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "uniqueID": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "volume": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "pubYear": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "articleID": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "titleEN": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "titleEN_Splchar": {
+          "analyzer": "splcharanalyzer",
+          "type": "string",
+          "include_in_all": false
+        },
+        "titleAR": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "titleCN": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "titleFR": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "titlePT": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "titleRU": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "titleES": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "authors": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "liveDate": {
+          "type": "date",
+          "include_in_all": false
+        },
+        "citationEN": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "citationFR": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "keywordsEN": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "startPage": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "endPage": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "journal": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "bookTitle": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "editors": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "issue": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "pubPlace": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "publisher": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "countriesEN": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "countriesAR": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "countriesCN": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "countriesFR": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "countriesPT": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "countriesRU": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "countriesES": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "meSHTerms": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "abstractEN": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "documentTypeNameEN": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "documentTypeNameAR": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "documentTypeNameCN": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "documentTypeNameFR": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "documentTypeNamePT": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "documentTypeNameRU": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "documentTypeNameES": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "aMSTARID": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "aMSTARNumerator": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "aMSTARDenominator": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "batchID": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "viewCount": {
+          "type": "double",
+          "include_in_all": false
+        },
+        "topicEN": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "topicAR": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "topicCN": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "topicFR": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "topicPT": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "topicRU": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "topicES": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "topicSynonymEN": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "topicSynonymAR": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "topicSynonymCN": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "topicSynonymFR": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "topicSynonymPT": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "topicSynonymRU": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "topicSynonymES": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "quality_value": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "journalImpactFactor": {
+          "type": "double",
+          "include_in_all": false
+        },
+        "includedStudiesCount": {
+          "type": "double",
+          "include_in_all": false
+        },
+        "citationsCount": {
+          "type": "double",
+          "include_in_all": false
+        },
+        "anyUserFriendlySummary": {
+          "type": "double",
+          "include_in_all": false
+        },
+        "anyEvidence": {
+          "type": "double",
+          "include_in_all": false
+        },
+        "domain": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "fullTextEN": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "fullTextAR": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "fullTextCN": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "fullTextPT": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "fullTextES": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "fullTextRU": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "fullTextFR": {
+          "type": "string",
+          "include_in_all": false
+        },
+        "pdfFullTextEN": {
+          "type": "string",
+          "include_in_all": false
+        }
+      }
+    },
+    "topic_suggestions": {
+      "properties": {
+        "suggestEN": {
+          "type": "completion",
+          "payloads": true,
+          "preserve_separators": true,
+          "preserve_position_increments": true,
+          "max_input_len": 150
+        },
+        "suggestAR": {
+          "type": "completion",
+          "payloads": true,
+          "preserve_separators": true,
+          "preserve_position_increments": true,
+          "max_input_len": 150
+        },
+        "suggestCN": {
+          "type": "completion",
+          "payloads": true,
+          "preserve_separators": true,
+          "preserve_position_increments": true,
+          "max_input_len": 150
+        },
+        "suggestFR": {
+          "type": "completion",
+          "payloads": true,
+          "preserve_separators": true,
+          "preserve_position_increments": true,
+          "max_input_len": 150
+        },
+        "suggestPT": {
+          "type": "completion",
+          "payloads": true,
+          "preserve_separators": true,
+          "preserve_position_increments": true,
+          "max_input_len": 150
+        },
+        "suggestRU": {
+          "type": "completion",
+          "payloads": true,
+          "preserve_separators": true,
+          "preserve_position_increments": true,
+          "max_input_len": 150
+        },
+        "suggestES": {
+          "type": "completion",
+          "payloads": true,
+          "preserve_separators": true,
+          "preserve_position_increments": true,
+          "max_input_len": 150
+        }
+      }
+    }
+  }
+}

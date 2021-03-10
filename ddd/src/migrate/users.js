@@ -1,5 +1,6 @@
-const shortid = require("shortid");
-const db = require("./db");
+const mongodb = require("./mongodb");
+const esdb = require("./esdb");
+require("array.prototype.flatmap").shim();
 
 const extract = (site) => {
   return require(`./data/${site.toUpperCase()}_Users.json`);
@@ -53,7 +54,7 @@ const transform = (users) => {
 };
 
 const load = (transforms) => {
-  db.bulkWrite("users", transforms);
+  mongodb.bulkWrite("users", transforms);
 };
 
 module.exports = (site) => {
