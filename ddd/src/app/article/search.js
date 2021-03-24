@@ -1,24 +1,26 @@
 /**
- * Article search using elasticsearch
+ * Article search
  */
-module.exports = ({ searchRepository }) => {
+module.exports = ({ client }) => {
   const search = async (opts) => {
     const {
-      lang,
-      q,
-      applied_filters,
-      sort_by,
-      page,
-      monthly_update,
-      related_article_id,
+      type,
+      // lang,
+      // q,
+      // applied_filters,
+      // sort_by,
+      // page,
+      // monthly_update,
+      // related_article_id,
     } = opts;
 
     try {
-      const results = await searchRepository.search();
-
-      // we'll need to translate the articles into the proper format for
-      // consumption on the API / legacy frontends
-
+      const index = `${type}-articles`;
+      const query = {
+        match: { legacyId: 1 },
+      };
+      // formatted in the expected result to match API contract
+      const results = await client.search(index, query);
       return results;
     } catch (error) {
       throw new Error(error);

@@ -1,16 +1,24 @@
 /**
  * Article suggest using elasticsearch?
  */
-module.exports = ({ searchRepository }) => {
+module.exports = ({ client }) => {
   const suggest = async (opts) => {
-    const { lang } = opts;
-
+    const { lang, type, prefix } = opts;
     try {
-      const results = await searchRepository.suggest();
-
-      // we'll need to translate the articles into the proper format for
-      // consumption on the API / legacy frontends
-
+      const index = `${type}-articles`;
+      const field = `title_suggest_${lang}`;
+      const query = {};
+      const suggest = {
+        suggest: {
+          "article-suggest": {
+            prefix,
+            completion: {
+              field,
+            },
+          },
+        },
+      };
+      const results = await client.suggest(index, query, suggest);
       return results;
     } catch (error) {
       throw new Error(error);
