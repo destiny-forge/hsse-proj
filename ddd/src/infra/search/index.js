@@ -1,23 +1,20 @@
-const { Client } = require("@elastic/elasticsearch");
-const client = new Client({
-  node: process.env.ELASTIC_SEARCH_URL || "http://localhost:9200",
-});
+const client = require("./esdb");
 
 module.exports = () => {
-  const search = (query) => {
-    const result = client.search(query);
-    // we should filter out any ES related search things and instead
-    // send just the array of articles back to the caller to keep things
-    // clean and abstracted
-
-    return result;
+  const init = async (index) => {
+    return await client.init(index);
   };
 
-  const index = () => {
-    return;
+  const index = async (index, doc) => {
+    return await client.index(index, doc);
+  };
+
+  const search = async (query) => {
+    return await client.search(query);
   };
 
   return {
+    init,
     index,
     search,
   };

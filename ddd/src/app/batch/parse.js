@@ -48,24 +48,25 @@ const clean = (fields) => {
   ["volume", "issue", "pages"].forEach((field) => {
     if (article[field] === "[NOT USED]") {
       delete article[field];
-    } else {
-      const parsed = parseInt(article[field]);
-      if (isNaN(parsed)) {
-        delete article[field];
-      } else {
-        article[field] = parsed;
-      }
     }
+    // } else {
+    //   const parsed = parseInt(article[field]);
+    //   if (isNaN(parsed)) {
+    //     delete article[field];
+    //   } else {
+    //     article[field] = parsed;
+    //   }
+    // }
   });
 
-  ["startPage", "endPage"].forEach((field) => {
-    const parsed = parseInt(article[field]);
-    if (isNaN(parsed)) {
-      delete article[field];
-    } else {
-      article[field] = parsed;
-    }
-  });
+  // ["startPage", "endPage"].forEach((field) => {
+  //   const parsed = parseInt(article[field]);
+  //   if (isNaN(parsed)) {
+  //     delete article[field];
+  //   } else {
+  //     article[field] = parsed;
+  //   }
+  // });
 
   ["databaseProvider", "language"].forEach((field) => {
     if (article[field] === undefined) {

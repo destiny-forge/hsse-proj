@@ -56,11 +56,11 @@ const Article = t.struct(
     keywords: t.maybe(t.String),
     customKeywords: t.maybe(t.String),
 
-    volume: t.maybe(t.Number),
-    issue: t.maybe(t.Number),
+    volume: t.maybe(t.String),
+    issue: t.maybe(t.String),
     pages: t.maybe(t.Number),
-    startPage: t.maybe(t.Number),
-    endPage: t.maybe(t.Number),
+    startPage: t.maybe(t.String),
+    endPage: t.maybe(t.String),
     editors: t.maybe(t.String),
 
     pubPlace: t.maybe(t.String),

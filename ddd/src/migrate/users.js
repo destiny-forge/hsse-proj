@@ -1,6 +1,4 @@
 const mongodb = require("./mongodb");
-const esdb = require("./esdb");
-require("array.prototype.flatmap").shim();
 
 const extract = (site) => {
   return require(`./data/${site.toUpperCase()}_Users.json`);

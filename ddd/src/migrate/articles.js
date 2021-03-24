@@ -1,7 +1,9 @@
 const shortid = require("shortid");
 const mongodb = require("./mongodb");
-const esdb = require("./esdb");
-require("array.prototype.flatmap").shim();
+const esdb = require("../infra/search/esdb");
+const mappings = require("../infra/search/es_templates/article_mappings");
+
+const flatMap = (arr, f) => arr.reduce((r, x) => r.concat(f(x)), []);
 
 // load the extracts from disk
 const extract = (site) => {
@@ -30,7 +32,7 @@ const transform = (articles) => {
       article.summaries["Health-Evidence.ca"];
     delete article.summaries["Health-Evidence.ca"];
 
-    return article; //.type === "sse" ? sseArticle(article) : hseArticle(article);
+    return article;
   });
 };
 
@@ -41,29 +43,30 @@ const load = (transforms) => {
 
 // index the articles in elasticsearch
 const index = (transforms) => {
-  const fields = {
-    id: { type: "integer" },
-    text: { type: "text" },
-    user: { type: "keyword" },
-    time: { type: "date" },
-  };
-  const iresult = esdb.index("articles", fields);
+  transforms = transforms.map((t) => {
+    t.id = t.shortId;
+    t.applied_filters = t.filters;
+    delete t.filters;
+    return t;
+  });
 
-  console.log(iresult);
-
-  const articles = transforms.flatMap((doc) => [
-    { index: { _index: "articles" } },
+  const articles = flatMap(transforms, (doc) => [
+    { index: { _index: `${doc.type}-articles` } },
     doc,
   ]);
 
-  esdb.bulk(articles);
-  esdb.count(articles);
+  Promise.resolve()
+    .then(() => esdb.init("hse-articles", mappings))
+    .then(() => esdb.init("sse-articles", mappings))
+    .then(() => esdb.bulk(articles))
+    .then(() => esdb.count("hse-articles"))
+    .then(() => esdb.count("sse-articles"));
 };
 
 module.exports = (site) => {
   const extracts = extract(site);
   const transforms = transform(extracts);
-  const results = load(transforms);
+  //const results = load(transforms);
   index(transforms);
-  return results;
+  return null;
 };
