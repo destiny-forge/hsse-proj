@@ -1,10 +1,6 @@
 const client = require("./esdb");
 
 module.exports = () => {
-  const init = async (index) => {
-    return await client.init(index);
-  };
-
   const index = async (index, doc) => {
     return await client.index(index, doc);
   };
@@ -13,8 +9,13 @@ module.exports = () => {
     return await client.search(query);
   };
 
+  const reindex = async (index, docs) => {
+    await client.init(index);
+    await client.bulk(index, docs);
+  };
+
   return {
-    init,
+    reindex,
     index,
     search,
   };

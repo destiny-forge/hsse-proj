@@ -1,5 +1,5 @@
 const shortid = require("shortid");
-const mongodb = require("./mongodb");
+const mongodb = require("../infra/mongodb/standalone");
 
 // load the extracts from disk
 const extract = (site) => {

@@ -1,4 +1,4 @@
-const mongodb = require("./mongodb");
+const mongodb = require("../infra/mongodb/standalone");
 
 const extract = (site) => {
   return require(`./data/${site.toUpperCase()}_Users.json`);

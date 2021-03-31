@@ -1,4 +1,5 @@
 # Node DDD Boilerplate
+
 > RESTful api with Domain Driven Design
 
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/joshuaalpuerto/node-ddd-boilerplate.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/joshuaalpuerto/node-ddd-boilerplate/alerts/)
@@ -20,21 +21,25 @@
 ## Docker support
 
 **Prerequisites**
+
 1. [Docker](https://www.docker.com/products/docker-engine) Community Edition v17 or higher
 
 ```sh
 $ docker-compose up -d
 ```
+
 Access `http://localhost:<PORT>/api/<VERSION>` and you're ready to go!
+
 > http://localhost:4000/api/v1
 
 ### Docker CLI
+
 - `yarn docker:db:reset` - reset and run all migrations and seeders.
 - `yarn docker:db:refresh` - reset and run all migrations.
 - `yarn docker:db:refresh-test` - reset and run all migrations for test
 - `yarn docker:test` - refreshes test database and run unit and black-box testing.
 
-*...will add more*
+_...will add more_
 
 ## Quick Start
 
@@ -45,7 +50,7 @@ Access `http://localhost:<PORT>/api/<VERSION>` and you're ready to go!
 5. Run database migrations and seed with `yarn db:refresh`
 6. Run the application in development mode with `yarn start`
 7. Access `http://localhost:<PORT>/api/<VERSION>` and you're ready to go!
-    > http://localhost:4000/api/v1
+   > http://localhost:4000/api/v1
 
 ### Application Setup (Development)
 
@@ -130,6 +135,7 @@ $ sequelize seed:create     # create seeder
 > If you did not install your sequelize-cli globally you can run this commands by `npx`
 
 #### Setting up associations — migration and model files
+
 **IMPORTANT**: as of `6/23/17` the model file created with the `sequelize db:model` command still initializes a model with an empty `classMethods` object with an `associate` property in the options passed to `sequelize.define` method. **You cannot define associations this way anymore as of Sequelize v4.0.0-1.** This tripped me up for a hot second because the generated model file did not reflect this change, and the fact that support for the old way had been removed is seemingly buried in the changelogs. Don’t make the same mistake I did and be super confused for too long about why associations aren’t working.
 
 ```js
@@ -158,6 +164,7 @@ module.exports = function(sequelize, DataTypes) {
   return nameofmodel
 }
 ```
+
 ### Sequelize CLI Documentation
 
 For reference, see: [https://github.com/sequelize/cli](https://github.com/sequelize/cli)
@@ -189,10 +196,12 @@ For reference, see: [https://github.com/sequelize/cli](https://github.com/sequel
 - [Swagger-jsdoc](https://github.com/Surnet/swagger-jsdoc)- enables you to integrate Swagger using JSDoc comments in your code. Just add @swagger on top of your DocBlock and declare the meaning of your code in yaml complying to the OpenAPI specification.
 
 ### Logging
+
 - [winston](https://github.com/winstonjs/winston) - a multi-transport async logging library for Node.js. It is designed to be a simple and universal logging library with support for multiple transports. A transport is essentially a storage device for your logs. Each instance of a winston logger can have multiple transports configured at different levels. For example, one may want error logs to be stored in a persistent remote location (like a database), but all logs output to the console or a local file.
 - [morgan](https://github.com/expressjs/morgan) - HTTP request logger middleware for Node.js. A helper that collects logs from your server, such as your request logs.
 
 ### Tests
+
 - [mocha](https://mochajs.org/) - JavaScript test framework running on Node.js and in the browser, making asynchronous testing simple and fun
 - [chai](http://chaijs.com/) - a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework.
 - [supertest](https://github.com/visionmedia/supertest) - HTTP assertions made easy via superagent.
@@ -212,10 +221,10 @@ Adding `pre-commit` to your project can be helpful to encourage consistency and 
 
 - **2 spaces** – for indentation
 - **Single quotes for strings** – except to avoid escaping
-- **No unused variables** – this one catches *tons* of bugs!
+- **No unused variables** – this one catches _tons_ of bugs!
 - **No semicolons** – [It's][1] [fine.][2] [Really!][3]
 - **Never start a line with `(`, `[`, or `` ` ``**
-  - This is the **only** gotcha with omitting semicolons – *automatically checked for you!*
+  - This is the **only** gotcha with omitting semicolons – _automatically checked for you!_
   - [More details][4]
 - **Space after keywords** `if (condition) { ... }`
 - **Space after function name** `function name (arg) { ... }`
@@ -231,9 +240,15 @@ Adding `pre-commit` to your project can be helpful to encourage consistency and 
 This boilerplate is open to suggestions and contributions, documentation contributions are also important! :)
 
 ## Acknowledgments
+
 This boilerplate is forked and modified from [node-api-boilerplate](https://github.com/talyssonoc/node-api-boilerplate) - [Talysson de Oliveira Cassiano](https://github.com/talyssonoc) :clap:
 
 ## License
+
 MIT License - fork, modify and use however you want.
 
+# Running the es indexing
 
+Note: nodejs will run out of memory when attempting to read from mongodb and create the elasticsearch indexes due to the size of the data being returned from the find all articles query. You can get around this by increasing the memory allocated to the heap for nodejs via cmd line args.
+
+node --max-old-space-size=8192 search_index.js
