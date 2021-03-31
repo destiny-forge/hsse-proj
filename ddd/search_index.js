@@ -1,9 +1,9 @@
-const index = require("./src/search-index");
+const reindex = require("./src/infra/search/reindex");
 
 const execute = () => {
   const sites = ["hse", "sse"];
   sites.forEach(async (site) => {
-    await index.articles(site);
+    await reindex(site);
   });
 };
 
