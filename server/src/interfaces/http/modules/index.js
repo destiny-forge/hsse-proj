@@ -8,9 +8,9 @@ module.exports = () => {
   // swagger definition
   const swaggerDefinition = {
     info: {
-      title: "Node DDD API Explorer",
+      title: "HSE / SSE API Explorer",
       version: "1.0.0",
-      description: "Available REST Endpoints of Node DDD RESTful API"
+      description: "Available REST Endpoints for the HSE / SSE RESTful API",
     },
     host: `${process.env.API_SWAGGER}:${process.env.PORT}/${process.env.APP_VERSION}`,
     basePath: "/",
@@ -19,9 +19,9 @@ module.exports = () => {
         description: "",
         type: "apiKey",
         name: "Authorization",
-        in: "header"
-      }
-    }
+        in: "header",
+      },
+    },
   };
 
   // options for the swagger docs
@@ -29,7 +29,7 @@ module.exports = () => {
     // import swaggerDefinitions
     swaggerDefinition: swaggerDefinition,
     // path to the API docs
-    apis: ["src/interfaces/http/modules/**/*.js"]
+    apis: ["src/interfaces/http/modules/**/*.js"],
   };
 
   // initialize swagger-jsdoc

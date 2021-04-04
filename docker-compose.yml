@@ -6,12 +6,12 @@ services:
       - '37017:27017'
 
   hsse-admin-client:
-    build: ./ui
+    build: ./admin
     ports:
       - '3000:3000'
 
   hsse-server:
-    build: ./ddd
+    build: ./server
     ports:
       - '5001:4000'
     environment:

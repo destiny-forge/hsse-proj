@@ -1,7 +1,7 @@
 {
-  "name": "node-ddd-boilerplate",
-  "version": "0.0.0-development",
-  "description": "RESTful api Domain Driven Design",
+  "name": "hse-sse-server",
+  "version": "1.0",
+  "description": "NodeJS server api for HSE/SSE",
   "main": "index.js",
   "engines": {
     "node": ">= 12",

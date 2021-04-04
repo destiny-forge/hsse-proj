@@ -252,3 +252,7 @@ MIT License - fork, modify and use however you want.
 Note: nodejs will run out of memory when attempting to read from mongodb and create the elasticsearch indexes due to the size of the data being returned from the find all articles query. You can get around this by increasing the memory allocated to the heap for nodejs via cmd line args.
 
 node --max-old-space-size=8192 search_index.js
+
+# running the legacy import
+
+node run migrate-legacy

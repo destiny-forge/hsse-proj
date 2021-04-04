@@ -1,13 +1,13 @@
 language: node_js
 node_js:
- - "node"
+  - "node"
 before_install:
- - npm install -g yarn
- - psql -c 'create database node_ddd_test;' -U postgres
+  - npm install -g yarn
+  - psql -c 'create database hse_sse_test;' -U postgres
 install:
- - yarn
+  - yarn
 after_script:
- - npm run coveralls
+  - npm run coveralls
 after_success:
   - npm run travis-deploy-once "npm run semantic-release"
 cache:
