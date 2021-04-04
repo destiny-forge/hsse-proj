@@ -156,7 +156,7 @@ class StudyForm extends React.Component {
         this.Study.create(data)
           .then((res) => {
             this.props.history.replace(
-              `/batch/articles/studies/${article.batchId}`
+              `/admin/batch/articles/studies/${article.batchId}`
             );
             this.notifyDone();
           })

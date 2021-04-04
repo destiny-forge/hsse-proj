@@ -6,8 +6,8 @@ class ForgotPassword extends Component {
     super(props);
 
     this.state = {
-      email: "",
-      isReset: false
+      email: '',
+      isReset: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -16,48 +16,44 @@ class ForgotPassword extends Component {
   }
 
   handleChange(e) {
-    const {
-      name,
-      value
-    } = e.target;
+    const { name, value } = e.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
   handleFormSubmit(e) {
     e.preventDefault();
-    const {
-      email
-    } = this.state;
+    const { email } = this.state;
 
     this.Auth.forgotPassword(email)
-      .then(res => {
+      .then((res) => {
         if (res.success) {
           this.setState({
             isReset: true,
-            email: ""
+            email: '',
           });
         }
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
-      })
+      });
   }
 
   render() {
-    const {
-      isReset,
-      email
-    } = this.state;
+    const { isReset, email } = this.state;
 
     return (
       <div className="d-flex flex-column flex">
         <div className="navbar light bg pos-rlt box-shadow">
           <div className="mx-auto">
-            <a href="/" className="navbar-brand">
+            <a href="/admin" className="navbar-brand">
               <span className="hidden-folded d-inline">
-                <img src="../assets/images/mcmaster-logo.png" alt="." className="logo-login" />
+                <img
+                  src="../assets/images/mcmaster-logo.png"
+                  alt="."
+                  className="logo-login"
+                />
               </span>
             </a>
           </div>
@@ -66,12 +62,11 @@ class ForgotPassword extends Component {
           <div className="py-5 text-center w-100">
             <div className="mx-auto w-xxl w-auto-xs">
               <div className="px-3">
-                {
-                  isReset && 
+                {isReset && (
                   <div className="alert alert-primary">
                     Please check your email.
                   </div>
-                }
+                )}
                 <div className="my-3 text-lg">Forgot password</div>
                 <form onSubmit={this.handleFormSubmit}>
                   <div className="form-group">
@@ -84,10 +79,10 @@ class ForgotPassword extends Component {
                       onChange={this.handleChange}
                     />
                   </div>
-                  <button 
-                    type="submit" 
-                    className="btn primary"
-                  > Reset password</button>
+                  <button type="submit" className="btn primary">
+                    {' '}
+                    Reset password
+                  </button>
                 </form>
               </div>
             </div>

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import AuthService from '../../services/AuthService';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 class PasswordReset extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      password: "",
-      passwordConfirmation: "",
-      token: "",
+      password: '',
+      passwordConfirmation: '',
+      token: '',
       success: false,
       mismatch: false,
     };
@@ -22,86 +22,77 @@ class PasswordReset extends Component {
   componentDidMount() {
     const { token } = this.props.match.params;
     this.setState({
-      token
-    })
+      token,
+    });
   }
 
   handleChange(e) {
-    const {
-      name,
-      value
-    } = e.target;
+    const { name, value } = e.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
   handleFormSubmit(e) {
     e.preventDefault();
-    const {
-      passwordConfirmation,
-      password,
-      token
-    } = this.state;
+    const { passwordConfirmation, password, token } = this.state;
 
     if (passwordConfirmation !== password) {
       this.setState({
         mismatch: true,
-        password: "",
-        passwordConfirmation: ""
+        password: '',
+        passwordConfirmation: '',
       });
     } else {
       this.Auth.passwordReset(token, passwordConfirmation)
-        .then(res => {
+        .then((res) => {
           if (res.success) {
             this.setState({
               success: true,
-              password: "",
-              passwordConfirmation: ""
+              password: '',
+              passwordConfirmation: '',
             });
           }
         })
-        .catch(err => {
+        .catch((err) => {
           alert(err);
-        })
-      }
+        });
+    }
   }
 
   validate() {
-    const {
-      success,
-      mismatch
-    } = this.state;
+    const { success, mismatch } = this.state;
 
     if (success) {
       return (
         <div className="alert alert-success">
-          Password has been successfully updated. <Link to='/login'>Login now.</Link>
+          Password has been successfully updated.{' '}
+          <Link to="/admin/login">Login now.</Link>
         </div>
-      )
+      );
     }
     if (mismatch) {
       return (
         <div className="alert alert-danger">
           Password's do not match. Please try again
         </div>
-      )
+      );
     }
-
   }
 
   render() {
-    const {
-      password,
-      passwordConfirmation
-    } = this.state;
+    const { password, passwordConfirmation } = this.state;
     return (
       <div className="d-flex flex-column flex">
         <div className="navbar light bg pos-rlt box-shadow">
           <div className="mx-auto">
-            <a href="/" className="navbar-brand">
+            <a href="/admin/" className="navbar-brand">
               <span className="hidden-folded d-inline">
-                <img src="../assets/images/mcmaster-logo.png" alt="." className="logo-login" />
+                <img
+                  src="../assets/images/mcmaster-logo.png"
+                  alt="."
+                  className="logo-login"
+                />
               </span>
             </a>
           </div>
@@ -110,7 +101,7 @@ class PasswordReset extends Component {
           <div className="py-5 text-center w-100">
             <div className="mx-auto w-xxl w-auto-xs">
               <div className="px-3">
-                { this.validate() }
+                {this.validate()}
                 <div className="my-3 text-lg">Password reset</div>
                 <form onSubmit={this.handleFormSubmit}>
                   <div className="form-group">
@@ -133,7 +124,10 @@ class PasswordReset extends Component {
                       onChange={this.handleChange}
                     />
                   </div>
-                  <button type="submit" className="btn primary"> Sign Up</button>
+                  <button type="submit" className="btn primary">
+                    {' '}
+                    Sign Up
+                  </button>
                 </form>
               </div>
             </div>

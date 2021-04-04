@@ -57,7 +57,7 @@ class PresentationDetails extends React.Component {
 
   loadEditForm(shortId) {
     const { type } = this.props.match.params;
-    this.props.history.replace(`/${type}/presentation/${shortId}`);
+    this.props.history.replace(`/admin/${type}/presentation/${shortId}`);
   }
 
   handleDocType(documentType) {

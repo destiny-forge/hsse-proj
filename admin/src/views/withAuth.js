@@ -18,14 +18,14 @@ export default function withAuth(AuthComponent) {
     handleLogout(e) {
       e.preventDefault();
       Auth.logout();
-      this.props.history.replace('/login');
+      this.props.history.replace('/admin/login');
     }
 
     componentDidMount() {
       const { history } = this.props;
 
       if (!Auth.loggedIn()) {
-        history.replace('/login');
+        history.replace('/admin/login');
       } else {
         try {
           const profile = Auth.getProfile();
@@ -34,7 +34,7 @@ export default function withAuth(AuthComponent) {
           });
         } catch (err) {
           Auth.logout();
-          history.replace('/login');
+          history.replace('/admin/login');
         }
       }
     }
@@ -53,7 +53,7 @@ export default function withAuth(AuthComponent) {
             >
               <div className="sidenav modal-dialog dk white">
                 <div className="navbar lt">
-                  <a href="/" className="navbar-brand">
+                  <a href="/admin/" className="navbar-brand">
                     <span className="hidden-folded d-inline">
                       <img
                         src="../assets/images/mcmaster-logo.png"
@@ -71,7 +71,7 @@ export default function withAuth(AuthComponent) {
                           <li className="nav-header">
                             <div className="py-3">
                               <a
-                                href="/article"
+                                href="/admin/article"
                                 className="btn btn-sm success theme-accent btn-block"
                               >
                                 <i className="fa fa-fw fa-plus"></i>
@@ -84,7 +84,7 @@ export default function withAuth(AuthComponent) {
                           </li>
                         )}
                         <li>
-                          <a href="/dashboard">
+                          <a href="/admin/dashboard">
                             <span className="nav-icon">
                               <i className="fa fa-dashboard"></i>
                             </span>
@@ -93,7 +93,7 @@ export default function withAuth(AuthComponent) {
                         </li>
                         {perms.can_upload(user) && (
                           <li>
-                            <a href="/upload">
+                            <a href="/admin/upload">
                               <span className="nav-icon">
                                 <i className="fa fa-upload fa-align-left"></i>
                               </span>
@@ -102,7 +102,7 @@ export default function withAuth(AuthComponent) {
                           </li>
                         )}
                         <li>
-                          <a href="/hse/eligibility">
+                          <a href="/admin/hse/eligibility">
                             <span className="nav-icon">
                               <i className="fa fa-medkit fa-align-left"></i>
                             </span>
@@ -110,7 +110,7 @@ export default function withAuth(AuthComponent) {
                           </a>
                         </li>
                         <li>
-                          <a href="/sse/eligibility">
+                          <a href="/admin/sse/eligibility">
                             <span className="nav-icon">
                               <i className="fa fa-users fa-align-left"></i>
                             </span>
@@ -119,7 +119,7 @@ export default function withAuth(AuthComponent) {
                         </li>
                         {perms.can_prioritize(user) && (
                           <li>
-                            <a href="/email-manager">
+                            <a href="/admin/email-manager">
                               <span className="nav-icon">
                                 <i className="fa fa-send fa-align-left"></i>
                               </span>
@@ -129,7 +129,7 @@ export default function withAuth(AuthComponent) {
                         )}
                         {perms.can_admin(user) && (
                           <li>
-                            <a href="/user-manager">
+                            <a href="/admin/user-manager">
                               <span className="nav-icon">
                                 <i className="fa fa-user fa-align-left"></i>
                               </span>

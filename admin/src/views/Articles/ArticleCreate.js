@@ -60,7 +60,7 @@ class ArticleCreate extends Component {
       this.Article.create(article).then((res) => {
         this.setState({ errors: [] });
         this.props.history.replace(
-          `/${this.state.article.type}/eligibility?t=${Date.now()}`
+          `/admin/${this.state.article.type}/eligibility?t=${Date.now()}`
         );
         this.notifyDone();
       });

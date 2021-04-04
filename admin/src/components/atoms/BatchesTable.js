@@ -62,7 +62,7 @@ const BatchesTable = ({ user, title, stage, batches, onPrioritize }) => {
                         : batch.batch.referenceType || 'N/A'}
                     </td>
                     <td>
-                      <Link to={`/batch/articles/${stage}/${batch._id}`}>
+                      <Link to={`/admin/batch/articles/${stage}/${batch._id}`}>
                         {batch.name}
                       </Link>
                       <br />

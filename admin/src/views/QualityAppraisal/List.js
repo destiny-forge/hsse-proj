@@ -136,8 +136,8 @@ class AppraisalList extends React.Component {
       return null;
     }
 
-    const code = `/${stageName}/${article.type}/${article.shortId}`;
-    const resolve = `/conflicts/${article.type}/${stageName}/${article.shortId}`;
+    const code = `/admin/${stageName}/${article.type}/${article.shortId}`;
+    const resolve = `/admin/conflicts/${article.type}/${stageName}/${article.shortId}`;
 
     return status === 'Conflicted' ? (
       <Link to={resolve}>Resolve Conflicts</Link>

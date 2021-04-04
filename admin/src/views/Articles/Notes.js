@@ -10,20 +10,20 @@ class Notes extends Component {
     super(props);
 
     this.state = {
-      articles: []
-    }
+      articles: [],
+    };
 
     this.Note = NotesService({ fetch: this.props.fetch });
   }
 
   componentDidMount() {
     this.setState({
-      articles: this.props.history.location.state.articles
+      articles: this.props.history.location.state.articles,
     });
   }
 
-  notifyChangesSaved = () => toast.success("Changes saved.") 
-  notifyDone = () => toast.info("Notes complete.") 
+  notifyChangesSaved = () => toast.success('Changes saved.');
+  notifyDone = () => toast.info('Notes complete.');
 
   compareChanges = (oldArray, newArray) => {
     // Compare the old article props array to the new articles
@@ -42,41 +42,38 @@ class Notes extends Component {
     return changes;
   };
 
-  handleChange = idx => evt => {
+  handleChange = (idx) => (evt) => {
     const newArticleData = this.state.articles.map((article, sidx) => {
       if (idx !== sidx) return article;
       return { ...article, notes: evt.target.value };
     });
 
     this.setState({ articles: newArticleData });
-  }
+  };
 
   handleDone = (e) => {
     e.preventDefault();
     this.notifyDone();
-    this.props.history.replace('/sse');
-  }
+    this.props.history.replace('/admin/sse');
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const originalArticles = this.props.history.location.state.articles;
     const updatedArticles = this.state.articles;
 
-    const changes = this.compareChanges(
-      originalArticles, 
-      updatedArticles
-    );
+    const changes = this.compareChanges(originalArticles, updatedArticles);
 
-    if (changes.length) {    
+    if (changes.length) {
       this.Note.create(changes)
-        .then(res => {
+        .then((res) => {
           this.notifyChangesSaved();
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
-        })
-      }
+        });
+    }
   };
 
   render() {
@@ -84,8 +81,8 @@ class Notes extends Component {
     return (
       <div className="padding">
         <div className="box p-md-4">
-          {
-            articles && articles.map((article, idx) => (
+          {articles &&
+            articles.map((article, idx) => (
               <ul className="list" key={idx}>
                 <li className="list-item">
                   <div className="clear">
@@ -93,29 +90,31 @@ class Notes extends Component {
                     <div className="form-group row">
                       <label className="col-sm-2 col-form-label">Notes</label>
                       <div className="col-sm-12">
-                        <textarea 
+                        <textarea
                           value={article.notes}
                           className="form-control"
                           onChange={this.handleChange(idx)}
-                          rows="5" />
+                          rows="5"
+                        />
                       </div>
                     </div>
                   </div>
                 </li>
               </ul>
-            ))
-          }
+            ))}
           <button
             type="submit"
             className="btn success mr-3"
-            onClick={this.handleSubmit}>
-              Save Changes
+            onClick={this.handleSubmit}
+          >
+            Save Changes
           </button>
 
           <button
             type="submit"
             className="btn primary"
-            onClick={this.handleDone}>
+            onClick={this.handleDone}
+          >
             Done
           </button>
         </div>

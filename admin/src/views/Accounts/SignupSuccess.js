@@ -1,14 +1,17 @@
-import React from 'react'
+import React from 'react';
 
 const SignupSuccess = () => {
-
   return (
     <div className="d-flex flex-column flex">
       <div className="navbar light bg pos-rlt box-shadow">
         <div className="mx-auto">
-          <a href="/" className="navbar-brand">
+          <a href="/admin" className="navbar-brand">
             <span className="hidden-folded d-inline">
-              <img src="../assets/images/mcmaster-logo.png" alt="." className="logo-login" />
+              <img
+                src="../assets/images/mcmaster-logo.png"
+                alt="."
+                className="logo-login"
+              />
             </span>
           </a>
         </div>
@@ -24,7 +27,7 @@ const SignupSuccess = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default SignupSuccess;
