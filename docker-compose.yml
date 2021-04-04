@@ -6,19 +6,24 @@ services:
       - '37017:27017'
 
   hsse-admin-client:
+    build: ./client
+    ports:
+      - '4000:4000'
+
+  hsse-admin-client:
     build: ./admin
     ports:
-      - '3000:3000'
+      - '5000:5000'
 
   hsse-server:
     build: ./server
     ports:
-      - '5001:4000'
+      - '5001:3000'
     environment:
       - APP_BASE_URL=
       - APP_VERSION=
       - API_SWAGGER=
-      - FRONTEND_URL=localhost:3000
+      - FRONTEND_URL=localhost:4000
       - DATABASE_URL=mongodb://mongo:27017
       - DATABASE_URL_TEST=mongodb://mongo:27017
       - DATABASE_URL_STAGING=
@@ -32,5 +37,6 @@ services:
     ports:
       - '80:80'
     depends_on:
-      - hsse-admin-client
       - hsse-server
+      - hsse-client
+      - hsse-admin-client

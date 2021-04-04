@@ -2,14 +2,20 @@
   "AWSEBDockerrunVersion": 2,
   "containerDefinitions": [
     {
-      "name": "hsse-admin-client",
-      "image": "destinyforge/hsse-admin-client",
+      "name": "hsse-server",
+      "image": "destinyforge/hsse-server",
       "essential": false,
       "memory": 128
     },
     {
-      "name": "hsse-server",
-      "image": "destinyforge/hsse-server",
+      "name": "hsse-client",
+      "image": "destinyforge/hsse-client",
+      "essential": false,
+      "memory": 128
+    },
+    {
+      "name": "hsse-admin-client",
+      "image": "destinyforge/hsse-admin-client",
       "essential": false,
       "memory": 128
     },
@@ -23,7 +29,7 @@
           "containerPort": 80
         }
       ],
-      "links": ["hsse-admin-client", "hsse-server"],
+      "links": ["hsse-server", "hsse-client", "hsse-admin-client"],
       "memory": 128
     }
   ]
