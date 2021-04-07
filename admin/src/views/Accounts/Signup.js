@@ -46,7 +46,7 @@ class Signup extends Component {
       <div className="d-flex flex-column flex">
         <div className="navbar light bg pos-rlt box-shadow">
           <div className="mx-auto">
-            <a href="/" className="navbar-brand">
+            <a href="/admin" className="navbar-brand">
               <span className="hidden-folded d-inline">
                 <img
                   src="../assets/images/mcmaster-logo.png"
