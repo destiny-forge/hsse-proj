@@ -29,7 +29,7 @@ const prepare = async (searchClient, articleRepository, recipient, date) => {
     const sub_count = recipient.subscriptions.length;
 
     // loop through subs and generate HTML template artifacts
-    recipient.subscriptions.forEach(async (sub, index) => {
+    for (const [index, sub] of recipient.subscriptions.entries()) {
       let query = {
         //[`title${subscription.lang.toUpperCase()}`]: "test",
         //monthly_update needs to be here
@@ -97,7 +97,7 @@ const prepare = async (searchClient, articleRepository, recipient, date) => {
       let template = path.join(__dirname, filename);
       let html = await ejs.renderFile(template, data);
       subs += html;
-    });
+    }
 
     hot_docs = _.uniq(hot_docs);
 
