@@ -8,7 +8,7 @@ const transform = (article) => {
   // cleanup titles
   article["titleEN"] = article.title;
   for (const [key, value] of Object.entries(article.titles)) {
-    article[`title${key.toUpperCase()}`] = value.title || "";
+    article[`title${key.toUpperCase()}`] = value || "";
   }
   delete article.title;
   delete article.titles;

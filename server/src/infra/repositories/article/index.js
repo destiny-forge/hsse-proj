@@ -56,6 +56,17 @@ module.exports = ({ model }) => {
     }
   };
 
+  const findByShortIds = async (...args) => {
+    try {
+      const articles = await model.findByShortIds(...args);
+      return articles.map((article) => {
+        return toEntity(article);
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const findByBatchAndDocTypes = async (batchId, docTypes, matches) => {
     try {
       const articles = await model.findByBatchAndDocTypes(
@@ -233,6 +244,7 @@ module.exports = ({ model }) => {
     updateStage,
     updateStageCoderStatus,
     findById,
+    findByShortIds,
     findByType,
     findByBatch,
     findByBatchAndDocTypes,

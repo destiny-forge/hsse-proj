@@ -12,6 +12,17 @@ module.exports = ({ model }) => {
     }
   };
 
+  const getSubscribers = async (...args) => {
+    try {
+      const filters = await model.getSubscribers(...args);
+      return filters.map((filter) => {
+        return toEntity(filter);
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const find = async (...args) => {
     try {
       const filters = await model.find(...args);
@@ -51,6 +62,7 @@ module.exports = ({ model }) => {
 
   return {
     getAll,
+    getSubscribers,
     create,
     update,
     findOne,

@@ -10,6 +10,7 @@ const {
 module.exports = () => {
   const {
     repository: { articleRepository, subscriptionRepository },
+    search,
     mailer,
   } = container.cradle;
 
@@ -25,13 +26,15 @@ module.exports = () => {
     subscriptionRepository,
   });
 
-  const testUseCase = send({
+  const testUseCase = test({
+    searchClient: search,
     subscriptionRepository,
     articleRepository,
     mailer,
   });
 
   const sendUseCase = send({
+    searchClient: search,
     subscriptionRepository,
     articleRepository,
     mailer,

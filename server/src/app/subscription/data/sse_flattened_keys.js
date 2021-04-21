@@ -1,5 +1,3 @@
-import { filter } from "ramda";
-
 const filters = [
   {
     title: "Programs and services",
@@ -2361,4 +2359,4 @@ const filters = [
   { title: "Optimal aging", key: "themeOptimalAging", name: "checkedTheme" },
 ];
 
-export default filters;
+module.exports = filters;

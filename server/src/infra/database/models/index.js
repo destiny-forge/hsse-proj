@@ -4,6 +4,7 @@ const batches = require("./batch");
 const eligibility = require("./eligibility");
 const appraisals = require("./appraisal");
 const studies = require("./study");
+const subscriptions = require("./subscription");
 
 module.exports = {
   users,
@@ -12,4 +13,5 @@ module.exports = {
   eligibility,
   appraisals,
   studies,
+  subscriptions,
 };

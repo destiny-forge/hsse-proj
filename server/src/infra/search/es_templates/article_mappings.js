@@ -21,9 +21,6 @@ module.exports = {
     monthlyUpdateDate: {
       type: "keyword",
     },
-    title: {
-      type: "text",
-    },
     applied_filters: {
       type: "keyword",
     },

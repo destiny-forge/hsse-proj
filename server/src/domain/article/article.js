@@ -18,6 +18,8 @@ const Article = t.struct(
     source: t.String,
     language: t.String,
     lost: t.Boolean,
+    live: t.Boolean,
+    liveDate: t.maybe(t.Date),
     published: t.maybe(t.Date),
     harvested: t.maybe(t.Date),
 
@@ -126,6 +128,8 @@ const Article = t.struct(
       rating: "AMSTAR rating from McMaster Health Forum",
       priority: "low",
       monthlyUpdateDate: "",
+      liveDate: "",
+      live: false,
       stages: {
         eligibility: { status: "New Article" },
         studies: { status: "New Article" },

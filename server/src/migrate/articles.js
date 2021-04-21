@@ -18,10 +18,21 @@ const extract = (site) => {
 const transform = (article) => {
   article.shortId = shortid.generate();
 
+  article.monthlyUpdateDate = article.monthlyUpdateDate.slice(0, 7);
+  if (article.monthlyUpdateDate == "1900-01") {
+    article.monthlyUpdateDate = "";
+  }
+
   if (article.published !== "") {
     article.published = new Date(article.published);
   } else {
     delete article.published;
+  }
+
+  if (article.liveDate !== "") {
+    article.liveDate = new Date(article.liveDate);
+  } else {
+    delete article.liveDate;
   }
 
   if (article.harvested !== "") {

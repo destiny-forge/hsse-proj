@@ -14,6 +14,22 @@ module.exports = ({ database }) => {
     }
   };
 
+  const getSubscribers = async (type, recipients) => {
+    try {
+      const results = await database
+        .get()
+        .collection(COLLECTION)
+        .find({
+          type: { $eq: type },
+          email: { $in: recipients },
+        })
+        .toArray();
+      return results;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const getAll = async () => {
     try {
       const results = await database
@@ -65,6 +81,7 @@ module.exports = ({ database }) => {
     getAll,
     findOne,
     update,
+    getSubscribers,
     createIndexes,
   };
 };

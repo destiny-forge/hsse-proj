@@ -161,14 +161,17 @@ const count = async (index) => {
 
 const search = async (index, query) => {
   console.log("Searching ES ...");
-  const resp = await client.search({
-    index,
-    body: {
-      query,
-    },
-  });
-  console.log(resp.body.hits);
-  return handleResolve(resp);
+  const resp = await client
+    .search({
+      index,
+      body: {
+        query,
+      },
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return resp.body.hits.hits || [];
 };
 
 function handleError(err) {

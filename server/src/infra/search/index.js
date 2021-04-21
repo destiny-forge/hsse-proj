@@ -5,8 +5,10 @@ module.exports = () => {
     return await client.index(index, doc);
   };
 
-  const search = async (query) => {
-    return await client.search(query);
+  const search = async (index, query) => {
+    let results = await client.search(index, query);
+    results = results.map((h) => h._source) || [];
+    return results;
   };
 
   const reindex = async (index, docs) => {
@@ -20,3 +22,20 @@ module.exports = () => {
     search,
   };
 };
+
+// Sample queries
+// {
+//     "query": {
+//         "match": {
+//           "legacyId": 75698
+//         }
+//     }
+// }
+
+// {
+//   "query": {
+//     "terms": {
+//       "applied_filters": ["system"]
+//     }
+//   }
+// }

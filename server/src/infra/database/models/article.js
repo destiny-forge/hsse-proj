@@ -105,6 +105,18 @@ module.exports = ({ database }) => {
     }
   };
 
+  const findByShortIds = async (ids) => {
+    try {
+      return await database
+        .get()
+        .collection("articles")
+        .find({ shortId: { $in: ids } })
+        .toArray();
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const findByBatchAndDocTypes = async (batchId, docTypes, optMatches) => {
     const join = {
       $lookup: {
@@ -642,6 +654,7 @@ module.exports = ({ database }) => {
     create,
     getAll,
     findById,
+    findByShortIds,
     findByType,
     findByDocType,
     findOne,

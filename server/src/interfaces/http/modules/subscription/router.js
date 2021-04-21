@@ -154,13 +154,14 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.post("/test", (req, res) => {
-    const { type, monthYear, recipients } = req.body;
+    const { type, date, recipients } = req.body;
     testUseCase
-      .test(type, monthYear, recipients)
+      .test(type, date, recipients)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
       .catch((error) => {
+        console.log(error);
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });
@@ -192,9 +193,9 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.post("/send", (req, res) => {
-    const { type, monthYear } = req.body;
+    const { type, date } = req.body;
     sendUseCase
-      .send(type, monthYear)
+      .send(type, date)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

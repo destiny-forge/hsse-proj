@@ -2,19 +2,26 @@ const prepare = require("./prepare");
 const DateHelper = require("./date");
 
 /**
- * Email send monthly published articles
+ * Email: send monthly published articles
  */
-module.exports = ({ articleRepository, mailer }) => {
-  const test = async (type, monthYear, recipients) => {
+module.exports = ({
+  searchClient,
+  subscriptionRepository,
+  articleRepository,
+  mailer,
+}) => {
+  const test = async (type, date, recipients) => {
+    console.log("here", type, date, recipients);
+
     if (!type) {
       return {
         error: "A valid type is required",
       };
     }
 
-    if (!monthYear) {
+    if (!date) {
       return {
-        error: "A valid monthYear is required",
+        error: "A valid date is required",
       };
     }
 
@@ -25,17 +32,30 @@ module.exports = ({ articleRepository, mailer }) => {
     }
 
     try {
-      let { month, year } = DateHelper.getMonthYear(monthYear);
-      let filters = type === "hse" ? hse.filters : sse.filters;
+      let { year, month } = DateHelper.getYearMonth(date);
 
-      recipients
-        .map((email) => {
-          return { email, filters };
+      const subscriptions = await subscriptionRepository.getSubscribers(
+        type,
+        recipients
+      );
+
+      console.log(subscriptions);
+
+      subscriptions
+        .map(({ email, subscriptions }) => {
+          return { type, email, subscriptions };
         })
-        .forEach((recipient) => {
-          let html = prepare(articleRepository, recipient, monthYear);
+        .forEach(async (recipient) => {
+          let html = await prepare(
+            searchClient,
+            articleRepository,
+            recipient,
+            date
+          );
           let subject = type === "sse" ? "Social" : "Health";
           subject += ` Systems Evidence Service - ${month} ${year}`;
+
+          console.log("html=", html);
 
           mailer.send({
             to: recipient.email,

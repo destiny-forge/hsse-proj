@@ -5,8 +5,8 @@ const execute = () => {
   sites.forEach((site) => {
     //app.logger.log(`importing legacy data for site = ${site}`);
     //migrate.users(site);
-    //migrate.batches(site);
-    //migrate.articles(site);
+    migrate.batches(site);
+    migrate.articles(site);
     migrate.subscriptions(site);
   });
 };

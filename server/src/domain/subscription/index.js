@@ -5,15 +5,14 @@ const { cleanData, cleanMongoId } = require("../helper");
 const Subscription = t.struct(
   {
     _id: t.maybe(t.String),
-    legacyId: t.maybe(t.String),
+    legacyId: t.maybe(t.Number),
+    type: t.String,
     email: t.String,
-    filters: t.Array,
-    subscribed: t.Boolean,
+    subscriptions: t.Array,
   },
   {
     defaultProps: {
-      filters: [],
-      subscribed: true,
+      subscriptions: [],
     },
   }
 );

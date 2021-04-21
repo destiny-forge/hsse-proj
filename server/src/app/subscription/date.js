@@ -13,12 +13,12 @@ const monthNames = [
   "December",
 ];
 
-const getMonthYear = (monthYear) => {
-  let month = monthNames[parseInt(monthYear.split("-")[0]) - 1];
-  let year = parseInt(monthYear.split("-"[1]));
-  return { month, year };
+const getYearMonth = (yearMonth) => {
+  let year = parseInt(yearMonth.split("-"[0]));
+  let month = monthNames[parseInt(yearMonth.split("-")[1]) - 1];
+  return { year, month };
 };
 
-module.export = {
-  getMonthYear,
+module.exports = {
+  getYearMonth,
 };

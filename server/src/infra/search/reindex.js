@@ -14,7 +14,8 @@ const extract = async (site) => {
   const query = {
     type: site,
     status: "Completed",
-    monthlyUpdateDate: { $ne: "1900-01-01" },
+    live: true,
+    monthlyUpdateDate: { $ne: "" },
   };
 
   return await mongodb.find("articles", query);
