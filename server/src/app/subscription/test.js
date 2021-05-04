@@ -11,8 +11,6 @@ module.exports = ({
   mailer,
 }) => {
   const test = async (type, date, recipients) => {
-    console.log("here", type, date, recipients);
-
     if (!type) {
       return {
         error: "A valid type is required",
@@ -39,8 +37,6 @@ module.exports = ({
         recipients
       );
 
-      console.log(subscriptions);
-
       subscriptions
         .map(({ email, subscriptions }) => {
           return { type, email, subscriptions };
@@ -52,10 +48,21 @@ module.exports = ({
             recipient,
             date
           );
-          let subject = type === "sse" ? "Social" : "Health";
-          subject += ` Systems Evidence Service - ${month} ${year}`;
 
-          console.log("html=", html);
+          let subject = "";
+          switch (type) {
+            case "sse":
+              type = "Social";
+              break;
+            case "hse":
+              type = "Health";
+              break;
+            case "cov":
+              type = "COVID";
+              break;
+          }
+
+          subject += ` Systems Evidence Service - ${month} ${year}`;
 
           mailer.send({
             to: recipient.email,

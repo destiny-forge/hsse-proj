@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="14px" height="18px" viewBox="0 0 14 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.1 (15681) - http://www.bohemiancoding.com/sketch -->
+    <title>export_icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="export_icon" sketch:type="MSLayerGroup" fill="#4187C7">
+            <g id="XMLID_2297_" sketch:type="MSShapeGroup">
+                <g id="XMLID_2298_">
+                    <g id="XMLID_2327_" transform="translate(7.000000, 6.136364) rotate(-180.000000) translate(-7.000000, -6.136364) translate(2.625000, 0.000000)">
+                        <path d="M0.6125,8.75454545 L4.375,12.1909091 L8.1375,8.75454545 L7.525,8.18181818 L4.8125,10.7181818 L4.8125,-1.77635684e-15 L3.9375,-1.77635684e-15 L3.9375,10.7181818 L1.225,8.18181818 L0.6125,8.75454545 Z" id="XMLID_2328_"></path>
+                    </g>
+                    <g id="XMLID_2299_" transform="translate(0.000000, 4.909091)">
+                        <path d="M8.8375,0.154010695 L8.8375,0.924064171 L13.125,0.924064171 L13.125,11.7048128 L0.875,11.7048128 L0.875,0.924064171 L5.1625,0.924064171 L5.1625,0.154010695 L0,0.154010695 L0,12.4748663 L14,12.4748663 L14,0.154010695 L8.8375,0.154010695 Z" id="XMLID_2326_"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
