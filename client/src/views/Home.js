@@ -2,11 +2,13 @@ import Header from '../components/Header';
 import Search from '../components/Search';
 import GuidedQuestions from '../components/GuidedQuestions';
 import Footer from '../components/Footer';
+import Page from '../components/Page';
 
-const Home = () => (
+const Home = ({ site, t }) => (
   <div className="home layered-navigation">
     <div id="page-content">
       <Header />
+      {site}
       <div class="home-page">
         <div class="home-page-header">
           <h1>Health Systems Evidence</h1>
@@ -26,4 +28,4 @@ const Home = () => (
   </div>
 );
 
-export default Home;
+export default Page(Home);

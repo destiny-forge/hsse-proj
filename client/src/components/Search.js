@@ -61,51 +61,48 @@ const Search = ({ onSearch }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const query = document.getElementById('search').value;
-    console.log(query);
-    // if (query == lastSuggestions[0].query) {
-    //   onSearch(lastSuggestions[0])
-    // }
-    // else {
-    //   onSearch({ query: query });
-    // }
-  };
-
-  const performSearch = (suggestion) => {
-    onSearch(suggestion);
-    dismissKeyboard();
+    onSearch({ query });
   };
 
   const dismissKeyboard = () => document.activeElement.blur();
-  const clearSuggestions = () => setSuggestions([]);
   const getSuggestionValue = (suggestion) => {
     console.log(suggestion);
     return suggestion.query;
   };
-  const clearInput = () => performSearch('');
+
+  const clearInput = () => {
+    setQuery('');
+    setSuggestions([]);
+    dismissKeyboard();
+    onSearch('');
+  };
 
   return (
-    <form action="#" onSubmit={handleSubmit} className="search-bar">
-      <Autosuggest
-        key={'autosuggest-#{count}'}
-        suggestions={suggestions}
-        onSuggestionsFetchRequested={debounce(fetchSuggestions, 200)}
-        onSuggestionsClearRequested={clearInput}
-        getSuggestionValue={getSuggestionValue}
-        renderSuggestion={renderSuggestion}
-        inputProps={{
-          placeholder: '',
-          value: query,
-          onChange,
-          id: 'search',
-          ref: 'search',
-        }}
-        cache={false}
-      />
-      <Button className="btn-clear" onClick={clearInput}>
-        &#x00D7;
-      </Button>
-    </form>
+    <div className="search-box">
+      <form action="#" onSubmit={handleSubmit} className="search-bar">
+        <div className="react-autosuggest">
+          <Autosuggest
+            key={'autosuggest-#{count}'}
+            suggestions={suggestions}
+            onSuggestionsFetchRequested={debounce(fetchSuggestions, 200)}
+            onSuggestionsClearRequested={clearInput}
+            getSuggestionValue={getSuggestionValue}
+            renderSuggestion={renderSuggestion}
+            inputProps={{
+              placeholder: '',
+              value: query,
+              onChange,
+              id: 'search',
+              ref: 'search',
+            }}
+            cache={false}
+          />
+          <Button className="btn-clear" onClick={clearInput}>
+            &#x00D7;
+          </Button>
+        </div>
+      </form>
+    </div>
   );
 };
 

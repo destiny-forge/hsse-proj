@@ -33,7 +33,7 @@ const GuidedQuestions = () => {
   const next = (e) => {
     e.preventDefault();
     const nextIndex = index + 1;
-    if (nextIndex <= questions.length) {
+    if (nextIndex < questions.length) {
       setIndex(nextIndex);
       setQuestion(questions[nextIndex]);
     }
@@ -57,10 +57,10 @@ const GuidedQuestions = () => {
 
   const Dots = () => {
     return (
-      <ul>
+      <ul className="carousel-indicators">
         {questions.map((_q, i) => {
-          const className =
-            'carousel-indicator-item' + i === index ? ' active' : '';
+          let className = 'carousel-indicator-item';
+          className += i === index ? ' active' : '';
           return (
             <li key={i} className={className} onClick={() => navigate(i)}></li>
           );
@@ -86,7 +86,7 @@ const GuidedQuestions = () => {
                   <span>{answer.title}</span>
                 </a>
                 <span className="answer-item-filters">
-                  {answer.description}
+                  [{answer.description}]
                 </span>
               </li>
             ))}
@@ -117,7 +117,7 @@ const GuidedQuestions = () => {
   };
 
   return (
-    <div>
+    <div className="guided-questions-box">
       <Dots />
       <LeftArrow />
       <GuidedQuestion />
