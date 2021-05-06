@@ -4,14 +4,24 @@ import { get } from 'underscore';
 const LanguageContext = React.createContext();
 const LanguageConsumer = LanguageContext.Consumer;
 
-const LANGUAGES = [
-  { value: 'cn', label: '中文' },
-  { value: 'en', label: 'English' },
-  { value: 'es', label: 'Español' },
-  { value: 'fr', label: 'Français' },
-  { value: 'pt', label: 'Português' },
-  //{ value: 'ar', label: 'Arabic' },
-];
+const LANGUAGES = {
+  hse: [
+    { value: 'cn', label: '中文' },
+    { value: 'en', label: 'English' },
+    { value: 'es', label: 'Español' },
+    { value: 'fr', label: 'Français' },
+    { value: 'pt', label: 'Português' },
+    //{ value: 'ar', label: 'Arabic' },
+  ],
+  sse: [
+    { value: 'en', label: 'English' },
+    { value: 'fr', label: 'Français' },
+  ],
+  cvd: [
+    { value: 'en', label: 'English' },
+    { value: 'fr', label: 'Français' },
+  ],
+};
 
 const LanguageProvider = ({ site, children }) => {
   const [language, setLanguage] = useState('en');
@@ -63,7 +73,7 @@ const LanguageProvider = ({ site, children }) => {
   };
 
   return (
-    <LanguageContext.Provider value={{ language, t, updateLanguage }}>
+    <LanguageContext.Provider value={{ language, t, site, updateLanguage }}>
       {children}
     </LanguageContext.Provider>
   );
@@ -78,7 +88,7 @@ const LanguageChooser = () => {
 
   return (
     <LanguageConsumer>
-      {({ language, t, updateLanguage }) => (
+      {({ language, t, site, updateLanguage }) => (
         <div>
           <a
             class="desktop-menu-link menu-item-text"
@@ -94,7 +104,7 @@ const LanguageChooser = () => {
                 visibility: visible ? 'visible' : 'hidden',
               }}
             >
-              {LANGUAGES.map((l) => {
+              {LANGUAGES[site].map((l) => {
                 let is_active = l.value == language;
                 return (
                   <li className="menu-item">
