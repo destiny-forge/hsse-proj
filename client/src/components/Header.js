@@ -1,8 +1,10 @@
-const Header = () => (
+import Context from './Context';
+
+const Header = ({ t }) => (
   <nav className="top-nav">
     <h1>
       <a href="/?" data-reactid=".0.1.1:1.0.0">
-        Health Systems Evidence
+        {t.site_name}
       </a>
     </h1>
     <a
@@ -317,4 +319,4 @@ const Header = () => (
   </nav>
 );
 
-export default Header;
+export default Context(Header);

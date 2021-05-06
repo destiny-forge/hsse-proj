@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { get } from 'underscore';
 
 const LanguageContext = React.createContext();
 const LanguageConsumer = LanguageContext.Consumer;
@@ -21,9 +22,34 @@ const LanguageProvider = ({ site, children }) => {
     fetch(url)
       .then((res) => res.json())
       .then((results) => {
-        console.log(results);
-        setTranslations(results);
+        const flattened = flatten(results);
+        console.log(flattened);
+        setTranslations(flattened);
       });
+  };
+
+  const t = (key) => get(translations, key) || '** Translation not found';
+
+  const flatten = (data) => {
+    var result = {};
+    function recurse(cur, prop) {
+      if (Object(cur) !== cur) {
+        result[prop] = cur;
+      } else if (Array.isArray(cur)) {
+        for (var i = 0, l = cur.length; i < l; i++)
+          recurse(cur[i], prop + '[' + i + ']');
+        if (l == 0) result[prop] = [];
+      } else {
+        var isEmpty = true;
+        for (var p in cur) {
+          isEmpty = false;
+          recurse(cur[p], prop ? prop + '.' + p : p);
+        }
+        if (isEmpty && prop) result[prop] = {};
+      }
+    }
+    recurse(data, '');
+    return result;
   };
 
   useEffect(() => {
@@ -37,9 +63,7 @@ const LanguageProvider = ({ site, children }) => {
   };
 
   return (
-    <LanguageContext.Provider
-      value={{ language, translations, updateLanguage }}
-    >
+    <LanguageContext.Provider value={{ language, t, updateLanguage }}>
       {children}
     </LanguageContext.Provider>
   );
@@ -48,7 +72,7 @@ const LanguageProvider = ({ site, children }) => {
 const LanguageChooser = () => {
   return (
     <LanguageConsumer>
-      {({ language, translations, updateLanguage }) => (
+      {({ language, t, updateLanguage }) => (
         <div>
           <a class="desktop-menu-link menu-item-text" href="#">
             Select language

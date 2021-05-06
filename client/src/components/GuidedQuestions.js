@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import Context from './Context';
 
-const GuidedQuestions = () => {
+const GuidedQuestions = ({ site, language }) => {
   const [index, setIndex] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState(null);
   const [collapsed, setCollapsed] = useState(true);
 
   useEffect(() => {
-    let url = '/i18n/hse/questions-en.json';
+    let url = `/i18n/${site}/questions-${language}.json`;
     fetch(url)
       .then((res) => res.json())
       .then((results) => {
@@ -126,4 +127,4 @@ const GuidedQuestions = () => {
   );
 };
 
-export default GuidedQuestions;
+export default Context(GuidedQuestions);
