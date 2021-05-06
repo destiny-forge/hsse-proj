@@ -28,7 +28,7 @@ const LanguageProvider = ({ site, children }) => {
       });
   };
 
-  const t = (key) => get(translations, key) || '** Translation not found';
+  const t = (key) => get(translations, key) || '';
 
   const flatten = (data) => {
     var result = {};

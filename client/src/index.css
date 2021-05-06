@@ -12,10 +12,24 @@ code {
     monospace;
 }
 
-.home {
-  /*background: url(/images/bg_hse_gradient.png);*/
+.hse.home {
+  background: url(./images/bg_hse_gradient.png);
   background: linear-gradient(to right, #178eee, #1925e3);
   background-size: 100% 448px;
+  background-repeat: no-repeat;
+}
+
+.sse.home {
+  background: url(./images/bg_hse_gradient.png);
+  background: linear-gradient(to right, #ed2124, #a71930);
+  background-size: 100% 430px;
+  background-repeat: no-repeat;
+}
+
+.cvd.home {
+  background: url(./images/bg_hse_gradient.png);
+  background: linear-gradient(to right, #5b5b5b, #262626);
+  background-size: 100% 430px;
   background-repeat: no-repeat;
 }
 
@@ -7268,12 +7282,21 @@ button.close {
 .react-toggle:hover .react-toggle-track {
   background-color: #000;
 }
-.react-toggle--checked .react-toggle-track {
+.hse .react-toggle--checked .react-toggle-track {
   background-color: #cc4921;
 }
-.react-toggle.react-toggle--checked:hover .react-toggle-track {
+.sse .react-toggle--checked .react-toggle-track {
+  background-color: #007096;
+}
+
+.hse .react-toggle.react-toggle--checked:hover .react-toggle-track {
   background-color: #a0391a;
 }
+
+.sse .react-toggle.react-toggle--checked:hover .react-toggle-track {
+  background-color: #004a63;
+}
+
 .react-toggle-track-check {
   display: none;
   position: absolute;
@@ -7391,14 +7414,27 @@ input {
 .form-group {
   margin-bottom: 8px;
 }
+
 h1 {
-  color: #178eee;
   font-size: 32px;
 }
 h2 {
-  color: #178eee;
   font-size: 20px;
 }
+
+.hse h1,
+.hse h2 {
+  color: #178eee;
+}
+.sse h1,
+.sse h2 {
+  color: #ed2124;
+}
+.cvd h1,
+.cvd h2 {
+  color: #5b5b5b;
+}
+
 label.role {
   display: block;
 }
@@ -7682,11 +7718,19 @@ form .form-errors {
 }
 .layer .layer-header {
   color: #fff;
-  background-color: #178eee;
   vertical-align: middle;
   padding: 16px;
   font-size: 16px;
   height: 48px;
+}
+.hse .layer .layer-header {
+  background-color: #178eee;
+}
+.sse .layer .layer-header {
+  background-color: #ed2124;
+}
+.cvd .layer .layer-header {
+  background-color: #5b5b5b;
 }
 .layer .layer-header-title {
   display: inline-block;
@@ -7854,13 +7898,26 @@ form .form-errors {
   padding: 12px;
   font-weight: 300;
 }
+
 .menu-item .layer-toggle {
   color: #787878;
 }
-.menu-item .layer-toggle:active {
+
+.hse .menu-item .layer-toggle:active {
   color: #fff;
   background-color: #178eee;
 }
+
+.sse .menu-item .layer-toggle:active {
+  color: #fff;
+  background-color: #ed2124;
+}
+
+.cvd .menu-item .layer-toggle:active {
+  color: #fff;
+  background-color: #5b5b5b;
+}
+
 .menu-item .layer-toggle:focus {
   outline: 0;
 }
@@ -8124,7 +8181,7 @@ form .form-errors {
 #app .layered-navigation-content {
   padding: 0;
 }
-#app .top-nav {
+#app .hse .top-nav {
   width: auto;
   overflow: visible;
   background: #1925e3;
@@ -8134,6 +8191,29 @@ form .form-errors {
   height: 48px;
   z-index: 2;
 }
+
+#app .sse .top-nav {
+  width: auto;
+  overflow: visible;
+  background: #a71930;
+  background: linear-gradient(to right, #ed2124, #a71930);
+  color: #fff;
+  line-height: 16px;
+  height: 48px;
+  z-index: 2;
+}
+
+#app .cvd .top-nav {
+  width: auto;
+  overflow: visible;
+  background: #262626;
+  background: linear-gradient(to right, #5b5b5b, #262626);
+  color: #fff;
+  line-height: 16px;
+  height: 48px;
+  z-index: 2;
+}
+
 #app .top-nav h1 {
   display: inline-block;
   padding: 0;
@@ -8190,17 +8270,41 @@ form .form-errors {
     position: relative;
     z-index: 9999;
     cursor: auto;
+  }
+
+  #app .hse .top-nav ul li.hover,
+  #app .hse .top-nav ul li:hover {
     background-color: #47a5f1;
   }
+
+  #app .sse .top-nav ul li.hover,
+  #app .sse .top-nav ul li:hover {
+    background-color: #f15053;
+  }
+
+  #app .cvd .top-nav ul li.hover,
+  #app .cvd .top-nav ul li:hover {
+    background-color: #727272;
+  }
+
   #app .top-nav ul ul {
     visibility: hidden;
     position: absolute;
     top: 100%;
     width: 100%;
-    background-color: #178eee;
     left: 0;
     z-index: 9998;
   }
+  #app .hse .top-nav ul ul {
+    background-color: #178eee;
+  }
+  #app .sse .top-nav ul ul {
+    background-color: #ed2124;
+  }
+  #app .cvd .top-nav ul ul {
+    background-color: #5b5b5b;
+  }
+
   #app .top-nav ul ul ul {
     top: 0;
     left: 99%;
@@ -8289,8 +8393,6 @@ form .form-errors {
   }
 }
 #app.home {
-  background: url(./images/bg_hse_gradient.png);
-  background: linear-gradient(to right, #178eee, #1925e3);
   background-size: 100% 448px;
   background-repeat: no-repeat;
 }
@@ -8685,10 +8787,20 @@ form .form-errors {
 .article-item {
   position: relative;
 }
-.article-item h1 {
+
+.hse .article-item h1 {
   color: #178eee;
   font-size: 24px;
 }
+.sse .article-item h1 {
+  color: #ed2124;
+  font-size: 24px;
+}
+.cvd .article-item h1 {
+  color: #5b5b5b;
+  font-size: 24px;
+}
+
 .article-item h2 {
   color: #cc4921;
   font-size: 14px;
@@ -8902,9 +9014,16 @@ form .form-errors {
 .main-menu .menu-item:first-child {
   padding-top: 0;
 }
-.main-menu .menu-item:active {
+.hse .main-menu .menu-item:active {
   background-color: #178eee;
 }
+.sse .main-menu .menu-item:active {
+  background-color: #ed2124;
+}
+.cvd .main-menu .menu-item:active {
+  background-color: #5b5b5b;
+}
+
 .main-menu .menu-item .menu-item-icon {
   left: 12px;
 }
