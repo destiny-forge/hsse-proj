@@ -1,4 +1,6 @@
-const HSEFooter = () => (
+import Context from '../components/Context';
+
+const HSEFooter = ({ t }) => (
   <footer>
     <div className="logo-wrapper">
       <img src="/images/mcmaster_logo.svg" className="logo" />
@@ -7,7 +9,7 @@ const HSEFooter = () => (
   </footer>
 );
 
-const SSEFooter = () => (
+const SSEFooter = ({ t }) => (
   <footer>
     <div className="logo-wrapper">
       <div className="logo">
@@ -19,9 +21,7 @@ const SSEFooter = () => (
         >
           <img src="/images/mcmaster_forum_logo.png" />
         </a>
-        <p>
-          A partner of Sustainable Development Solutions Network (SDSN) Canada
-        </p>
+        <p>{t('footer.forum_plus')}</p>
       </div>
       <div className="forum-logo">
         <a
@@ -32,10 +32,7 @@ const SSEFooter = () => (
         >
           <img src="/images/monash_university_logo.png" />
         </a>
-        <p>
-          Host organization for Sustainable Development Solutions Network (SDSN)
-          Australia, New Zealand &amp; Pacific
-        </p>
+        <p>{t('footer.monash_university')}</p>
       </div>
     </div>
     <div className="clearfix"></div>
@@ -54,7 +51,7 @@ const SSEFooter = () => (
   </footer>
 );
 
-const CVDFooter = () => (
+const CVDFooter = ({ t }) => (
   <footer>
     <div className="logo-wrapper">
       <img src="/images/mcmaster_logo.svg" className="logo" />
@@ -63,10 +60,9 @@ const CVDFooter = () => (
   </footer>
 );
 
-const Footer = () => {
-  const theme = 'hse';
+const Footer = ({ site, t }) => {
   let Component = HSEFooter;
-  switch (theme) {
+  switch (site) {
     case 'hse':
       Component = HSEFooter;
       break;
@@ -77,7 +73,7 @@ const Footer = () => {
       Component = CVDFooter;
       break;
   }
-  return <Component />;
+  return <Component t={t} />;
 };
 
-export default Footer;
+export default Context(Footer);
