@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Context from './Context';
+import { GuidedSearchConsumer } from './GuidedSearchContext';
 
 const GuidedQuestions = ({ site, language }) => {
   const [index, setIndex] = useState(0);
@@ -118,12 +119,20 @@ const GuidedQuestions = ({ site, language }) => {
   };
 
   return (
-    <div className="guided-questions-box">
-      <Dots />
-      <LeftArrow />
-      <GuidedQuestion />
-      <RightArrow />
-    </div>
+    <GuidedSearchConsumer>
+      {({ toggled }) => {
+        return (
+          toggled && (
+            <div className="guided-questions-box">
+              <Dots />
+              <LeftArrow />
+              <GuidedQuestion />
+              <RightArrow />
+            </div>
+          )
+        );
+      }}
+    </GuidedSearchConsumer>
   );
 };
 
