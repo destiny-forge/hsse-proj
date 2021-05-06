@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { debounce, delay } from 'underscore';
+import Context from '../components/Context';
 import Autosuggest from 'react-autosuggest';
 
 import SearchService from '../services/SearchService';
 import Button from '../components/Button';
 
-const Search = ({ onSearch }) => {
+const Search = ({ onSearch, t }) => {
   const Search = SearchService();
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
@@ -89,7 +90,7 @@ const Search = ({ onSearch }) => {
             getSuggestionValue={getSuggestionValue}
             renderSuggestion={renderSuggestion}
             inputProps={{
-              placeholder: '',
+              placeholder: t('search_page.search_box.placeholder'),
               value: query,
               onChange,
               id: 'search',
@@ -106,4 +107,4 @@ const Search = ({ onSearch }) => {
   );
 };
 
-export default Search;
+export default Context(Search);
