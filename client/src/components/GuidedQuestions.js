@@ -15,7 +15,7 @@ const GuidedQuestions = ({ site, language }) => {
         setQuestions(results);
         setQuestion(results[0]);
       });
-  }, []);
+  }, [language]);
 
   const navigate = (i) => {
     setIndex(i);
