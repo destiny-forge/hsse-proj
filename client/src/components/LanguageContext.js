@@ -70,30 +70,47 @@ const LanguageProvider = ({ site, children }) => {
 };
 
 const LanguageChooser = () => {
+  const [visible, setVisible] = useState(false);
+
+  const toggle = () => {
+    setVisible(!visible);
+  };
+
   return (
     <LanguageConsumer>
       {({ language, t, updateLanguage }) => (
         <div>
-          <a class="desktop-menu-link menu-item-text" href="#">
-            Select language
+          <a
+            class="desktop-menu-link menu-item-text"
+            onMouseOver={toggle}
+            onMouseOut={toggle}
+            href="#"
+          >
+            {t('main_menu.select_language')}
+            <ul
+              className="languages-menu menu-list"
+              style={{
+                display: visible ? 'block' : 'none',
+                visibility: visible ? 'visible' : 'hidden',
+              }}
+            >
+              {LANGUAGES.map((l) => {
+                let is_active = l.value == language;
+                return (
+                  <li className="menu-item">
+                    <a
+                      className="menu-item-text"
+                      href="#"
+                      onClick={() => updateLanguage(l.value)}
+                    >
+                      {l.label}
+                    </a>
+                    {is_active && <i className="checkmark" />}
+                  </li>
+                );
+              })}
+            </ul>
           </a>
-          <ul className="languages-menu menu-list">
-            {LANGUAGES.map((l) => {
-              let is_active = l.value == language;
-              return (
-                <li className="menu-item">
-                  <a
-                    className="menu-item-text"
-                    href="#"
-                    onClick={() => updateLanguage(l.value)}
-                  >
-                    {l.label}
-                  </a>
-                  {is_active && <i className="checkmark" />}
-                </li>
-              );
-            })}
-          </ul>
         </div>
       )}
     </LanguageConsumer>

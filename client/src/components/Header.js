@@ -1,6 +1,7 @@
 import Context from './Context';
+import { LanguageChooser } from './LanguageContext';
 
-const Header = ({ t }) => (
+const Header = ({ site, t }) => (
   <nav className="top-nav">
     <h1>
       <a href="/?" data-reactid=".0.1.1:1.0.0">
@@ -98,94 +99,7 @@ const Header = ({ t }) => (
           </div>
         </div>
         <span className="menu-item-icon" data-reactid=".0.1.1:1.2.2.1"></span>
-        <a
-          href="#"
-          className="layer-toggle layer-toggle-languages menu-item-text"
-          data-reactid=".0.1.1:1.2.2.2"
-        >
-          <span className="sr-only" data-reactid=".0.1.1:1.2.2.2.0">
-            Toggle navigation
-          </span>
-          <span data-reactid=".0.1.1:1.2.2.2.1">Select language</span>
-        </a>
-        <a
-          className="desktop-menu-link menu-item-text"
-          href="#"
-          data-reactid=".0.1.1:1.2.2.3"
-        >
-          Select language
-        </a>
-        <ul className="languages-menu menu-list" data-reactid=".0.1.1:1.2.2.4">
-          <li
-            className="menu-item"
-            value="cn"
-            data-reactid=".0.1.1:1.2.2.4.$language-0"
-          >
-            <a
-              className="menu-item-text"
-              href="#"
-              data-reactid=".0.1.1:1.2.2.4.$language-0.0"
-            >
-              中文
-            </a>
-          </li>
-          <li
-            className="menu-item"
-            value="en"
-            data-reactid=".0.1.1:1.2.2.4.$language-1"
-          >
-            <a
-              className="menu-item-text"
-              href="#"
-              data-reactid=".0.1.1:1.2.2.4.$language-1.0"
-            >
-              English
-            </a>
-            <i
-              className="checkmark"
-              data-reactid=".0.1.1:1.2.2.4.$language-1.1"
-            ></i>
-          </li>
-          <li
-            className="menu-item"
-            value="es"
-            data-reactid=".0.1.1:1.2.2.4.$language-2"
-          >
-            <a
-              className="menu-item-text"
-              href="#"
-              data-reactid=".0.1.1:1.2.2.4.$language-2.0"
-            >
-              Español
-            </a>
-          </li>
-          <li
-            className="menu-item"
-            value="fr"
-            data-reactid=".0.1.1:1.2.2.4.$language-3"
-          >
-            <a
-              className="menu-item-text"
-              href="#"
-              data-reactid=".0.1.1:1.2.2.4.$language-3.0"
-            >
-              Français
-            </a>
-          </li>
-          <li
-            className="menu-item"
-            value="pt"
-            data-reactid=".0.1.1:1.2.2.4.$language-4"
-          >
-            <a
-              className="menu-item-text"
-              href="#"
-              data-reactid=".0.1.1:1.2.2.4.$language-4.0"
-            >
-              Português
-            </a>
-          </li>
-        </ul>
+        <LanguageChooser site={site} />
       </li>
       <li
         className="menu-item menu-item-guided-search"
