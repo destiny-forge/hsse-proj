@@ -6,6 +6,13 @@ const HSEFooter = ({ t }) => (
       <img src="/images/mcmaster_logo.svg" className="logo" />
       <img src="/images/mcmaster_forum_logo.svg" className="forum-logo" />
     </div>
+    <a href="mailto:hse@mcmaster.ca" target="_blank" class="contact-us">
+      {t('contact_us')}
+    </a>
+    <span data-reactid=".0.1.1:5.2">|</span>
+    <a href="/terms" class="terms">
+      {t('terms_of_use')}
+    </a>
   </footer>
 );
 
@@ -42,11 +49,11 @@ const SSEFooter = ({ t }) => (
       target="_blank"
       class="contact-us"
     >
-      Contact us
+      {t('contact_us')}
     </a>
     <span>|</span>
-    <a rel="alternate" hreflang="en" href="/terms?lang=en" className="terms">
-      Terms of use
+    <a rel="alternate" hreflang="en" href="/terms" className="terms">
+      {t('terms_of_use')}
     </a>
   </footer>
 );
@@ -57,6 +64,19 @@ const CVDFooter = ({ t }) => (
       <img src="/images/mcmaster_logo.svg" className="logo" />
       <img src="/images/mcmaster_forum_logo.svg" className="forum-logo" />
     </div>
+    <div className="clearfix"></div>
+    <a
+      rel="alternate"
+      href="mailto:covidend@mcmaster.ca"
+      target="_blank"
+      class="contact-us"
+    >
+      {t('contact_us')}
+    </a>
+    <span>|</span>
+    <a rel="alternate" hreflang="en" href="/terms" className="terms">
+      {t('terms_of_use')}
+    </a>
   </footer>
 );
 
@@ -69,7 +89,7 @@ const Footer = ({ site, t }) => {
     case 'sse':
       Component = SSEFooter;
       break;
-    case 'covid':
+    case 'cvd':
       Component = CVDFooter;
       break;
   }
