@@ -9,8 +9,8 @@ const Home = ({ site, t }) => {
   return (
     <div className={className}>
       <div className="layered-navigation-content">
+        <Header />
         <div id="page-content">
-          <Header />
           <div class="home-page">
             <div class="home-page-header">
               <h1>{t('site_name')}</h1>

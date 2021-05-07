@@ -67,7 +67,8 @@ const LanguageProvider = ({ site, children }) => {
     getTranslations(language);
   }, []);
 
-  const updateLanguage = (lang) => {
+  const updateLanguage = (e, lang) => {
+    e.preventDefault();
     setLanguage(lang);
     getTranslations(lang);
   };
@@ -111,7 +112,7 @@ const LanguageChooser = () => {
                     <a
                       className="menu-item-text"
                       href="#"
-                      onClick={() => updateLanguage(l.value)}
+                      onClick={(e) => updateLanguage(e, l.value)}
                     >
                       {l.label}
                     </a>

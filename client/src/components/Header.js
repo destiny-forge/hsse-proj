@@ -5,7 +5,7 @@ import GuidedSearchToggle from './GuidedSearchToggle';
 const Header = ({ site, t }) => (
   <nav className="top-nav">
     <h1>
-      <a href="/?">{t.site_name}</a>
+      <a href="/">{t.site_name}</a>
     </h1>
     <a href="#" className="layer-toggle layer-toggle-main">
       <span className="sr-only">{t('toggle_navigation')}</span>
