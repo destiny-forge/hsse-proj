@@ -16,7 +16,7 @@ const GuidedQuestions = ({ site, language }) => {
         setQuestions(results);
         setQuestion(results[0]);
       });
-  }, [language]);
+  }, [site, language]);
 
   const navigate = (i) => {
     setIndex(i);
@@ -100,7 +100,7 @@ const GuidedQuestions = ({ site, language }) => {
 
   const LeftArrow = () => {
     let className = 'btn-prev';
-    className += index == 0 ? ' disabled' : '';
+    className += index === 0 ? ' disabled' : '';
     return (
       <a href="#" className={className} onClick={prev}>
         <i />
@@ -110,7 +110,7 @@ const GuidedQuestions = ({ site, language }) => {
 
   const RightArrow = () => {
     let className = 'btn-next';
-    className += index + 1 == questions.length ? ' disabled' : '';
+    className += index + 1 === questions.length ? ' disabled' : '';
     return (
       <a href="#" className={className} onClick={next}>
         <i />

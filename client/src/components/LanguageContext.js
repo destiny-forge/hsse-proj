@@ -48,7 +48,7 @@ const LanguageProvider = ({ site, children }) => {
       } else if (Array.isArray(cur)) {
         for (var i = 0, l = cur.length; i < l; i++)
           recurse(cur[i], prop + '[' + i + ']');
-        if (l == 0) result[prop] = [];
+        if (l === 0) result[prop] = [];
       } else {
         var isEmpty = true;
         for (var p in cur) {
@@ -91,11 +91,10 @@ const LanguageChooser = () => {
     <LanguageConsumer>
       {({ language, t, site, updateLanguage }) => (
         <div>
-          <a
-            class="desktop-menu-link menu-item-text"
+          <label
+            className="desktop-menu-link menu-item-text"
             onMouseOver={toggle}
             onMouseOut={toggle}
-            href="#"
           >
             {t('main_menu.select_language')}
             <ul
@@ -106,9 +105,9 @@ const LanguageChooser = () => {
               }}
             >
               {LANGUAGES[site].map((l) => {
-                let is_active = l.value == language;
+                let is_active = l.value === language;
                 return (
-                  <li className="menu-item">
+                  <li key={l.value} className="menu-item">
                     <a
                       className="menu-item-text"
                       href="#"
@@ -121,7 +120,7 @@ const LanguageChooser = () => {
                 );
               })}
             </ul>
-          </a>
+          </label>
         </div>
       )}
     </LanguageConsumer>

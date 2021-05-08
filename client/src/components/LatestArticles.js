@@ -21,7 +21,7 @@ const ArticleList = ({ language, articles }) => {
           title
         )}?source=latest_content`;
         return (
-          <li class="selectable-item result-latest-item">
+          <li key={article.id} class="selectable-item result-latest-item">
             <h2 class="result-item-title">
               <a href={href}>
                 <span>{title}</span>
@@ -38,17 +38,19 @@ const LatestArticles = ({ site, t, language }) => {
   const [latest, setLatest] = useState({});
 
   useEffect(() => {
-    SearchService()
-      .latest(site, language)
-      .then((result) => {
-        setLatest(result);
-      });
+    const search = SearchService();
+    search.latest(site, language).then((result) => {
+      console.log(result);
+      setLatest(result);
+    });
   }, [site, language]);
 
   const title = () => {
     let blurb = t('latest_content_page.blurb_title');
     return `${blurb} ${t(latest.month)} ${t(latest.year)}`;
   };
+
+  console.log(latest);
 
   return latest === {} ? (
     <div></div>

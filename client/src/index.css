@@ -7393,6 +7393,11 @@ button {
 button span {
   vertical-align: top;
 }
+
+.button {
+  cursor: pointer;
+}
+
 .button:focus,
 .button:hover {
   text-decoration: none;

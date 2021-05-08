@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Context from '../components/Context';
 
 const HSEFooter = ({ t }) => (
@@ -6,13 +7,18 @@ const HSEFooter = ({ t }) => (
       <img src="/images/mcmaster_logo.svg" className="logo" />
       <img src="/images/mcmaster_forum_logo.svg" className="forum-logo" />
     </div>
-    <a href="mailto:hse@mcmaster.ca" target="_blank" class="contact-us">
+    <a
+      href="mailto:hse@mcmaster.ca"
+      target="_blank"
+      rel="noreferrer"
+      className="contact-us"
+    >
       {t('contact_us')}
     </a>
-    <span data-reactid=".0.1.1:5.2">|</span>
-    <a href="/terms" class="terms">
+    <span>|</span>
+    <Link to="/terms" className="terms">
       {t('terms_of_use')}
-    </a>
+    </Link>
   </footer>
 );
 
@@ -21,10 +27,10 @@ const SSEFooter = ({ t }) => (
     <div className="logo-wrapper">
       <div className="logo">
         <a
-          rel="alternate"
-          hreflang="en"
+          hrefLang="en"
           href="https://www.mcmasterforum.org/lets-collaborate/forumplus"
           target="_blank"
+          rel="noreferrer"
         >
           <img src="/images/mcmaster_forum_logo.png" />
         </a>
@@ -32,10 +38,10 @@ const SSEFooter = ({ t }) => (
       </div>
       <div className="forum-logo">
         <a
-          rel="alternate"
-          hreflang="en"
+          hrefLang="en"
           href="https://www.monash.edu/sustainable-development"
           target="_blank"
+          rel="noreferrer"
         >
           <img src="/images/monash_university_logo.png" />
         </a>
@@ -44,17 +50,17 @@ const SSEFooter = ({ t }) => (
     </div>
     <div className="clearfix"></div>
     <a
-      rel="alternate"
       href="mailto:sse@mcmaster.ca"
       target="_blank"
-      class="contact-us"
+      rel="noreferrer"
+      className="contact-us"
     >
       {t('contact_us')}
     </a>
     <span>|</span>
-    <a rel="alternate" hreflang="en" href="/terms" className="terms">
+    <Link to="/terms" rel="alternate" hrefLang="en" className="terms">
       {t('terms_of_use')}
-    </a>
+    </Link>
   </footer>
 );
 
@@ -66,17 +72,17 @@ const CVDFooter = ({ t }) => (
     </div>
     <div className="clearfix"></div>
     <a
-      rel="alternate"
       href="mailto:covidend@mcmaster.ca"
       target="_blank"
-      class="contact-us"
+      rel="noreferrer"
+      className="contact-us"
     >
       {t('contact_us')}
     </a>
     <span>|</span>
-    <a rel="alternate" hreflang="en" href="/terms" className="terms">
+    <Link to="/terms" rel="alternate" hrefLang="en" className="terms">
       {t('terms_of_use')}
-    </a>
+    </Link>
   </footer>
 );
 

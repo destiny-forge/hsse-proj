@@ -11,7 +11,7 @@ const Markdown = ({ page, site, language }) => {
       .then((results) => {
         setContent(results);
       });
-  }, [site, language]);
+  }, [page, site, language]);
 
   return <div dangerouslySetInnerHTML={{ __html: marked(content) }} />;
 };

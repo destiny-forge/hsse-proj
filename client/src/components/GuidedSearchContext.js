@@ -5,7 +5,7 @@ const GuidedSearchConsumer = GuidedSearchContext.Consumer;
 
 const GuidedSearchProvider = ({ children }) => {
   let is_toggled = localStorage.getItem('guided_search');
-  is_toggled = is_toggled == 'false' ? 0 : 1;
+  is_toggled = is_toggled === 'false' ? false : true;
   const [toggled, setToggled] = useState(is_toggled);
 
   const toggle = () => {
