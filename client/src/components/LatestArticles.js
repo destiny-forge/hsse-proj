@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchService from '../services/SearchService';
 import Context from './Context';
 
@@ -11,9 +11,59 @@ const slugify = (text) => {
     .trim();
 };
 
+const DocumentTypeArticles = ({ language, latest }) => {
+  let types = latest.document_Types_Articles || [];
+  return types.map((type) => {
+    const key = type.DocumentTypeId;
+    const title = type[`DocumentTypeName${language.toUpperCase()}`];
+    const articles = type.document_Types_Articles;
+    return articles.length > 0 ? (
+      <React.Fragment>
+        <h2 className="documentType" key={key}>
+          {title}
+        </h2>
+        <ArticleList language={language} articles={articles} />
+      </React.Fragment>
+    ) : null;
+  });
+};
+
+const ProgramServiceArticles = ({ language, latest }) => {
+  let types = latest.program_Services_Articles || [];
+  return types.map((type) => {
+    const key = type.DomainID;
+    const title = type[`DomainName${language.toUpperCase()}`];
+    const articles = type.program_Services_Articles;
+    return articles.length > 0 ? (
+      <React.Fragment>
+        <h2 className="domain" key={key}>
+          {title}
+        </h2>
+        <ArticleList language={language} articles={articles} />
+      </React.Fragment>
+    ) : null;
+  });
+};
+
+const ArticlesByCategory = ({ site, language, latest }) => {
+  let Component = DocumentTypeArticles;
+  switch (site) {
+    case 'hse':
+      Component = DocumentTypeArticles;
+      break;
+    case 'sse':
+      Component = ProgramServiceArticles;
+      break;
+    case 'cvd':
+      Component = DocumentTypeArticles;
+      break;
+  }
+  return <Component language={language} latest={latest} />;
+};
+
 const ArticleList = ({ language, articles }) => {
   return (
-    <ul class="selectable-list-latest result-list-latest">
+    <ul className="selectable-list-latest result-list-latest">
       {articles.map((article) => {
         const title = article[`Title${language.toUpperCase()}`];
         let href = `/articles/${article.ArticleId}-${slugify(
@@ -22,9 +72,9 @@ const ArticleList = ({ language, articles }) => {
         return (
           <li
             key={article.ArticleId}
-            class="selectable-item result-latest-item"
+            className="selectable-item result-latest-item"
           >
-            <h2 class="result-item-title">
+            <h2 className="result-item-title">
               <a href={href}>
                 <span>{title}</span>
               </a>
@@ -42,6 +92,7 @@ const LatestArticles = ({ site, t, language }) => {
   useEffect(() => {
     const search = SearchService();
     const results = search.latest(site, language);
+    console.log(results);
     setLatest(results);
     // search.latest(site, language).then((result) => {
     //   console.log(result);
@@ -62,6 +113,7 @@ const LatestArticles = ({ site, t, language }) => {
       <span dangerouslySetInnerHTML={{ __html: latest.hot_Docs_Content1 }} />
       <ArticleList language={language} articles={latest.hot_Docs_Articles} />
       <span dangerouslySetInnerHTML={{ __html: latest.hot_Docs_Content2 }} />
+      <ArticlesByCategory site={site} language={language} latest={latest} />
     </div>
   );
 };
