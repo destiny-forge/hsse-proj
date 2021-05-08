@@ -1,4 +1,6 @@
 import Context from '../components/Context';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import LatestArticles from '../components/LatestArticles';
 
 const Latest = ({ site }) => {

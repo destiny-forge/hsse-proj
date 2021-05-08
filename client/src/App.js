@@ -14,7 +14,7 @@ import {
 import Home from './views/Home';
 import About from './views/About';
 import Terms from './views/Terms';
-import Latest from './views/Search/Latest';
+import Latest from './views/Latest';
 import { SiteProvider, SiteConsumer } from './components/SiteContext';
 import { LanguageProvider } from './components/LanguageContext';
 import { GuidedSearchProvider } from './components/GuidedSearchContext';

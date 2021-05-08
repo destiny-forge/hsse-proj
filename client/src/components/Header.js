@@ -1,6 +1,7 @@
 import Context from './Context';
 import { LanguageChooser } from './LanguageContext';
 import GuidedSearchToggle from './GuidedSearchToggle';
+import { Link } from 'react-router-dom';
 
 const Header = ({ site, t }) => (
   <nav className="top-nav">
@@ -16,15 +17,15 @@ const Header = ({ site, t }) => (
     <ul className="main-menu menu-list">
       <li className="menu-item menu-item-home">
         <span className="menu-item-icon"></span>
-        <a href="/" className="menu-item-text">
+        <Link to="/" className="menu-item-text">
           {t('main_menu.home')}
-        </a>
+        </Link>
       </li>
       <li className="menu-item menu-item-about">
         <span className="menu-item-icon"></span>
-        <a href="/about" className="menu-item-text">
+        <Link to="/about" className="menu-item-text">
           {t('main_menu.about')}
-        </a>
+        </Link>
       </li>
       <li className="menu-item menu-item-language">
         <span className="menu-item-icon"></span>
@@ -39,9 +40,9 @@ const Header = ({ site, t }) => (
       </li>
       <li className="menu-item menu-item-latest-content">
         <span className="menu-item-icon"></span>
-        <a href="/latest-content" className="menu-item-text">
+        <Link to="/latest-content" className="menu-item-text">
           {t('main_menu.latest_content')}
-        </a>
+        </Link>
       </li>
       <li className="menu-item menu-item-sign-up">
         <span className="menu-item-icon"></span>
