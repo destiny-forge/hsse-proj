@@ -4,7 +4,6 @@ import Context from './Context';
 
 const slugify = (text) => {
   return text
-    .toString()
     .toLowerCase()
     .replace(/\s+/g, '-') // Replace spaces with -
     .replace(/[^\w\-]+/g, '') // Remove all non-word chars
@@ -16,12 +15,15 @@ const ArticleList = ({ language, articles }) => {
   return (
     <ul class="selectable-list-latest result-list-latest">
       {articles.map((article) => {
-        const title = article[`title${language.toUpperCase()}`];
-        let href = `/articles/${article.id}-${slugify(
+        const title = article[`Title${language.toUpperCase()}`];
+        let href = `/articles/${article.ArticleId}-${slugify(
           title
         )}?source=latest_content`;
         return (
-          <li key={article.id} class="selectable-item result-latest-item">
+          <li
+            key={article.ArticleId}
+            class="selectable-item result-latest-item"
+          >
             <h2 class="result-item-title">
               <a href={href}>
                 <span>{title}</span>
@@ -39,20 +41,20 @@ const LatestArticles = ({ site, t, language }) => {
 
   useEffect(() => {
     const search = SearchService();
-    search.latest(site, language).then((result) => {
-      console.log(result);
-      setLatest(result);
-    });
+    const results = search.latest(site, language);
+    setLatest(results);
+    // search.latest(site, language).then((result) => {
+    //   console.log(result);
+    //   setLatest(result);
+    // });
   }, [site, language]);
 
   const title = () => {
     let blurb = t('latest_content_page.blurb_title');
-    return `${blurb} ${t(latest.month)} ${t(latest.year)}`;
+    return `${blurb} ${t(`months.${latest.month}`)} ${latest.year}`;
   };
 
-  console.log(latest);
-
-  return latest === {} ? (
+  return Object.entries(latest).length === 0 ? (
     <div></div>
   ) : (
     <div className="latest-content-page">
