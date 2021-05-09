@@ -1,12 +1,5 @@
 const container = require("src/container");
-const {
-  create,
-  get,
-  list,
-  assign,
-  latest,
-  detail,
-} = require("src/app/article");
+const { create, get, list, assign, detail } = require("src/app/article");
 
 module.exports = () => {
   const {
@@ -30,12 +23,10 @@ module.exports = () => {
     articleRepository,
   });
 
-  const latestUseCase = latest({ articleRepository });
   const detailUseCase = detail({ articleRepository });
 
   return {
     getUseCase,
-    latestUseCase,
     detailUseCase,
     createUseCase,
     listUseCase,

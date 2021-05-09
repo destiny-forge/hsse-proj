@@ -28,7 +28,14 @@ module.exports = ({ config, logger }) => {
   apiRouter
     .use(
       cors({
-        origin: ["http://localhost:3000"],
+        origin: [
+          "http://localhost:3000",
+          "http://localhost:3001",
+          "http://socialsystemsevidence.localhost:3000",
+          "http://socialsystemsevidence.localhost:3001",
+          "http://healthsystemsevidence.localhost:3000",
+          "http://healthsystemsevidence.localhost:3001",
+        ],
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type", "Authorization"],
       })
@@ -62,6 +69,8 @@ module.exports = ({ config, logger }) => {
 
   apiRouter.use("/subscriptions", controller("subscription").router);
   apiRouter.use("/search", controller("search").router);
+
+  apiRouter.use("/latest_content", controller("latest_content").router);
 
   router.use("", apiRouter);
 

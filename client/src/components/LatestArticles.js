@@ -18,12 +18,12 @@ const DocumentTypeArticles = ({ language, latest }) => {
     const title = type[`DocumentTypeName${language.toUpperCase()}`];
     const articles = type.document_Types_Articles;
     return articles.length > 0 ? (
-      <React.Fragment>
+      <div key={key}>
         <h2 className="documentType" key={key}>
           {title}
         </h2>
         <ArticleList language={language} articles={articles} />
-      </React.Fragment>
+      </div>
     ) : null;
   });
 };
@@ -35,12 +35,12 @@ const ProgramServiceArticles = ({ language, latest }) => {
     const title = type[`DomainName${language.toUpperCase()}`];
     const articles = type.program_Services_Articles;
     return articles.length > 0 ? (
-      <React.Fragment>
+      <div key={key}>
         <h2 className="domain" key={key}>
           {title}
         </h2>
         <ArticleList language={language} articles={articles} />
-      </React.Fragment>
+      </div>
     ) : null;
   });
 };
@@ -89,15 +89,10 @@ const ArticleList = ({ language, articles }) => {
 const LatestArticles = ({ site, t, language }) => {
   const [latest, setLatest] = useState({});
 
-  useEffect(() => {
+  useEffect(async () => {
     const search = SearchService();
-    const results = search.latest(site, language);
-    console.log(results);
-    setLatest(results);
-    // search.latest(site, language).then((result) => {
-    //   console.log(result);
-    //   setLatest(result);
-    // });
+    const result = await search.latest(site, language);
+    setLatest(result);
   }, [site, language]);
 
   const title = () => {
