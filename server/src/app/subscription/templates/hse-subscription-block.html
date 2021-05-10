@@ -1,0 +1,84 @@
+<tr>
+  <td
+    id="m_-3991892845636654270x_art_ttl"
+    colspan="2"
+    style="
+      font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 11pt;
+    "
+  >
+    <p style="margin: 1em 0 0 0">&nbsp;</p>
+    <h2
+      style="
+        color: #ed2124;
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-size: 16pt;
+        font-weight: bold;
+        margin: 0;
+      "
+    >
+      Evidence service (<%= index %> of <%= sub_count %>)
+    </h2>
+    <p style="margin: 0.5em 0 0 0">&nbsp;</p>
+    During the past month, the following documents that match your interests
+    based on the following subscribed search were added to Social Systems
+    Evidence:
+    <p style="margin-top: 2em; margin-bottom: 1em">
+      <strong>Keywords: *</strong>
+    </p>
+    <p style="margin-top: 1em; margin-bottom: 2em">
+      <strong>
+        Filters: <% keywords = filters.map(function(f) { return '"' + f + '"';
+        }) -%> <%- keywords.join(",") %>
+      </strong>
+    </p>
+    To change the searches you have subscribed to, log in to your Social Systems
+    Evidence account and click on ‘saved searches’ in your account’s drop-down
+    menu. The documents are presented below with the ones with a more general*
+    focus appearing earlier in the list and those with a specific focus later in
+    the list, as well as with the more recent** ones appearing earlier in the
+    list and the older ones later in the list. <% for (let [type, types] of
+    Object.entries(articles)) { %>
+    <h3
+      style="
+        color: #ed2124;
+        margin-top: 14px;
+        margin-bottom: 8px;
+        font-size: 14pt;
+        font-weight: bold;
+      "
+    >
+      <%= type %>
+    </h3>
+    <% for (let [focus, articles] of Object.entries(types)) { %>
+    <h3 style="color: #848484; font-size: 10pt; font-weight: bold">
+      <%= focus %>
+    </h3>
+    <ul
+      style="
+        color: rgb(0, 112, 150);
+        color: #666666;
+        padding-top: 3px;
+        padding-bottom: 6px;
+      "
+    >
+      <% articles.forEach(function(article) { %>
+      <li style="color: rgb(0, 112, 150); margin: 3px 0">
+        <a
+          style="
+            text-decoration: none;
+            color: rgb(0, 112, 150) !important;
+            color: #007096;
+          "
+          href="<%= article.href %>"
+          data-saferedirecturl="<%= article.safeHREF %>"
+          target="_blank"
+        >
+          <%= article.title %>
+        </a>
+      </li>
+      <% }); %>
+    </ul>
+    <% }} %>
+  </td>
+</tr>

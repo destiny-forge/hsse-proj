@@ -3,19 +3,21 @@ services:
   - docker
 
 # before_install:
-#   - docker build -t destinyforge/hsse-admin-client-test -f ./ui/Dockerfile ./ui
+#   - docker build -t destinyforge/hsse-admin-client-test -f ./admin/Dockerfile ./admin
 
 script:
   - docker ps -a
 
 after_success:
   - echo "Success - ..."
-  - docker build -t destinyforge/hsse-admin-client ./ui --build-arg REACT_APP_BACKEND_SERVER=$REACT_APP_BACKEND_SERVER
+  - docker build -t destinyforge/hsse-client ./client --build-arg REACT_APP_BACKEND_SERVER=$REACT_APP_BACKEND_SERVER
+  - docker build -t destinyforge/hsse-admin-client ./admin --build-arg REACT_APP_BACKEND_SERVER=$REACT_APP_BACKEND_SERVER
   - docker build -t destinyforge/hsse-nginx ./nginx
-  - docker build -t destinyforge/hsse-server ./ddd
+  - docker build -t destinyforge/hsse-server ./server
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  # Take those images and push them to docker hub
+  # Push images to docker hub
+  - docker push destinyforge/hsse-client
   - docker push destinyforge/hsse-admin-client
   - docker push destinyforge/hsse-nginx
   - docker push destinyforge/hsse-server

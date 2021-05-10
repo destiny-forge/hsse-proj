@@ -1,0 +1,87 @@
+[
+   {
+      "title":"Voulez-vous en savoir plus sur certains types d'arrangements du système de santé?",
+      "answers":[
+         {
+            "title":"Comment les décisions (sur les soins) sont-elles prises",
+            "description":"Arrangements de gouvernance",
+            "filters":"governance_arrangements"
+         },
+         {
+            "title":"Comment les soins sont-ils payés",
+            "description":"Arrangements financiers",
+            "filters":"financial_arrangements"
+         },
+         {
+            "title":"Comment les soins sont-ils organisés",
+            "description":"Arrangements relatifs à la prestation de services",
+            "filters":"delivery_arrangements"
+         },
+         {
+            "title":"Comment favoriser le changement",
+            "description":"Stratégies de mise en œuvre",
+            "filters":"implementation_strategies"
+         }
+      ]
+   },
+   {
+      "title":"Avez-vous un type de question en particulier?",
+      "answers":[
+         {
+            "title":"Quelles approches ont été évaluées pour leurs avantages et leurs inconvénients? (ou quelle approche fonctionne?)",
+            "description":"revues systématiques sur les effets et revues des revues systématiques",
+            "filters":"?"
+         },
+         {
+            "title":"Quelles approches ont été évaluées pour leur rapport coût-efficacité? (ou est une approche rentable?)",
+            "description":"évaluations économiques et études des prix de revient",
+            "filters":"?"
+         },
+         {
+            "title":"Que savons-nous d'autre sur une approche ou un problème qu'il vise à résoudre?",
+            "description":"revues systématiques sur d'autres questions",
+            "filters":"?"
+         },
+         {
+            "title":"Qu'est-ce qui a été essayé ailleurs et quelle est la justification? (et avec quels impacts)?",
+            "description":"descriptions de réformes de la santé",
+            "filters":"?"
+         },
+         {
+            "title":"Que savons-nous d'un problème, des options et des implications de mise en œuvre dans un système de santé particulier?",
+            "description":"synthèses de données probantes pour éclairer les politiques",
+            "filters":"?"
+         },
+         {
+            "title":"Comment fonctionne un système de santé en particulier?",
+            "description":"descriptions des systèmes de santé",
+            "filters":"?"
+         }
+      ]
+   },
+   {
+      "title":"Êtes-vous intéressé à des maladies, technologies, secteurs ou fournisseurs de soins spécifiques?",
+      "answers":[
+         {
+            "title":"Maladies (maladies infectieuses, maladies non transmissibles ou autres conditions)",
+            "description":"Maladies",
+            "filters":"conditions"
+         },
+         {
+            "title":"Technologies (diagnostics, vaccins, médicaments, dispositifs, chirurgies)",
+            "description":"Technologies",
+            "filters":"conditionTechnologies"
+         },
+         {
+            "title":"Secteurs (soins à domicile, soins primaires, soins hospitaliers, réadaptation, soins de longue durée et santé publique)",
+            "description":"Secteurs",
+            "filters":"conditionSectors"
+         },
+         {
+            "title":"Fournisseurs (médecins généralistes, médecins spécialistes, infirmières, pharmaciens, etc.)",
+            "description":"Fournisseurs",
+            "filters":"conditionProviders"
+         }
+      ]
+   }
+]

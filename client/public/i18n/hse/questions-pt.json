@@ -1,0 +1,87 @@
+[
+   {
+      "title":"Deseja conhecer os tipos particulares de planos de saúde?",
+      "answers":[
+         {
+            "title":"Como as decisões (sobre cuidados) são tomadas",
+            "description":"Os arranjos de governança",
+            "filters":"governance_arrangements"
+         },
+         {
+            "title":"Como são pagos os cuidados",
+            "description":"Mecanismos financeiros",
+            "filters":"financial_arrangements"
+         },
+         {
+            "title":"Como são organizados os cuidados",
+            "description":"Mecanismos de prestação de cuidados",
+            "filters":"delivery_arrangements"
+         },
+         {
+            "title":"Como as mudanças podem ser induzidas",
+            "description":"Estratégias de implementação]",
+            "filters":"implementation_strategies"
+         }
+      ]
+   },
+   {
+      "title":"Tem um tipo específico de pergunta?",
+      "answers":[
+         {
+            "title":"Quais abordagens foram avaliadas por suas vantagens e desvantagens? (ou qual a abordagem que funciona?)",
+            "description":"revisões sistemáticas de efeitos e visões gerais de revisões",
+            "filters":"?"
+         },
+         {
+            "title":"Quais abordagens foram avaliadas por seu custo-benefício? (ou é um custo-benefício abordagem?)",
+            "description":"avaliações econômicas e estudos de custos",
+            "filters":"?"
+         },
+         {
+            "title":"O que sabemos a respeito de uma abordagem ou do problema que ela aborda?",
+            "description":"revisões sistemáticas que abordam outras perguntas",
+            "filters":"?"
+         },
+         {
+            "title":"O que já foi experimentado em outros lugares e qual a fundamentação documentada? (e com que impactos)?",
+            "description":"descrições da reforma da saúde",
+            "filters":"?"
+         },
+         {
+            "title":"O que sabemos a respeito de um problema, opções e considerações sobre implementação em um determinado sistema de saúde?",
+            "description":"resumos de evidências para políticas",
+            "filters":"?"
+         },
+         {
+            "title":"Como funciona um determinado sistema de saúde?",
+            "description":"descrição do sistema de saúde",
+            "filters":"?"
+         }
+      ]
+   },
+   {
+      "title":"Está interessado em doenças, tecnologias, setores ou fornecedores específicos?",
+      "answers":[
+         {
+            "title":"Doenças (doenças infecciosas, doenças não transmissíveis ou outras condições)",
+            "description":"Doenças",
+            "filters":"conditions"
+         },
+         {
+            "title":"Tecnologias (diagnósticos, vacinas, medicamentos, dispositivos, cirurgias)",
+            "description":"Tecnologias",
+            "filters":"conditionTechnologies"
+         },
+         {
+            "title":"Setores (cuidados domiciliares, cuidados primários, cuidados hospitalares, reabilitação, cuidados de longa duração e saúde pública)",
+            "description":"Setores",
+            "filters":"conditionSectors"
+         },
+         {
+            "title":"Fornecedores (médicos generalistas, médicos especialistas, enfermeiros, farmacêuticos, etc.)",
+            "description":"Fornecedores",
+            "filters":"conditionProviders"
+         }
+      ]
+   }
+]
