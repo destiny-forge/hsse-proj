@@ -8,17 +8,17 @@ services:
   hsse-admin-client:
     build: ./client
     ports:
-      - '4000:4000'
+      - '3000:3000'
 
   hsse-admin-client:
     build: ./admin
     ports:
-      - '5000:5000'
+      - '3001:3001'
 
   hsse-server:
     build: ./server
     ports:
-      - '5001:3000'
+      - '5001:4000'
     environment:
       - APP_BASE_URL=
       - APP_VERSION=
