@@ -5,6 +5,7 @@ const eligibility = require("./eligibility");
 const appraisals = require("./appraisal");
 const studies = require("./study");
 const subscriptions = require("./subscription");
+const updates = require("./updates");
 
 module.exports = {
   users,
@@ -14,4 +15,5 @@ module.exports = {
   appraisals,
   studies,
   subscriptions,
+  updates,
 };

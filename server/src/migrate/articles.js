@@ -30,6 +30,9 @@ const transform = (article) => {
   }
 
   if (article.liveDate !== "") {
+    if (article.monthlyUpdateDate === "") {
+      article.monthlyUpdateDate = article.liveDate.slice(0, 7);
+    }
     article.liveDate = new Date(article.liveDate);
   } else {
     delete article.liveDate;

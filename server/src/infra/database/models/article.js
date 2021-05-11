@@ -1,4 +1,5 @@
 const ObjectID = require("mongodb").ObjectID;
+const moment = require("moment");
 
 module.exports = ({ database }) => {
   const create = async (article) => {
@@ -271,13 +272,40 @@ module.exports = ({ database }) => {
     }
   };
 
+  const latest = async (type) => {
+    // last month
+    let date = new Date();
+    let lastMonth = moment(date).subtract(1, "months").format("YYYY-MM");
+
+    const query = {
+      live: { $eq: true },
+      type: { $eq: type },
+      monthlyUpdateDate: { $eq: lastMonth },
+    };
+
+    // @TODO - we could move the projections into the db query
+    // using aggregations but for now we'll do it in the APP code
+    // since it's different for both HSE/SSE
+
+    try {
+      const results = await database
+        .get()
+        .collection("articles")
+        .find()
+        .toArray(query);
+      return results;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const aggregateMonthlyUpdates = async (type) => {
     const languages = ["ar", "ch", "fr", "pt", "ru", "es"];
     const match = {
       $match: {
         type: { $eq: type },
         monthlyUpdateDate: { $ne: "" },
-        status: { $ne: "Live" },
+        live: { $eq: false },
       },
     };
     const group = {
@@ -353,7 +381,7 @@ module.exports = ({ database }) => {
         total: { $sum: 1 },
         live: {
           $sum: {
-            $cond: [{ $eq: ["$status", "Live"] }, 1, 0],
+            $cond: [{ $eq: ["$live", true] }, 1, 0],
           },
         },
         needing_data: {
@@ -484,7 +512,7 @@ module.exports = ({ database }) => {
         .collection("articles")
         .updateMany(
           { batchId: { $eq: ObjectID(batchId) } },
-          { $set: { status: "Live" } }
+          { $set: { live: true } }
         );
       const { result } = cmdResult.toJSON();
       return result;
@@ -500,7 +528,7 @@ module.exports = ({ database }) => {
         .collection("articles")
         .updateMany(
           { monthlyUpdateDate: { $eq: monthlyUpdateDate } },
-          { $set: { status: "Live" } }
+          { $set: { live: true } }
         );
       const { result } = cmdResult.toJSON();
       return result;
@@ -676,5 +704,6 @@ module.exports = ({ database }) => {
     goLive,
     createIndexes,
     migrate,
+    latest,
   };
 };

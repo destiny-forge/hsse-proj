@@ -31,8 +31,9 @@ module.exports = ({ latestUseCase, response: { Success, Fail } }) => {
    *         $ref: '#/responses/BadRequest'
    */
   router.get("/", (req, res) => {
+    const { type, language } = req.query;
     latestUseCase
-      .latest(req.query)
+      .latest(type, language)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

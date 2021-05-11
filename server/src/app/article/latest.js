@@ -2,10 +2,98 @@
  * Article latest
  */
 module.exports = ({ articleRepository }) => {
-  const latest = async ({ site, language }) => {
+  const latest = async (type, language) => {
     try {
-      console.log(site, language);
+      const articles = await articleRepository.latest(type);
+      let latest = [];
+      switch (type) {
+        case "hse":
+          latest = formatLatestHSE(articles, language);
+          break;
+        case "sse":
+          latest = formatLatestSSE(articles, language);
+          break;
+        case "cvd":
+          latest = [];
+          break;
+      }
+      return latest;
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 
+  const formatLatestHSE = (articles, language) => {
+    const latest = {
+      document_Types_Articles: [],
+      hot_Docs_Articles: [],
+      hot_Docs_Content1: "",
+      hot_Docs_Content2: "",
+      month: "",
+      year: "",
+    };
+    const types = {};
+    articles.each((article) => {
+      if (article.type in types) {
+        const stub = {
+          ArticleId: article.shortId,
+          [`Title${language.toUpperCase()}`]: article.titles[language] || "",
+          Title2: article.title,
+        };
+        if (!article.hot_docs) {
+          types[article.type] = types[article.type].push(stub);
+        } else {
+          latest["hot_Docs_Articles"].push(stub);
+        }
+      } else {
+        types[article.type] = [];
+      }
+    });
+
+    let count = 1;
+    for (const [key, value] of Object.entries(types)) {
+      const type = {
+        DocumentTypeID: count,
+        DocumentTypeName2: key,
+        [`DocumentTypeName${language}`]: translate(key, language),
+        document_Types_Articles: value,
+      };
+      latest["document_Types_Articles"].push(type);
+      count++;
+    }
+
+    // get the month and year from the first article returned
+    let date = new Date(articles[0].liveDate);
+    const month = date.toLocaleString("default", { month: "long" });
+
+    // get translations for hot_docs_content
+    latest["hot_Docs_Content1"] = "wtf";
+    latest["hot_Docs_Content2"] = "wtf2";
+    latest["year"] = date.getFullYear();
+    latest["month"] = month.toLowerCase();
+  };
+
+  const formatLatestSSE = (articles, language) => {
+    const latest = {};
+    const domains = {};
+
+    return [];
+  };
+
+  //@TODO - load translations json file and perform
+  //lookups for these keys - this will be needed in
+  // multiple places so make a utility function out
+  // of it and load it as a singleton in container.js
+  const translate = (key, language) => {
+    return key;
+  };
+
+  return {
+    latest,
+  };
+};
+
+/*
       const sample = {
         document_Types_Articles: [
           {
@@ -303,16 +391,4 @@ module.exports = ({ articleRepository }) => {
         month: "april",
         year: "2021",
       };
-
-      //return await articleRepository.find();
-
-      return sample;
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
-
-  return {
-    latest,
-  };
-};
+    */
