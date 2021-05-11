@@ -67,7 +67,7 @@ class PasswordReset extends Component {
       return (
         <div className="alert alert-success">
           Password has been successfully updated.{' '}
-          <Link to="/admin/login">Login now.</Link>
+          <Link to="/login">Login now.</Link>
         </div>
       );
     }
@@ -86,7 +86,7 @@ class PasswordReset extends Component {
       <div className="d-flex flex-column flex">
         <div className="navbar light bg pos-rlt box-shadow">
           <div className="mx-auto">
-            <a href="/admin/" className="navbar-brand">
+            <Link to="/" className="navbar-brand">
               <span className="hidden-folded d-inline">
                 <img
                   src="../assets/images/mcmaster-logo.png"
@@ -94,7 +94,7 @@ class PasswordReset extends Component {
                   className="logo-login"
                 />
               </span>
-            </a>
+            </Link>
           </div>
         </div>
         <div id="content-body">

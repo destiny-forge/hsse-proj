@@ -245,7 +245,7 @@ class PresentationForm extends React.Component {
 
         this.Article.create(formData)
           .then((res) => {
-            this.props.history.replace(`/admin/${type}/presentation`);
+            this.props.history.replace(`/${type}/presentation`);
             this.notifyDone();
           })
           .catch((err) => {

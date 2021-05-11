@@ -28,7 +28,7 @@ class ConfirmEmail extends Component {
             },
             () => {
               setTimeout(() => {
-                return this.props.history.replace('/admin/login');
+                return this.props.history.replace('/login');
               }, 4000);
             }
           );
@@ -48,7 +48,7 @@ class ConfirmEmail extends Component {
           <div className="d-flex flex-column flex">
             <div className="navbar light bg pos-rlt box-shadow">
               <div className="mx-auto">
-                <a href="/admin/" className="navbar-brand">
+                <Link to="/" className="navbar-brand">
                   <span className="hidden-folded d-inline">
                     <img
                       src="../assets/images/mcmaster-logo.png"
@@ -56,7 +56,7 @@ class ConfirmEmail extends Component {
                       className="logo-login"
                     />
                   </span>
-                </a>
+                </Link>
               </div>
             </div>
             <div id="content-body">
@@ -67,7 +67,7 @@ class ConfirmEmail extends Component {
                     <p>You will be redirected to the login page.</p>
                     <p>
                       If you are not redirected to the login page,{' '}
-                      <Link to="/admin/login">click here</Link>.
+                      <Link to="/login">click here</Link>.
                     </p>
                   </div>
                 </div>

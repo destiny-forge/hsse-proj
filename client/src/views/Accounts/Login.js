@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AuthService from '../../services/AuthService';
+import { Link } from 'react-router-dom';
 
 class Login extends Component {
   constructor() {
@@ -111,20 +112,17 @@ class Login extends Component {
                   </button>
                 </form>
                 <div className="my-4">
-                  <a
-                    href="/admin/forgot-password"
-                    className="text-primary _600"
-                  >
+                  <Link to="/forgot-password" className="text-primary _600">
                     {' '}
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
                 <div>
                   Do not have an account?
-                  <a href="/signup" className="text-primary _600">
+                  <Link to="/signup" className="text-primary _600">
                     {' '}
                     Sign up
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

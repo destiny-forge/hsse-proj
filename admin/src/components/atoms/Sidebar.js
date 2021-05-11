@@ -15,7 +15,7 @@ const Sidebar = (props) => {
             <li className="nav-item">
               {perms.can_filter(props.user) && (
                 <NavLink
-                  to={`/admin/${props.type}/eligibility`}
+                  to={`/${props.type}/eligibility`}
                   isActive={(match) => {
                     return match && match.isExact;
                   }}
@@ -28,7 +28,7 @@ const Sidebar = (props) => {
             <li className="nav-item">
               {perms.can_appraise(props.user) && (
                 <NavLink
-                  to={`/admin/${props.type}/appraisals`}
+                  to={`/${props.type}/appraisals`}
                   isActive={(match) => {
                     return match && match.isExact;
                   }}
@@ -41,7 +41,7 @@ const Sidebar = (props) => {
             <li className="nav-item">
               {perms.can_link(props.user) && (
                 <NavLink
-                  to={`/admin/${props.type}/studies`}
+                  to={`/${props.type}/studies`}
                   isActive={(match) => {
                     return match && match.isExact;
                   }}
@@ -54,7 +54,7 @@ const Sidebar = (props) => {
             <li className="nav-item">
               {perms.can_detail(props.user) && (
                 <NavLink
-                  to={`/admin/${props.type}/presentation`}
+                  to={`/${props.type}/presentation`}
                   isActive={(match) => {
                     return match && match.isExact;
                   }}
@@ -67,7 +67,7 @@ const Sidebar = (props) => {
             <li className="nav-item">
               {perms.can_translate(props.user) && (
                 <NavLink
-                  to={`/admin/${props.type}/translating`}
+                  to={`/${props.type}/translating`}
                   isActive={(match) => {
                     return match && match.isExact;
                   }}
@@ -81,7 +81,7 @@ const Sidebar = (props) => {
               <div className="list-body">
                 {perms.can_prioritize(props.user) && (
                   <NavLink
-                    to={`/admin/${props.type}/prioritizing`}
+                    to={`/${props.type}/prioritizing`}
                     isActive={(match) => {
                       return match && match.isExact;
                     }}

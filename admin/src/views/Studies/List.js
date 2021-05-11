@@ -127,7 +127,7 @@ class StudiesList extends React.Component {
       return null;
     }
 
-    const code = `/admin/${stageName}/${article.type}/${article.shortId}`;
+    const code = `/${stageName}/${article.type}/${article.shortId}`;
 
     return <Link to={code}>Code</Link>;
   }

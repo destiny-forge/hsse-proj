@@ -45,79 +45,63 @@ class App extends Component {
           draggable
           pauseOnHover
         />
-        <Router>
+        <Router basename={'admin'}>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route exact path="/admin" component={Dashboard} />
-            <Route path="/admin/login" component={Login} />
-            <Route path="/admin/signup" component={Signup} />
-            <Route path="/admin/forgot-password" component={ForgotPassword} />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/forgot-password" component={ForgotPassword} />
+            <Route path="/account/reset/:token" component={PasswordReset} />
+            <Route path="/signup-success" component={SignupSuccess} />
+            <Route path="/account/confirm/:token" component={ConfirmEmail} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/article" component={ArticleCreate} />
             <Route
-              path="/admin/account/reset/:token"
-              component={PasswordReset}
-            />
-            <Route path="/admin/signup-success" component={SignupSuccess} />
-            <Route
-              path="/admin/account/confirm/:token"
-              component={ConfirmEmail}
-            />
-            <Route path="/admin/dashboard" component={Dashboard} />
-            <Route path="/admin/article" component={ArticleCreate} />
-            <Route
-              path="/admin/conflicts/:type/eligibility/:shortId"
+              path="/conflicts/:type/eligibility/:shortId"
               component={EligibilityConflicts}
             />
             <Route
-              path="/admin/conflicts/:type/appraisals/:shortId"
+              path="/conflicts/:type/appraisals/:shortId"
               component={AppraisalConflicts}
             />
 
             <Route
-              path="/admin/:type/presentation/:shortId"
+              path="/:type/presentation/:shortId"
               component={PresentationForm}
             />
 
-            <Route path="/admin/:type/eligibility" component={TabView} />
-            <Route path="/admin/:type/appraisals" component={TabView} />
-            <Route path="/admin/:type/studies" component={TabView} />
-            <Route
-              path="/admin/:type/presentation"
-              component={PresentationDetails}
-            />
-            <Route
-              path="/admin/:type/translating"
-              component={TranslatingDetails}
-            />
-            <Route
-              path="/admin/:type/prioritizing"
-              component={PrioritizingList}
-            />
+            <Route path="/:type/eligibility" component={TabView} />
+            <Route path="/:type/appraisals" component={TabView} />
+            <Route path="/:type/studies" component={TabView} />
+            <Route path="/:type/presentation" component={PresentationDetails} />
+            <Route path="/:type/translating" component={TranslatingDetails} />
+            <Route path="/:type/prioritizing" component={PrioritizingList} />
 
             <Route
-              path="/admin/eligibility/:type/:shortId"
+              path="/eligibility/:type/:shortId"
               component={EligibilityForm}
             />
             <Route
-              path="/admin/appraisals/:type/:shortId"
+              path="/appraisals/:type/:shortId"
               component={AppraisalForm}
             />
-            <Route path="/admin/studies/:type/:shortId" component={StudyForm} />
+            <Route path="/studies/:type/:shortId" component={StudyForm} />
             <Route
-              path="/admin/batch/articles/studies/:shortId"
+              path="/batch/articles/studies/:shortId"
               component={StudyList}
             />
             <Route
-              path="/admin/batch/articles/appraisals/:shortId"
+              path="/batch/articles/appraisals/:shortId"
               component={AppraisalList}
             />
             <Route
-              path="/admin/batch/articles/:stage/:shortId"
+              path="/batch/articles/:stage/:shortId"
               component={Articles}
             />
-            <Route path="/admin/upload" component={BatchUpload} />
-            <Route path="/admin/notes" component={Notes} />
-            <Route path="/admin/email-manager" component={EmailManager} />
-            <Route path="/admin/user-manager" component={UserManager} />
+            <Route path="/upload" component={BatchUpload} />
+            <Route path="/notes" component={Notes} />
+            <Route path="/email-manager" component={EmailManager} />
+            <Route path="/user-manager" component={UserManager} />
           </Switch>
         </Router>
       </LanguageProvider>
