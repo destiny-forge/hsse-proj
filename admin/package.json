@@ -6,7 +6,7 @@
     "antd": "^3.26.18",
     "date-fns": "^2.16.1",
     "jwt-decode": "^2.2.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "moment": "^2.27.0",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
