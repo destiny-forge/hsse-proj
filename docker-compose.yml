@@ -5,7 +5,7 @@ services:
     ports:
       - '37017:27017'
 
-  hsse-admin-client:
+  hsse-client:
     build: ./client
     ports:
       - '3000:3000'
