@@ -7,7 +7,7 @@ const SearchService = () => {
   const baseURL = is_localhost ? 'http://localhost:5001' : '/api';
 
   const latest = async (site, language) => {
-    const url = `${baseURL}/latest_content?site=${site}&lang=${language}`;
+    const url = `${baseURL}/latest_content?type=${site}&lang=${language}`;
     const response = await fetch(url);
     const result = await response.json();
     return result.data;

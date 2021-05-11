@@ -1,4 +1,4 @@
-FROM node:alpine as builder
+FROM node:12.13.0-alpine as builder
 
 # environment variable to inject into build
 ARG REACT_APP_BACKEND_SERVER

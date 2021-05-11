@@ -237,6 +237,17 @@ module.exports = ({ model }) => {
     }
   };
 
+  const latest = async (type) => {
+    try {
+      const articles = await model.latest(type);
+      return articles.map((article) => {
+        return toEntity(article);
+      });
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   return {
     getAll,
     create,
@@ -261,5 +272,6 @@ module.exports = ({ model }) => {
     goLive,
     prioritize,
     findOne,
+    latest,
   };
 };
