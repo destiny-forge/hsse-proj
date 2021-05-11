@@ -48,7 +48,8 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route path="/login" component={Login} />
+            <Route exact path="/admin" component={Dashboard} />
+            <Route path="/admin/login" component={Login} />
             <Route path="/admin/signup" component={Signup} />
             <Route path="/admin/forgot-password" component={ForgotPassword} />
             <Route
