@@ -9,7 +9,7 @@ const SiteProvider = ({ children }) => {
 
   if (url.indexOf('healthsystemsevidence') >= 0) {
     site = 'hse';
-  } else if (url.indexOf('socialsystemsevidence') >= 0) {
+  } else if (url.indexOf('socialsystemevidence') >= 0) {
     site = 'sse';
   } else {
     site = 'cvd';
