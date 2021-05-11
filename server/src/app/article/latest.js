@@ -1,10 +1,12 @@
 /**
  * Article latest
  */
-module.exports = ({ articleRepository }) => {
+module.exports = ({ articleRepository, updateRepository }) => {
   const latest = async (type, language) => {
     try {
-      const articles = await articleRepository.latest(type);
+      const { date } = updateRepository.latestMonthlyUpdate(type);
+      const articles = await articleRepository.findByMonthlyUpdate(type, date);
+
       let latest = [];
       switch (type) {
         case "hse":
@@ -33,7 +35,7 @@ module.exports = ({ articleRepository }) => {
       year: "",
     };
     const types = {};
-    articles.each((article) => {
+    articles.forEach((article) => {
       if (article.type in types) {
         const stub = {
           ArticleId: article.shortId,

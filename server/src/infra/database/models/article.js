@@ -272,16 +272,11 @@ module.exports = ({ database }) => {
     }
   };
 
-  const latest = async (type) => {
-    // last month
-    let date = new Date();
-    let lastMonth = moment(date).subtract(1, "months").format("YYYY-MM");
-    console.log(lastMonth);
-
+  const findByMonthlyUpdate = async (type, date) => {
     const query = {
       live: { $eq: true },
       type: { $eq: type },
-      monthlyUpdateDate: { $eq: lastMonth },
+      monthlyUpdateDate: { $eq: date },
     };
 
     // @TODO - we could move the projections into the db query
@@ -705,6 +700,6 @@ module.exports = ({ database }) => {
     goLive,
     createIndexes,
     migrate,
-    latest,
+    findByMonthlyUpdate,
   };
 };

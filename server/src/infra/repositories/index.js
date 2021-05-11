@@ -5,6 +5,7 @@ const Eligibility = require("./eligibility");
 const Appraisal = require("./appraisal");
 const Study = require("./study");
 const Subscription = require("./subscription");
+const Update = require("./update");
 
 module.exports = ({ database }) => {
   const userModel = database.mongo.models.users;
@@ -14,6 +15,7 @@ module.exports = ({ database }) => {
   const appraisalModel = database.mongo.models.appraisals;
   const studyModel = database.mongo.models.studies;
   const subscriptionModel = database.mongo.models.subscriptions;
+  const updateModel = database.mongo.models.updates;
   return {
     userRepository: User({ model: userModel({ database }) }),
     articleRepository: Article({ model: articleModel({ database }) }),
@@ -27,6 +29,9 @@ module.exports = ({ database }) => {
     studyRepository: Study({ model: studyModel({ database }) }),
     subscriptionRepository: Subscription({
       model: subscriptionModel({ database }),
+    }),
+    updateRepository: Update({
+      model: updateModel({ database }),
     }),
   };
 };
