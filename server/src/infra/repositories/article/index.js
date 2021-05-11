@@ -237,9 +237,9 @@ module.exports = ({ model }) => {
     }
   };
 
-  const latest = async (type) => {
+  const findByMonthlyUpdate = async (type, date) => {
     try {
-      const articles = await model.latest(type);
+      const articles = await model.findByMonthlyUpdate(type, date);
       return articles.map((article) => {
         return toEntity(article);
       });
@@ -272,6 +272,6 @@ module.exports = ({ model }) => {
     goLive,
     prioritize,
     findOne,
-    latest,
+    findByMonthlyUpdate,
   };
 };

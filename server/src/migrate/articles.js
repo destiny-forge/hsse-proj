@@ -17,11 +17,7 @@ const extract = (site) => {
 // clean up data and add shortId
 const transform = (article) => {
   article.shortId = shortid.generate();
-
   article.monthlyUpdateDate = article.monthlyUpdateDate.slice(0, 7);
-  if (article.monthlyUpdateDate == "1900-01") {
-    article.monthlyUpdateDate = "";
-  }
 
   if (article.published !== "") {
     article.published = new Date(article.published);
@@ -30,9 +26,6 @@ const transform = (article) => {
   }
 
   if (article.liveDate !== "") {
-    if (article.monthlyUpdateDate === "") {
-      article.monthlyUpdateDate = article.liveDate.slice(0, 7);
-    }
     article.liveDate = new Date(article.liveDate);
   } else {
     delete article.liveDate;

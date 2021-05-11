@@ -7,6 +7,7 @@ const execute = () => {
     //migrate.users(site);
     migrate.batches(site);
     migrate.articles(site);
+    migrate.updates(site);
     migrate.subscriptions(site);
   });
 };
