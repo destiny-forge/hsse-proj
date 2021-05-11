@@ -31,8 +31,8 @@ module.exports = ({ config, logger }) => {
         origin: [
           "http://localhost:3000",
           "http://localhost:3001",
-          "http://socialsystemsevidence.localhost:3000",
-          "http://socialsystemsevidence.localhost:3001",
+          "http://socialsystemevidence.localhost:3000",
+          "http://socialsystemevidence.localhost:3001",
           "http://healthsystemsevidence.localhost:3000",
           "http://healthsystemsevidence.localhost:3001",
         ],
