@@ -276,6 +276,7 @@ module.exports = ({ database }) => {
     // last month
     let date = new Date();
     let lastMonth = moment(date).subtract(1, "months").format("YYYY-MM");
+    console.log(lastMonth);
 
     const query = {
       live: { $eq: true },
@@ -291,8 +292,8 @@ module.exports = ({ database }) => {
       const results = await database
         .get()
         .collection("articles")
-        .find()
-        .toArray(query);
+        .find(query)
+        .toArray();
       return results;
     } catch (e) {
       throw e;
