@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AuthService from '../../services/AuthService';
+import { Link } from 'react-router-dom';
 
 class ForgotPassword extends Component {
   constructor(props) {
