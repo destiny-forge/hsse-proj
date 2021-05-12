@@ -15,7 +15,7 @@ class Login extends Component {
   }
 
   componentDidMount() {
-    if (this.Auth.loggedIn()) this.props.history.replace('/admin');
+    if (this.Auth.loggedIn()) this.props.history.replace('/');
   }
 
   handleChange(e) {
@@ -37,7 +37,7 @@ class Login extends Component {
             message: res.data.error,
           });
         } else {
-          this.props.history.replace('/admin');
+          this.props.history.replace('/');
         }
       })
       .catch((err) => {
@@ -60,15 +60,15 @@ class Login extends Component {
       <div className="d-flex flex-column flex">
         <div className="navbar light bg pos-rlt box-shadow">
           <div className="mx-auto">
-            <a href="/admin" className="navbar-brand">
+            <Link to="/" className="navbar-brand">
               <span className="hidden-folded d-inline">
                 <img
-                  src="../assets/images/mcmaster-logo.png"
+                  src="./assets/images/mcmaster-logo.png"
                   alt="."
                   className="logo-login"
                 />
               </span>
-            </a>
+            </Link>
           </div>
         </div>
         <div id="content-body">

@@ -54,15 +54,15 @@ export default function withAuth(AuthComponent) {
             >
               <div className="sidenav modal-dialog dk white">
                 <div className="navbar lt">
-                  <a href="/" className="navbar-brand">
+                  <Link to="/" className="navbar-brand">
                     <span className="hidden-folded d-inline">
                       <img
-                        src="../assets/images/mcmaster-logo.png"
+                        src="./assets/images/mcmaster-logo.png"
                         alt="."
                         className="logo"
                       />
                     </span>
-                  </a>
+                  </Link>
                 </div>
                 <div className="flex hide-scroll">
                   <div className="scroll">
