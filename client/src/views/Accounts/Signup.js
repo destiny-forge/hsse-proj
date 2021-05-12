@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AuthService from '../../services/AuthService';
+import { Link } from 'react-router-dom';
 
 class Signup extends Component {
   constructor(props) {
@@ -91,9 +92,9 @@ class Signup extends Component {
                       {' '}
                       By clicking Sign Up, I agree to the
                     </span>
-                    <a href="/admin/terms"> Terms of service</a>
+                    <Link to="/terms"> Terms of service</Link>
                     <span className="text-muted"> and</span>
-                    <a href="/admin/privacy"> Policy Privacy.</a>
+                    <Link to="/privacy"> Policy Privacy.</Link>
                   </div>
                   <button type="submit" className="btn primary">
                     {' '}
@@ -103,10 +104,10 @@ class Signup extends Component {
                 <div className="py-4 text-center">
                   <div>
                     Already have an account?
-                    <a href="/admin/login" className="text-primary _600">
+                    <Link to="/login" className="text-primary _600">
                       {' '}
                       Sign in
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

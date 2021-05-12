@@ -169,7 +169,7 @@ class EligibilityForm extends React.Component {
         this.Eligibility.create(formData)
           .then((res) => {
             this.props.history.replace(
-              `/admin/batch/articles/eligibility/${article.batchId}`
+              `/batch/articles/eligibility/${article.batchId}`
             );
             window.location.reload();
             this.notifyDone();
@@ -204,7 +204,7 @@ class EligibilityForm extends React.Component {
     this.Eligibility.create(data).then((res) => {
       if (!relevant) {
         this.props.history.replace(
-          `/admin/batch/articles/eligibility/${article.batchId}`
+          `/batch/articles/eligibility/${article.batchId}`
         );
         window.location.reload();
         this.notifyDone();

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AuthService from '../services/AuthService';
 import { LanguageChooser } from '../components/molecules/Language';
 import perms from '../utils/permissions';
+import { Link } from 'react-router-dom';
 
 export default function withAuth(AuthComponent) {
   const Auth = new AuthService(process.env.BACKEND_SERVER);
@@ -18,14 +19,14 @@ export default function withAuth(AuthComponent) {
     handleLogout(e) {
       e.preventDefault();
       Auth.logout();
-      this.props.history.replace('/admin/login');
+      this.props.history.replace('/login');
     }
 
     componentDidMount() {
       const { history } = this.props;
 
       if (!Auth.loggedIn()) {
-        history.replace('/admin/login');
+        history.replace('/login');
       } else {
         try {
           const profile = Auth.getProfile();
@@ -34,7 +35,7 @@ export default function withAuth(AuthComponent) {
           });
         } catch (err) {
           Auth.logout();
-          history.replace('/admin/login');
+          history.replace('/login');
         }
       }
     }
@@ -53,7 +54,7 @@ export default function withAuth(AuthComponent) {
             >
               <div className="sidenav modal-dialog dk white">
                 <div className="navbar lt">
-                  <a href="/admin/" className="navbar-brand">
+                  <a href="/" className="navbar-brand">
                     <span className="hidden-folded d-inline">
                       <img
                         src="../assets/images/mcmaster-logo.png"
@@ -70,71 +71,71 @@ export default function withAuth(AuthComponent) {
                         {perms.can_upload(user) && (
                           <li className="nav-header">
                             <div className="py-3">
-                              <a
-                                href="/admin/article"
+                              <Link
+                                to="/article"
                                 className="btn btn-sm success theme-accent btn-block"
                               >
                                 <i className="fa fa-fw fa-plus"></i>
                                 <span className="hidden-folded d-inline">
                                   New Article
                                 </span>
-                              </a>
+                              </Link>
                             </div>
                             <span className="text-xs hidden-folded">Main</span>
                           </li>
                         )}
                         <li>
-                          <a href="/admin/dashboard">
+                          <Link to="/dashboard">
                             <span className="nav-icon">
                               <i className="fa fa-dashboard"></i>
                             </span>
                             <span className="nav-text">Dashboard</span>
-                          </a>
+                          </Link>
                         </li>
                         {perms.can_upload(user) && (
                           <li>
-                            <a href="/admin/upload">
+                            <Link to="/upload">
                               <span className="nav-icon">
                                 <i className="fa fa-upload fa-align-left"></i>
                               </span>
                               <span className="nav-text">Batch Upload</span>
-                            </a>
+                            </Link>
                           </li>
                         )}
                         <li>
-                          <a href="/admin/hse/eligibility">
+                          <Link to="/hse/eligibility">
                             <span className="nav-icon">
                               <i className="fa fa-medkit fa-align-left"></i>
                             </span>
                             <span className="nav-text">Health Systems</span>
-                          </a>
+                          </Link>
                         </li>
                         <li>
-                          <a href="/admin/sse/eligibility">
+                          <Link to="/sse/eligibility">
                             <span className="nav-icon">
                               <i className="fa fa-users fa-align-left"></i>
                             </span>
                             <span className="nav-text">Social Systems</span>
-                          </a>
+                          </Link>
                         </li>
                         {perms.can_prioritize(user) && (
                           <li>
-                            <a href="/admin/email-manager">
+                            <Link to="/email-manager">
                               <span className="nav-icon">
                                 <i className="fa fa-send fa-align-left"></i>
                               </span>
                               <span className="nav-text">Email Manager</span>
-                            </a>
+                            </Link>
                           </li>
                         )}
                         {perms.can_admin(user) && (
                           <li>
-                            <a href="/admin/user-manager">
+                            <Link to="/user-manager">
                               <span className="nav-icon">
                                 <i className="fa fa-user fa-align-left"></i>
                               </span>
                               <span className="nav-text">User Manager</span>
-                            </a>
+                            </Link>
                           </li>
                         )}
                         <li className="pb-2 hidden-folded"></li>

@@ -70,13 +70,13 @@ class BatchUpload extends Component {
             if (selectedArticleSource.value === 'referrals') {
               this.setState({
                 redirect: true,
-                path: '/admin/notes',
+                path: '/notes',
                 articles: res.data,
               });
             } else {
               this.setState({
                 redirect: true,
-                path: `/admin/${this.state.article.type}/eligibility`,
+                path: `/${this.state.article.type}/eligibility`,
                 articles: res.data,
               });
             }
