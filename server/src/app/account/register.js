@@ -2,14 +2,18 @@
  * Account registration
  */
 module.exports = ({ userRepository, events }) => {
-  const register = async (email, password) => {
+  const register = async (type, email, password) => {
     try {
-      let user = await userRepository.findByEmail(email);
+      if ((type !== "hse") | (type !== "sse") || type !== "cvd") {
+        return { error: "invalid" };
+      }
+
+      let user = await userRepository.findByEmail(type, email);
       if (user) {
         return { error: "email has already been taken" };
       }
 
-      user = stubUser({ email, password });
+      user = stubUser({ type, email, password });
       user = await userRepository.create(user);
 
       const data = {
@@ -29,15 +33,15 @@ module.exports = ({ userRepository, events }) => {
   };
 };
 
-const stubUser = ({ email, password }) => {
+const stubUser = ({ type, email, password }) => {
   const now = new Date();
   return {
     email,
     // note: password length and complexity should also be managed
     password,
+    type,
     confirmed: false,
-    // @todo - Lock down the roles!
-    role: "user",
+    roles: ["user"],
     createdAt: now,
     updatedAt: now,
   };

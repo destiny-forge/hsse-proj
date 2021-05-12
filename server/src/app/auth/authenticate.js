@@ -4,10 +4,10 @@ const Auth = require("src/domain/auth");
  * Authenticate user
  */
 module.exports = ({ userRepository, webToken }) => {
-  const authenticate = async (email, password) => {
+  const authenticate = async (type, email, password) => {
     try {
       const auth = Auth({ email, password });
-      const user = await userRepository.findByEmail(auth.email);
+      const user = await userRepository.findByEmail(type, auth.email);
 
       if (!user) {
         return { error: "user not found" };
@@ -23,6 +23,7 @@ module.exports = ({ userRepository, webToken }) => {
       return {
         token: signIn({
           id: user._id,
+          type: user.type,
           email: user.email,
           roles: user.roles,
         }),

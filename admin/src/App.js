@@ -29,82 +29,88 @@ import { LanguageProvider } from './components/molecules/Language';
 import PrioritizingList from './views/Prioritizing/List';
 import EmailManager from './views/EmailManager/Form';
 import UserManager from './views/UserManager';
+import { SiteProvider } from './components/context/SiteContext';
 
 class App extends Component {
   render() {
     return (
-      <LanguageProvider>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnVisibilityChange
-          draggable
-          pauseOnHover
-        />
-        <Router basename={'admin'}>
-          <Switch>
-            <Route exact path="/" component={Dashboard} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/forgot-password" component={ForgotPassword} />
-            <Route path="/account/reset/:token" component={PasswordReset} />
-            <Route path="/signup-success" component={SignupSuccess} />
-            <Route path="/account/confirm/:token" component={ConfirmEmail} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/article" component={ArticleCreate} />
-            <Route
-              path="/conflicts/:type/eligibility/:shortId"
-              component={EligibilityConflicts}
-            />
-            <Route
-              path="/conflicts/:type/appraisals/:shortId"
-              component={AppraisalConflicts}
-            />
+      <SiteProvider>
+        <LanguageProvider>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange
+            draggable
+            pauseOnHover
+          />
+          <Router basename={'admin'}>
+            <Switch>
+              <Route exact path="/" component={Dashboard} />
+              <Route path="/login" component={Login} />
+              <Route path="/signup" component={Signup} />
+              <Route path="/forgot-password" component={ForgotPassword} />
+              <Route path="/account/reset/:token" component={PasswordReset} />
+              <Route path="/signup-success" component={SignupSuccess} />
+              <Route path="/account/confirm/:token" component={ConfirmEmail} />
+              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/article" component={ArticleCreate} />
+              <Route
+                path="/conflicts/:type/eligibility/:shortId"
+                component={EligibilityConflicts}
+              />
+              <Route
+                path="/conflicts/:type/appraisals/:shortId"
+                component={AppraisalConflicts}
+              />
 
-            <Route
-              path="/:type/presentation/:shortId"
-              component={PresentationForm}
-            />
+              <Route
+                path="/:type/presentation/:shortId"
+                component={PresentationForm}
+              />
 
-            <Route path="/:type/eligibility" component={TabView} />
-            <Route path="/:type/appraisals" component={TabView} />
-            <Route path="/:type/studies" component={TabView} />
-            <Route path="/:type/presentation" component={PresentationDetails} />
-            <Route path="/:type/translating" component={TranslatingDetails} />
-            <Route path="/:type/prioritizing" component={PrioritizingList} />
+              <Route path="/:type/eligibility" component={TabView} />
+              <Route path="/:type/appraisals" component={TabView} />
+              <Route path="/:type/studies" component={TabView} />
+              <Route
+                path="/:type/presentation"
+                component={PresentationDetails}
+              />
+              <Route path="/:type/translating" component={TranslatingDetails} />
+              <Route path="/:type/prioritizing" component={PrioritizingList} />
 
-            <Route
-              path="/eligibility/:type/:shortId"
-              component={EligibilityForm}
-            />
-            <Route
-              path="/appraisals/:type/:shortId"
-              component={AppraisalForm}
-            />
-            <Route path="/studies/:type/:shortId" component={StudyForm} />
-            <Route
-              path="/batch/articles/studies/:shortId"
-              component={StudyList}
-            />
-            <Route
-              path="/batch/articles/appraisals/:shortId"
-              component={AppraisalList}
-            />
-            <Route
-              path="/batch/articles/:stage/:shortId"
-              component={Articles}
-            />
-            <Route path="/upload" component={BatchUpload} />
-            <Route path="/notes" component={Notes} />
-            <Route path="/email-manager" component={EmailManager} />
-            <Route path="/user-manager" component={UserManager} />
-          </Switch>
-        </Router>
-      </LanguageProvider>
+              <Route
+                path="/eligibility/:type/:shortId"
+                component={EligibilityForm}
+              />
+              <Route
+                path="/appraisals/:type/:shortId"
+                component={AppraisalForm}
+              />
+              <Route path="/studies/:type/:shortId" component={StudyForm} />
+              <Route
+                path="/batch/articles/studies/:shortId"
+                component={StudyList}
+              />
+              <Route
+                path="/batch/articles/appraisals/:shortId"
+                component={AppraisalList}
+              />
+              <Route
+                path="/batch/articles/:stage/:shortId"
+                component={Articles}
+              />
+              <Route path="/upload" component={BatchUpload} />
+              <Route path="/notes" component={Notes} />
+              <Route path="/email-manager" component={EmailManager} />
+              <Route path="/user-manager" component={UserManager} />
+            </Switch>
+          </Router>
+        </LanguageProvider>
+      </SiteProvider>
     );
   }
 }

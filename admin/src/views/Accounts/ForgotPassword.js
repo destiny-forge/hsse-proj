@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AuthService from '../../services/AuthService';
 import { Link } from 'react-router-dom';
+import Context from '../../components/context/Context';
 
 class ForgotPassword extends Component {
   constructor(props) {
@@ -26,8 +27,9 @@ class ForgotPassword extends Component {
   handleFormSubmit(e) {
     e.preventDefault();
     const { email } = this.state;
+    const { site } = this.props;
 
-    this.Auth.forgotPassword(email)
+    this.Auth.forgotPassword(site, email)
       .then((res) => {
         if (res.success) {
           this.setState({
@@ -94,4 +96,4 @@ class ForgotPassword extends Component {
   }
 }
 
-export default ForgotPassword;
+export default Context(ForgotPassword);

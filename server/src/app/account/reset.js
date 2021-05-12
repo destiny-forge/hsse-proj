@@ -4,9 +4,9 @@ const emailer = require("./email");
  * Account reset password
  */
 module.exports = ({ config, userRepository, webToken, mailer, events }) => {
-  const send = async (email) => {
+  const send = async (type, email) => {
     try {
-      const user = await userRepository.findByEmail(email);
+      const user = await userRepository.findByEmail(type, email);
       if (!user) {
         return {
           error: "User not found",
@@ -26,12 +26,12 @@ module.exports = ({ config, userRepository, webToken, mailer, events }) => {
     }
   };
 
-  const reset = async (token, password) => {
+  const reset = async (type, token, password) => {
     try {
       const verifyToken = webToken.verify();
       const { email } = verifyToken(token);
 
-      const user = await userRepository.findByEmail(email);
+      const user = await userRepository.findByEmail(type, email);
 
       const result = await userRepository.update(user._id, {
         password: userRepository.encryptPassword(password),

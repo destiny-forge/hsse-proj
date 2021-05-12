@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AuthService from '../../services/AuthService';
 import { Link } from 'react-router-dom';
+import Context from '../../components/context/Context';
 
 class Login extends Component {
   constructor() {
@@ -29,8 +30,9 @@ class Login extends Component {
   handleFormSubmit(e) {
     e.preventDefault();
     const { email, password } = this.state;
+    const site = this.props;
 
-    this.Auth.login(email, password)
+    this.Auth.login(site, email, password)
       .then((res) => {
         if (res.data.error) {
           this.setState({
@@ -133,4 +135,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default Context(Login);

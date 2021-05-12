@@ -12,17 +12,6 @@ module.exports = ({
 
   /**
    * @swagger
-   * definitions:
-   *   auth:
-   *     properties:
-   *       email:
-   *         type: string
-   *       password:
-   *         type: string
-   */
-
-  /**
-   * @swagger
    * /token:
    *   post:
    *     tags:
@@ -47,9 +36,9 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.post("/register", (req, res) => {
-    const { email, password } = req.body;
+    const { type, email, password } = req.body;
     registerUseCase
-      .register(email, password)
+      .register(type, email, password)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
@@ -85,9 +74,9 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.post("/reset", (req, res) => {
-    const { email } = req.body;
+    const { type, email } = req.body;
     resetUseCase
-      .send(email)
+      .send(type, email)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
@@ -131,9 +120,9 @@ module.exports = ({
    */
   router.post("/reset/:token", (req, res) => {
     const { token } = req.params;
-    const { password } = req.body;
+    const { type, password } = req.body;
     resetUseCase
-      .reset(token, password)
+      .reset(type, token, password)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
