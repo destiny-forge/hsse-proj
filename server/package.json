@@ -1,6 +1,6 @@
 {
   "name": "hse-sse-server",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "NodeJS server api for HSE/SSE",
   "main": "index.js",
   "engines": {
