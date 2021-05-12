@@ -13,32 +13,30 @@ class AuthService {
     this.getProfile = this.getProfile.bind(this);
   }
 
-  login(email, password) {
-    // TODO: return res.data.error for invalid logins
-    // Also need to check for confirmed or not. Currently ddd does not
-    // check for that
-
+  login(type, email, password) {
     // Get a token from api server using the fetch api
     return this.fetch(`/auth/authenticate`, {
       method: 'POST',
       body: JSON.stringify({
+        type,
         email,
-        password
-      })
-    }).then(res => {
+        password,
+      }),
+    }).then((res) => {
       this.setToken(res.data.token); // Setting the token in localStorage
       return Promise.resolve(res);
     });
   }
 
-  register(email, password) {
+  register(type, email, password) {
     return this.fetch(`/account/register`, {
       method: 'POST',
       body: JSON.stringify({
+        type,
         email,
-        password
-      })
-    }).then(res => {
+        password,
+      }),
+    }).then((res) => {
       return Promise.resolve(res);
     });
   }
@@ -47,9 +45,9 @@ class AuthService {
     return this.fetch(`/account/confirm/${token}`, {
       method: 'POST',
       body: JSON.stringify({
-        token
-      })
-    }).then(res => {
+        token,
+      }),
+    }).then((res) => {
       return Promise.resolve(res);
     });
   }
@@ -59,20 +57,21 @@ class AuthService {
       method: 'POST',
       body: JSON.stringify({
         token,
-        password
-      })
-    }).then(res => {
+        password,
+      }),
+    }).then((res) => {
       return Promise.resolve(res);
     });
   }
 
-  forgotPassword(email) {
+  forgotPassword(type, email) {
     return this.fetch(`/account/reset`, {
       method: 'POST',
       body: JSON.stringify({
-        email
-      })
-    }).then(res => {
+        type,
+        email,
+      }),
+    }).then((res) => {
       return Promise.resolve(res);
     });
   }
@@ -97,19 +96,19 @@ class AuthService {
     }
   }
 
-  setToken(idToken) {
+  setToken(token) {
     // Saves user token to localStorage
-    localStorage.setItem('id_token', idToken);
+    localStorage.setItem('admin_token', token);
   }
 
   getToken() {
     // Retrieves the user token from localStorage
-    return localStorage.getItem('id_token');
+    return localStorage.getItem('admin_token');
   }
 
   logout() {
     // Clear user token and profile data from localStorage
-    localStorage.removeItem('id_token');
+    localStorage.removeItem('admin_token');
   }
 
   getProfile() {
@@ -120,7 +119,7 @@ class AuthService {
   getQueryString(params) {
     const esc = encodeURIComponent;
     return Object.keys(params)
-      .map(k => esc(k) + '=' + esc(params[k]))
+      .map((k) => esc(k) + '=' + esc(params[k]))
       .join('&');
   }
 
@@ -128,7 +127,7 @@ class AuthService {
     // performs api calls sending the required authentication headers
     const headers = {
       Accept: 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     };
 
     if (this.loggedIn()) {
@@ -139,15 +138,15 @@ class AuthService {
       if (options.method === 'GET' || options.method === 'DELETE') {
         const qs = '?' + this.getQueryString(options.data);
         url = url + qs;
-      }  
+      }
     }
-      
+
     return fetch(`${this.domain}${url}`, {
       headers,
-      ...options
+      ...options,
     })
       .then(this._checkStatus)
-      .then(response => response.json());
+      .then((response) => response.json());
   }
 
   _checkStatus(response) {

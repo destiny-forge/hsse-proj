@@ -13,15 +13,12 @@ class AuthService {
     this.getProfile = this.getProfile.bind(this);
   }
 
-  login(email, password) {
-    // TODO: return res.data.error for invalid logins
-    // Also need to check for confirmed or not. Currently ddd does not
-    // check for that
-
+  login(type, email, password) {
     // Get a token from api server using the fetch api
     return this.fetch(`/auth/authenticate`, {
       method: 'POST',
       body: JSON.stringify({
+        type,
         email,
         password,
       }),
@@ -31,10 +28,11 @@ class AuthService {
     });
   }
 
-  register(email, password) {
+  register(type, email, password) {
     return this.fetch(`/account/register`, {
       method: 'POST',
       body: JSON.stringify({
+        type,
         email,
         password,
       }),
@@ -66,10 +64,11 @@ class AuthService {
     });
   }
 
-  forgotPassword(email) {
+  forgotPassword(type, email) {
     return this.fetch(`/account/reset`, {
       method: 'POST',
       body: JSON.stringify({
+        type,
         email,
       }),
     }).then((res) => {
@@ -97,19 +96,19 @@ class AuthService {
     }
   }
 
-  setToken(idToken) {
+  setToken(token) {
     // Saves user token to localStorage
-    localStorage.setItem('id_token', idToken);
+    localStorage.setItem('client_token', token);
   }
 
   getToken() {
     // Retrieves the user token from localStorage
-    return localStorage.getItem('id_token');
+    return localStorage.getItem('client_token');
   }
 
   logout() {
     // Clear user token and profile data from localStorage
-    localStorage.removeItem('id_token');
+    localStorage.removeItem('client_token');
   }
 
   getProfile() {

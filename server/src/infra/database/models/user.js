@@ -45,13 +45,13 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findByEmail = async (email) => {
+  const findByEmail = async (type, email) => {
     try {
       if (!Email.isValid(email)) throw "Invalid email address";
       return await database
         .get()
         .collection("users")
-        .findOne({ email: { $eq: email } });
+        .findOne({ type: { $eq: type }, email: { $eq: email } });
     } catch (e) {
       throw e;
     }

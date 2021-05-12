@@ -180,7 +180,7 @@ export default function withAuth(AuthComponent) {
                         className="d-flex align-items-center"
                       >
                         <span className="avatar w-32">
-                          <img src="../assets/images/a3.jpg" alt="..." />
+                          <img src="./assets/images/a3.jpg" alt="..." />
                         </span>
                       </a>
                       <div className="dropdown-menu dropdown-menu-right w pt-0 mt-2 animate fadeIn">

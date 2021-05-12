@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AuthService from '../../services/AuthService';
 import { Link } from 'react-router-dom';
+import Context from '../../components/context/Context';
 
 class Signup extends Component {
   constructor(props) {
@@ -30,8 +31,9 @@ class Signup extends Component {
   handleFormSubmit(e) {
     e.preventDefault();
     const { email, passwordConfirmation } = this.state;
+    const { site } = this.props;
 
-    this.Auth.register(email, passwordConfirmation)
+    this.Auth.register(site, email, passwordConfirmation)
       .then((res) => {
         if (res.success) {
           this.props.history.replace('/signup-success');
@@ -123,4 +125,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default Context(Signup);
