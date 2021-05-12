@@ -1,19 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const SignupSuccess = () => {
   return (
     <div className="d-flex flex-column flex">
       <div className="navbar light bg pos-rlt box-shadow">
         <div className="mx-auto">
-          <a href="/admin" className="navbar-brand">
+          <Link to="/" className="navbar-brand">
             <span className="hidden-folded d-inline">
               <img
-                src="../assets/images/mcmaster-logo.png"
+                src="./assets/images/mcmaster-logo.png"
                 alt="."
                 className="logo-login"
               />
             </span>
-          </a>
+          </Link>
         </div>
       </div>
       <div id="content-body">
