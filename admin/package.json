@@ -2,7 +2,7 @@
   "name": "ui",
   "version": "0.1.0",
   "private": true,
-  "homepage": "/admin",
+  "homepage": "/admin/",
   "dependencies": {
     "antd": "^3.26.18",
     "date-fns": "^2.16.1",
