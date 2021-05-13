@@ -18,6 +18,8 @@ import Latest from './views/Latest';
 import { SiteProvider, SiteConsumer } from './components/SiteContext';
 import { LanguageProvider } from './components/LanguageContext';
 import { GuidedSearchProvider } from './components/GuidedSearchContext';
+import { LanguageConsumer } from '../../admin/src/components/molecules/Language';
+import { Helmet } from 'react-helmet';
 
 const App = () => {
   return (
@@ -25,35 +27,46 @@ const App = () => {
       <SiteConsumer>
         {({ site }) => (
           <LanguageProvider site={site}>
-            <GuidedSearchProvider>
-              <div id="app" className="App">
-                <Router>
-                  <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/about" component={About} />
-                    <Route exact path="/terms" component={Terms} />
-                    <Route exact path="/signup" component={Signup} />
-                    <Route
-                      exact
-                      path="/signup-success"
-                      component={SignupSuccess}
-                    />
-                    <Route
-                      exact
-                      path="/signup-confirm"
-                      component={ConfirmEmail}
-                    />
-                    <Route exact path="/login" component={Login} />
-                    <Route
-                      exact
-                      path="/forgot-password"
-                      component={ForgotPassword}
-                    />
-                    <Route exact path="/latest-content" component={Latest} />
-                  </Switch>
-                </Router>
-              </div>
-            </GuidedSearchProvider>
+            <LanguageConsumer>
+              {({ t, language }) => (
+                <GuidedSearchProvider>
+                  <div id="app" className="App">
+                    <Helmet>
+                      <title>{t('site_name')}</title>
+                    </Helmet>
+                    <Router>
+                      <Switch>
+                        <Route exact path="/" component={Home} />
+                        <Route exact path="/about" component={About} />
+                        <Route exact path="/terms" component={Terms} />
+                        <Route exact path="/signup" component={Signup} />
+                        <Route
+                          exact
+                          path="/signup-success"
+                          component={SignupSuccess}
+                        />
+                        <Route
+                          exact
+                          path="/signup-confirm"
+                          component={ConfirmEmail}
+                        />
+                        <Route exact path="/login" component={Login} />
+                        <Route
+                          exact
+                          path="/forgot-password"
+                          component={ForgotPassword}
+                        />
+                        <Route
+                          exact
+                          path="/latest-content"
+                          component={Latest}
+                        />
+                      </Switch>
+                    </Router>
+                  </div>
+                </GuidedSearchProvider>
+              )}
+            </LanguageConsumer>
           </LanguageProvider>
         )}
       </SiteConsumer>
