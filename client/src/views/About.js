@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet';
 
-const About = ({ site }) => {
+const About = ({ site, t }) => {
   const className = `${site} app about layered-navigation`;
   return (
     <div className={className}>
