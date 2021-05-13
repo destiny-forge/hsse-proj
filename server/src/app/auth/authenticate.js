@@ -6,7 +6,7 @@ const Auth = require("src/domain/auth");
 module.exports = ({ userRepository, webToken }) => {
   const authenticate = async (type, email, password) => {
     try {
-      const auth = Auth({ email, password });
+      const auth = Auth({ type, email, password });
       const user = await userRepository.findByEmail(type, auth.email);
 
       if (!user) {
