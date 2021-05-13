@@ -4,7 +4,7 @@ const { Router } = require("express");
 module.exports = ({
   authenticateUseCase,
   logger,
-  response: { Success, Fail }
+  response: { Success, Fail },
 }) => {
   const router = Router();
 
@@ -45,13 +45,13 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.post("/authenticate", (req, res) => {
-    const { email, password } = req.body;
+    const { type, email, password } = req.body;
     authenticateUseCase
-      .authenticate(email, password)
-      .then(data => {
+      .authenticate(type, email, password)
+      .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
-      .catch(error => {
+      .catch((error) => {
         logger.error(error); // we still need to log every error for debugging
         res.status(Status.BAD_REQUEST).json(Fail(error.message));
       });
