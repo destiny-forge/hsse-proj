@@ -30,7 +30,7 @@ class Login extends Component {
   handleFormSubmit(e) {
     e.preventDefault();
     const { email, password } = this.state;
-    const site = this.props;
+    const { site } = this.props;
 
     this.Auth.login(site, email, password)
       .then((res) => {
