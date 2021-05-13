@@ -6,6 +6,7 @@ module.exports = ({ model }) => {
       let lastUpdate = await model.latestMonthlyUpdate(...args);
       return toEntity(lastUpdate);
     } catch (err) {
+      console.log(err);
       throw new Error(err);
     }
   };

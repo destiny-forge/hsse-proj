@@ -1,11 +1,15 @@
+const _ = require("underscore");
+
 /**
  * Article latest
  */
 module.exports = ({ articleRepository, updateRepository }) => {
   const latest = async (type, language) => {
     try {
-      const { date } = updateRepository.latestMonthlyUpdate(type);
-      const articles = await articleRepository.findByMonthlyUpdate(type, date);
+      const { date } = await updateRepository.latestMonthlyUpdate(type);
+      let dte = date.toISOString().split("T")[0].slice(0, 7);
+
+      const articles = await articleRepository.findByMonthlyUpdate(type, dte);
 
       let latest = [];
       switch (type) {
@@ -21,6 +25,7 @@ module.exports = ({ articleRepository, updateRepository }) => {
       }
       return latest;
     } catch (error) {
+      console.log(error);
       throw new Error(error);
     }
   };
@@ -36,19 +41,18 @@ module.exports = ({ articleRepository, updateRepository }) => {
     };
     const types = {};
     articles.forEach((article) => {
-      if (article.type in types) {
-        const stub = {
-          ArticleId: article.shortId,
-          [`Title${language.toUpperCase()}`]: article.titles[language] || "",
-          Title2: article.title,
-        };
-        if (!article.hot_docs) {
-          types[article.type] = types[article.type].push(stub);
-        } else {
-          latest["hot_Docs_Articles"].push(stub);
-        }
-      } else {
+      if (!_.has(types, article.type)) {
         types[article.type] = [];
+      }
+      const stub = {
+        ArticleId: article.shortId,
+        [`Title${language.toUpperCase()}`]: article.titles[language] || "",
+        Title2: article.title,
+      };
+      if (article.hot_docs) {
+        latest["hot_Docs_Articles"].push(stub);
+      } else {
+        types[article.type].push(stub);
       }
     });
 
@@ -73,6 +77,8 @@ module.exports = ({ articleRepository, updateRepository }) => {
     latest["hot_Docs_Content2"] = "wtf2";
     latest["year"] = date.getFullYear();
     latest["month"] = month.toLowerCase();
+
+    return latest;
   };
 
   const formatLatestSSE = (articles, language) => {
