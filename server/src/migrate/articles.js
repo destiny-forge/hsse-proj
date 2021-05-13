@@ -42,11 +42,6 @@ const transform = (article) => {
     article.summaries["Health-Evidence.ca"];
   delete article.summaries["Health-Evidence.ca"];
 
-  // loop through the titles and fix up the nested "title" until J10 fixes
-  for (const [key, value] of Object.entries(article.titles)) {
-    article.titles[key] = value.title;
-  }
-
   return article;
 };
 

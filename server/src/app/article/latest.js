@@ -25,7 +25,6 @@ module.exports = ({ articleRepository, updateRepository }) => {
       }
       return latest;
     } catch (error) {
-      console.log(error);
       throw new Error(error);
     }
   };
@@ -41,18 +40,19 @@ module.exports = ({ articleRepository, updateRepository }) => {
     };
     const types = {};
     articles.forEach((article) => {
-      if (!_.has(types, article.type)) {
-        types[article.type] = [];
+      if (!_.has(types, article.documentType)) {
+        types[article.documentType] = [];
       }
+      let title = language === "en" ? article.title : article.titles[language];
       const stub = {
-        ArticleId: article.shortId,
-        [`Title${language.toUpperCase()}`]: article.titles[language] || "",
+        ArticleId: article._id,
+        [`Title${language.toUpperCase()}`]: title,
         Title2: article.title,
       };
       if (article.hot_docs) {
         latest["hot_Docs_Articles"].push(stub);
       } else {
-        types[article.type].push(stub);
+        types[article.documentType].push(stub);
       }
     });
 
@@ -61,7 +61,7 @@ module.exports = ({ articleRepository, updateRepository }) => {
       const type = {
         DocumentTypeID: count,
         DocumentTypeName2: key,
-        [`DocumentTypeName${language}`]: translate(key, language),
+        [`DocumentTypeName${language.toUpperCase()}`]: translate(key, language),
         document_Types_Articles: value,
       };
       latest["document_Types_Articles"].push(type);

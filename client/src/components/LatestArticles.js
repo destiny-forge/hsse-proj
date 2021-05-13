@@ -15,7 +15,9 @@ const DocumentTypeArticles = ({ language, latest }) => {
   let types = latest.document_Types_Articles || [];
   return types.map((type) => {
     const key = type.DocumentTypeId;
-    const title = type[`DocumentTypeName${language.toUpperCase()}`];
+    const title =
+      type[`DocumentTypeName${language.toUpperCase()}`] ||
+      type['DocumentTypeName2'];
     const articles = type.document_Types_Articles;
     return articles.length > 0 ? (
       <div key={key}>
@@ -65,7 +67,8 @@ const ArticleList = ({ language, articles }) => {
   return (
     <ul className="selectable-list-latest result-list-latest">
       {articles.map((article) => {
-        const title = article[`Title${language.toUpperCase()}`];
+        const title =
+          article[`Title${language.toUpperCase()}`] || article.Title2;
         let href = `/articles/${article.ArticleId}-${slugify(
           title
         )}?source=latest_content`;

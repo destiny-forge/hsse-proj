@@ -16,9 +16,11 @@ import About from './views/About';
 import Terms from './views/Terms';
 import Latest from './views/Latest';
 import { SiteProvider, SiteConsumer } from './components/SiteContext';
-import { LanguageProvider } from './components/LanguageContext';
+import {
+  LanguageProvider,
+  LanguageConsumer,
+} from './components/LanguageContext';
 import { GuidedSearchProvider } from './components/GuidedSearchContext';
-import { LanguageConsumer } from '../../admin/src/components/molecules/Language';
 import { Helmet } from 'react-helmet';
 
 const App = () => {
@@ -28,7 +30,7 @@ const App = () => {
         {({ site }) => (
           <LanguageProvider site={site}>
             <LanguageConsumer>
-              {({ t, language }) => (
+              {({ t }) => (
                 <GuidedSearchProvider>
                   <div id="app" className="App">
                     <Helmet>
