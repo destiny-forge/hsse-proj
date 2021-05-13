@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 
 const Latest = ({ site, t }) => {
   return (
-    <div className={`${site} app latest layered-navigation`}>
+    <div className={`${site} app latest_content layered-navigation`}>
       <div className="layered-navigation-content">
         <Helmet>
           <title>
