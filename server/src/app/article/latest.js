@@ -6,9 +6,20 @@ const _ = require("underscore");
 module.exports = ({ articleRepository, updateRepository }) => {
   const latest = async (type, language) => {
     try {
-      const { date } = await updateRepository.latestMonthlyUpdate(type);
-      let dte = date.toISOString().split("T")[0].slice(0, 7);
+      const date = await updateRepository.latestMonthlyUpdate(type);
 
+      if (date === null) {
+        return {
+          document_Types_Articles: [],
+          hot_Docs_Articles: [],
+          hot_Docs_Content1: "No articles found",
+          hot_Docs_Content2: "",
+          month: "",
+          year: "",
+        };
+      }
+
+      let dte = date.toISOString().split("T")[0].slice(0, 7);
       const articles = await articleRepository.findByMonthlyUpdate(type, dte);
 
       let latest = [];

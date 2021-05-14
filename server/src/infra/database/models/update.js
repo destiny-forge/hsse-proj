@@ -8,7 +8,10 @@ module.exports = ({ database }) => {
         .sort({ date: -1 })
         .limit(1)
         .toArray();
-      return result[0];
+      if (result.length > 0) {
+        return result[0].date;
+      }
+      return null;
     } catch (e) {
       throw e;
     }
