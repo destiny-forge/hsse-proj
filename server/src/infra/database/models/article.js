@@ -272,12 +272,16 @@ module.exports = ({ database }) => {
     }
   };
 
-  const findByMonthlyUpdate = async (type, date) => {
+  const findByMonthlyUpdate = async (type, date, filters) => {
     const query = {
       live: { $eq: true },
       type: { $eq: type },
       monthlyUpdateDate: { $eq: date },
     };
+
+    if (filters && filters.length > 0) {
+      query.filters = { $in: filters };
+    }
 
     // @TODO - we could move the projections into the db query
     // using aggregations but for now we'll do it in the APP code

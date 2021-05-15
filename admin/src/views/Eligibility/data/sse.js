@@ -64,10 +64,12 @@ const tree = {
       {
         title: 'Programs and services',
         key: 'programsServices',
+        legacyKey: '2_-1',
         children: [
           {
             title: 'Children and youth services',
             key: 'programsServicesChildren',
+            legacyKey: '2_2022',
             children: [
               {
                 title: 'Adoption services',
@@ -102,6 +104,7 @@ const tree = {
           {
             title: 'Citizenship',
             key: 'programsServicesCitizenship',
+            legacyKey: '2_2009',
             children: [
               {
                 title: 'Admissibility, security and visa services',
@@ -152,6 +155,7 @@ const tree = {
           {
             title: 'Climate action',
             key: 'programsServicesClimate',
+            legacyKey: '2_2402',
             children: [
               {
                 title: 'Energy-use production',
@@ -275,6 +279,7 @@ const tree = {
           {
             title: 'Community and social services',
             key: 'programsServicesCommunity',
+            legacyKey: '2_2010',
             children: [
               {
                 title: 'Accessibility services',
@@ -309,6 +314,7 @@ const tree = {
           {
             title: 'Consumer protection',
             key: 'programsServicesConsumer',
+            legacyKey: '2_2011',
             children: [
               {
                 title: 'Consumer awareness and education',
@@ -349,6 +355,7 @@ const tree = {
           {
             title: 'Culture and gender',
             key: 'programsServicesCulture',
+            legacyKey: '2_2012',
             children: [
               { title: 'Arts', key: 'programsServicesCultureArts' },
               { title: 'Heritage', key: 'programsServicesCultureHeritage' },
@@ -385,6 +392,7 @@ const tree = {
           {
             title: 'Economic development and growth',
             key: 'programsServicesEconomic',
+            legacyKey: '2_2352',
             children: [
               {
                 title: 'Access to finance',
@@ -443,6 +451,7 @@ const tree = {
           {
             title: 'Education',
             key: 'programsServicesEducation',
+            legacyKey: '31_343',
             children: [
               {
                 title: 'Pre-primary education',
@@ -520,6 +529,7 @@ const tree = {
           {
             title: 'Employment',
             key: 'programsServicesEmployment',
+            legacyKey: '31_344',
             children: [
               {
                 title: 'Job training/retraining',
@@ -568,6 +578,7 @@ const tree = {
           {
             title: 'Energy supply',
             key: 'energySupply',
+            legacyKey: '2_2403',
             children: [
               {
                 title: 'Biofuel',
@@ -701,6 +712,7 @@ const tree = {
           {
             title: 'Environmental conservation',
             key: 'environmentalConservation',
+            legacyKey: '2_2404',
             children: [
               { title: 'Air', key: 'environmentalConservationAir' },
               {
@@ -867,6 +879,7 @@ const tree = {
           {
             title: 'Financial protection',
             key: 'financial',
+            legacyKey: '2_2256',
             children: [
               {
                 title: 'Social assistance',
@@ -908,6 +921,7 @@ const tree = {
           {
             title: 'Food safety and security',
             key: 'foodSafety',
+            legacyKey: '2_2013',
             children: [
               { title: 'Food access', key: 'foodSafetyAccess' },
               {
@@ -926,6 +940,7 @@ const tree = {
           {
             title: 'Government services',
             key: 'government',
+            legacyKey: '2_2014',
             children: [
               {
                 title: 'Identification, licensing and registration',
@@ -961,6 +976,7 @@ const tree = {
           {
             title: 'Housing',
             key: 'housing',
+            legacyKey: '2_2015',
             children: [
               { title: 'Access to housing', key: 'housingAccess' },
               { title: 'Temporary housing', key: 'housingTemporary' },
@@ -978,6 +994,7 @@ const tree = {
           {
             title: 'Infrastructure',
             key: 'infrastructure',
+            legacyKey: '2_2017',
             children: [
               {
                 title: 'Capital planning',
@@ -1040,6 +1057,7 @@ const tree = {
           {
             title: 'Natural resources',
             key: 'naturalResources',
+            legacyKey: '2_2405',
             children: [
               {
                 title: 'Aquatic life',
@@ -1088,6 +1106,7 @@ const tree = {
           {
             title: 'Public safety and justice',
             key: 'publicSafety',
+            legacyKey: '2_2019',
             children: [
               {
                 title: 'Crime prevention',
@@ -1145,6 +1164,7 @@ const tree = {
           {
             title: 'Recreation',
             key: 'recreation',
+            legacyKey: '2_2328',
             children: [
               {
                 title: 'Promotion of recreation',
@@ -1168,6 +1188,7 @@ const tree = {
           {
             title: 'Transportation',
             key: 'transportation',
+            legacyKey: '2_2021',
             children: [
               {
                 title: 'Accessible transportation options',

@@ -1120,6 +1120,10 @@ a {
   color: #cc4921;
   text-decoration: none;
 }
+.sse a {
+  color: #007096;
+  text-decoration: none;
+}
 a:focus,
 a:hover {
   color: #8a3116;
@@ -1128,6 +1132,12 @@ a:hover {
 a:focus {
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
+}
+
+.sse a:focus,
+.sse a:hover {
+  color: #00374a;
+  text-decoration: underline;
 }
 figure {
   margin: 0;

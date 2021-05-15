@@ -1,10 +1,7 @@
-const { toEntity } = require("./transform");
-
 module.exports = ({ model }) => {
   const latestMonthlyUpdate = async (...args) => {
     try {
-      let lastUpdate = await model.latestMonthlyUpdate(...args);
-      return toEntity(lastUpdate);
+      return await model.latestMonthlyUpdate(...args);
     } catch (err) {
       console.log(err);
       throw new Error(err);
