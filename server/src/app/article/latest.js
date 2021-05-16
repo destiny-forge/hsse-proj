@@ -4,8 +4,8 @@ const hse_ui = require("../i18n/hse/ui");
 const sse_ui = require("../i18n/sse/ui");
 const cvd_ui = require("../i18n/cvd/ui");
 
-const t_ui = (type, key, scope) => {
-  const translations = {};
+const t_ui = (type, language, key, scope) => {
+  let translations = {};
   switch (type) {
     case "hse":
       translations = hse_ui;
@@ -17,11 +17,11 @@ const t_ui = (type, key, scope) => {
       translations = cvd_ui;
       break;
   }
-  return (
-    translations.filter((item) => item.key === key && item.scope === scope)[
-      language
-    ] || ""
+  let result = translations.filter(
+    (item) => item.key === key && item.scope === scope
   );
+
+  return result.length > 0 ? result[0][language] : "";
 };
 /**
  * Article latest
@@ -58,6 +58,7 @@ module.exports = ({ articleRepository, updateRepository }) => {
       }
       return latest;
     } catch (error) {
+      //console.log(error);
       throw new Error(error);
     }
   };
@@ -125,8 +126,19 @@ module.exports = ({ articleRepository, updateRepository }) => {
     const month = dte.toLocaleString("default", { month: "long" });
 
     // get translations for hot_docs_content
-    latest["hot_Docs_Content1"] = "wtf";
-    latest["hot_Docs_Content2"] = "wtf2";
+    latest["hot_Docs_Articles"] = _.uniq(latest["hot_Docs_Articles"]);
+    latest["hot_Docs_Content1"] = t_ui(
+      type,
+      language,
+      "_EvidenceService_HotDocs_Header",
+      "Evidence Service"
+    );
+    latest["hot_Docs_Content2"] = t_ui(
+      type,
+      language,
+      "_EvidenceService_HotDocs_Header2",
+      "Evidence Service"
+    );
     latest["year"] = dte.getFullYear();
     latest["month"] = month.toLowerCase();
 
@@ -199,10 +211,19 @@ module.exports = ({ articleRepository, updateRepository }) => {
     let dte = new Date(articles[0].liveDate);
     const month = dte.toLocaleString("default", { month: "long" });
 
-    // get translations for hot_docs_content
     latest["hot_Docs_Articles"] = _.uniq(latest["hot_Docs_Articles"]);
-    latest["hot_Docs_Content1"] = "wtf";
-    latest["hot_Docs_Content2"] = "wtf2";
+    latest["hot_Docs_Content1"] = t_ui(
+      type,
+      language,
+      "_EvidenceService_HotDocs_Header",
+      "Evidence Service"
+    );
+    latest["hot_Docs_Content2"] = t_ui(
+      type,
+      language,
+      "_EvidenceService_HotDocs_Header2",
+      "Evidence Service"
+    );
     latest["year"] = dte.getFullYear();
     latest["month"] = month.toLowerCase();
 
