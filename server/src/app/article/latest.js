@@ -83,7 +83,7 @@ module.exports = ({ articleRepository, updateRepository }) => {
       year: "",
     };
 
-    const hotDocArticles = articles.filter((article) => article.hot_docs);
+    const hotDocArticles = articles.filter((article) => article.isHotDocs);
     hotDocArticles.forEach((article) => {
       let title = language === "en" ? article.title : article.titles[language];
       const stub = {
@@ -104,7 +104,8 @@ module.exports = ({ articleRepository, updateRepository }) => {
       };
 
       const docTypeArticles = articles.filter(
-        (article) => !article.hot_docs && article.documentType === docType.label
+        (article) =>
+          !article.isHotDocs && article.documentType === docType.label
       );
 
       docTypeArticles.forEach((article) => {
