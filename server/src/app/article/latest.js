@@ -93,11 +93,10 @@ module.exports = ({ articleRepository, updateRepository }) => {
       latest["hot_Docs_Articles"].push(stub);
     });
 
-    let count = 1;
-    hse.types.forEach((docType) => {
+    hse.types.forEach((docType, i) => {
       const title = t(docType.legacyKey);
       const typeStub = {
-        DocumentTypeID: count,
+        DocumentTypeID: i,
         [`DocumentTypeName${language.toUpperCase()}`]: title,
         DocumentTypeName2: docType.label,
         document_Types_Articles: [],
@@ -168,42 +167,33 @@ module.exports = ({ articleRepository, updateRepository }) => {
       latest["hot_Docs_Articles"].push(stub);
     });
 
-    const types = {};
-    domainItems.forEach((domain) => {
-      //const title = translate(domain.legacyKey, language);
-      if (!_.has(types, domain.title)) {
-        types[domain.title] = [];
-      }
+    domainItems.forEach((domain, i) => {
+      const domainTitle = t(domain.legacyKey);
+      const typeStub = {
+        DomainID: i,
+        DomainName2: domain.title,
+        [`DomainName${language.toUpperCase()}`]: domainTitle,
+        program_Services_Articles: [],
+      };
+
       const domainArticles = articles.filter(
         (article) => !article.hot_docs && article.filters.includes(domain.key)
       );
 
-      //console.log(domainArticles);
-
       domainArticles.forEach((article) => {
         let title =
           language === "en" ? article.title : article.titles[language];
-        const stub = {
+        const articleStub = {
           ArticleId: article._id,
           [`Title${language.toUpperCase()}`]: title,
           Title2: article.title,
         };
 
-        types[domain.title].push(stub);
+        typeStub["program_Services_Articles"].push(articleStub);
       });
-    });
 
-    let count = 1;
-    for (const [key, value] of Object.entries(types)) {
-      const type = {
-        DomainID: count,
-        DomainName2: key,
-        [`DomainName${language.toUpperCase()}`]: t(key),
-        program_Services_Articles: value,
-      };
-      latest["program_Services_Articles"].push(type);
-      count++;
-    }
+      latest["program_Services_Articles"].push(typeStub);
+    });
 
     // get the month and year from the first article returned
     let dte = new Date(articles[0].liveDate);
