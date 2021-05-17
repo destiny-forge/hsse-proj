@@ -451,6 +451,18 @@ module.exports = ({ database }) => {
     }
   };
 
+  const findByLegacyId = async (id, type) => {
+    try {
+      const results = await database
+        .get()
+        .collection("articles")
+        .findOne({ legacyId: { $eq: id }, type: { $eq: type } });
+      return results;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const findOne = async (query) => {
     try {
       const results = await database
@@ -682,6 +694,7 @@ module.exports = ({ database }) => {
     create,
     getAll,
     findById,
+    findByLegacyId,
     findByShortIds,
     findByType,
     findByDocType,

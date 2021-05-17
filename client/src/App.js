@@ -15,6 +15,7 @@ import Home from './views/Home';
 import About from './views/About';
 import Terms from './views/Terms';
 import Latest from './views/Latest';
+import Article from './views/Article';
 import { SiteProvider, SiteConsumer } from './components/SiteContext';
 import {
   LanguageProvider,
@@ -62,6 +63,11 @@ const App = () => {
                           exact
                           path="/latest-content"
                           component={Latest}
+                        />
+                        <Route
+                          exact
+                          path="/articles/:id-:ignore"
+                          component={Article}
                         />
                       </Switch>
                     </Router>

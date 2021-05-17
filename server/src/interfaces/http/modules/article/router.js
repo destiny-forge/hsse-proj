@@ -1,219 +1,16 @@
 const Status = require("http-status");
 const { Router } = require("express");
 
-module.exports = ({
-  getUseCase,
-  createUseCase,
-  listUseCase,
-  assignUseCase,
-  detailUseCase,
-  logger,
-  auth,
-  response: { Success, Fail },
-}) => {
+module.exports = ({ detailUseCase, logger, response: { Success, Fail } }) => {
   const router = Router();
-  router.use(auth.authenticate());
 
   /**
    * @swagger
    * /:
    *   post:
    *     tags:
-   *       - Article
-   *     description: Article creation
-   *     consumes:
-   *       - application/json
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *       - name: body
-   *         description: Article fields
-   *         in: body
-   *         required: true
-   *         type: string
-   *         schema:
-   *           $ref: '#/definitions/article'
-   *     responses:
-   *       200:
-   *         description: Successfully created
-   *       400:
-   *         $ref: '#/responses/BadRequest'
-   */
-  router.post("/", (req, res) => {
-    createUseCase
-      .create(req.body)
-      .then((data) => {
-        res.status(Status.OK).json(Success(data));
-      })
-      .catch((error) => {
-        logger.error(error); // we still need to log every error for debugging
-        res.status(Status.BAD_REQUEST).json(Fail(error.message));
-      });
-  });
-
-  /**
-   * @swagger
-   * /:
-   *   post:
-   *     tags:
-   *       - Article
-   *     description: Article assignment
-   *     consumes:
-   *       - application/json
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *       - name: body
-   *         description: Article assignment fields
-   *         in: body
-   *         required: true
-   *         type: string
-   *         schema:
-   *           $ref: '#/definitions/article/assign'
-   *     responses:
-   *       200:
-   *         description: Successfully created
-   *       400:
-   *         $ref: '#/responses/BadRequest'
-   */
-  router.post("/assign", (req, res) => {
-    const { body, user } = req;
-    const assignment = {
-      ...body,
-      userId: user._id,
-    };
-    assignUseCase
-      .assign(assignment)
-      .then((data) => {
-        res.status(Status.OK).json(Success(data));
-      })
-      .catch((error) => {
-        logger.error(error); // we still need to log every error for debugging
-        res.status(Status.BAD_REQUEST).json(Fail(error.message));
-      });
-  });
-
-  /**
-   * @swagger
-   * /:
-   *   get:
-   *     tags:
-   *       - Article
-   *     description: Article get by shortArticleId
-   *     consumes:
-   *       - application/json
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *       - name: shortArticleId
-   *         description: Article type
-   *         in: params
-   *         required: true
-   *         type: string
-   *         schema:
-   *           $ref: '#/definitions/article'
-   *     responses:
-   *       200:
-   *         description: Article
-   *       400:
-   *         $ref: '#/responses/BadRequest'
-   */
-  router.get("/:shortArticleId", (req, res) => {
-    const { shortArticleId } = req.params;
-    getUseCase
-      .get(shortArticleId)
-      .then((data) => {
-        res.status(Status.OK).json(Success(data));
-      })
-      .catch((error) => {
-        logger.error(error); // we still need to log every error for debugging
-        res.status(Status.BAD_REQUEST).json(Fail(error.message));
-      });
-  });
-
-  /**
-   * @swagger
-   * /:
-   *   get:
-   *     tags:
-   *       - Article
-   *     description: Article list by type
-   *     consumes:
-   *       - application/json
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *       - name: body
-   *         description: Article type
-   *         in: body
-   *         required: true
-   *         type: string
-   *         schema:
-   *           $ref: '#/definitions/article'
-   *     responses:
-   *       200:
-   *         description: Successfully created
-   *       400:
-   *         $ref: '#/responses/BadRequest'
-   */
-  router.get("/", (req, res) => {
-    const { type, stage, status } = req.query;
-    listUseCase
-      .list(type, stage, status)
-      .then((data) => {
-        res.status(Status.OK).json(Success(data));
-      })
-      .catch((error) => {
-        logger.error(error); // we still need to log every error for debugging
-        res.status(Status.BAD_REQUEST).json(Fail(error.message));
-      });
-  });
-
-  /**
-   * @swagger
-   * /:
-   *   get:
-   *     tags:
-   *       - Article
-   *     description: Article list by batchId
-   *     consumes:
-   *       - application/json
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *       - name: body
-   *         description: Article batchId
-   *         in: body
-   *         required: true
-   *         type: string
-   *         schema:
-   *           $ref: '#/definitions/article'
-   *     responses:
-   *       200:
-   *         description: Successfully created
-   *       400:
-   *         $ref: '#/responses/BadRequest'
-   */
-  router.get("/batch/:stage/:batchId", (req, res) => {
-    const { stage, batchId } = req.params;
-    listUseCase
-      .listByBatch(batchId, stage)
-      .then((data) => {
-        res.status(Status.OK).json(Success(data));
-      })
-      .catch((error) => {
-        logger.error(error); // we still need to log every error for debugging
-        res.status(Status.BAD_REQUEST).json(Fail(error.message));
-      });
-  });
-
-  /**
-   * @swagger
-   * /:
-   *   post:
-   *     tags:
-   *       - Article suggestions search
-   *     description: Article suggestions
+   *       - Article detail
+   *     description: Non authenticated article detail
    *     consumes:
    *       - application/json
    *     produces:
@@ -232,9 +29,11 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/:id-:slug", (req, res) => {
+  router.get("/:id", (req, res) => {
+    const { id } = req.params;
+    const { type, lang } = req.query;
     detailUseCase
-      .detail(req.query)
+      .detail(id, type, lang)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })
