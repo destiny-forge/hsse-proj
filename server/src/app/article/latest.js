@@ -1,28 +1,7 @@
 const _ = require("underscore");
 const { hse, sse } = require("../data");
-const hse_ui = require("../i18n/hse/ui");
-const sse_ui = require("../i18n/sse/ui");
-const cvd_ui = require("../i18n/cvd/ui");
+const t_ui = require("../i18n");
 
-const t_ui = (type, language, key, scope) => {
-  let translations = {};
-  switch (type) {
-    case "hse":
-      translations = hse_ui;
-      break;
-    case "sse":
-      translations = sse_ui;
-      break;
-    case "cvd":
-      translations = cvd_ui;
-      break;
-  }
-  let result = translations.filter(
-    (item) => item.key === key && item.scope === scope
-  );
-
-  return result.length > 0 ? result[0][language] : "";
-};
 /**
  * Article latest
  */
