@@ -4,7 +4,7 @@
 
 const ArticleService = ({ fetch }) => {
   const create = async (article) => {
-    const res = await fetch('/admin/articles', {
+    const res = await fetch('/admin-articles', {
       method: 'POST',
       body: JSON.stringify(article),
     });
@@ -17,12 +17,12 @@ const ArticleService = ({ fetch }) => {
   };
 
   const get = async (shortId) => {
-    const res = await fetch(`/admin/articles/${shortId}`);
+    const res = await fetch(`/admin-articles/${shortId}`);
     return Promise.resolve(res);
   };
 
   const assign = async (assignment) => {
-    const res = await fetch('/admin/articles/assign', {
+    const res = await fetch('/admin-articles/assign', {
       method: 'POST',
       body: JSON.stringify(assignment),
     });
@@ -30,7 +30,7 @@ const ArticleService = ({ fetch }) => {
   };
 
   const getArticlesByBatch = async (id, stage) => {
-    const res = await fetch(`/admin/articles/batch/${stage}/${id}`);
+    const res = await fetch(`/admin-articles/batch/${stage}/${id}`);
     return Promise.resolve(res);
   };
 
