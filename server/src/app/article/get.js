@@ -2,7 +2,7 @@
  * Article get
  */
 module.exports = ({ articleRepository }) => {
-  const get = async (shortArticleId) => {
+  const get = async (type, shortArticleId) => {
     if (!shortArticleId) {
       return {
         error: "A valid shortArticleId is required",
@@ -14,6 +14,7 @@ module.exports = ({ articleRepository }) => {
 
     try {
       return await articleRepository.findOne({
+        type,
         [key]: { $eq: value },
       });
     } catch (error) {

@@ -125,9 +125,9 @@ class PresentationForm extends React.Component {
   }
 
   getData() {
-    const { shortId } = this.props.match.params;
+    const { shortId, type } = this.props.match.params;
 
-    this.Article.get(shortId).then((res) => {
+    this.Article.get(type, shortId).then((res) => {
       if (res.data != null) {
         const article = res.data;
         this.setState({

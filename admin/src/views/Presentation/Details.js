@@ -45,8 +45,8 @@ class PresentationDetails extends React.Component {
   }
 
   handleLoad() {
-    const { shortId } = this.state;
-    this.Article.get(shortId).then((res) => {
+    const { shortId, type } = this.state;
+    this.Article.get(type, shortId).then((res) => {
       if (res.data != null) {
         this.loadEditForm(shortId);
       } else {

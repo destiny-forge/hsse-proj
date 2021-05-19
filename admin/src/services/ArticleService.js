@@ -16,8 +16,14 @@ const ArticleService = ({ fetch }) => {
     return Promise.resolve(res);
   };
 
-  const get = async (shortId) => {
-    const res = await fetch(`/admin-articles/${shortId}`);
+  const get = async (type, shortId) => {
+    const params = {
+      method: 'GET',
+      data: {
+        type,
+      },
+    };
+    const res = await fetch(`/admin-articles/${shortId}`, params);
     return Promise.resolve(res);
   };
 

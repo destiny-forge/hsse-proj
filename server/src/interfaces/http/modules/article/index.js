@@ -13,7 +13,12 @@ module.exports = () => {
 
   return {
     app,
-    admin_router: router({ logger, auth, response: { Success, Fail }, ...app }),
+    admin_router: admin_router({
+      logger,
+      auth,
+      response: { Success, Fail },
+      ...app,
+    }),
     router: router({ logger, response: { Success, Fail }, ...app }),
   };
 };
