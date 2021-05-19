@@ -1,5 +1,6 @@
 const _ = require("underscore");
 const { hse, sse } = require("../data");
+const t_ui = require("../i18n");
 
 /**
  * Article latest
@@ -36,16 +37,21 @@ module.exports = ({ articleRepository, updateRepository }) => {
       }
       return latest;
     } catch (error) {
+      //console.log(error);
       throw new Error(error);
     }
   };
 
   const formatLatestHSE = async (type, date, language) => {
-    const filters = [];
+    const translations = require(`../i18n/${type}/${language}`);
+    const t = (key) => {
+      return translations.filters[key];
+    };
+
     const articles = await articleRepository.findByMonthlyUpdate(
       type,
       date,
-      filters
+      []
     );
     const latest = {
       document_Types_Articles: [],
@@ -55,43 +61,64 @@ module.exports = ({ articleRepository, updateRepository }) => {
       month: "",
       year: "",
     };
-    const types = {};
-    articles.forEach((article) => {
-      if (!_.has(types, article.documentType)) {
-        types[article.documentType] = [];
-      }
+
+    const hotDocArticles = articles.filter((article) => article.isHotDocs);
+    hotDocArticles.forEach((article) => {
       let title = language === "en" ? article.title : article.titles[language];
       const stub = {
         ArticleId: article._id,
         [`Title${language.toUpperCase()}`]: title,
         Title2: article.title,
       };
-      if (article.hot_docs) {
-        latest["hot_Docs_Articles"].push(stub);
-      } else {
-        types[article.documentType].push(stub);
-      }
+      latest["hot_Docs_Articles"].push(stub);
     });
 
-    let count = 1;
-    for (const [key, value] of Object.entries(types)) {
-      const type = {
-        DocumentTypeID: count,
-        DocumentTypeName2: key,
-        [`DocumentTypeName${language.toUpperCase()}`]: translate(key, language),
-        document_Types_Articles: value,
+    hse.types.forEach((docType, i) => {
+      const title = t(docType.legacyKey);
+      const typeStub = {
+        DocumentTypeID: i,
+        [`DocumentTypeName${language.toUpperCase()}`]: title,
+        DocumentTypeName2: docType.label,
+        document_Types_Articles: [],
       };
-      latest["document_Types_Articles"].push(type);
-      count++;
-    }
+
+      const docTypeArticles = articles.filter(
+        (article) =>
+          !article.isHotDocs && article.documentType === docType.label
+      );
+
+      docTypeArticles.forEach((article) => {
+        let title =
+          language === "en" ? article.title : article.titles[language];
+        const articleStub = {
+          ArticleId: article._id,
+          [`Title${language.toUpperCase()}`]: title,
+          Title2: article.title,
+        };
+        typeStub["document_Types_Articles"].push(articleStub);
+      });
+
+      latest["document_Types_Articles"].push(typeStub);
+    });
 
     // get the month and year from the first article returned
     let dte = new Date(articles[0].liveDate);
     const month = dte.toLocaleString("default", { month: "long" });
 
     // get translations for hot_docs_content
-    latest["hot_Docs_Content1"] = "wtf";
-    latest["hot_Docs_Content2"] = "wtf2";
+    latest["hot_Docs_Articles"] = _.uniq(latest["hot_Docs_Articles"]);
+    latest["hot_Docs_Content1"] = t_ui(
+      type,
+      language,
+      "_EvidenceService_HotDocs_Header",
+      "Evidence Service"
+    );
+    latest["hot_Docs_Content2"] = t_ui(
+      type,
+      language,
+      "_EvidenceService_HotDocs_Header2",
+      "Evidence Service"
+    );
     latest["year"] = dte.getFullYear();
     latest["month"] = month.toLowerCase();
 
@@ -99,6 +126,10 @@ module.exports = ({ articleRepository, updateRepository }) => {
   };
 
   const formatLatestSSE = async (type, date, language) => {
+    const translations = require(`../i18n/${type}/${language}`);
+    const t = (key) => {
+      return translations.filters[key];
+    };
     const domainItems = sse.tree.checkedDomain.items[0].children;
     const filters = _.pick(domainItems, "key");
 
@@ -119,6 +150,7 @@ module.exports = ({ articleRepository, updateRepository }) => {
 
     const hotDocArticles = articles.filter((article) => article.hot_docs);
     hotDocArticles.forEach((article) => {
+      let title = language === "en" ? article.title : article.titles[language];
       const stub = {
         ArticleId: article._id,
         [`Title${language.toUpperCase()}`]: title,
@@ -127,63 +159,55 @@ module.exports = ({ articleRepository, updateRepository }) => {
       latest["hot_Docs_Articles"].push(stub);
     });
 
-    const types = {};
-    domainItems.forEach((domain) => {
-      //const title = translate(domain.legacyKey, language);
-      if (!_.has(types, domain.title)) {
-        types[domain.title] = [];
-      }
+    domainItems.forEach((domain, i) => {
+      const domainTitle = t(domain.legacyKey);
+      const typeStub = {
+        DomainID: i,
+        DomainName2: domain.title,
+        [`DomainName${language.toUpperCase()}`]: domainTitle,
+        program_Services_Articles: [],
+      };
+
       const domainArticles = articles.filter(
         (article) => !article.hot_docs && article.filters.includes(domain.key)
       );
 
-      //console.log(domainArticles);
-
       domainArticles.forEach((article) => {
         let title =
           language === "en" ? article.title : article.titles[language];
-        const stub = {
+        const articleStub = {
           ArticleId: article._id,
           [`Title${language.toUpperCase()}`]: title,
           Title2: article.title,
         };
 
-        types[domain.title].push(stub);
+        typeStub["program_Services_Articles"].push(articleStub);
       });
-    });
 
-    let count = 1;
-    for (const [key, value] of Object.entries(types)) {
-      const type = {
-        DomainID: count,
-        DomainName2: key,
-        [`DomainName${language.toUpperCase()}`]: translate(key, language),
-        program_Services_Articles: value,
-      };
-      latest["program_Services_Articles"].push(type);
-      count++;
-    }
+      latest["program_Services_Articles"].push(typeStub);
+    });
 
     // get the month and year from the first article returned
     let dte = new Date(articles[0].liveDate);
     const month = dte.toLocaleString("default", { month: "long" });
 
-    // get translations for hot_docs_content
     latest["hot_Docs_Articles"] = _.uniq(latest["hot_Docs_Articles"]);
-    latest["hot_Docs_Content1"] = "wtf";
-    latest["hot_Docs_Content2"] = "wtf2";
+    latest["hot_Docs_Content1"] = t_ui(
+      type,
+      language,
+      "_EvidenceService_HotDocs_Header",
+      "Evidence Service"
+    );
+    latest["hot_Docs_Content2"] = t_ui(
+      type,
+      language,
+      "_EvidenceService_HotDocs_Header2",
+      "Evidence Service"
+    );
     latest["year"] = dte.getFullYear();
     latest["month"] = month.toLowerCase();
 
     return latest;
-  };
-
-  //@TODO - load translations json file and perform
-  //lookups for these keys - this will be needed in
-  // multiple places so make a utility function out
-  // of it and load it as a singleton in container.js
-  const translate = (key, language) => {
-    return key;
   };
 
   return {

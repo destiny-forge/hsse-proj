@@ -228,6 +228,15 @@ module.exports = ({ model }) => {
     }
   };
 
+  const findByLegacyId = async (...args) => {
+    try {
+      const article = await model.findByLegacyId(...args);
+      return article ? toEntity(article) : null;
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const findOne = async (...args) => {
     try {
       const article = await model.findOne(...args);
@@ -255,6 +264,7 @@ module.exports = ({ model }) => {
     updateStage,
     updateStageCoderStatus,
     findById,
+    findByLegacyId,
     findByShortIds,
     findByType,
     findByBatch,

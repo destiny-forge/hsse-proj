@@ -57,7 +57,7 @@ module.exports = ({ config, logger }) => {
   apiRouter.use("/account", controller("account").router);
   apiRouter.use("/users", controller("user").router);
 
-  apiRouter.use("/articles", controller("article").router);
+  apiRouter.use("/admin/articles", controller("article").admin_router);
   apiRouter.use("/batches", controller("batch").router);
   apiRouter.use("/notes", controller("note").router);
   apiRouter.use("/eligibility", controller("eligibility").router);
@@ -67,10 +67,11 @@ module.exports = ({ config, logger }) => {
   apiRouter.use("/translating", controller("translating").router);
   apiRouter.use("/prioritizing", controller("prioritizing").router);
 
+  /* client side routes */
   apiRouter.use("/subscriptions", controller("subscription").router);
   apiRouter.use("/search", controller("search").router);
-
   apiRouter.use("/latest_content", controller("latest_content").router);
+  apiRouter.use("/articles", controller("article").router);
 
   router.use("", apiRouter);
 

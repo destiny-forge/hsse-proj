@@ -1,34 +1,45 @@
 const types = [
-  { value: "Evidence briefs for policy", label: "Evidence briefs for policy" },
+  {
+    value: "Evidence briefs for policy",
+    label: "Evidence briefs for policy",
+    legacyKey: "10_1",
+  },
   {
     value: "Overviews of systematic reviews",
     label: "Overviews of systematic reviews",
+    legacyKey: "10_2",
   },
   {
     label: "Systematic reviews of effects",
     value: "Systematic reviews of effects",
+    legacyKey: "10_3",
   },
   {
     value: "Systematic reviews addressing other questions",
     label: "Systematic reviews addressing other questions",
+    legacyKey: "10_4",
   },
   {
     value: "Systematic reviews in progress",
     label: "Systematic reviews in progress",
+    legacyKey: "10_5",
   },
   {
     value: "Systematic reviews being planned",
     label: "Systematic reviews being planned",
+    legacyKey: "10_6",
   },
   {
     value: "Economic evaluations and costing studies",
     label: "Economic evaluations and costing studies",
+    legacyKey: "10_7",
   },
   {
     value:
       "No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in SSE.",
     label:
       "No, after reviewing the document types and eligibility criteria, this record is not eligible for inclusions in SSE.",
+    legacyKey: "",
   },
 ];
 
