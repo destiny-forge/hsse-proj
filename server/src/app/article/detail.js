@@ -1,4 +1,5 @@
 const t_ui = require("../i18n");
+const { hse, sse } = require("../data");
 
 /**
  * Article detail query
@@ -24,6 +25,29 @@ module.exports = ({ articleRepository }) => {
   };
 
   const transform = (article, type, language) => {
+    const translations = require(`../i18n/${type}/${language}`);
+    let t_types = {};
+    let types = {};
+    switch (type) {
+      case "hse":
+        types = hse.types;
+        break;
+      case "sse":
+        types = sse.types;
+        break;
+      case "cvd":
+        types = [];
+        break;
+    }
+    types.forEach((typ) => {
+      t_types[typ.value] = typ.legacyKey;
+    });
+
+    const t_type = (documentType) => {
+      const legacyKey = t_types[documentType];
+      return translations.filters[legacyKey];
+    };
+
     let labels = getLabels(type, language);
     let fieldsVisible = getFieldVisibility(article.documentType);
     const title = language === "en" ? article.title : article.titles[language];
@@ -31,9 +55,14 @@ module.exports = ({ articleRepository }) => {
     const quality = `${article.amstarNumerator}/${article.amstarDenominator}`;
     const quality_note = t_ui(type, language, "cboAMSTAR_4", "");
     const countryLinks = getCountryLinks(article.countryLinks, type, language);
+    const abstract = language === "en" ? article.abstract : "";
+    const documentType = t_type(article.documentType);
+
     return {
       ...article,
+      documentType,
       title,
+      abstract,
       published,
       quality,
       quality_note,

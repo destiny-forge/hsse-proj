@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import ArticleService from '../services/ArticleService';
 import Context from './Context';
+import _ from 'underscore';
 
 const ArticleField = ({ visible = true, children }) => {
   return visible ? <div className="article-field">{children}</div> : null;
+};
+
+const get = (field, value) => {
+  return _.isUndefined(field) || _.isNull(field) || _.isEmpty(field)
+    ? value
+    : field;
 };
 
 const CountryAuthorLinks = ({ items, language }) => {
@@ -89,8 +97,11 @@ const ArticleDetail = ({ id, site, language, t }) => {
               visible={article.last_year_literature_searched_visible}
             >
               <h2>{article.label_last_year_literature_searched}</h2>
-              {article.lastLitSearch.year ||
-                t('no_last_year_literature_searched')}
+              {_.get(
+                article.lastLitSearch,
+                'year',
+                t('articles_page.no_last_year_literature_searched')
+              )}
             </ArticleField>
 
             <ArticleField visible={article.quality_rating_visible}>
@@ -113,7 +124,19 @@ const ArticleDetail = ({ id, site, language, t }) => {
 
             <ArticleField>
               <h2>{article.label_abstract}</h2>
-              <p>{article.abstract || t('no_topics')}</p>
+              <p>{get(article.abstract, t('articles_page.no_topics'))}</p>
+            </ArticleField>
+
+            <ArticleField visible={article.related_documents_visible}>
+              <Link
+                className="btn btn-primary"
+                to={{
+                  pathname: '/search',
+                  related_article_id: article.id,
+                }}
+              >
+                {t('articles_page.related_documents')}
+              </Link>
             </ArticleField>
           </div>
         </div>
