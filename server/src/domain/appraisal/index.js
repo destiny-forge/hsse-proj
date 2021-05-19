@@ -23,7 +23,7 @@ const Appraisal = t.struct(
   },
   {
     defaultProps: {
-      status: "In Progress",
+      status: "In progress",
       notInEnglish: false,
       noFreeFullText: false,
       completed: false,

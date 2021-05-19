@@ -16,8 +16,8 @@ import CountryLinks from '../../components/molecules/CountryLinks';
 import validate from './validate';
 
 const STATUSES = [
-  { value: 'In Progress', label: 'In Progress' },
-  { value: 'Data Entry Complete', label: 'Data Entry Complete' },
+  { value: 'In progress', label: 'In progress' },
+  { value: 'Data entry complete', label: 'Data entry complete' },
 ];
 
 class StudyForm extends React.Component {
@@ -30,7 +30,7 @@ class StudyForm extends React.Component {
       _id: null,
       type,
       article: '',
-      status: 'In Progress',
+      status: 'In progress',
       notInEnglish: false,
       noFreeFullText: false,
       largeReview: false,

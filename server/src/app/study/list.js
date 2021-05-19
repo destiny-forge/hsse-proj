@@ -17,14 +17,14 @@ module.exports = ({ articleRepository }) => {
       ];
 
       const matches = [
-        { "stages.eligibility.status": "Complete" },
-        { "stages.appraisals.status": "Complete" },
+        { "stages.eligibility.status": "Completed" },
+        { "stages.appraisals.status": "Completed" },
       ];
 
-      let statuses = [status, "Complete"];
+      let statuses = [status, "Completed"];
 
       if (status === "Complicated") {
-        statuses.push("In Progress");
+        statuses.push("In progress");
       }
 
       return await articleRepository.aggregate(
@@ -54,8 +54,8 @@ module.exports = ({ articleRepository }) => {
       ];
 
       const matches = [
-        { "stages.eligibility.status": "Complete" },
-        { "stages.appraisals.status": "Complete" },
+        { "stages.eligibility.status": "Completed" },
+        { "stages.appraisals.status": "Completed" },
       ];
 
       return await articleRepository.findByBatchAndDocTypes(

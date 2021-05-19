@@ -4,7 +4,7 @@
 module.exports = ({ articleRepository }) => {
   const list = async (type, language, priority) => {
     try {
-      let statuses = ["New Article"];
+      let statuses = ["New article"];
       return await articleRepository.findByLanguage(
         type,
         language,

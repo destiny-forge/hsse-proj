@@ -10,9 +10,9 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      let statuses = [status, "Complete"];
-      if (status === "In Progress") {
-        statuses.push("Conflicted");
+      let statuses = [status, "Completed"];
+      if (status === "In progress") {
+        statuses.push("Discrepancy detected");
       }
 
       return await articleRepository.aggregate(type, "eligibility", statuses);
@@ -35,7 +35,12 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      let status = ["New Article", "In Progress", "Conflicted", "Complete"];
+      let status = [
+        "New article",
+        "In progress",
+        "Discrepancy detected",
+        "Completed",
+      ];
 
       return await articleRepository.findByBatch(
         batchId,

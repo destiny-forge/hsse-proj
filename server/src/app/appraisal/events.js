@@ -13,16 +13,16 @@ module.exports = ({ events, appraisalRepository, articleRepository }) => {
   events.on("article.appraisals.coded", async (articleId) => {
     const appraisals = await appraisalRepository.findByArticleId(articleId);
     const cleanQuestions = _.clone(appraisals[0].cleanQuestions);
-    let status = "In Progress";
+    let status = "In progress";
 
     if (appraisals.length === 2) {
       const first = appraisals[0];
       const second = appraisals[1];
-      if (first.status === "Complete" && second.status === "Complete") {
+      if (first.status === "Completed" && second.status === "Completed") {
         const conflicts = diff.compareAppraisals(appraisals, first.userId);
-        status = conflicts.length > 0 ? "Conflicted" : "Complete";
+        status = conflicts.length > 0 ? "Discrepancy detected" : "Completed";
 
-        if (status === "Complete") {
+        if (status === "Completed") {
           const {
             _id,
             complicated,

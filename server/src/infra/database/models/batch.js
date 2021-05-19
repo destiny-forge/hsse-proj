@@ -77,7 +77,7 @@ module.exports = ({ database }) => {
     const { batchId, stage, type, user, status } = assignment;
     const assign = {
       ...user,
-      status: "In Progress",
+      status: "In progress",
     };
     try {
       const fields = {

@@ -10,10 +10,10 @@ module.exports = ({ events, studyRepository, articleRepository }) => {
   events.on("article.study.coded", async (articleId) => {
     const articles = await studyRepository.findByArticleId(articleId);
     const study = articles[0];
-    let status = "In Progress";
+    let status = "In progress";
 
-    if (study.status === "Data Entry Complete") {
-      status = "Complete";
+    if (study.status === "Data entry complete") {
+      status = "Completed";
 
       try {
         const {

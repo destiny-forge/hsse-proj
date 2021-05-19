@@ -30,7 +30,12 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      let status = ["New Article", "In Progress", "Conflicted", "Complete"];
+      let status = [
+        "New article",
+        "In progress",
+        "Discrepancy detected",
+        "Completed",
+      ];
 
       return await articleRepository.findByBatch(batchId, stage, status);
     } catch (error) {

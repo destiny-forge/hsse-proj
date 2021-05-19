@@ -6,7 +6,7 @@ const withSection = (WrappedComponent) => {
   const Section = ({ history, fetch, user }) => {
     const props = { history, fetch };
     const [batches, setBatches] = useState([]);
-    const [status, setStatus] = useState('New Article');
+    const [status, setStatus] = useState('New article');
     const Batch = BatchService({ fetch });
     const paths = history.location.pathname.split('/');
 

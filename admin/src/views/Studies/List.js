@@ -123,7 +123,7 @@ class StudiesList extends React.Component {
       return null;
     }
 
-    if (!this.isAssigned(stage) || status === 'Complete') {
+    if (!this.isAssigned(stage) || status === 'Completed') {
       return null;
     }
 

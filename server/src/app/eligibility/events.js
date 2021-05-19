@@ -13,19 +13,19 @@ module.exports = ({ events, eligibilityRepository, articleRepository }) => {
   events.on("article.eligibility.coded", async (articleId) => {
     const filters = await eligibilityRepository.findByArticleId(articleId);
     const finalFilters = _.clone(filters[0].filters);
-    let status = "In Progress";
+    let status = "In progress";
 
     if (filters.length === 2) {
       const first = filters[0];
       const second = filters[1];
       if (
-        first.selectedStatus === "Data Entry Complete" &&
-        second.selectedStatus === "Data Entry Complete"
+        first.selectedStatus === "Data entry complete" &&
+        second.selectedStatus === "Data entry complete"
       ) {
         const conflicts = diff.compareFilters(filters, first.userId);
-        status = conflicts.length > 0 ? "Conflicted" : "Complete";
+        status = conflicts.length > 0 ? "Discrepancy detected" : "Completed";
 
-        if (status === "Complete") {
+        if (status === "Completed") {
           const { _id, documentType, questionType, generalFocus } = first;
           articleRepository.update(articleId, {
             "stages.eligibility._id": new ObjectID(_id),

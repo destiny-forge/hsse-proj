@@ -132,14 +132,14 @@ class AppraisalList extends React.Component {
       return null;
     }
 
-    if (!this.isAssigned(stage) || status === 'Complete') {
+    if (!this.isAssigned(stage) || status === 'Completed') {
       return null;
     }
 
     const code = `/${stageName}/${article.type}/${article.shortId}`;
     const resolve = `/conflicts/${article.type}/${stageName}/${article.shortId}`;
 
-    return status === 'Conflicted' ? (
+    return status === 'Discrepancy detected' ? (
       <Link to={resolve}>Resolve Conflicts</Link>
     ) : (
       <Link to={code}>Code</Link>
