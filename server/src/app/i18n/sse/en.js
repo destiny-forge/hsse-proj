@@ -1,5 +1,5 @@
 module.exports = {
-  "filters": {
+  filters: {
     "0_1": "Topics of interest",
     "0_2": "Domains",
     "0_3": "Area of focus",
@@ -68,9 +68,12 @@ module.exports = {
     "2_2039": "Where services are provided",
     "2_2040": "With what supports are services provided",
     "2_2041": "Centralization/decentralization of policy authority",
-    "2_2042": "Accountability of the state sector's role in financing & delivery",
-    "2_2043": "Stewardship of the non-state sector's role in financing & delivery",
-    "2_2044": "Decision-making authority about who is covered and what can or must be provided to them",
+    "2_2042":
+      "Accountability of the state sector's role in financing & delivery",
+    "2_2043":
+      "Stewardship of the non-state sector's role in financing & delivery",
+    "2_2044":
+      "Decision-making authority about who is covered and what can or must be provided to them",
     "2_2045": "Corruption protections",
     "2_2046": "Ownership",
     "2_2047": "Management approaches",
@@ -93,7 +96,8 @@ module.exports = {
     "2_2064": "Citizen participation in system monitoring",
     "2_2065": "Citizen participation in service delivery",
     "2_2066": "Citizen complaints management",
-    "2_2067": "Stakeholder participation in policy & organizational decisions (or monitoring)",
+    "2_2067":
+      "Stakeholder participation in policy & organizational decisions (or monitoring)",
     "2_2068": "Taxation",
     "2_2069": "Social insurance",
     "2_2070": "Community-based insurance",
@@ -115,10 +119,14 @@ module.exports = {
     "2_2087": "Fundholding",
     "2_2089": "Targeted payments/penalties (Remuneration)",
     "2_2090": "Scope & nature of insurance plans",
-    "2_2091": "Lists of covered/reimbursed organizations, providers, services & products",
-    "2_2092": "Restrictions in coverage/reimbursement rates for organizations, providers, services & products",
-    "2_2093": "Caps on coverage/reimbursement for organizations, providers, services & products",
-    "2_2094": "Prior approval requirements for organizations, providers, services & products",
+    "2_2091":
+      "Lists of covered/reimbursed organizations, providers, services & products",
+    "2_2092":
+      "Restrictions in coverage/reimbursement rates for organizations, providers, services & products",
+    "2_2093":
+      "Caps on coverage/reimbursement for organizations, providers, services & products",
+    "2_2094":
+      "Prior approval requirements for organizations, providers, services & products",
     "2_2095": "Lists of substitutable services & products",
     "2_2096": "Premium (level & features)",
     "2_2097": "Cost sharing",
@@ -140,7 +148,8 @@ module.exports = {
     "2_2113": "Skill mix - Task shifting / substitution",
     "2_2114": "Skill mix - Multidisciplinary teams",
     "2_2115": "Skill mix - Volunteers or caregivers",
-    "2_2116": "Skill mix – Communication & case discussion between distant professionals ",
+    "2_2116":
+      "Skill mix – Communication & case discussion between distant professionals ",
     "2_2117": "Staff - Training",
     "2_2118": "Staff - Support",
     "2_2119": "Staff - Workload/workflow/intensity",
@@ -459,7 +468,8 @@ module.exports = {
     "2_2483": "Land-use planning",
     "2_2484": "Parks and other protected areas",
     "2_2485": "Freshwater (lakes & rivers)",
-    "2_2486": "Seas (marine & coasts, including coastal erosion) & their catchments",
+    "2_2486":
+      "Seas (marine & coasts, including coastal erosion) & their catchments",
     "2_2487": "Fauna protection",
     "2_2488": "Flora protection",
     "2_2489": "Conservation status assessment",
@@ -955,6 +965,6 @@ module.exports = {
     "0_15_any": "Any theme",
     "0_17_any": "Any intergovernmental organizations' social systems document",
     "0_18_any": "Any Canadian social systems document",
-    "0_19_any": "Any Ontario's social system document"
-  }
-}
+    "0_19_any": "Any Ontario's social system document",
+  },
+};

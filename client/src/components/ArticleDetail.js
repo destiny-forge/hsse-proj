@@ -63,6 +63,31 @@ const CountryLinks = ({ items, t }) => {
   );
 };
 
+const NestedList = (list, listName, itemName) => {
+  let result = [];
+
+  if (list === null || list.length === 0) {
+    return null;
+  }
+
+  list.forEach((item, i) => {
+    result.push(
+      <li key={`${itemName}-item-${i}`} className={`${itemName}-item`}>
+        {item.title}
+      </li>
+    );
+    if (item[listName] && item[listName].length > 0) {
+      result.push(
+        <li key={`${itemName}-item-nested-${i}`} className={`${itemName}-item`}>
+          <ul>{NestedList(item[listName], listName, itemName)}</ul>
+        </li>
+      );
+    }
+  });
+
+  return result;
+};
+
 const ArticleDetail = ({ id, site, language, t }) => {
   const [article, setArticle] = useState(null);
 
@@ -137,6 +162,69 @@ const ArticleDetail = ({ id, site, language, t }) => {
               >
                 {t('articles_page.related_documents')}
               </Link>
+            </ArticleField>
+
+            <ArticleField visible={article.priority_area_visible}>
+              <h2>{article.label_priority_areas}</h2>
+              <ul>
+                {NestedList(
+                  article.priority_areas,
+                  'priority_areas',
+                  'priority_area'
+                ) || t('articles_page.no_priority_areas')}
+              </ul>
+            </ArticleField>
+          </div>
+
+          <div className="section">
+            <ArticleField>
+              <h2>{article.label_domains}</h2>
+              <ul>
+                {NestedList(article.filters, 'domains', 'domain') ||
+                  t('articles_page.no_domains')}
+              </ul>
+            </ArticleField>
+
+            <ArticleField>
+              <h2>{article.label_social_system_topics}</h2>
+              <ul>
+                {NestedList(article.topics, 'topics', 'topic') ||
+                  t('articles_page.no_topics')}
+              </ul>
+            </ArticleField>
+          </div>
+
+          <div className="section">
+            <ArticleField visible={article.theme_visible}>
+              <h2>{article.label_themes}</h2>
+              <ul>
+                {NestedList(article.themes, 'themes', 'theme') ||
+                  t('articles_page.no_themes')}
+              </ul>
+            </ArticleField>
+
+            {/*
+          <ArticleField visible={article.country_groupings_visible}>
+            <h2>{article.label_country_groupings}</h2>
+            {@ifNotEmpty @renderCountries(article.country_groupings), @t('no_country_groupings')}
+          </ArticleField>
+
+          <ArticleField visible={article.who_region_visible}>
+            <h2>{article.label_who_regions}</h2>
+            {@ifNotEmpty @joinList(_.compact(_.pluck(article.who_regions, 'title'))), @t('no_who_regions')}
+          </ArticleField>
+
+          <ArticleField visible={article.lmic_focus_visible}>
+            <h2>{article.label_lmic_focus}</h2>
+            <div className="article-item-lmic-focus">
+              {@ifNotEmpty @joinList(_.compact(_.pluck(article.lmic_focus, 'title'))), @t('no_lmic_focus')}
+            </div>
+            </ArticleField>
+            */}
+
+            <ArticleField visible={article.country_focus_visible}>
+              <h2>{article.label_country_focus}</h2>
+              {article.country_focus || t('no_country_focus')}
             </ArticleField>
           </div>
         </div>

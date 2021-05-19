@@ -57,6 +57,15 @@ module.exports = ({ articleRepository }) => {
     const countryLinks = getCountryLinks(article.countryLinks, type, language);
     const abstract = language === "en" ? article.abstract : "";
     const documentType = t_type(article.documentType);
+    const priority_areas = [
+      {
+        priority_areas: null,
+        title: t_ui(type, language, "_NotApplicable", ""),
+      },
+    ];
+    const topics = null;
+    const themes = null;
+    const filters = getFilters(article.filters, type, language);
 
     return {
       ...article,
@@ -67,6 +76,10 @@ module.exports = ({ articleRepository }) => {
       quality,
       quality_note,
       countryLinks,
+      priority_areas,
+      topics,
+      themes,
+      filters,
       ...labels,
       ...fieldsVisible,
     };
@@ -87,6 +100,98 @@ module.exports = ({ articleRepository }) => {
       });
     }
     return countryLinks;
+  };
+
+  const getFilters = (filters, type, language) => {
+    return [
+      [
+        {
+          domains: [
+            {
+              domains: [
+                {
+                  domains: [],
+                  title: "Early childhood development services",
+                },
+              ],
+              title: "Children and youth services",
+            },
+            {
+              domains: [
+                {
+                  domains: [],
+                  title: "Literacy training",
+                },
+                {
+                  domains: [],
+                  title: "Teaching",
+                },
+                {
+                  domains: [],
+                  title: "Pre-primary education",
+                },
+                {
+                  domains: [],
+                  title: "Primary education",
+                },
+              ],
+              title: "Education",
+            },
+          ],
+          title: "Programs and services",
+        },
+        {
+          domains: [
+            {
+              domains: [
+                {
+                  domains: [],
+                  title: "Skills and competencies development",
+                },
+              ],
+              title: "Citizen-targeted strategy",
+            },
+          ],
+          title: "Implementation strategies",
+        },
+        {
+          domains: [
+            {
+              domains: [],
+              title: "4. Quality education",
+            },
+            {
+              domains: [],
+              title: "17. Partnerships for the goals",
+            },
+          ],
+          title: "Sustainable Development Goals",
+        },
+        {
+          domains: [
+            {
+              domains: [
+                {
+                  domains: [],
+                  title: "Children and youth",
+                },
+              ],
+              title: "Populations",
+            },
+            {
+              domains: [
+                {
+                  domains: [],
+                  title: "Education",
+                },
+              ],
+              title: "Outcomes",
+            },
+          ],
+          title: "Perspectives",
+        },
+      ],
+    ];
   };
 
   const getLabels = (type, language) => {
