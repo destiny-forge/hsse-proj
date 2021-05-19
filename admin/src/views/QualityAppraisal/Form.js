@@ -16,8 +16,8 @@ import { hse, sse } from './data';
 import validate from './validate';
 
 const STATUSES = [
-  { value: 'In Progress', label: 'In Progress' },
-  { value: 'Complete', label: 'Complete' },
+  { value: 'In progress', label: 'In progress' },
+  { value: 'Completed', label: 'Completed' },
 ];
 
 const ANSWERS = ['Yes', 'No', "Can't answer", 'Not applicable'];
@@ -32,7 +32,7 @@ class AppraisalForm extends React.Component {
     this.state = {
       _id: null,
       article: '',
-      status: 'In Progress',
+      status: 'In progress',
       notInEnglish: false,
       noFreeFullText: false,
       type,

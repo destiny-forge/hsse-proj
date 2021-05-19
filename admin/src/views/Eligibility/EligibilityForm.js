@@ -13,8 +13,8 @@ import validate from './validate';
 import TreeView from '../../components/molecules/TreeView';
 
 const STATUSES = [
-  { value: 'In Progress', label: 'In Progress' },
-  { value: 'Data Entry Complete', label: 'Data Entry Complete' },
+  { value: 'In progress', label: 'In progress' },
+  { value: 'Data entry complete', label: 'Data entry complete' },
 ];
 
 class EligibilityForm extends React.Component {
@@ -33,7 +33,7 @@ class EligibilityForm extends React.Component {
       type: type,
       article: '',
       generalFocus: false,
-      selectedStatus: 'In Progress',
+      selectedStatus: 'In progress',
       eligible: true,
       errors: {},
     };
@@ -51,7 +51,7 @@ class EligibilityForm extends React.Component {
   setStatusAndEligibility = (docType) => {
     const eligible = docType.indexOf('not eligible') === -1;
     const selectedStatus = !eligible
-      ? 'Data Entry Complete'
+      ? 'Data entry complete'
       : this.state.selectedStatus;
     this.setState({ eligible, selectedStatus });
   };
@@ -194,7 +194,7 @@ class EligibilityForm extends React.Component {
       type: type,
       action: 'coding',
       relevant: relevant,
-      selectedStatus: !relevant ? 'Data Entry Complete' : 'In Progress',
+      selectedStatus: !relevant ? 'Data entry complete' : 'In progress',
       generalFocus: false,
       completed: !relevant,
     };
@@ -396,11 +396,11 @@ class EligibilityForm extends React.Component {
                     </div>
                     <ul>
                       <li>
-                        <b>In Progress</b> = Still having content added, not
+                        <b>In progress</b> = Still having content added, not
                         visible in searches
                       </li>
                       <li>
-                        <b>Data Entry Complete</b> = All required content has
+                        <b>Data entry complete</b> = All required content has
                         been added, still not visible in searches
                       </li>
                     </ul>

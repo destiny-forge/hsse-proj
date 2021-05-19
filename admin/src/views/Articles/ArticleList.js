@@ -50,14 +50,14 @@ const ArticleList = ({ stage, articles = [], user, assign }) => {
       return null;
     }
 
-    if (!isAssigned(stage) || status === 'Complete') {
+    if (!isAssigned(stage) || status === 'Completed') {
       return null;
     }
 
     const code = `/${stageName}/${article.type}/${article.shortId}`;
     const resolve = `/conflicts/${article.type}/${stageName}/${article.shortId}`;
 
-    return status === 'Conflicted' ? (
+    return status === 'Discrepancy detected' ? (
       <Link to={resolve}>Resolve Conflicts</Link>
     ) : (
       <Link to={code}>Code</Link>

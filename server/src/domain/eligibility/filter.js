@@ -22,7 +22,7 @@ const Filter = t.struct(
   },
   {
     defaultProps: {
-      selectedStatus: "In Progress",
+      selectedStatus: "In progress",
       generalFocus: false,
       completed: false,
       relevant: true,

@@ -35,7 +35,7 @@ module.exports = ({ articleRepository, eligibilityRepository }) => {
       const { _id, documentType, questionType, generalFocus } = source;
       return await articleRepository.update(articleId, {
         "stages.eligibility._id": new ObjectID(_id),
-        "stages.eligibility.status": "Complete",
+        "stages.eligibility.status": "Completed",
         documentType,
         questionType,
         generalFocus,

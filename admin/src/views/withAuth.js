@@ -77,7 +77,7 @@ export default function withAuth(AuthComponent) {
                               >
                                 <i className="fa fa-fw fa-plus"></i>
                                 <span className="hidden-folded d-inline">
-                                  New Article
+                                  New article
                                 </span>
                               </Link>
                             </div>

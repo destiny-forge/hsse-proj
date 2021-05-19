@@ -39,7 +39,7 @@ module.exports = ({ batchRepository, articleRepository }) => {
         };
       }
 
-      assignment.status = "In Progress";
+      assignment.status = "In progress";
 
       const result = batchRepository.assign(assignment);
       articleRepository.assign(assignment);

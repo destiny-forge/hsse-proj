@@ -24,10 +24,10 @@ import { getYear } from '../../utils/format';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 const STATUSES = [
-  { value: 'New Article', label: 'New Article' },
-  { value: 'Data Entry Complete', label: 'Data Entry Complete' },
-  { value: 'Live', label: 'Live' },
-  { value: 'Deleted', label: 'Deleted' },
+  { value: 'New article', label: 'New article' },
+  { value: 'Data entry complete', label: 'Data entry complete' },
+  { value: 'Excluded', label: 'Excluded' },
+  { value: 'Completed', label: 'Completed' },
 ];
 
 const REF_TYPES = [
@@ -969,7 +969,7 @@ class PresentationForm extends React.Component {
                       className="form-control"
                       rows="5"
                       onChange={this.handleTextChange}
-                      disabled={article.status !== 'Deleted'}
+                      disabled={article.status !== 'Excluded'}
                     />
                   </div>
                 </div>
@@ -984,8 +984,11 @@ class PresentationForm extends React.Component {
                       added, still not visible in searches
                     </li>
                     <li>
-                      <b>Live</b> - Available for searching/alerting Deleted =
-                      Removed from the system, not visible in searches
+                      <b>Excluded</b> = Removed from the system, not visible in
+                      searches
+                    </li>
+                    <li>
+                      <b>Completed</b> - Available for searching/alerting
                     </li>
                   </ul>
                 </div>

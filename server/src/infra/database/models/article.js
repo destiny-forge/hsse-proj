@@ -78,7 +78,7 @@ module.exports = ({ database }) => {
         .find({
           type: { $eq: type },
           priority: { $eq: priority },
-          ["stages.eligibility.status"]: "Complete",
+          ["stages.eligibility.status"]: "Completed",
           $or: [
             { [`titles.${language}`]: { $exists: false } },
             { [`titles.${language}.approved`]: false },
@@ -204,17 +204,17 @@ module.exports = ({ database }) => {
         total: { $sum: 1 },
         in_progress: {
           $sum: {
-            $cond: [{ $eq: [`$stages.${stage}.status`, "In Progress"] }, 1, 0],
+            $cond: [{ $eq: [`$stages.${stage}.status`, "In progress"] }, 1, 0],
           },
         },
         complete: {
           $sum: {
-            $cond: [{ $eq: [`$stages.${stage}.status`, "Complete"] }, 1, 0],
+            $cond: [{ $eq: [`$stages.${stage}.status`, "Completed"] }, 1, 0],
           },
         },
         created: {
           $sum: {
-            $cond: [{ $ne: [`$stages.${stage}.status`, "Complete"] }, 1, 0],
+            $cond: [{ $ne: [`$stages.${stage}.status`, "Completed"] }, 1, 0],
           },
         },
         batchName: { $first: "$batchName" },
@@ -314,7 +314,7 @@ module.exports = ({ database }) => {
         total: { $sum: 1 },
         needing_data: {
           $sum: {
-            $cond: [{ $eq: ["$status", "In Progress"] }, 1, 0],
+            $cond: [{ $eq: ["$status", "In progress"] }, 1, 0],
           },
         },
       },
@@ -371,8 +371,8 @@ module.exports = ({ database }) => {
       $match: {
         type: { $eq: type },
         monthlyUpdateDate: { $eq: "" },
-        ["stages.eligibility.status"]: "Complete",
-        ["stages.appraisals.status"]: "Complete",
+        ["stages.eligibility.status"]: "Completed",
+        ["stages.appraisals.status"]: "Completed",
       },
     };
     const group = {
@@ -386,7 +386,7 @@ module.exports = ({ database }) => {
         },
         needing_data: {
           $sum: {
-            $cond: [{ $eq: ["$status", "In Progress"] }, 1, 0],
+            $cond: [{ $eq: ["$status", "In progress"] }, 1, 0],
           },
         },
       },
@@ -479,7 +479,7 @@ module.exports = ({ database }) => {
     const { articleId, batchId, stage, type, user, status } = assignment;
     const assign = {
       ...user,
-      status: "In Progress",
+      status: "In progress",
     };
     try {
       const fields = {
@@ -662,9 +662,9 @@ module.exports = ({ database }) => {
     //   {
     //     $set: {
     //       stages: {
-    //         eligibility: { status: "New Article" },
-    //         studies: { status: "New Article" },
-    //         appraisals: { status: "New Article" },
+    //         eligibility: { status: "New article" },
+    //         studies: { status: "New article" },
+    //         appraisals: { status: "New article" },
     //       },
     //     },
     //   },
@@ -674,7 +674,7 @@ module.exports = ({ database }) => {
     //   { status: { $exists: false } },
     //   {
     //     $set: {
-    //       status: "New Article",
+    //       status: "New article",
     //     },
     //   },
     //   { multi: true }

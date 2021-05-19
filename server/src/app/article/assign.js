@@ -39,7 +39,7 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      assignment.status = isFull ? "In Progress" : "New Article";
+      assignment.status = isFull ? "In progress" : "New article";
 
       return await articleRepository.assign(assignment);
     } catch (error) {

@@ -13,7 +13,7 @@ export default (article) =>
     }
 
     if (
-      article.status === 'Deleted' &&
+      article.status === 'Excluded' &&
       (!article.deletedReason || article.deletedReason === '')
     ) {
       errors.deletedReason =

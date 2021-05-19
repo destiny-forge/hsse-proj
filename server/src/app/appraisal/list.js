@@ -10,18 +10,18 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      let statuses = [status, "Complete"];
+      let statuses = [status, "Completed"];
 
-      if (status === "In Progress") {
-        statuses.push("Conflicted");
+      if (status === "In progress") {
+        statuses.push("Discrepancy detected");
       }
 
       if (status === "Complicated") {
         statuses = [
-          "New Article",
-          "In Progress",
-          "Complete",
-          "Conflicted",
+          "New article",
+          "In progress",
+          "Completed",
+          "Discrepancy detected",
           "Complicated",
         ];
       }

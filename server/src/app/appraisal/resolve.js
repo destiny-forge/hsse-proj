@@ -46,7 +46,7 @@ module.exports = ({ articleRepository, appraisalRepository }) => {
 
       return await articleRepository.update(articleId, {
         "stages.appraisals._id": new ObjectID(_id),
-        "stages.appraisals.status": "Complete",
+        "stages.appraisals.status": "Completed",
         questions,
         complicated,
         amstarNumerator,

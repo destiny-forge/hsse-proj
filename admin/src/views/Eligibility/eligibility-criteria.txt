@@ -11,7 +11,7 @@ If the user selects NO for document type, we will clear / disable all editable f
 Leaving the save button.
 
 4. Modify Article status
-- options should be "In Progress" | "Data Entry Complete"
+- options should be "In progress" | "Completed"
 - remove the other values and update the legend appropriately
 
 5. Document Type in current system has context popup menu descriptions for each of the items

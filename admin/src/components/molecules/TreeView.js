@@ -42,7 +42,7 @@ const TreeView = ({ tree, selectedItems = [], onChange }) => {
         }
       });
     }
-    console.log(JSON.stringify(globalKeys));
+    //console.log(JSON.stringify(globalKeys));
     setTreeSelections(selections);
     onChange(selections);
   }, [selectedItems]);
