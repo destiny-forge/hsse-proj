@@ -1595,4 +1595,4 @@ const groupings = [
   },
 ];
 
-export { countries, groupings };
+module.exports = { countries, groupings };
