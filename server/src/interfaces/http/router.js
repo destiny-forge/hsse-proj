@@ -64,7 +64,7 @@ module.exports = ({ config, logger }) => {
   apiRouter.use("/articles", controller("article").router);
 
   /* admin API routes */
-  apiRouter.use("/admin/articles", controller("article").admin_router);
+  apiRouter.use("/admin-articles", controller("article").admin_router);
   apiRouter.use("/batches", controller("batch").router);
   apiRouter.use("/notes", controller("note").router);
   apiRouter.use("/eligibility", controller("eligibility").router);
