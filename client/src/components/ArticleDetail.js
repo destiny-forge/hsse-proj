@@ -20,12 +20,12 @@ const CountryAuthorLinks = ({ items, language }) => {
   }
   return (
     <ul className="article-item-region-list">
-      {Object.keys(items).map((key) => {
+      {items.map((item) => {
         return (
-          <li key={key} className="region-item">
-            <span className="region-item-title">{key}:</span>
+          <li key={item.key} className="region-item">
+            <span className="region-item-title">{item.key}:</span>
             <ul className="article-author-list">
-              {items[key].links.map((author, i) => (
+              {item.value.links.map((author, i) => (
                 <li key={`author-item-${i}`} className="author-item">
                   <a
                     rel="alternate"
@@ -51,11 +51,11 @@ const CountryLinks = ({ items, t }) => {
   }
   return (
     <ul className="article-item-countries">
-      {Object.keys(items).map((key) => {
+      {items.map((item) => {
         return (
-          <li key={key} className="country-item">
-            <span>{key}</span>
-            <span>({items[key].count})</span>
+          <li key={item.key} className="country-item">
+            <span>{item.key}</span>
+            <span>({item.value.count})</span>
           </li>
         );
       })}
