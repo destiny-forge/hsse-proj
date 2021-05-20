@@ -4,6 +4,14 @@ import ArticleService from '../services/ArticleService';
 import Context from './Context';
 import _ from 'underscore';
 
+const joinList = (array) => {
+  if (array.length <= 1) {
+    return array;
+  }
+  let lastItem = _.last(array);
+  return array.slice(0, -1).join(', ') + ' and ' + lastItem;
+};
+
 const ArticleField = ({ visible = true, children }) => {
   return visible ? <div className="article-field">{children}</div> : null;
 };
@@ -60,6 +68,17 @@ const CountryLinks = ({ items, t }) => {
         );
       })}
     </ul>
+  );
+};
+
+const CountryGroups = (country_groupings) => {
+  if (country_groupings.length === 0) {
+    return null;
+  }
+  return joinList(
+    country_groupings.map((group) => {
+      return `${group.key}(${group.value})`;
+    })
   );
 };
 
@@ -140,9 +159,9 @@ const ArticleDetail = ({ id, site, language, t }) => {
               }
             >
               <h2>{article.label_studies_conducted_in}</h2>
-              <CountryLinks items={article.countryLinks} t={t} />
+              <CountryLinks items={article.country_links} t={t} />
               <CountryAuthorLinks
-                items={article.countryLinks}
+                items={article.country_links}
                 language={language}
               />
             </ArticleField>
@@ -203,11 +222,15 @@ const ArticleDetail = ({ id, site, language, t }) => {
               </ul>
             </ArticleField>
 
+            <ArticleField visible={article.country_groupings_visible}>
+              <h2>{article.label_country_groupings}</h2>
+              {CountryGroups(article.country_groupings) ||
+                t('no_country_groupings')}
+            </ArticleField>
+
             {/*
-          <ArticleField visible={article.country_groupings_visible}>
-            <h2>{article.label_country_groupings}</h2>
-            {@ifNotEmpty @renderCountries(article.country_groupings), @t('no_country_groupings')}
-          </ArticleField>
+
+
 
           <ArticleField visible={article.who_region_visible}>
             <h2>{article.label_who_regions}</h2>

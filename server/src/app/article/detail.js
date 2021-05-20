@@ -55,8 +55,9 @@ module.exports = ({ articleRepository }) => {
     const published = article.published.getFullYear();
     const quality = `${article.amstarNumerator}/${article.amstarDenominator}`;
     const quality_note = t_ui(type, language, "cboAMSTAR_4", "");
-    let countryLinks = getCountryLinks(article.countryLinks, type, language);
-    countryLinks = translateCountryLinks(countryLinks, translations);
+    let country_links = getCountryLinks(article.countryLinks, type, language);
+    country_links = translateCountryLinks(country_links, translations);
+    const country_groupings = getCountryGroupings(country_links, translations);
     const abstract = language === "en" ? article.abstract : "";
     const documentType = t_type(article.documentType);
     const priority_areas = [
@@ -69,6 +70,8 @@ module.exports = ({ articleRepository }) => {
     const themes = null;
     const filters = getFilters(article.filters, type, language);
 
+    delete article.countryLinks;
+
     return {
       ...article,
       documentType,
@@ -77,7 +80,8 @@ module.exports = ({ articleRepository }) => {
       published,
       quality,
       quality_note,
-      countryLinks,
+      country_links,
+      country_groupings,
       priority_areas,
       topics,
       themes,
@@ -121,6 +125,30 @@ module.exports = ({ articleRepository }) => {
       }
       return countryLink;
     });
+  };
+
+  const getCountryGroupings = (countryLinks, t) => {
+    let groupings = [];
+    country.groupings.forEach((group) => {
+      group.linkCount = 0;
+
+      const matches = countryLinks.filter((country) => {
+        return group.countries.includes(parseInt(country.value.id));
+      });
+
+      matches.forEach((match) => {
+        group.linkCount += match.value.links.length;
+      });
+
+      if (group.linkCount > 0) {
+        groupings.push({
+          key: t.filters[group.key] || group.name,
+          value: group.linkCount,
+        });
+      }
+    });
+
+    return groupings.sort((a, b) => b.value - a.value);
   };
 
   const getFilters = (filters, type, language) => {
