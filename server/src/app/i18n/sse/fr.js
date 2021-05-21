@@ -1,5 +1,5 @@
 module.exports = {
-  "filters": {
+  filters: {
     "0_1": "Thèmes d'intérêt",
     "0_2": "Domaines",
     "0_3": "Domaine d'intérêt",
@@ -15,7 +15,8 @@ module.exports = {
     "0_14": "Cible",
     "0_15": "Thème",
     "0_16": "Producteur de documents",
-    "0_17": "DOCUMENTS LIÉS AUX SYSTÈMES DE SANTÉ D'ORGANISATIONS INTERGOUVERNEMENTALES",
+    "0_17":
+      "DOCUMENTS LIÉS AUX SYSTÈMES DE SANTÉ D'ORGANISATIONS INTERGOUVERNEMENTALES",
     "0_18": "CANADA'S HEALTH SYSTEMS DOCUMENTS",
     "0_19": "ONTARIO'S HEALTH SYSTEM DOCUMENTS",
     "0_20": "Focus mondial/régional",
@@ -63,14 +64,18 @@ module.exports = {
     "2_2034": "Rémunération des fournisseurs de services",
     "2_2035": "Achats de produits et services",
     "2_2036": "Incitatifs pour les citoyens",
-    "2_2037": "Comment les services sont conçus pour répondre aux besoins des citoyens",
+    "2_2037":
+      "Comment les services sont conçus pour répondre aux besoins des citoyens",
     "2_2038": "Qui dispense les services",
     "2_2039": "Où sont dispensés les services",
     "2_2040": "Quelles technologies soutiennent la prestation de services",
     "2_2041": "Centralisation/décentralisation de l'autorité politique",
-    "2_2042": "Imputabilité du secteur public dans le financement et la prestation de services",
-    "2_2043": "Rôle de gouvernance et de direction des secteurs non étatiques sur le financement et la prestation de services",
-    "2_2044": "Pouvoir décisionnel au sujet de qui est couvert et qu'est-ce qui peut ou doit leur être offert",
+    "2_2042":
+      "Imputabilité du secteur public dans le financement et la prestation de services",
+    "2_2043":
+      "Rôle de gouvernance et de direction des secteurs non étatiques sur le financement et la prestation de services",
+    "2_2044":
+      "Pouvoir décisionnel au sujet de qui est couvert et qu'est-ce qui peut ou doit leur être offert",
     "2_2045": "Protections contre la corruption",
     "2_2046": "Propriété",
     "2_2047": "Approches de gestion",
@@ -89,11 +94,13 @@ module.exports = {
     "2_2060": "Qualité et sécurité",
     "2_2061": "Responsabilité professionnelle",
     "2_2062": "Grève/moyen de pression au travail",
-    "2_2063": "Participation des citoyens dans les décisions politiques et organisationnelles",
+    "2_2063":
+      "Participation des citoyens dans les décisions politiques et organisationnelles",
     "2_2064": "Participation des citoyens dans la surveillance des systèmes",
     "2_2065": "Participation des citoyens dans la prestation de services",
     "2_2066": "Gestion des plaintes de citoyens",
-    "2_2067": "Participation des parties prenantes aux décisions politiques et organisationnelles (ou surveillance)",
+    "2_2067":
+      "Participation des parties prenantes aux décisions politiques et organisationnelles (ou surveillance)",
     "2_2068": "Taxation",
     "2_2069": "Assurance sociale",
     "2_2070": "Assurance communautaire",
@@ -115,10 +122,14 @@ module.exports = {
     "2_2087": "Attribution d'une enveloppe",
     "2_2089": "Paiements ciblés/pénalités (rémunération)",
     "2_2090": "Portée et nature des régimes d'assurances",
-    "2_2091": "Listes d'organisations, fournisseurs, services et produits couverts / remboursés",
-    "2_2092": "Restrictions de couverture / taux de remboursement pour les organisations, fournisseurs, services et produits",
-    "2_2093": "Plafonds sur la couverture / remboursement pour les organisations, les fournisseurs, les services et les produits",
-    "2_2094": "Exigences d'approbation préalable pour les organisations, les fournisseurs, les services et les produits",
+    "2_2091":
+      "Listes d'organisations, fournisseurs, services et produits couverts / remboursés",
+    "2_2092":
+      "Restrictions de couverture / taux de remboursement pour les organisations, fournisseurs, services et produits",
+    "2_2093":
+      "Plafonds sur la couverture / remboursement pour les organisations, les fournisseurs, les services et les produits",
+    "2_2094":
+      "Exigences d'approbation préalable pour les organisations, les fournisseurs, les services et les produits",
     "2_2095": "Listes de services et produits de remplacement",
     "2_2096": "Primes (niveaux et caractéristiques)",
     "2_2097": "Partage des coûts",
@@ -133,14 +144,16 @@ module.exports = {
     "2_2106": "Système - Besoin, demande et offre",
     "2_2107": "Système - Recrutement, rétention et transition",
     "2_2108": "Système - Gestion de la performance",
-    "2_2109": "Conditions de travail - Satisfaction des fournisseurs de services",
+    "2_2109":
+      "Conditions de travail - Satisfaction des fournisseurs de services",
     "2_2110": "Conditions de travail - Santé et sécurité",
     "2_2111": "Répartition des compétences - Performance des rôles",
     "2_2112": "Répartition des compétences - Expansion ou extension des rôles",
     "2_2113": "Répartition des compétences - Délégation/substitution de tâches",
     "2_2114": "Répartition des compétences - Équipe multidisciplinaire",
     "2_2115": "Répartition des compétences - Bénévoles ou aidants",
-    "2_2116": "Répartition des compétences - Communication et discussion des cas entre professionnels à distance",
+    "2_2116":
+      "Répartition des compétences - Communication et discussion des cas entre professionnels à distance",
     "2_2117": "Personnel - Formation",
     "2_2118": "Personnel - Soutien",
     "2_2119": "Personnel - Charge de travail/flux de travail/intensité",
@@ -379,7 +392,8 @@ module.exports = {
     "2_2404": "Protection de l’environnement",
     "2_2405": "Ressources naturelles",
     "2_2406": "Réduction de la consommation d'énergie",
-    "2_2407": "Approvisionnement en électricité faible en carbone ou à carbone zéro",
+    "2_2407":
+      "Approvisionnement en électricité faible en carbone ou à carbone zéro",
     "2_2408": "Électrification et autre remplacement de carburant",
     "2_2409": "Solutions énergétiques sans émission",
     "2_2410": "Gestion des risques liés au changement climatique",
@@ -448,7 +462,8 @@ module.exports = {
     "2_2473": "Traitement thermochimique",
     "2_2474": "Énergie et chaleur",
     "2_2475": "Énergie, chaleur et refroidissement (trigénération)",
-    "2_2476": "Énergie, chaleur, refroidissement et autres produits (polygénération)",
+    "2_2476":
+      "Énergie, chaleur, refroidissement et autres produits (polygénération)",
     "2_2477": "Résidentiel",
     "2_2478": "Industriel",
     "2_2479": "Mix énergétique",
@@ -459,7 +474,8 @@ module.exports = {
     "2_2483": "Aménagement du territoire",
     "2_2484": "Parcs et autres zones protégées",
     "2_2485": "Eau douce (lacs et rivières)",
-    "2_2486": "Mers et océans (incluant les côtes et l’érosion côtière) et leurs bassins versants",
+    "2_2486":
+      "Mers et océans (incluant les côtes et l’érosion côtière) et leurs bassins versants",
     "2_2487": "Protection de la faune",
     "2_2488": "Protection de la flore",
     "2_2489": "Évaluation de l'état de conservation",
@@ -672,7 +688,7 @@ module.exports = {
     "6_181": "Émirats arabes unis",
     "6_182": "Royaume-Uni",
     "6_183": "Tanzanie (République-Unie de)",
-    "6_184": "États-Unis",
+    "6_184": "Etats-Unis d'Amérique",
     "6_185": "Uruguay",
     "6_186": "Ouzbékistan",
     "6_187": "Vanuatu",
@@ -777,9 +793,11 @@ module.exports = {
     "22_18": "Viabilité",
     "22_19": "État de santé et de bien-être",
     "22_20": "Main-d'œuvre et milieu de travail",
-    "22_21": "Gestion du changement en vue d'améliorer les pratiques et la santé",
+    "22_21":
+      "Gestion du changement en vue d'améliorer les pratiques et la santé",
     "22_22": "Gestion des données, de l'information et des connaissances",
-    "22_23": "Prise de décisions fondées sur les valeurs et la participation du public",
+    "22_23":
+      "Prise de décisions fondées sur les valeurs et la participation du public",
     "22_24": "Soins axés sur le patient",
     "22_25": "Circulation des patients et intégration du système",
     "22_26": "Prévention et prise en charge des maladies chroniques",
@@ -918,28 +936,34 @@ module.exports = {
     "31_8_any": "Toutes les disciplines",
     "2_2009_any": "Tous les programmes ou services de citoyenneté",
     "2_2010_any": "Tous les services communautaires et sociaux",
-    "2_2011_any": "Tous les programmes ou services de protection du consommateur",
+    "2_2011_any":
+      "Tous les programmes ou services de protection du consommateur",
     "2_2012_any": "Tous les programmes ou services de culture et genre",
-    "2_2013_any": "Tous les programmes ou services de sécurité et salubrité alimentaires",
+    "2_2013_any":
+      "Tous les programmes ou services de sécurité et salubrité alimentaires",
     "2_2014_any": "Tous les services gouvernementaux",
     "2_2015_any": "Tous les programmes ou services de logement",
     "2_2017_any": "Tous les programmes ou services d'infrastructures",
     "2_2018_any": "Tous les programmes ou services d'emplois",
-    "2_2019_any": "Tous les programmes ou services de sécurité publique et justice",
+    "2_2019_any":
+      "Tous les programmes ou services de sécurité publique et justice",
     "2_2021_any": "Tous les programmes ou services de transport",
     "2_2022_any": "Tous les services à l'enfance et la jeunesse",
     "2_2023_any": "Tous les programmes ou services d'éducation",
     "2_2256_any": "Tous les programmes ou services de protection financière",
     "2_2328_any": "Tous les programmes ou services de loisirs",
-    "2_2352_any": "Tous les programmes ou services de développement et de croissance économique",
+    "2_2352_any":
+      "Tous les programmes ou services de développement et de croissance économique",
     "2_2024_any": "Tous les arrangements de gouvernance",
     "2_2025_any": "Tous les arrangements financiers",
     "2_2026_any": "Tous les arrangements de prestation de services",
     "2_2135_any": "Toutes les stratégies ciblant les citoyens",
     "2_2136_any": "Toutes les stratégies ciblant les fournisseurs de services",
     "2_2402_any": "Toutes les actions pour le climat",
-    "2_2403_any": "Tous les programmes et services d’approvisionnement énergétique",
-    "2_2404_any": "Tous les programmes et services de protection de l’environnement",
+    "2_2403_any":
+      "Tous les programmes et services d’approvisionnement énergétique",
+    "2_2404_any":
+      "Tous les programmes et services de protection de l’environnement",
     "2_2405_any": "Toutes les ressources naturelles",
     "0_6_any": "N'importe quel pays",
     "0_7_any": "Tous les groupes de pays",
@@ -952,8 +976,9 @@ module.exports = {
     "0_13_any": "Tous les focus",
     "0_14_any": "Toutes les cibles",
     "0_15_any": "Tous les thèmes",
-    "0_17_any": "Tous les documents liés aux systèmes sociaux d'organisations intergouvernementales",
+    "0_17_any":
+      "Tous les documents liés aux systèmes sociaux d'organisations intergouvernementales",
     "0_18_any": "Tous les documents liés aux systèmes sociaux au Canada",
-    "0_19_any": "Tous les documents liés aux systèmes sociaux en Ontario"
-  }
-}
+    "0_19_any": "Tous les documents liés aux systèmes sociaux en Ontario",
+  },
+};

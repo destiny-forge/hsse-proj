@@ -48,11 +48,14 @@ module.exports = ({ articleRepository, updateRepository }) => {
       return translations.filters[key];
     };
 
-    const articles = await articleRepository.findByMonthlyUpdate(
-      type,
-      date,
-      []
-    );
+    let articles = await articleRepository.findByMonthlyUpdate(type, date, []);
+
+    articles = articles.sort((a, b) => {
+      return language === "en"
+        ? a.title.localeCompare(b.title, language)
+        : a.titles[language].localeCompare(b.titles[language], language);
+    });
+
     const latest = {
       document_Types_Articles: [],
       hot_Docs_Articles: [],
@@ -83,8 +86,7 @@ module.exports = ({ articleRepository, updateRepository }) => {
       };
 
       const docTypeArticles = articles.filter(
-        (article) =>
-          !article.isHotDocs && article.documentType === docType.label
+        (article) => article.documentType === docType.label
       );
 
       docTypeArticles.forEach((article) => {
@@ -133,11 +135,17 @@ module.exports = ({ articleRepository, updateRepository }) => {
     const domainItems = sse.tree.checkedDomain.items[0].children;
     const filters = _.pick(domainItems, "key");
 
-    const articles = await articleRepository.findByMonthlyUpdate(
+    let articles = await articleRepository.findByMonthlyUpdate(
       type,
       date,
       filters
     );
+
+    articles = articles.sort((a, b) => {
+      return language === "en"
+        ? a.title.localeCompare(b.title, language)
+        : a.titles[language].localeCompare(b.titles[language], language);
+    });
 
     const latest = {
       program_Services_Articles: [],
@@ -148,7 +156,7 @@ module.exports = ({ articleRepository, updateRepository }) => {
       year: "",
     };
 
-    const hotDocArticles = articles.filter((article) => article.hot_docs);
+    const hotDocArticles = articles.filter((article) => article.isHotDocs);
     hotDocArticles.forEach((article) => {
       let title = language === "en" ? article.title : article.titles[language];
       const stub = {
@@ -168,8 +176,8 @@ module.exports = ({ articleRepository, updateRepository }) => {
         program_Services_Articles: [],
       };
 
-      const domainArticles = articles.filter(
-        (article) => !article.hot_docs && article.filters.includes(domain.key)
+      const domainArticles = articles.filter((article) =>
+        article.filters.includes(domain.key)
       );
 
       domainArticles.forEach((article) => {

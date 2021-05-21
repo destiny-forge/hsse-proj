@@ -1,5 +1,6 @@
 const t_ui = require("../i18n");
 const { hse, sse, country } = require("../data");
+const _ = require("underscore");
 
 /**
  * Article detail query
@@ -50,11 +51,17 @@ module.exports = ({ articleRepository }) => {
 
     let labels = getLabels(type, language);
     let fieldsVisible = getFieldVisibility(article.documentType);
+
     const title = language === "en" ? article.title : article.titles[language];
     const published = article.published.getFullYear();
-    const quality = `${article.amstarNumerator}/${article.amstarDenominator}`;
+    const quality =
+      article.amstarNumerator === -1
+        ? null
+        : `${article.amstarNumerator}/${article.amstarDenominator}`;
     const quality_note = t_ui(type, language, "cboAMSTAR_4", "");
-    const countryLinks = getCountryLinks(article.countryLinks, type, language);
+    let country_links = getCountryLinks(article.countryLinks, type, language);
+    country_links = translateCountryLinks(country_links, translations);
+    const country_groupings = getCountryGroupings(country_links, translations);
     const abstract = language === "en" ? article.abstract : "";
     const documentType = t_type(article.documentType);
     const priority_areas = [
@@ -66,16 +73,23 @@ module.exports = ({ articleRepository }) => {
     const topics = null;
     const themes = null;
     const filters = getFilters(article.filters, type, language);
+    let citation = article.citations[language];
+    citation = citation === "" ? null : citation;
+
+    delete article.countryLinks;
+    delete article.citations;
 
     return {
       ...article,
+      citation,
       documentType,
       title,
       abstract,
       published,
       quality,
       quality_note,
-      countryLinks,
+      country_links,
+      country_groupings,
       priority_areas,
       topics,
       themes,
@@ -86,7 +100,8 @@ module.exports = ({ articleRepository }) => {
   };
 
   const getCountryLinks = (countryLinks, type, language) => {
-    for (const [_key, value] of Object.entries(countryLinks)) {
+    let arrCountryLinks = [];
+    for (const [key, value] of Object.entries(countryLinks)) {
       value.links.forEach((link) => {
         if (language !== "en") {
           const translated = t_ui(
@@ -98,8 +113,50 @@ module.exports = ({ articleRepository }) => {
           link.name = `${link.name} (${translated})`;
         }
       });
+      arrCountryLinks.push({
+        key,
+        value,
+      });
     }
-    return countryLinks;
+    return arrCountryLinks;
+  };
+
+  const translateCountryLinks = (countryLinks, t) => {
+    return countryLinks.map((countryLink) => {
+      const c = _.filter(country.countries, {
+        value: countryLink.value.id.toString(),
+      });
+      if (c.length === 1) {
+        const tKey = c[0].key;
+        const newKey = t.filters[tKey];
+        countryLink.key = newKey;
+      }
+      return countryLink;
+    });
+  };
+
+  const getCountryGroupings = (countryLinks, t) => {
+    let groupings = [];
+    country.groupings.forEach((group) => {
+      group.linkCount = 0;
+
+      const matches = countryLinks.filter((country) => {
+        return group.countries.includes(parseInt(country.value.id));
+      });
+
+      matches.forEach((match) => {
+        group.linkCount += match.value.links.length;
+      });
+
+      if (group.linkCount > 0) {
+        groupings.push({
+          key: t.filters[group.key] || group.name,
+          value: group.linkCount,
+        });
+      }
+    });
+
+    return groupings.sort((a, b) => b.value - a.value);
   };
 
   const getFilters = (filters, type, language) => {
@@ -477,6 +534,7 @@ module.exports = ({ articleRepository }) => {
         };
         break;
     }
+    return fields;
   };
 
   return {

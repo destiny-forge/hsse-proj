@@ -4,6 +4,14 @@ import ArticleService from '../services/ArticleService';
 import Context from './Context';
 import _ from 'underscore';
 
+const joinList = (array) => {
+  if (array.length <= 1) {
+    return array;
+  }
+  let lastItem = _.last(array);
+  return array.slice(0, -1).join(', ') + ' and ' + lastItem;
+};
+
 const ArticleField = ({ visible = true, children }) => {
   return visible ? <div className="article-field">{children}</div> : null;
 };
@@ -20,12 +28,12 @@ const CountryAuthorLinks = ({ items, language }) => {
   }
   return (
     <ul className="article-item-region-list">
-      {Object.keys(items).map((key) => {
+      {items.map((item) => {
         return (
-          <li key={key} className="region-item">
-            <span className="region-item-title">{key}:</span>
+          <li key={item.key} className="region-item">
+            <span className="region-item-title">{item.key}:</span>
             <ul className="article-author-list">
-              {items[key].links.map((author, i) => (
+              {item.value.links.map((author, i) => (
                 <li key={`author-item-${i}`} className="author-item">
                   <a
                     rel="alternate"
@@ -51,15 +59,26 @@ const CountryLinks = ({ items, t }) => {
   }
   return (
     <ul className="article-item-countries">
-      {Object.keys(items).map((key) => {
+      {items.map((item) => {
         return (
-          <li key={key} className="country-item">
-            <span>{key}</span>
-            <span>({items[key].count})</span>
+          <li key={item.key} className="country-item">
+            <span>{item.key}</span>
+            <span>({item.value.count})</span>
           </li>
         );
       })}
     </ul>
+  );
+};
+
+const CountryGroups = (country_groupings) => {
+  if (country_groupings.length === 0) {
+    return null;
+  }
+  return joinList(
+    country_groupings.map((group) => {
+      return `${group.key} (${group.value})`;
+    })
   );
 };
 
@@ -87,6 +106,20 @@ const NestedList = (list, listName, itemName) => {
 
   return result;
 };
+
+const RelatedArticles = ({ article, t }) => (
+  <ArticleField visible={article.related_documents_visible}>
+    <Link
+      className="btn btn-primary"
+      to={{
+        pathname: '/search',
+        related_article_id: article.id,
+      }}
+    >
+      {t('articles_page.related_documents')}
+    </Link>
+  </ArticleField>
+);
 
 const ArticleDetail = ({ id, site, language, t }) => {
   const [article, setArticle] = useState(null);
@@ -140,9 +173,9 @@ const ArticleDetail = ({ id, site, language, t }) => {
               }
             >
               <h2>{article.label_studies_conducted_in}</h2>
-              <CountryLinks items={article.countryLinks} t={t} />
+              <CountryLinks items={article.country_links} t={t} />
               <CountryAuthorLinks
-                items={article.countryLinks}
+                items={article.country_links}
                 language={language}
               />
             </ArticleField>
@@ -152,17 +185,7 @@ const ArticleDetail = ({ id, site, language, t }) => {
               <p>{get(article.abstract, t('articles_page.no_topics'))}</p>
             </ArticleField>
 
-            <ArticleField visible={article.related_documents_visible}>
-              <Link
-                className="btn btn-primary"
-                to={{
-                  pathname: '/search',
-                  related_article_id: article.id,
-                }}
-              >
-                {t('articles_page.related_documents')}
-              </Link>
-            </ArticleField>
+            <RelatedArticles article={article} t={t} />
 
             <ArticleField visible={article.priority_area_visible}>
               <h2>{article.label_priority_areas}</h2>
@@ -203,29 +226,98 @@ const ArticleDetail = ({ id, site, language, t }) => {
               </ul>
             </ArticleField>
 
-            {/*
-          <ArticleField visible={article.country_groupings_visible}>
-            <h2>{article.label_country_groupings}</h2>
-            {@ifNotEmpty @renderCountries(article.country_groupings), @t('no_country_groupings')}
-          </ArticleField>
-
-          <ArticleField visible={article.who_region_visible}>
-            <h2>{article.label_who_regions}</h2>
-            {@ifNotEmpty @joinList(_.compact(_.pluck(article.who_regions, 'title'))), @t('no_who_regions')}
-          </ArticleField>
-
-          <ArticleField visible={article.lmic_focus_visible}>
-            <h2>{article.label_lmic_focus}</h2>
-            <div className="article-item-lmic-focus">
-              {@ifNotEmpty @joinList(_.compact(_.pluck(article.lmic_focus, 'title'))), @t('no_lmic_focus')}
-            </div>
+            <ArticleField visible={article.country_groupings_visible}>
+              <h2>{article.label_country_groupings}</h2>
+              {CountryGroups(article.country_groupings) ||
+                t('articles_page.no_country_groupings')}
             </ArticleField>
-            */}
+
+            <ArticleField visible={article.who_region_visible}>
+              <h2>{article.label_who_regions}</h2>
+              {joinList(_.compact(_.pluck(article.who_regions, 'title'))) ||
+                t('articles_page.no_who_regions')}
+            </ArticleField>
+
+            <ArticleField visible={article.lmic_focus_visible}>
+              <h2>{article.label_lmic_focus}</h2>
+              <div className="article-item-lmic-focus">
+                {joinList(_.compact(_.pluck(article.lmic_focus, 'title'))) ||
+                  t('articles_page.no_lmic_focus')}
+              </div>
+            </ArticleField>
 
             <ArticleField visible={article.country_focus_visible}>
               <h2>{article.label_country_focus}</h2>
-              {article.country_focus || t('no_country_focus')}
+              {article.country_focus || t('articles_page.no_country_focus')}
             </ArticleField>
+          </div>
+
+          <RelatedArticles article={article} t={t} />
+
+          <div className="desktop-sidebar">
+            <div className="section">
+              {/*
+            <ArticleField visible={article.user_friendly_summary_visible}>
+              <h2>{article.label_user_friendly_summary}</h2>
+              {@ifNotEmpty @renderLinksList('summary-link', article.user_friendly_summary_links), @t('no_summary_links')}
+            </ArticleField>
+
+            <ArticleField visible={article.scientific_abstract_visible}>
+              <h2>{article.label_scientific_abstract}</h2>
+              {@ifNotEmpty @renderLinksList('abstract-links', article.abstract_links), @t('no_scientific_abstract')}
+            </ArticleField>
+
+            <ArticleField visible={article.full_text_report_visible}>
+              <h2>{article.label_full_text_report}</h2>
+              {@ifNotEmpty @renderLinksList('full-text-report', article.full_text_link), @t('no_full_text_report')}
+            </ArticleField>
+            */}
+
+              <ArticleField>
+                <h2>{article.label_citation}</h2>
+                {article.citation || t('articles_page.no_doi')}
+              </ArticleField>
+
+              <ArticleField>
+                <h2>{article.label_doi}</h2>
+                {article.DOI || t('articles_page.no_doi')}
+              </ArticleField>
+            </div>
+
+            <div className="section">
+              <ArticleField>
+                <h2>{article.label_question_type}</h2>
+                {article.questionType}
+              </ArticleField>
+
+              <ArticleField>
+                <h2>{article.label_focus}</h2>
+                {article.generalFocus || t('articles_page.no_focus')}
+              </ArticleField>
+
+              {/*
+                          <ArticleField>
+              <h2>{article.label_targets}</h2>
+              {@ifNotEmpty @renderTargets(), @t('no_targets')}
+            </ArticleField>
+              */}
+
+              <ArticleField visible={article.author_email_visible}>
+                <h2>{article.label_author_email}</h2>
+                {article.author_email || t('articles_page.no_author_email')}
+              </ArticleField>
+
+              <ArticleField visible={article.registry_record_visible}>
+                <h2>{article.label_registry_record}</h2>
+                {article.label_registry_record ||
+                  t('articles_page.no_registry_record_links')}
+              </ArticleField>
+
+              <ArticleField visible={article.who_links_visible}>
+                <h2>{article.label_who_links}</h2>
+                {article.who_links || t('articles_page.no_who_links')}
+              </ArticleField>
+            </div>
           </div>
         </div>
       </div>
