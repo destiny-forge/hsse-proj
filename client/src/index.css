@@ -8352,11 +8352,15 @@ form .form-errors {
 #app footer .logo img {
   height: 55px;
 }
-#app footer {
+#app .sse footer {
   text-align: center;
   margin-bottom: 60px;
   margin-top: 20px;
   display: flow-root;
+}
+#app .hse footer {
+  text-align: center;
+  margin-bottom: 60px;
 }
 #app footer .forum-logo,
 #app footer .logo {
@@ -8365,20 +8369,33 @@ form .form-errors {
 #app footer .forum-logo {
   height: 36px;
 }
-#app footer .forum-logo,
-#app footer .logo {
+#app .sse footer .forum-logo,
+#app .sse footer .logo {
   width: 222px;
 }
-#app footer .logo {
+#app .sse footer .logo {
   float: left;
   max-width: 375px;
 }
-#app footer .logo-wrapper {
+#app .sse footer .logo-wrapper {
   display: flow-root;
   margin: 20px auto;
   max-width: 590px;
 }
-#app footer .forum-logo {
+
+#app .hse footer .logo {
+  height: 42px;
+  border-right: 1px solid #999;
+  padding-right: 8px;
+  margin-right: 8px;
+}
+
+#app .hse footer .logo-wrapper {
+  display: block;
+  margin: 20px auto;
+}
+
+#app .sse footer .forum-logo {
   float: right;
   max-width: 375px;
 }
