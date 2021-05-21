@@ -33,6 +33,7 @@ module.exports = ({ articleRepository, batchRepository }) => {
       language: article.language,
       uploaded: new Date(),
       harvested: new Date(),
+      liveDate: new Date(Date.parse("1900-01-01T05:00:00.000Z")),
       shortId: shortid.generate(),
     };
 

@@ -128,7 +128,6 @@ const Article = t.struct(
       rating: "AMSTAR rating from McMaster Health Forum",
       priority: "low",
       monthlyUpdateDate: "",
-      liveDate: "",
       live: false,
       stages: {
         eligibility: { status: "New article" },
