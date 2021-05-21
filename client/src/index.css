@@ -2,14 +2,6 @@
   background-color: #fff;
 }
 
-#app footer .logo img {
-  height: 55px;
-}
-
-#app footer .forum-logo img {
-  height: 45px;
-}
-
 .hse.home {
   background: url(./images/bg_hse_gradient.png);
   background: linear-gradient(to right, #178eee, #1925e3);
@@ -8356,7 +8348,17 @@ form .form-errors {
   height: 20px;
   color: #000;
 }
-#app footer {
+
+#app footer .logo img {
+  height: 55px;
+}
+#app .sse footer {
+  text-align: center;
+  margin-bottom: 60px;
+  margin-top: 20px;
+  display: flow-root;
+}
+#app .hse footer {
   text-align: center;
   margin-bottom: 60px;
 }
@@ -8367,24 +8369,57 @@ form .form-errors {
 #app footer .forum-logo {
   height: 36px;
 }
-#app footer .logo {
+#app .sse footer .forum-logo,
+#app .sse footer .logo {
+  width: 222px;
+}
+#app .sse footer .logo {
   float: left;
   max-width: 375px;
 }
-#app footer .logo-wrapper {
+#app .sse footer .logo-wrapper {
   display: flow-root;
   margin: 20px auto;
   max-width: 590px;
 }
-#app footer .forum-logo {
+
+#app .hse footer .logo {
+  height: 42px;
+  border-right: 1px solid #999;
+  padding-right: 8px;
+  margin-right: 8px;
+}
+
+#app .hse footer .logo-wrapper {
+  display: block;
+  margin: 20px auto;
+}
+
+#app .sse footer .forum-logo {
   float: right;
   max-width: 375px;
 }
+#app footer .forum-logo img {
+  height: 45px;
+}
+
+#app footer .forum-logo p,
+#app footer .logo p {
+  color: #a8a8a8;
+  margin-top: 10px;
+  font-size: 12px;
+}
+
 #app footer .clearfix {
   clear: both;
 }
 
-#app footer a {
+#app .sse footer a {
+  color: #007096;
+  text-decoration: underline;
+}
+
+#app .hse footer a {
   color: #cc4921;
   text-decoration: underline;
 }

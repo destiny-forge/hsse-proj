@@ -16,8 +16,8 @@ const Latest = ({ site, t }) => {
         <Header />
         <div id="page-content">
           <LatestArticles />
-          <Footer />
         </div>
+        <Footer />
       </div>
     </div>
   );
