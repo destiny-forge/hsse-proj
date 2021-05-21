@@ -48,11 +48,14 @@ module.exports = ({ batchRepository, articleRepository, config }) => {
         return shortid.generate();
       });
 
+      const liveDate = new Date(Date.parse("1900-01-01T05:00:00.000Z"));
+
       const result = articles.map(async (article, index) => {
         article.batchId = new ObjectID(newBatch._id);
         article.batchName = batch.name;
         article.published = new Date(batch.uploaded);
         article.harvested = new Date(batch.harvested);
+        article.liveDate = liveDate;
         article.status = "New article";
         article.shortId = shortids[index];
 
