@@ -2,6 +2,14 @@
   background-color: #fff;
 }
 
+#app footer .logo img {
+  height: 55px;
+}
+
+#app footer .forum-logo img {
+  height: 45px;
+}
+
 .hse.home {
   background: url(./images/bg_hse_gradient.png);
   background: linear-gradient(to right, #178eee, #1925e3);
@@ -8360,15 +8368,22 @@ form .form-errors {
   height: 36px;
 }
 #app footer .logo {
-  height: 42px;
-  border-right: 1px solid #999;
-  padding-right: 8px;
-  margin-right: 8px;
+  float: left;
+  max-width: 375px;
 }
 #app footer .logo-wrapper {
-  display: block;
+  display: flow-root;
   margin: 20px auto;
+  max-width: 590px;
 }
+#app footer .forum-logo {
+  float: right;
+  max-width: 375px;
+}
+#app footer .clearfix {
+  clear: both;
+}
+
 #app footer a {
   color: #cc4921;
   text-decoration: underline;

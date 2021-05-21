@@ -83,8 +83,7 @@ module.exports = ({ articleRepository, updateRepository }) => {
       };
 
       const docTypeArticles = articles.filter(
-        (article) =>
-          !article.isHotDocs && article.documentType === docType.label
+        (article) => article.documentType === docType.label
       );
 
       docTypeArticles.forEach((article) => {
@@ -168,8 +167,8 @@ module.exports = ({ articleRepository, updateRepository }) => {
         program_Services_Articles: [],
       };
 
-      const domainArticles = articles.filter(
-        (article) => !article.hot_docs && article.filters.includes(domain.key)
+      const domainArticles = articles.filter((article) =>
+        article.filters.includes(domain.key)
       );
 
       domainArticles.forEach((article) => {

@@ -51,9 +51,13 @@ module.exports = ({ articleRepository }) => {
 
     let labels = getLabels(type, language);
     let fieldsVisible = getFieldVisibility(article.documentType);
+
     const title = language === "en" ? article.title : article.titles[language];
     const published = article.published.getFullYear();
-    const quality = `${article.amstarNumerator}/${article.amstarDenominator}`;
+    const quality =
+      article.amstarNumerator === -1
+        ? null
+        : `${article.amstarNumerator}/${article.amstarDenominator}`;
     const quality_note = t_ui(type, language, "cboAMSTAR_4", "");
     let country_links = getCountryLinks(article.countryLinks, type, language);
     country_links = translateCountryLinks(country_links, translations);
@@ -69,11 +73,15 @@ module.exports = ({ articleRepository }) => {
     const topics = null;
     const themes = null;
     const filters = getFilters(article.filters, type, language);
+    let citation = article.citations[language];
+    citation = citation === "" ? null : citation;
 
     delete article.countryLinks;
+    delete article.citations;
 
     return {
       ...article,
+      citation,
       documentType,
       title,
       abstract,
@@ -526,6 +534,7 @@ module.exports = ({ articleRepository }) => {
         };
         break;
     }
+    return fields;
   };
 
   return {
