@@ -13,7 +13,9 @@ const Markdown = ({ page, site, language }) => {
       });
   }, [page, site, language]);
 
-  return <div dangerouslySetInnerHTML={{ __html: marked(content) }} />;
+  return (
+    <div dangerouslySetInnerHTML={{ __html: marked(content, 'Maruku') }} />
+  );
 };
 
 export default Context(Markdown);
