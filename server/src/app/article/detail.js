@@ -131,12 +131,15 @@ module.exports = ({ articleRepository }) => {
       "litFullTextReport",
       "One Page Summary"
     )} (${free})`;
-    return [
-      {
-        title,
-        url,
-      },
-    ];
+
+    return url === ""
+      ? []
+      : [
+          {
+            title,
+            url,
+          },
+        ];
   };
 
   const getFocus = (focus, type, language) => {
