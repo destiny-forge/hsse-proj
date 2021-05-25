@@ -12,6 +12,29 @@ const joinList = (array) => {
   return array.slice(0, -1).join(', ') + ' and ' + lastItem;
 };
 
+const Links = (name, links, language) => {
+  if (_.isUndefined(links) || (links && links.length === 0)) {
+    return null;
+  }
+
+  return (
+    <ul>
+      {links.map((link, i) => (
+        <li key={`${name}-${i}`} className={`${name}-item`}>
+          <a
+            rel="alternate"
+            hrefLang={language}
+            href={link.url}
+            target="_blank"
+          >
+            {link.title}
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+};
+
 const ArticleField = ({ visible = true, children }) => {
   return visible ? <div className="article-field">{children}</div> : null;
 };
@@ -256,22 +279,26 @@ const ArticleDetail = ({ id, site, language, t }) => {
 
           <div className="desktop-sidebar">
             <div className="section">
-              {/*
-            <ArticleField visible={article.user_friendly_summary_visible}>
-              <h2>{article.label_user_friendly_summary}</h2>
-              {@ifNotEmpty @renderLinksList('summary-link', article.user_friendly_summary_links), @t('no_summary_links')}
-            </ArticleField>
+              <ArticleField visible={article.user_friendly_summary_visible}>
+                <h2>{article.label_user_friendly_summary}</h2>
+                {Links(
+                  'summary-link',
+                  article.user_friendly_summary_links,
+                  language
+                ) || t('articles_page.no_summary_links')}
+              </ArticleField>
 
-            <ArticleField visible={article.scientific_abstract_visible}>
-              <h2>{article.label_scientific_abstract}</h2>
-              {@ifNotEmpty @renderLinksList('abstract-links', article.abstract_links), @t('no_scientific_abstract')}
-            </ArticleField>
+              <ArticleField visible={article.scientific_abstract_visible}>
+                <h2>{article.label_scientific_abstract}</h2>
+                {Links('abstract-links', article.abstract_links, language) ||
+                  t('articles_page.no_scientific_abstract')}
+              </ArticleField>
 
-            <ArticleField visible={article.full_text_report_visible}>
-              <h2>{article.label_full_text_report}</h2>
-              {@ifNotEmpty @renderLinksList('full-text-report', article.full_text_link), @t('no_full_text_report')}
-            </ArticleField>
-            */}
+              <ArticleField visible={article.full_text_report_visible}>
+                <h2>{article.label_full_text_report}</h2>
+                {Links('full-text-report', article.full_text_link, language) ||
+                  t('articles_page.no_full_text_report')}
+              </ArticleField>
 
               <ArticleField>
                 <h2>{article.label_citation}</h2>

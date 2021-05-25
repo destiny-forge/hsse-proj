@@ -8864,6 +8864,14 @@ form .form-errors {
   font-size: 24px;
 }
 
+.sse .article-item h2 {
+  color: #007096;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
 .article-item h2 {
   color: #cc4921;
   font-size: 14px;
