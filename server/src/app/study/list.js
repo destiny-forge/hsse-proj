@@ -17,11 +17,11 @@ module.exports = ({ articleRepository }) => {
       ];
 
       const matches = [
-        { "stages.eligibility.status": "Completed" },
-        { "stages.appraisals.status": "Completed" },
+        { "stages.eligibility.status": "Data entry complete" },
+        { "stages.appraisals.status": "Data entry complete" },
       ];
 
-      let statuses = [status, "Completed"];
+      let statuses = [status, "Data entry complete"];
 
       if (status === "Complicated") {
         statuses.push("In progress");
@@ -54,8 +54,8 @@ module.exports = ({ articleRepository }) => {
       ];
 
       const matches = [
-        { "stages.eligibility.status": "Completed" },
-        { "stages.appraisals.status": "Completed" },
+        { "stages.eligibility.status": "Data entry complete" },
+        { "stages.appraisals.status": "Data entry complete" },
       ];
 
       return await articleRepository.findByBatchAndDocTypes(

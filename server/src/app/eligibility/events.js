@@ -23,9 +23,10 @@ module.exports = ({ events, eligibilityRepository, articleRepository }) => {
         second.selectedStatus === "Data entry complete"
       ) {
         const conflicts = diff.compareFilters(filters, first.userId);
-        status = conflicts.length > 0 ? "Discrepancy detected" : "Completed";
+        status =
+          conflicts.length > 0 ? "Discrepancy detected" : "Data entry complete";
 
-        if (status === "Completed") {
+        if (status === "Data entry complete") {
           const { _id, documentType, questionType, generalFocus } = first;
           articleRepository.update(articleId, {
             "stages.eligibility._id": new ObjectID(_id),

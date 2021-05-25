@@ -18,11 +18,15 @@ module.exports = ({ events, appraisalRepository, articleRepository }) => {
     if (appraisals.length === 2) {
       const first = appraisals[0];
       const second = appraisals[1];
-      if (first.status === "Completed" && second.status === "Completed") {
+      if (
+        first.status === "Data entry complete" &&
+        second.status === "Data entry complete"
+      ) {
         const conflicts = diff.compareAppraisals(appraisals, first.userId);
-        status = conflicts.length > 0 ? "Discrepancy detected" : "Completed";
+        status =
+          conflicts.length > 0 ? "Discrepancy detected" : "Data entry complete";
 
-        if (status === "Completed") {
+        if (status === "Data entry complete") {
           const {
             _id,
             complicated,

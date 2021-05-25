@@ -17,7 +17,7 @@ import validate from './validate';
 
 const STATUSES = [
   { value: 'In progress', label: 'In progress' },
-  { value: 'Completed', label: 'Completed' },
+  { value: 'Data entry complete', label: 'Data entry complete' },
 ];
 
 const ANSWERS = ['Yes', 'No', "Can't answer", 'Not applicable'];

@@ -9,7 +9,6 @@ module.exports = ({ articleRepository }) => {
         statuses = [
           "New article",
           "Data entry complete",
-          "Completed",
           "Excluded",
           "Discrepancy detected",
         ];

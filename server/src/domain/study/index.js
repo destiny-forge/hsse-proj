@@ -33,7 +33,7 @@ const Study = t.struct(
     complicated: t.Boolean,
 
     countryLinks: t.Object,
-    status: t.String, //'In progress', 'Completed'
+    status: t.String, //'In progress', 'Data entry complete'
   },
   {
     defaultProps: {

@@ -10,7 +10,7 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      let statuses = [status, "Completed"];
+      let statuses = [status, "Data entry complete"];
 
       if (status === "In progress") {
         statuses.push("Discrepancy detected");
@@ -20,7 +20,7 @@ module.exports = ({ articleRepository }) => {
         statuses = [
           "New article",
           "In progress",
-          "Completed",
+          "Data entry complete",
           "Discrepancy detected",
           "Complicated",
         ];

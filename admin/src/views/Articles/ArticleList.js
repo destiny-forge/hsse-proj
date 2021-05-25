@@ -50,7 +50,7 @@ const ArticleList = ({ stage, articles = [], user, assign }) => {
       return null;
     }
 
-    if (!isAssigned(stage) || status === 'Completed') {
+    if (!isAssigned(stage) || status === 'Data entry complete') {
       return null;
     }
 
