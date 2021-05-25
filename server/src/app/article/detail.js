@@ -78,7 +78,7 @@ module.exports = ({ articleRepository }) => {
 
     let abstracts = getLinks(article, "abstracts");
     let hyperlinks = getFullTextLinks(article.hyperlinks, type, language);
-
+    let generalFocus = getFocus(article.generalFocus, type, language);
     delete article.countryLinks;
     delete article.citations;
 
@@ -99,6 +99,7 @@ module.exports = ({ articleRepository }) => {
       topics,
       themes,
       filters,
+      generalFocus,
       ...labels,
       ...fieldsVisible,
     };
@@ -136,6 +137,12 @@ module.exports = ({ articleRepository }) => {
         url,
       },
     ];
+  };
+
+  const getFocus = (focus, type, language) => {
+    const general = t_ui(type, language, "cblFocus_1", "");
+    const specific = t_ui(type, language, "cblFocus_0", "");
+    return focus ? general : specific;
   };
 
   const getCountryLinks = (countryLinks, type, language) => {
