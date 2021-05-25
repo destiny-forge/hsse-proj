@@ -76,6 +76,9 @@ module.exports = ({ articleRepository }) => {
     let citation = article.citations[language];
     citation = citation === "" ? null : citation;
 
+    let abstracts = getLinks(article, "abstracts");
+    let hyperlinks = getFullTextLinks(article.hyperlinks, type, language);
+
     delete article.countryLinks;
     delete article.citations;
 
@@ -85,6 +88,8 @@ module.exports = ({ articleRepository }) => {
       documentType,
       title,
       abstract,
+      abstracts,
+      hyperlinks,
       published,
       quality,
       quality_note,
@@ -97,6 +102,40 @@ module.exports = ({ articleRepository }) => {
       ...labels,
       ...fieldsVisible,
     };
+  };
+
+  const getLinks = (article, field) => {
+    const links = Object.entries(article[field]).filter(
+      ([_key, value]) => value !== ""
+    );
+
+    return links.map(([key, value]) => {
+      return {
+        title: key,
+        url: value,
+      };
+    });
+  };
+
+  const getFullTextLinks = (links, type, language) => {
+    let url = links[language];
+    url = url === "" ? links["en"] : url;
+    const free =
+      language === "en"
+        ? "free"
+        : t_ui(type, language, "_FreeInEnglish_Hyperlink", "");
+    const title = `${t_ui(
+      type,
+      language,
+      "litFullTextReport",
+      "One Page Summary"
+    )} (${free})`;
+    return [
+      {
+        title,
+        url,
+      },
+    ];
   };
 
   const getCountryLinks = (countryLinks, type, language) => {
