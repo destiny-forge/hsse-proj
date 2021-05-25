@@ -132,7 +132,7 @@ class AppraisalList extends React.Component {
       return null;
     }
 
-    if (!this.isAssigned(stage) || status === 'Completed') {
+    if (!this.isAssigned(stage) || status === 'Data entry complete') {
       return null;
     }
 

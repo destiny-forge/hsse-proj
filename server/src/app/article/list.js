@@ -34,7 +34,7 @@ module.exports = ({ articleRepository }) => {
         "New article",
         "In progress",
         "Discrepancy detected",
-        "Completed",
+        "Data entry complete",
       ];
 
       return await articleRepository.findByBatch(batchId, stage, status);

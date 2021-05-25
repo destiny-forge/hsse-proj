@@ -130,6 +130,17 @@ const NestedList = (list, listName, itemName) => {
   return result;
 };
 
+const Targets = (targets) => {
+  if (targets && targets.length === 0) {
+    return null;
+  }
+  return (
+    <div className="article-item-targets">
+      {joinList(_.pluck(targets, 'title'))}
+    </div>
+  );
+};
+
 const RelatedArticles = ({ article, t }) => (
   <ArticleField visible={article.related_documents_visible}>
     <Link
@@ -290,13 +301,13 @@ const ArticleDetail = ({ id, site, language, t }) => {
 
               <ArticleField visible={article.scientific_abstract_visible}>
                 <h2>{article.label_scientific_abstract}</h2>
-                {Links('abstract-links', article.abstract_links, language) ||
+                {Links('abstract-links', article.abstracts, language) ||
                   t('articles_page.no_scientific_abstract')}
               </ArticleField>
 
               <ArticleField visible={article.full_text_report_visible}>
                 <h2>{article.label_full_text_report}</h2>
-                {Links('full-text-report', article.full_text_link, language) ||
+                {Links('full-text-report', article.hyperlinks, language) ||
                   t('articles_page.no_full_text_report')}
               </ArticleField>
 
@@ -322,12 +333,12 @@ const ArticleDetail = ({ id, site, language, t }) => {
                 {article.generalFocus || t('articles_page.no_focus')}
               </ArticleField>
 
-              {/*
-                          <ArticleField>
-              <h2>{article.label_targets}</h2>
-              {@ifNotEmpty @renderTargets(), @t('no_targets')}
-            </ArticleField>
-              */}
+              {
+                <ArticleField>
+                  <h2>{article.label_targets}</h2>
+                  {Targets(article.targets) || t('articles_page.no_targets')}
+                </ArticleField>
+              }
 
               <ArticleField visible={article.author_email_visible}>
                 <h2>{article.label_author_email}</h2>

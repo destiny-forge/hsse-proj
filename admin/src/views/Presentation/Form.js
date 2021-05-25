@@ -26,8 +26,8 @@ import 'react-toastify/dist/ReactToastify.min.css';
 const STATUSES = [
   { value: 'New article', label: 'New article' },
   { value: 'Data entry complete', label: 'Data entry complete' },
-  { value: 'Excluded', label: 'Excluded' },
-  { value: 'Completed', label: 'Completed' },
+  { value: 'Excluded', label: 'Deleted' },
+  { value: 'Live', label: 'Live' },
 ];
 
 const REF_TYPES = [
@@ -117,6 +117,7 @@ class PresentationForm extends React.Component {
     this.handleLinkUpdate = this.handleLinkUpdate.bind(this);
     this.handlePDFLinks = this.handlePDFLinks.bind(this);
     this.handleTreeChange = this.handleTreeChange.bind(this);
+    this.handleStatusChange = this.handleStatusChange.bind(this);
     //this.Monthly = MonthlyService({fetch: this.props.fetch });
   }
 
@@ -160,6 +161,19 @@ class PresentationForm extends React.Component {
         [field]: value,
       },
     });
+  };
+
+  handleStatusChange = (value) => {
+    let article = {
+      ...this.state.article,
+      status: value,
+    };
+    if (value === 'live') {
+      article.live = true;
+      article.liveDate = new Date();
+      article.status = 'Completed';
+    }
+    this.setState({ article });
   };
 
   handleTextChange = (e) => {
@@ -318,6 +332,12 @@ class PresentationForm extends React.Component {
   }
 
   notifyDone = () => toast.success('Presentation details successfully saved!');
+
+  getStatus = (article) => {
+    console.log(article);
+    let status = article.live ? 'Live' : article.status;
+    return STATUSES.filter((opt) => opt.value === status);
+  };
 
   render() {
     const { article, loaded, errors } = this.state;
@@ -951,11 +971,9 @@ class PresentationForm extends React.Component {
               <div className="form-group row">
                 <div className="col-sm-6">
                   <Select
-                    value={STATUSES.filter(
-                      (opt) => opt.value === article.status
-                    )}
+                    value={this.getStatus(article)}
                     name="status"
-                    onChange={(opt) => this.handleChange('status', opt.value)}
+                    onChange={(opt) => this.handleStatusChange(opt.value)}
                     options={STATUSES}
                     isSearchable
                   />
@@ -984,11 +1002,11 @@ class PresentationForm extends React.Component {
                       added, still not visible in searches
                     </li>
                     <li>
-                      <b>Excluded</b> = Removed from the system, not visible in
+                      <b>Deleted</b> = Removed from the system, not visible in
                       searches
                     </li>
                     <li>
-                      <b>Completed</b> - Available for searching/alerting
+                      <b>Live</b> - Available for searching/alerting
                     </li>
                   </ul>
                 </div>

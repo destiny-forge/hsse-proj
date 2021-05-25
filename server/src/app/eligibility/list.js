@@ -10,7 +10,7 @@ module.exports = ({ articleRepository }) => {
         };
       }
 
-      let statuses = [status, "Completed"];
+      let statuses = [status, "Data entry complete"];
       if (status === "In progress") {
         statuses.push("Discrepancy detected");
       }
@@ -39,7 +39,7 @@ module.exports = ({ articleRepository }) => {
         "New article",
         "In progress",
         "Discrepancy detected",
-        "Completed",
+        "Data entry complete",
       ];
 
       return await articleRepository.findByBatch(

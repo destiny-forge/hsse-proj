@@ -76,6 +76,9 @@ module.exports = ({ articleRepository }) => {
     let citation = article.citations[language];
     citation = citation === "" ? null : citation;
 
+    let abstracts = getLinks(article, "abstracts");
+    let hyperlinks = getFullTextLinks(article.hyperlinks, type, language);
+    let generalFocus = getFocus(article.generalFocus, type, language);
     delete article.countryLinks;
     delete article.citations;
 
@@ -85,6 +88,8 @@ module.exports = ({ articleRepository }) => {
       documentType,
       title,
       abstract,
+      abstracts,
+      hyperlinks,
       published,
       quality,
       quality_note,
@@ -94,9 +99,53 @@ module.exports = ({ articleRepository }) => {
       topics,
       themes,
       filters,
+      generalFocus,
       ...labels,
       ...fieldsVisible,
     };
+  };
+
+  const getLinks = (article, field) => {
+    const links = Object.entries(article[field]).filter(
+      ([_key, value]) => value !== ""
+    );
+
+    return links.map(([key, value]) => {
+      return {
+        title: key,
+        url: value,
+      };
+    });
+  };
+
+  const getFullTextLinks = (links, type, language) => {
+    let url = links[language];
+    url = url === "" ? links["en"] : url;
+    const free =
+      language === "en"
+        ? "free"
+        : t_ui(type, language, "_FreeInEnglish_Hyperlink", "");
+    const title = `${t_ui(
+      type,
+      language,
+      "litFullTextReport",
+      "One Page Summary"
+    )} (${free})`;
+
+    return url === ""
+      ? []
+      : [
+          {
+            title,
+            url,
+          },
+        ];
+  };
+
+  const getFocus = (focus, type, language) => {
+    const general = t_ui(type, language, "cblFocus_1", "");
+    const specific = t_ui(type, language, "cblFocus_0", "");
+    return focus ? general : specific;
   };
 
   const getCountryLinks = (countryLinks, type, language) => {

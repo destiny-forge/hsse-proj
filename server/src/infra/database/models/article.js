@@ -78,7 +78,7 @@ module.exports = ({ database }) => {
         .find({
           type: { $eq: type },
           priority: { $eq: priority },
-          ["stages.eligibility.status"]: "Completed",
+          ["stages.eligibility.status"]: "Data entry complete",
           $or: [
             { [`titles.${language}`]: { $exists: false } },
             { [`titles.${language}.approved`]: false },
@@ -209,12 +209,20 @@ module.exports = ({ database }) => {
         },
         complete: {
           $sum: {
-            $cond: [{ $eq: [`$stages.${stage}.status`, "Completed"] }, 1, 0],
+            $cond: [
+              { $eq: [`$stages.${stage}.status`, "Data entry complete"] },
+              1,
+              0,
+            ],
           },
         },
         created: {
           $sum: {
-            $cond: [{ $ne: [`$stages.${stage}.status`, "Completed"] }, 1, 0],
+            $cond: [
+              { $ne: [`$stages.${stage}.status`, "Data entry complete"] },
+              1,
+              0,
+            ],
           },
         },
         batchName: { $first: "$batchName" },
@@ -371,8 +379,8 @@ module.exports = ({ database }) => {
       $match: {
         type: { $eq: type },
         monthlyUpdateDate: { $eq: "" },
-        ["stages.eligibility.status"]: "Completed",
-        ["stages.appraisals.status"]: "Completed",
+        ["stages.eligibility.status"]: "Data entry complete",
+        ["stages.appraisals.status"]: "Data entry complete",
       },
     };
     const group = {

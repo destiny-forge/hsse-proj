@@ -13,7 +13,7 @@ module.exports = ({ events, studyRepository, articleRepository }) => {
     let status = "In progress";
 
     if (study.status === "Data entry complete") {
-      status = "Completed";
+      status = "Data entry complete";
 
       try {
         const {
