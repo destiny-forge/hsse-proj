@@ -126,7 +126,7 @@ class PasswordReset extends Component {
                   </div>
                   <button type="submit" className="btn primary">
                     {' '}
-                    Sign Up
+                    Reset
                   </button>
                 </form>
               </div>

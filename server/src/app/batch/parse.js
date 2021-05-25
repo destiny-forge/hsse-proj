@@ -45,18 +45,23 @@ const journalFields = [
 
 const clean = (fields) => {
   const article = Object.assign.apply({}, fields);
-  ["volume", "issue", "pages"].forEach((field) => {
+  ["volume", "issue"].forEach((field) => {
     if (article[field] === "[NOT USED]") {
       delete article[field];
     }
-    // } else {
-    //   const parsed = parseInt(article[field]);
-    //   if (isNaN(parsed)) {
-    //     delete article[field];
-    //   } else {
-    //     article[field] = parsed;
-    //   }
-    // }
+  });
+
+  ["pages"].forEach((field) => {
+    if (article[field] === "[NOT USED]") {
+      delete article[field];
+    } else {
+      const parsed = parseInt(article[field]);
+      if (isNaN(parsed)) {
+        delete article[field];
+      } else {
+        article[field] = parsed;
+      }
+    }
   });
 
   // ["startPage", "endPage"].forEach((field) => {
