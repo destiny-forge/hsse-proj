@@ -60,9 +60,14 @@ module.exports = ({ articleRepository, batchRepository }) => {
       entity.published = new Date(entity.published);
     }
 
+    if (entity.liveDate) {
+      entity.liveDate = new Date(entity.liveDate);
+    }
+
     if (entity.harvested) {
       entity.harvested = new Date(entity.harvested);
     }
+
     entity = article.type === "sse" ? sseArticle(entity) : hseArticle(entity);
     delete entity.stages; // tcomb defaults stages which overwrites the value
     return await articleRepository.update(article._id, entity);
