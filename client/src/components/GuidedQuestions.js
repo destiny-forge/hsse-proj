@@ -6,7 +6,7 @@ const GuidedQuestions = ({ site, language }) => {
   const [index, setIndex] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState(null);
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
     let url = `/i18n/${site}/questions-${language}.json`;
@@ -46,7 +46,8 @@ const GuidedQuestions = ({ site, language }) => {
     setCollapsed(!collapsed);
   };
 
-  const selectAnswer = (i) => {
+  const selectAnswer = (e, i) => {
+    e.preventDefault();
     console.log(question.answers[i]);
     // we'll want to load the search
     // page and populate the menu based
@@ -72,6 +73,72 @@ const GuidedQuestions = ({ site, language }) => {
   };
 
   const GuidedQuestion = () => {
+    let Question = null;
+    switch (site) {
+      case 'hse':
+        Question = HSEQuestion;
+        break;
+      case 'sse':
+        Question = SSEQuestion;
+        break;
+      default:
+      case 'cvd':
+        Question = null;
+        break;
+    }
+    return <Question />;
+  };
+
+  const SSEQuestion = () => {
+    let className = 'guided-question';
+    className += collapsed ? ' collapsed' : ' expanded';
+    return (
+      question && (
+        <div className={className}>
+          <div className="guided-question-text">
+            <span>{question.text}</span>
+            {question.image && (
+              <img src={question.image} alt={question.text} width="150" />
+            )}
+            <a className="btn-toggle" href="#" onClick={toggle}></a>
+          </div>
+          <ul className="answer-list">
+            {question.answers.map((answer, i) => {
+              let css = `answer-item${answer.image ? ' answer-image' : ''}`;
+              let aCss = `${
+                answer.image ? '' : 'layer-toggle layer-toggle-filters'
+              }`;
+              return (
+                <li key={i} className={css}>
+                  <a
+                    href="/search"
+                    className={aCss}
+                    onClick={(e) => selectAnswer(e, i)}
+                  >
+                    {answer.image ? (
+                      <img src={answer.image} alt={answer.section.title} />
+                    ) : (
+                      <React.Fragment>
+                        <span>{answer.text}</span>
+                        {answer.filterGroup.title !== '' ? (
+                          <span className="answer-item-filters">
+                            [{answer.filterGroup.title}]
+                          </span>
+                        ) : null}
+                      </React.Fragment>
+                    )}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+          <div className="clearfix" />
+        </div>
+      )
+    );
+  };
+
+  const HSEQuestion = () => {
     let className = 'guided-question';
     className += collapsed ? ' collapsed' : ' expanded';
     return (
@@ -84,7 +151,11 @@ const GuidedQuestions = ({ site, language }) => {
           <ul className="answer-list">
             {question.answers.map((answer, i) => (
               <li key={i} className="answer-item">
-                <a href="#" onClick={() => selectAnswer(i)}>
+                <a
+                  href="#"
+                  onClick={() => selectAnswer(i)}
+                  className="layer-toggle layer-toggle-filters"
+                >
                   <span>{answer.title}</span>
                 </a>
                 <span className="answer-item-filters">
@@ -93,6 +164,7 @@ const GuidedQuestions = ({ site, language }) => {
               </li>
             ))}
           </ul>
+          <div className="clearfix" />
         </div>
       )
     );

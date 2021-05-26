@@ -1,0 +1,524 @@
+[
+  {
+    "text": "Voulez-vous savoir comment atteindre les",
+    "image": "images/sdg/sdg_logo_fr.png",
+    "answers": [
+      {
+        "image": "images/sdg/sdg_1_fr.jpeg",
+        "section": {
+          "title": "1. Pas de pauvreté"
+        },
+        "filterGroup": {
+          "id": "2_2383",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_2_fr.jpeg",
+        "section": {
+          "title": "2. Faim Zero"
+        },
+        "filterGroup": {
+          "id": "2_2384",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_3_fr.jpeg",
+        "section": {
+          "title": "3. Bonne santé et bien-être (partiellement couvert)"
+        },
+        "filterGroup": {
+          "id": "2_2385",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_4_fr.jpeg",
+        "section": {
+          "title": "4. Éducation de qualité"
+        },
+        "filterGroup": {
+          "id": "2_2386",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_5_fr.jpeg",
+        "section": {
+          "title": "5. Égalité entre les sexes"
+        },
+        "filterGroup": {
+          "id": "2_2387",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_6_fr.jpeg",
+        "section": {
+          "title": "6. Eau propre et assainissement"
+        },
+        "filterGroup": {
+          "id": "2_2388",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_7_fr.jpeg",
+        "section": {
+          "title": "7. Énergie propre et abordable"
+        },
+        "filterGroup": {
+          "id": "2_2389",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_8_fr.jpeg",
+        "section": {
+          "title": "8. Travail décent et croissance économique"
+        },
+        "filterGroup": {
+          "id": "2_2390",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_9_fr.jpeg",
+        "section": {
+          "title": "9. Industrie, innovation et infrastructure"
+        },
+        "filterGroup": {
+          "id": "2_2391",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_10_fr.jpeg",
+        "section": {
+          "title": "10. Inégalités réduites"
+        },
+        "filterGroup": {
+          "id": "2_2392",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_11_fr.jpeg",
+        "section": {
+          "title": "11. Villes et communautés durables"
+        },
+        "filterGroup": {
+          "id": "2_2393",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_12_fr.jpeg",
+        "section": {
+          "title": "12. Consommation et production responsables"
+        },
+        "filterGroup": {
+          "id": "2_2394",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_13_fr.jpeg",
+        "section": {
+          "title": "13. Lutte contre changements climatiques"
+        },
+        "filterGroup": {
+          "id": "2_2398",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_14_fr.jpeg",
+        "section": {
+          "title": "14. Vie aquatique"
+        },
+        "filterGroup": {
+          "id": "2_2399",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_15_fr.jpeg",
+        "section": {
+          "title": "15. Vie terrestre"
+        },
+        "filterGroup": {
+          "id": "2_2400",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_16_fr.jpeg",
+        "section": {
+          "title": "16. Changements climatiques"
+        },
+        "filterGroup": {
+          "id": "2_2395",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_17_fr.jpeg",
+        "section": {
+          "title": "17. Partenariats pour les objectifs"
+        },
+        "filterGroup": {
+          "id": "2_2396",
+          "title": ""
+        }
+      }
+    ]
+  },
+  {
+    "text": "Voulez-vous en savoir plus sur certains secteurs et domaines gouvernementaux?",
+    "filters": [
+      {
+        "id": "0_2",
+        "title": "domaines"
+      }
+    ],
+    "answers": [
+      {
+        "text": "Enfants et jeunes",
+        "section": {
+          "title": "Enfants et jeunes"
+        },
+        "filterGroup": {
+          "id": "2_2022",
+          "title": ""
+        }
+      },
+      {
+        "text": "Citoyenneté",
+        "section": {
+          "title": "Citoyenneté"
+        },
+        "filterGroup": {
+          "id": "2_2009",
+          "title": ""
+        }
+      },
+      {
+        "text": "Action pour le climat",
+        "section": {
+          "title": "Action pour le climat"
+        },
+        "filterGroup": {
+          "id": "2_2402",
+          "title": ""
+        }
+      },
+      {
+        "text": "Services communautaires et sociaux",
+        "section": {
+          "title": "Services communautaires et sociaux"
+        },
+        "filterGroup": {
+          "id": "2_2010",
+          "title": ""
+        }
+      },
+      {
+        "text": "Protection des consommateurs",
+        "section": {
+          "title": "Protection des consommateurs"
+        },
+        "filterGroup": {
+          "id": "2_2011",
+          "title": ""
+        }
+      },
+      {
+        "text": "Culture et genre",
+        "section": {
+          "title": "Culture et genre"
+        },
+        "filterGroup": {
+          "id": "2_2012",
+          "title": ""
+        }
+      },
+      {
+        "text": "Développement économique",
+        "section": {
+          "title": "Développement économique"
+        },
+        "filterGroup": {
+          "id": "2_2352",
+          "title": ""
+        }
+      },
+      {
+        "text": "Éducation",
+        "section": {
+          "title": "Éducation"
+        },
+        "filterGroup": {
+          "id": "2_2023",
+          "title": ""
+        }
+      },
+      {
+        "text": "Emploi",
+        "section": {
+          "title": "Emploi"
+        },
+        "filterGroup": {
+          "id": "2_2018",
+          "title": ""
+        }
+      },
+      {
+        "text": "Approvisionnement énergétique",
+        "section": {
+          "title": "Approvisionnement énergétique"
+        },
+        "filterGroup": {
+          "id": "2_2403",
+          "title": ""
+        }
+      },
+      {
+        "text": "Protection de l’environnement",
+        "section": {
+          "title": "Protection de l’environnement"
+        },
+        "filterGroup": {
+          "id": "2_2404",
+          "title": ""
+        }
+      },
+      {
+        "text": "Sécurité et salubrité alimentaires",
+        "section": {
+          "title": "Sécurité et salubrité alimentaires"
+        },
+        "filterGroup": {
+          "id": "2_2013",
+          "title": ""
+        }
+      },
+      {
+        "text": "Services gouvernementaux",
+        "section": {
+          "title": "Services gouvernementaux"
+        },
+        "filterGroup": {
+          "id": "2_2014",
+          "title": ""
+        }
+      },
+      {
+        "text": "Logement",
+        "section": {
+          "title": "Logement"
+        },
+        "filterGroup": {
+          "id": "2_2015",
+          "title": ""
+        }
+      },
+      {
+        "text": "Infrastructure",
+        "section": {
+          "title": "Infrastructure"
+        },
+        "filterGroup": {
+          "id": "2_2017",
+          "title": ""
+        }
+      },
+      {
+        "text": "Ressources naturelles",
+        "section": {
+          "title": "Ressources naturelles"
+        },
+        "filterGroup": {
+          "id": "2_2405",
+          "title": ""
+        }
+      },
+      {
+        "text": "Sécurité publique et justice",
+        "section": {
+          "title": "Sécurité publique et justice"
+        },
+        "filterGroup": {
+          "id": "2_2019",
+          "title": ""
+        }
+      },
+      {
+        "text": "Loisirs",
+        "section": {
+          "title": "Loisirs"
+        },
+        "filterGroup": {
+          "id": "2_2328",
+          "title": ""
+        }
+      },
+      {
+        "text": "Transport",
+        "section": {
+          "title": "Transport"
+        },
+        "filterGroup": {
+          "id": "2_2021",
+          "title": ""
+        }
+      }
+    ]
+  },
+  {
+    "text": "Souhaitez-vous en savoir plus sur certains types d'arrangements de systèmes sociaux?",
+    "filters": [
+      {
+        "id": "2_2002",
+        "title": "Arrangements des systèmes"
+      }
+    ],
+    "answers": [
+      {
+        "text": "Comment les décisions sont-elles prises [arrangements de gouvernance]",
+        "section": {
+          "title": "Arrangements des systèmes"
+        },
+        "filterGroup": {
+          "id": "2_2024",
+          "title": "Arrangements de gouvernance"
+        }
+      },
+      {
+        "text": "Comment les programmes, services et produits sont-ils payés",
+        "section": {
+          "title": "Arrangements de gouvernance"
+        },
+        "filterGroup": {
+          "id": "2_2025",
+          "title": "arrangements financiers"
+        }
+      },
+      {
+        "text": "Comment les programmes, services et produits sont-ils organisés  ",
+        "section": {
+          "title": "Arrangements des systèmes"
+        },
+        "filterGroup": {
+          "id": "2_2026",
+          "title": "Arrangements relatifs à la prestation de services"
+        }
+      },
+      {
+        "text": "Quelles approches sont utilisées pour s'assurer que les programmes, services et produits soient accessibles à ceux qui en ont besoin",
+        "section": {
+          "title": "Arrangements des systèmes"
+        },
+        "filterGroup": {
+          "id": "2_2003",
+          "title": "Stratégies de mise en œuvre"
+        }
+      }
+    ]
+  },
+  {
+    "text": "Avez-vous un type de question en particulier?",
+    "filters": [
+      "0_10"
+    ],
+    "answers": [
+      {
+        "text": "Quelles approches ont été évaluées pour leurs avantages et leurs inconvénients? (ou quelles approches fonctionnent?)",
+        "section": {
+          "title": "Type de document"
+        },
+        "filterGroup": {
+          "id": "0_10",
+          "title": "Revues systématiques sur les effets et revues de revues systématiques"
+        }
+      },
+      {
+        "text": "Quelles approches ont été évaluées pour leur rapport coût-efficacité? (ou quelle approche est rentable?)",
+        "section": {
+          "title": "Type de document"
+        },
+        "filterGroup": {
+          "id": "0_10",
+          "title": "évaluations économiques et études des prix de revient"
+        }
+      },
+      {
+        "text": "Que savons-nous d'autre sur une approche ou un problème qu'elle vise à résoudre?",
+        "section": {
+          "title": "Type de document"
+        },
+        "filterGroup": {
+          "id": "0_10",
+          "title": "revues systématiques sur d'autres questions"
+        }
+      },
+      {
+        "text": "Que savons-nous d'un problème, des options et des implications de mise en œuvre dans un système social particulier?",
+        "section": {
+          "title": "Type de document"
+        },
+        "filterGroup": {
+          "id": "0_10",
+          "title": "synthèses de données probantes pour politiques"
+        }
+      }
+    ]
+  },
+  {
+    "text": "Êtes-vous intéressés par des pays particuliers ou les PFMRs?",
+    "answers": [
+      {
+        "text": "Cibler certains pays",
+        "section": {
+          "title": "Cibler certains pays"
+        },
+        "filterGroup": {
+          "id": "0_6",
+          "title": "",
+          "type": "countries_countries"
+        }
+      },
+      {
+        "text": "Groupes de pays (ANASE, BRICS, CARICOM, Commonwealth, AELE, Union européenne, Francophonie, G7, G20, G7, OCDE, OPEP, ASACR)",
+        "section": {
+          "title": "Groupes de pays (ANASE, BRICS, CARICOM, Commonwealth, AELE, Union européenne, Francophonie, G7, G20, G7, OCDE, OPEP, ASACR)"
+        },
+        "filterGroup": {
+          "id": "0_7",
+          "title": ""
+        }
+      },
+      {
+        "text": "Régions de la Banque mondiale (Asie de l'Est et Pacifique, Europe et Asie centrale, Amérique latine et Caraïbes, Moyen-Orient et Afrique du Nord, Amérique du Nord, Asie du Sud, Afrique subsaharienne)",
+        "section": {
+          "title": "Régions de la Banque mondiale (Asie de l'Est et Pacifique, Europe et Asie centrale, Amérique latine et Caraïbes, Moyen-Orient et Afrique du Nord, Amérique du Nord, Asie du Sud, Afrique subsaharienne)"
+        },
+        "filterGroup": {
+          "id": "0_29",
+          "title": ""
+        }
+      },
+      {
+        "text": "Point de mire sur les pays à faible et moyen revenu (PFMR)",
+        "section": {
+          "title": "Point de mire sur les pays à faible et moyen revenu (PFMR)"
+        },
+        "filterGroup": {
+          "id": "0_9",
+          "title": ""
+        }
+      }
+    ]
+  }
+]
