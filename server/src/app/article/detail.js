@@ -71,7 +71,6 @@ module.exports = ({ articleRepository }) => {
       },
     ];
     const topics = null;
-    const themes = null;
     const filters = getFilters(article.filters, type, language);
     let citation = article.citations[language];
     citation = citation === "" ? null : citation;
@@ -79,6 +78,27 @@ module.exports = ({ articleRepository }) => {
     let abstracts = getLinks(article, "abstracts");
     let hyperlinks = getFullTextLinks(article.hyperlinks, type, language);
     let generalFocus = getFocus(article.generalFocus, type, language);
+
+    const tree = getTree(type);
+
+    const domains = getTreeNodes(
+      tree["checkedDomain"].items,
+      article.filters,
+      translations
+    );
+
+    const themes = getTreeNodes(
+      tree["checkedTheme"].items,
+      article.filters,
+      translations
+    );
+
+    const lmic_focus = getTreeNodes(
+      tree["checkedLMIC"].items,
+      article.filters,
+      translations
+    );
+
     delete article.countryLinks;
     delete article.citations;
 
@@ -98,7 +118,9 @@ module.exports = ({ articleRepository }) => {
       priority_areas,
       topics,
       themes,
+      lmic_focus,
       filters,
+      domains,
       generalFocus,
       ...labels,
       ...fieldsVisible,
@@ -116,6 +138,36 @@ module.exports = ({ articleRepository }) => {
         url: value,
       };
     });
+  };
+
+  const getTree = (type) => {
+    let tree = {};
+    switch (type) {
+      case "hse":
+        tree = hse.tree;
+        break;
+      case "sse":
+        tree = sse.tree;
+        break;
+      case "cvd":
+        tree = {};
+        break;
+    }
+    return tree;
+  };
+
+  const getTreeNodes = (data, filters, t) => {
+    return data
+      .filter((item) => _.contains(filters, item.key))
+      .map((item) => {
+        let node = {
+          title: t.filters[item.legacyKey],
+        };
+        if (item.children) {
+          node.children = getTreeNodes(item.children, filters, t);
+        }
+        return node;
+      });
   };
 
   const getFullTextLinks = (links, type, language) => {

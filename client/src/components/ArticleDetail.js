@@ -226,7 +226,7 @@ const ArticleDetail = ({ id, site, language, t }) => {
             <ArticleField>
               <h2>{article.label_domains}</h2>
               <ul>
-                {NestedList(article.filters, 'domains', 'domain') ||
+                {NestedList(article.domains, 'children', 'domain') ||
                   t('articles_page.no_domains')}
               </ul>
             </ArticleField>
@@ -264,7 +264,8 @@ const ArticleDetail = ({ id, site, language, t }) => {
             <ArticleField visible={article.lmic_focus_visible}>
               <h2>{article.label_lmic_focus}</h2>
               <div className="article-item-lmic-focus">
-                {joinList(_.compact(_.pluck(article.lmic_focus, 'title'))) ||
+                {(article.lmic_focus.length > 0 &&
+                  joinList(_.compact(_.pluck(article.lmic_focus, 'title')))) ||
                   t('articles_page.no_lmic_focus')}
               </div>
             </ArticleField>
