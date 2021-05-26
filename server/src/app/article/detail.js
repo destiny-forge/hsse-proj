@@ -59,8 +59,13 @@ module.exports = ({ articleRepository }) => {
         ? null
         : `${article.amstarNumerator}/${article.amstarDenominator}`;
     const quality_note = t_ui(type, language, "cboAMSTAR_4", "");
+
     let country_links = getCountryLinks(article.countryLinks, type, language);
     country_links = translateCountryLinks(country_links, translations);
+    country_links = country_links.sort((a, b) => {
+      return a.key.localeCompare(b.key, language);
+    });
+
     const country_groupings = getCountryGroupings(country_links, translations);
     const abstract = language === "en" ? article.abstract : "";
     const documentType = t_type(article.documentType);
