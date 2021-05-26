@@ -18,8 +18,8 @@ const Home = ({ site, t }) => {
               <p className="intro2">{t('home_page.intro2')}</p>
               <Search onSearch={(result) => console.log(result)} />
             </div>
+            <GuidedQuestions />
           </div>
-          <GuidedQuestions />
         </div>
         <Footer />
       </div>

@@ -1,0 +1,524 @@
+[
+  {
+    "text": "Do you want to know about how to achieve the",
+    "image": "images/sdg/sdg_logo_en.png",
+    "answers": [
+      {
+        "image": "images/sdg/sdg_1_en.jpeg",
+        "section": {
+          "title": "1. No poverty"
+        },
+        "filterGroup": {
+          "id": "2_2383",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_2_en.jpeg",
+        "section": {
+          "title": "2. Zero hunger"
+        },
+        "filterGroup": {
+          "id": "2_2384",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_3_en.jpeg",
+        "section": {
+          "title": "3. Good health and well-being"
+        },
+        "filterGroup": {
+          "id": "2_2385",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_4_en.jpeg",
+        "section": {
+          "title": "4. Quality education"
+        },
+        "filterGroup": {
+          "id": "2_2386",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_5_en.jpeg",
+        "section": {
+          "title": "5. Gender equality"
+        },
+        "filterGroup": {
+          "id": "2_2387",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_6_en.jpeg",
+        "section": {
+          "title": "6. Clean water and sanitation"
+        },
+        "filterGroup": {
+          "id": "2_2388",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_7_en.jpeg",
+        "section": {
+          "title": "7. Affordable and clean energy"
+        },
+        "filterGroup": {
+          "id": "2_2389",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_8_en.jpeg",
+        "section": {
+          "title": "8. Decent work and economic growth"
+        },
+        "filterGroup": {
+          "id": "2_2390",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_9_en.jpeg",
+        "section": {
+          "title": "9. Industry, innovation and infrastructure"
+        },
+        "filterGroup": {
+          "id": "2_2391",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_10_en.jpeg",
+        "section": {
+          "title": "10. Reduced inequalities"
+        },
+        "filterGroup": {
+          "id": "2_2392",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_11_en.jpeg",
+        "section": {
+          "title": "11. Sustainable cities and communities"
+        },
+        "filterGroup": {
+          "id": "2_2393",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_12_en.jpeg",
+        "section": {
+          "title": "12. Responsible consumption and production"
+        },
+        "filterGroup": {
+          "id": "2_2394",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_13_en.jpeg",
+        "section": {
+          "title": "13. Climate action"
+        },
+        "filterGroup": {
+          "id": "2_2398",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_14_en.jpeg",
+        "section": {
+          "title": "14. Life below water"
+        },
+        "filterGroup": {
+          "id": "2_2399",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_15_en.jpeg",
+        "section": {
+          "title": "15. Life on land"
+        },
+        "filterGroup": {
+          "id": "2_2400",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_16_en.jpeg",
+        "section": {
+          "title": "16. Peace, justice and strong institutions"
+        },
+        "filterGroup": {
+          "id": "2_2395",
+          "title": ""
+        }
+      },
+      {
+        "image": "images/sdg/sdg_17_en.jpeg",
+        "section": {
+          "title": "17. Partnerships for the goals"
+        },
+        "filterGroup": {
+          "id": "2_2396",
+          "title": ""
+        }
+      }
+    ]
+  },
+  {
+    "text": "Do you want to know about particular government sectors and program areas?",
+    "filters": [
+      {
+        "id": "0_2",
+        "title": "domains"
+      }
+    ],
+    "answers": [
+      {
+        "text": "Children and youth services",
+        "section": {
+          "title": "Children and youth services"
+        },
+        "filterGroup": {
+          "id": "2_2022",
+          "title": ""
+        }
+      },
+      {
+        "text": "Citizenship",
+        "section": {
+          "title": "Citizenship"
+        },
+        "filterGroup": {
+          "id": "2_2009",
+          "title": ""
+        }
+      },
+      {
+        "text": "Climate action",
+        "section": {
+          "title": "Climate action"
+        },
+        "filterGroup": {
+          "id": "2_2402",
+          "title": ""
+        }
+      },
+      {
+        "text": "Community and social services",
+        "section": {
+          "title": "Community and social services"
+        },
+        "filterGroup": {
+          "id": "2_2010",
+          "title": ""
+        }
+      },
+      {
+        "text": "Consumer protection",
+        "section": {
+          "title": "Consumer protection"
+        },
+        "filterGroup": {
+          "id": "2_2011",
+          "title": ""
+        }
+      },
+      {
+        "text": "Culture and gender",
+        "section": {
+          "title": "Culture and gender"
+        },
+        "filterGroup": {
+          "id": "2_2012",
+          "title": ""
+        }
+      },
+      {
+        "text": "Economic development and growth",
+        "section": {
+          "title": "Economic development and growth"
+        },
+        "filterGroup": {
+          "id": "2_2352",
+          "title": ""
+        }
+      },
+      {
+        "text": "Education",
+        "section": {
+          "title": "Education"
+        },
+        "filterGroup": {
+          "id": "2_2023",
+          "title": ""
+        }
+      },
+      {
+        "text": "Employment",
+        "section": {
+          "title": "Employment"
+        },
+        "filterGroup": {
+          "id": "2_2018",
+          "title": ""
+        }
+      },
+      {
+        "text": "Energy supply",
+        "section": {
+          "title": "Energy supply"
+        },
+        "filterGroup": {
+          "id": "2_2403",
+          "title": ""
+        }
+      },
+      {
+        "text": "Environmental conservation",
+        "section": {
+          "title": "Environmental conservation"
+        },
+        "filterGroup": {
+          "id": "2_2404",
+          "title": ""
+        }
+      },
+      {
+        "text": "Food safety and security",
+        "section": {
+          "title": "Food safety and security"
+        },
+        "filterGroup": {
+          "id": "2_2013",
+          "title": ""
+        }
+      },
+      {
+        "text": "Government services",
+        "section": {
+          "title": "Government services"
+        },
+        "filterGroup": {
+          "id": "2_2014",
+          "title": ""
+        }
+      },
+      {
+        "text": "Housing",
+        "section": {
+          "title": "Housing"
+        },
+        "filterGroup": {
+          "id": "2_2015",
+          "title": ""
+        }
+      },
+      {
+        "text": "Infrastructure",
+        "section": {
+          "title": "Infrastructure"
+        },
+        "filterGroup": {
+          "id": "2_2017",
+          "title": ""
+        }
+      },
+      {
+        "text": "Natural resources",
+        "section": {
+          "title": "Natural resources"
+        },
+        "filterGroup": {
+          "id": "2_2405",
+          "title": ""
+        }
+      },
+      {
+        "text": "Public safety and justice",
+        "section": {
+          "title": "Public safety and justice"
+        },
+        "filterGroup": {
+          "id": "2_2019",
+          "title": ""
+        }
+      },
+      {
+        "text": "Recreation",
+        "section": {
+          "title": "Recreation"
+        },
+        "filterGroup": {
+          "id": "2_2328",
+          "title": ""
+        }
+      },
+      {
+        "text": "Transportation",
+        "section": {
+          "title": "Transportation"
+        },
+        "filterGroup": {
+          "id": "2_2021",
+          "title": ""
+        }
+      }
+    ]
+  },
+  {
+    "text": "Do you want to know about particular types of social system arrangements? ",
+    "filters": [
+      {
+        "id": "2_2002",
+        "title": "System arrangements"
+      }
+    ],
+    "answers": [
+      {
+        "text": "Who gets to make what types of decisions about programs, services and products",
+        "section": {
+          "title": "System arrangements"
+        },
+        "filterGroup": {
+          "id": "2_2024",
+          "title": "governance arrangements"
+        }
+      },
+      {
+        "text": "How programs, services and products are paid for",
+        "section": {
+          "title": "System arrangements"
+        },
+        "filterGroup": {
+          "id": "2_2025",
+          "title": "financial arrangements"
+        }
+      },
+      {
+        "text": "How the provision of programs, services and products is organized",
+        "section": {
+          "title": "System arrangements"
+        },
+        "filterGroup": {
+          "id": "2_2026",
+          "title": "delivery arrangements"
+        }
+      },
+      {
+        "text": "What approaches are used to ensure that programs, services and products get to those who need them",
+        "section": {
+          "title": "System arrangements"
+        },
+        "filterGroup": {
+          "id": "2_2003",
+          "title": "implementation strategies"
+        }
+      }
+    ]
+  },
+  {
+    "text": "Do you have a particular type of question?",
+    "filters": [
+      "0_10"
+    ],
+    "answers": [
+      {
+        "text": "What approaches have been evaluated for their benefits and harms? (or what approach works?)",
+        "section": {
+          "title": "Document Type"
+        },
+        "filterGroup": {
+          "id": "0_10",
+          "title": "systematic reviews of effects and overviews of reviews"
+        }
+      },
+      {
+        "text": "What approaches have been evaluated for their cost-effectiveness? (or is an approach cost-effective?)",
+        "section": {
+          "title": "Document Type"
+        },
+        "filterGroup": {
+          "id": "0_10",
+          "title": "economic evaluations and costing studies"
+        }
+      },
+      {
+        "text": "What else do we know about an approach or the problem it addresses?",
+        "section": {
+          "title": "Document Type"
+        },
+        "filterGroup": {
+          "id": "0_10",
+          "title": "systematic reviews addressing other questions"
+        }
+      },
+      {
+        "text": "What do we know about a problem, options and implementation considerations in a particular social system?",
+        "section": {
+          "title": "Document Type"
+        },
+        "filterGroup": {
+          "id": "0_10",
+          "title": "evidence briefs for policy"
+        }
+      }
+    ]
+  },
+  {
+    "text": "Are you focused on particular countries, country groupings, World Bank regions or on LMICs?",
+    "answers": [
+      {
+        "text": "Country focus",
+        "section": {
+          "title": "Country focus"
+        },
+        "filterGroup": {
+          "id": "0_6",
+          "title": "",
+          "type": "countries_countries"
+        }
+      },
+      {
+        "text": "Country groupings (ASEAN, BRICS, CARICOM, Commonwealth, EFTA, European Union, Francophonie, G7, G20, G7, OECD, OPEC, SAARC)",
+        "section": {
+          "title": "Country groupings (ASEAN, BRICS, CARICOM, Commonwealth, EFTA, European Union, Francophonie, G7, G20, G7, OECD, OPEC, SAARC)"
+        },
+        "filterGroup": {
+          "id": "0_7",
+          "title": ""
+        }
+      },
+      {
+        "text": "World Bank regions (East Asia and Pacific, Europe and Central Asia, Latin America & the Caribbean, Middle East and North Africa, North America, South Asia, Sub-Saharan Africa)",
+        "section": {
+          "title": "World Bank regions (East Asia and Pacific, Europe and Central Asia, Latin America & the Caribbean, Middle East and North Africa, North America, South Asia, Sub-Saharan Africa)"
+        },
+        "filterGroup": {
+          "id": "0_29",
+          "title": ""
+        }
+      },
+      {
+        "text": "Low- and middle-income country (LMIC) focus",
+        "section": {
+          "title": "Low- and middle-income country (LMIC) focus"
+        },
+        "filterGroup": {
+          "id": "0_9",
+          "title": ""
+        }
+      }
+    ]
+  }
+]

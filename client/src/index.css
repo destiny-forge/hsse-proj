@@ -8510,6 +8510,10 @@ form .form-errors {
 .home-page .guided-questions-box {
   margin-top: 48px;
 }
+
+.answer-list .answer-image {
+  padding-top: 0 !important;
+}
 @media (min-width: 1024px) {
   .home-page .guided-questions-box .btn-next,
   .home-page .guided-questions-box .btn-prev,
@@ -8545,9 +8549,31 @@ form .form-errors {
     top: 0;
     left: 0;
   }
-  .home-page .guided-questions-box .guided-question {
-    padding-left: 80px;
-    padding-right: 80px;
+
+  @media (min-width: 1024px) {
+    .home-page .guided-questions-box .guided-question {
+      padding-left: 80px;
+      padding-right: 80px;
+    }
+    .home-page .guided-questions-box .btn-next i:before {
+      background: url(./images/home_next_arrow.svg);
+      width: 64px;
+      height: 64px;
+      top: 0;
+      left: 0;
+    }
+    .home-page .guided-questions-box .btn-next,
+    .home-page .guided-questions-box .btn-prev,
+    .home-page .guided-questions-box .guided-question {
+      background: 0 0;
+    }
+    .home-page .guided-questions-box .btn-prev i:before {
+      background: url(./images/home_back_arrow.svg);
+      width: 64px;
+      height: 64px;
+      top: 0;
+      left: 0;
+    }
   }
 }
 .home-page .search-box {
@@ -9613,19 +9639,71 @@ form .form-errors {
 }
 .answer-item .layer-toggle {
   display: inline;
-  color: #cc4921;
+
   background: 0 0;
   text-align: left;
   height: auto;
+  float: none;
   padding: 0;
 }
 .answer-list {
   list-style: none;
   padding-left: 0;
 }
+
 .answer-list .answer-item + .answer-item {
   padding-top: 8px;
 }
+
+.answer-item img {
+  width: 90%;
+}
+
+@media (max-width: 575.98px) {
+  .answer-item a {
+    width: 50%;
+    float: left;
+    padding: 10px 5px;
+    text-align: center;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .answer-item a {
+    width: 25%;
+    float: left;
+    padding: 10px 5px;
+    text-align: center;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .answer-item a {
+    width: 25%;
+    float: left;
+    padding: 10px 5px;
+    text-align: center;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .answer-item a {
+    width: 20%;
+    float: left;
+    padding: 10px 5px;
+    text-align: center;
+  }
+}
+
+@media (min-width: 1200px) {
+  .answer-item a {
+    width: 15.6%;
+    float: left;
+    margin: 10px 5px;
+    text-align: center;
+  }
+}
+
 .applied-filters {
   list-style: none;
   padding-left: 0;
