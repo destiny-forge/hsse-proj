@@ -130,17 +130,6 @@ const NestedList = (list, listName, itemName) => {
   return result;
 };
 
-const Targets = (targets) => {
-  if (targets && targets.length === 0) {
-    return null;
-  }
-  return (
-    <div className="article-item-targets">
-      {joinList(_.pluck(targets, 'title'))}
-    </div>
-  );
-};
-
 const RelatedArticles = ({ article, t }) => (
   <ArticleField visible={article.related_documents_visible}>
     <Link
@@ -237,7 +226,7 @@ const ArticleDetail = ({ id, site, language, t }) => {
             <ArticleField>
               <h2>{article.label_domains}</h2>
               <ul>
-                {NestedList(article.filters, 'domains', 'domain') ||
+                {NestedList(article.domains, 'children', 'domain') ||
                   t('articles_page.no_domains')}
               </ul>
             </ArticleField>
@@ -275,7 +264,8 @@ const ArticleDetail = ({ id, site, language, t }) => {
             <ArticleField visible={article.lmic_focus_visible}>
               <h2>{article.label_lmic_focus}</h2>
               <div className="article-item-lmic-focus">
-                {joinList(_.compact(_.pluck(article.lmic_focus, 'title'))) ||
+                {(article.lmic_focus.length > 0 &&
+                  joinList(_.compact(_.pluck(article.lmic_focus, 'title')))) ||
                   t('articles_page.no_lmic_focus')}
               </div>
             </ArticleField>
@@ -332,13 +322,6 @@ const ArticleDetail = ({ id, site, language, t }) => {
                 <h2>{article.label_focus}</h2>
                 {article.generalFocus || t('articles_page.no_focus')}
               </ArticleField>
-
-              {
-                <ArticleField>
-                  <h2>{article.label_targets}</h2>
-                  {Targets(article.targets) || t('articles_page.no_targets')}
-                </ArticleField>
-              }
 
               <ArticleField visible={article.author_email_visible}>
                 <h2>{article.label_author_email}</h2>
