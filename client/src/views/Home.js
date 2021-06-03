@@ -1,5 +1,5 @@
 import Header from '../components/Header';
-import Search from '../components/Search';
+import SearchBar from '../components/SearchBar';
 import GuidedQuestions from '../components/GuidedQuestions';
 import Footer from '../components/Footer';
 import Context from '../components/Context';
@@ -16,7 +16,7 @@ const Home = ({ site, t }) => {
               <h1>{t('site_name')}</h1>
               <p className="intro">{t('home_page.intro')}</p>
               <p className="intro2">{t('home_page.intro2')}</p>
-              <Search onSearch={(result) => console.log(result)} />
+              <SearchBar onSearch={(result) => console.log(result)} />
             </div>
             <GuidedQuestions />
           </div>

@@ -71,6 +71,7 @@ const questionTypes = [
 const tree = {
   checkedDomain: {
     title: "Domains",
+    legacyKey: "0_2",
     items: [
       {
         title: "Programs and services",
@@ -272,8 +273,7 @@ const tree = {
                   },
                   {
                     title: "Supporting infrastructure",
-                    key:
-                      "programsServicesClimateElectrificationSupportingInfra",
+                    key: "programsServicesClimateElectrificationSupportingInfra",
                     legacyKey: "2_2449",
                   },
                   {
@@ -300,14 +300,12 @@ const tree = {
                   },
                   {
                     title: "Fugitive-emission reduction",
-                    key:
-                      "programsServicesClimateNonEnergyFugitiveEmissionReduction",
+                    key: "programsServicesClimateNonEnergyFugitiveEmissionReduction",
                     legacyKey: "2_2453",
                   },
                   {
                     title: "Industrial-process improvements",
-                    key:
-                      "programsServicesClimateNonEnergyIndustrialProcessImprovements",
+                    key: "programsServicesClimateNonEnergyIndustrialProcessImprovements",
                     legacyKey: "2_2454",
                   },
                   {
@@ -1015,14 +1013,12 @@ const tree = {
                   },
                   {
                     title: "Conservation status assessment",
-                    key:
-                      "environmentalConservationBiodiversityStatusAssessment",
+                    key: "environmentalConservationBiodiversityStatusAssessment",
                     legacyKey: "2_2489",
                   },
                   {
                     title: "Sustainable harvesting",
-                    key:
-                      "environmentalConservationBiodiversitySustainableHarvesting",
+                    key: "environmentalConservationBiodiversitySustainableHarvesting",
                     legacyKey: "2_2490",
                   },
                 ],
@@ -2127,8 +2123,7 @@ const tree = {
                   },
                   {
                     title: "Workplace conditions - Provider satisfaction",
-                    key:
-                      "serviceProviderWorkplaceConditionsProviderSatisfaction",
+                    key: "serviceProviderWorkplaceConditionsProviderSatisfaction",
                     legacyKey: "2_2109",
                   },
                   {
@@ -2158,15 +2153,13 @@ const tree = {
                   },
                   {
                     title: "Skill mix - Volunteers or caregivers",
-                    key:
-                      "serviceProviderSkillMixVolunteersOrInformalFamilyCaregivers",
+                    key: "serviceProviderSkillMixVolunteersOrInformalFamilyCaregivers",
                     legacyKey: "2_2115",
                   },
                   {
                     title:
                       "Skill mix – Communication & case discussion between distant professionals",
-                    key:
-                      "serviceProviderSkillMixCommunicationDistantHealthProfessionals",
+                    key: "serviceProviderSkillMixCommunicationDistantHealthProfessionals",
                     legacyKey: "2_2116",
                   },
                   {
@@ -2266,8 +2259,7 @@ const tree = {
                   },
                   {
                     title: "ICT that support individuals who receive services",
-                    key:
-                      "serviceSupportICTThatSupportIndividualsWhoReceiveCare",
+                    key: "serviceSupportICTThatSupportIndividualsWhoReceiveCare",
                     legacyKey: "2_2132",
                   },
                   {
@@ -2303,8 +2295,7 @@ const tree = {
             children: [
               {
                 title: "Information or education provision",
-                key:
-                  "implementationCitizenTargetedInformationOrEducationProvision",
+                key: "implementationCitizenTargetedInformationOrEducationProvision",
                 legacyKey: "2_2138",
               },
               {
@@ -2314,8 +2305,7 @@ const tree = {
               },
               {
                 title: "Skills and competencies development",
-                key:
-                  "implementationCitizenTargetedSkillsAndCompetenciesDevelopment",
+                key: "implementationCitizenTargetedSkillsAndCompetenciesDevelopment",
                 legacyKey: "2_2140",
               },
               {
@@ -2325,8 +2315,7 @@ const tree = {
               },
               {
                 title: "Communication and decision-making facilitation",
-                key:
-                  "implementationCitizenTargetedCommunicationAndDecisionMakingFacilitation",
+                key: "implementationCitizenTargetedCommunicationAndDecisionMakingFacilitation",
                 legacyKey: "2_2142",
               },
               {
@@ -2388,8 +2377,7 @@ const tree = {
               },
               {
                 title: "Citizen-mediated intervention",
-                key:
-                  "implementationProviderTargetedCitizenMediatedIntervention",
+                key: "implementationProviderTargetedCitizenMediatedIntervention",
                 legacyKey: "2_2380",
               },
               {

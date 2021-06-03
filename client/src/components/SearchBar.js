@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { debounce, delay } from 'underscore';
-import Context from '../components/Context';
+import Context from './Context';
 import Autosuggest from 'react-autosuggest';
 
 import SearchService from '../services/SearchService';
-import Button from '../components/Button';
+import Button from './Button';
 
-const Search = ({ onSearch, t }) => {
+const SearchBar = ({ onSearch, site, language, t }) => {
   const Search = SearchService();
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [count, setCount] = useState(0);
 
   const fetchSuggestions = ({ value }) => {
-    Search.suggestions(value)
+    Search.suggestions(value, site, language)
       .then((res) => {
         console.log(res);
         if (res.success) {
@@ -107,4 +107,4 @@ const Search = ({ onSearch, t }) => {
   );
 };
 
-export default Context(Search);
+export default Context(SearchBar);

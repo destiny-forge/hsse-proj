@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Context from './Context';
 import { GuidedSearchConsumer } from './GuidedSearchContext';
 
-const GuidedQuestions = ({ site, language }) => {
+const GuidedQuestions = ({ site, language, isCollapsed = false }) => {
   const [index, setIndex] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState(null);
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(isCollapsed);
 
   useEffect(() => {
     let url = `/i18n/${site}/questions-${language}.json`;

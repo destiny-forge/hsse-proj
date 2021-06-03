@@ -9969,7 +9969,12 @@ form .form-errors {
   top: 112px;
   width: 300px;
 }
-.search-page .filter-groups-menu-wrapper .filter-groups-menu-title {
+.sse .search-page .filter-groups-menu-wrapper .filter-groups-menu-title {
+  padding-bottom: 16px;
+  color: #ed2124;
+  font-size: 16px;
+}
+.hse .search-page .filter-groups-menu-wrapper .filter-groups-menu-title {
   padding-bottom: 16px;
   color: #178eee;
   font-size: 16px;

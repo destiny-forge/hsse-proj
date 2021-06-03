@@ -13,8 +13,8 @@ const SearchService = () => {
     return result.data;
   };
 
-  const suggestions = async (query, lang) => {
-    const url = `${baseURL}/search/suggestions/q=${query}&lang=${lang}`;
+  const suggestions = async (query, type, lang) => {
+    const url = `${baseURL}/search/suggestions?q=${query}&type=${type}&lang=${lang}`;
     const response = await fetch(url);
     const result = await response.json();
     return result.data;

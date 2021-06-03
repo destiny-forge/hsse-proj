@@ -80,6 +80,7 @@ const questionTypes = [
 const tree = {
   checkedKeysHST: {
     title: "Health Systems Topic",
+    legacyKey: "0_1",
     items: [
       {
         title: "Governance arrangements",
@@ -558,8 +559,7 @@ const tree = {
               {
                 title:
                   "Skill mix - Communication & case discussion between distant health professionals",
-                key:
-                  "careProviderSkillMixCommunicationDistantHealthProfessionals",
+                key: "careProviderSkillMixCommunicationDistantHealthProfessionals",
                 legacyKey: "2_1095",
               },
               {

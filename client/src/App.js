@@ -16,6 +16,8 @@ import About from './views/About';
 import Terms from './views/Terms';
 import Latest from './views/Latest';
 import Article from './views/Article';
+import Search from './views/Search';
+
 import { SiteProvider, SiteConsumer } from './components/SiteContext';
 import {
   LanguageProvider,
@@ -40,6 +42,7 @@ const App = () => {
                     <Router>
                       <Switch>
                         <Route exact path="/" component={Home} />
+                        <Route exact path="/search" component={Search} />
                         <Route exact path="/about" component={About} />
                         <Route exact path="/terms" component={Terms} />
                         <Route exact path="/signup" component={Signup} />
