@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Context from './Context';
 import { GuidedSearchConsumer } from './GuidedSearchContext';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 const GuidedQuestions = ({ site, language, isCollapsed = false }) => {
   const [index, setIndex] = useState(0);
@@ -9,6 +9,7 @@ const GuidedQuestions = ({ site, language, isCollapsed = false }) => {
   const [question, setQuestion] = useState(null);
   const [collapsed, setCollapsed] = useState(isCollapsed);
   let history = useHistory();
+  let location = useLocation();
 
   useEffect(() => {
     let url = `/i18n/${site}/questions-${language}.json`;
@@ -50,9 +51,18 @@ const GuidedQuestions = ({ site, language, isCollapsed = false }) => {
 
   const selectAnswer = (e, i) => {
     e.preventDefault();
-    history.replace(
-      '/search?applied_filters=' + question.answers[i].filterGroup.id
-    );
+    let params = new URLSearchParams(location.search);
+    const filter = question.answers[i].filterGroup.id;
+
+    let applied_filters = params.get('applied_filters');
+    applied_filters =
+      applied_filters === null ? filter : `${applied_filters},${filter}`;
+
+    history.push({
+      pathname: '/search',
+      search: `?applied_filters=${applied_filters}`,
+    });
+
     setCollapsed(true);
   };
 
