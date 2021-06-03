@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Context from './Context';
 import { GuidedSearchConsumer } from './GuidedSearchContext';
+import { useHistory } from 'react-router-dom';
 
 const GuidedQuestions = ({ site, language, isCollapsed = false }) => {
   const [index, setIndex] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState(null);
   const [collapsed, setCollapsed] = useState(isCollapsed);
+  let history = useHistory();
 
   useEffect(() => {
     let url = `/i18n/${site}/questions-${language}.json`;
@@ -48,14 +50,10 @@ const GuidedQuestions = ({ site, language, isCollapsed = false }) => {
 
   const selectAnswer = (e, i) => {
     e.preventDefault();
-    console.log(question.answers[i]);
-    // we'll want to load the search
-    // page and populate the menu based
-    // on the passed in filters
-
-    // Note: our system treats all child
-    // elements of a parent as selected if
-    // it itself is selected
+    history.replace(
+      '/search?applied_filters=' + question.answers[i].filterGroup.id
+    );
+    setCollapsed(true);
   };
 
   const Dots = () => {
