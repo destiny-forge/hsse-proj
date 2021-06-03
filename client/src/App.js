@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch } from 'react-router';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-
+import ScrollToTop from './components/ScrollToTop';
 import {
   Login,
   Signup,
@@ -40,6 +40,7 @@ const App = () => {
                       <title>{t('site_name')}</title>
                     </Helmet>
                     <Router>
+                      <ScrollToTop />
                       <Switch>
                         <Route exact path="/" component={Home} />
                         <Route exact path="/search" component={Search} />
