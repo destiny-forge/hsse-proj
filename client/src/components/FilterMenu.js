@@ -111,7 +111,12 @@ const FilterMenu = ({ site, language, t, filters, onRemove, onShow }) => {
         <span>{t('menus.filter_groups.title')}</span>
       </div>
       <div className="filter-groups-menu nested-menu">
-        <AppliedFilters filters={applied} onRemove={onRemove} onShow={onShow} />
+        <AppliedFilters
+          tree={tree}
+          filters={applied}
+          onRemove={onRemove}
+          onShow={onShow}
+        />
         <Menus tree={tree} parent={parent} filters={applied} t={t} />
       </div>
     </div>

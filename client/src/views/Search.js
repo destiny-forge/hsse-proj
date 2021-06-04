@@ -6,13 +6,14 @@ import GuidedQuestions from '../components/GuidedQuestions';
 import Footer from '../components/Footer';
 import Context from '../components/Context';
 import FilterMenu from '../components/FilterMenu';
+import SearchResults from '../components/SearchResults';
 import SearchService from '../services/SearchService';
 
 const Search = ({ site, language, t }) => {
   let { applied_filters } = useParams();
   const initial_filters = (applied_filters && applied_filters.split(',')) || [];
   const Search = SearchService();
-  const [results, setResults] = useState();
+  const [results, setResults] = useState([]);
   const [filters, setFilters] = useState(initial_filters);
   const className = `${site} search layered-navigation`;
 
@@ -45,7 +46,7 @@ const Search = ({ site, language, t }) => {
             <SearchBar onSearch={suggest} />
             <GuidedQuestions isCollapsed={true} />
             <FilterMenu filters={filters} results={results} search={search} />
-            <div className="result-box"></div>
+            <SearchResults results={results} />
           </div>
         </div>
         <Footer />
