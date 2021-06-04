@@ -5,15 +5,22 @@ const SearchResults = ({ t, results = [] }) => {
   return (
     <div className="result-box">
       <div className="result-box-header">
-        <div className="sort-order"></div>
-        <span className="sort-order-label">{t('sort_order.sorted_by')}</span>
-        <select className="sort-order-control">
-          <option value="relevance">{t('sort_order.relevance')}</option>
-          <option value="most_recent">{t('sort_order.most_recent')}</option>
-          <option value="highest_quality">
-            {t('sort_order.highest_quality')}
-          </option>
-        </select>
+        <div className="sort-order">
+          <span className="sort-order-label">
+            {t('search_page.sort_order.sorted_by')}&nbsp;
+          </span>
+          <select className="sort-order-control">
+            <option value="relevance">
+              {t('search_page.sort_order.relevance')}
+            </option>
+            <option value="most_recent">
+              {t('search_page.sort_order.most_recent')}
+            </option>
+            <option value="highest_quality">
+              {t('search_page.sort_order.highest_quality')}
+            </option>
+          </select>
+        </div>
       </div>
       <div className="result-box-count">
         {results.length} {t('search_page.result_box.results')}
