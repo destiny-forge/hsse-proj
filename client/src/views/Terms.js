@@ -2,19 +2,18 @@ import Context from '../components/Context';
 import Markdown from '../components/Markdown';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import { Fragment } from 'react';
 
-const Terms = ({ site }) => {
-  const className = `${site} app terms layered-navigation`;
+const Terms = ({ setPage }) => {
+  setPage('terms');
   return (
-    <div className={className}>
-      <div className="layered-navigation-content">
-        <Header />
-        <div id="page-content">
-          <Markdown page="terms" />
-          <Footer />
-        </div>
+    <Fragment>
+      <Header />
+      <div id="page-content">
+        <Markdown page="terms" />
+        <Footer />
       </div>
-    </div>
+    </Fragment>
   );
 };
 

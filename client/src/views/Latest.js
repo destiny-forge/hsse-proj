@@ -3,23 +3,23 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LatestArticles from '../components/LatestArticles';
 import { Helmet } from 'react-helmet';
+import { Fragment } from 'react';
 
-const Latest = ({ site, t }) => {
+const Latest = ({ t, setPage }) => {
+  setPage('latest_content');
   return (
-    <div className={`${site} app latest_content layered-navigation`}>
-      <div className="layered-navigation-content">
-        <Helmet>
-          <title>
-            {t('latest_content_page.title')} | {t('site_name')}
-          </title>
-        </Helmet>
-        <Header />
-        <div id="page-content">
-          <LatestArticles />
-        </div>
-        <Footer />
+    <Fragment>
+      <Helmet>
+        <title>
+          {t('latest_content_page.title')} | {t('site_name')}
+        </title>
+      </Helmet>
+      <Header />
+      <div id="page-content">
+        <LatestArticles />
       </div>
-    </div>
+      <Footer />
+    </Fragment>
   );
 };
 

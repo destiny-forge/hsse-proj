@@ -3,22 +3,21 @@ import Markdown from '../components/Markdown';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet';
+import { Fragment } from 'react';
 
-const About = ({ site, t }) => {
-  const className = `${site} app about layered-navigation`;
+const About = ({ site, t, setPage }) => {
+  setPage('about');
   return (
-    <div className={className}>
+    <Fragment>
       <Helmet>
         <title>About | {t('site_name')}</title>
       </Helmet>
-      <div className="layered-navigation-content">
-        <Header />
-        <div id="page-content">
-          <Markdown page="about" />
-          <Footer />
-        </div>
+      <Header />
+      <div id="page-content">
+        <Markdown page="about" />
+        <Footer />
       </div>
-    </div>
+    </Fragment>
   );
 };
 

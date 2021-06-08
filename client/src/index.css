@@ -8188,7 +8188,7 @@ form .form-errors {
 #app .layered-navigation-content {
   padding: 0;
 }
-#app .hse .top-nav {
+#app.hse .top-nav {
   width: auto;
   overflow: visible;
   background: #1925e3;
@@ -8199,7 +8199,7 @@ form .form-errors {
   z-index: 2;
 }
 
-#app .sse .top-nav {
+#app.sse .top-nav {
   width: auto;
   overflow: visible;
   background: #a71930;
@@ -8210,7 +8210,7 @@ form .form-errors {
   z-index: 2;
 }
 
-#app .cvd .top-nav {
+#app.cvd .top-nav {
   width: auto;
   overflow: visible;
   background: #262626;
@@ -8279,18 +8279,18 @@ form .form-errors {
     cursor: auto;
   }
 
-  #app .hse .top-nav ul li.hover,
-  #app .hse .top-nav ul li:hover {
+  #app.hse .top-nav ul li.hover,
+  #app.hse .top-nav ul li:hover {
     background-color: #47a5f1;
   }
 
-  #app .sse .top-nav ul li.hover,
-  #app .sse .top-nav ul li:hover {
+  #app.sse .top-nav ul li.hover,
+  #app.sse .top-nav ul li:hover {
     background-color: #f15053;
   }
 
-  #app .cvd .top-nav ul li.hover,
-  #app .cvd .top-nav ul li:hover {
+  #app.cvd .top-nav ul li.hover,
+  #app.cvd .top-nav ul li:hover {
     background-color: #727272;
   }
 
@@ -8302,13 +8302,13 @@ form .form-errors {
     left: 0;
     z-index: 9998;
   }
-  #app .hse .top-nav ul ul {
+  #app.hse .top-nav ul ul {
     background-color: #178eee;
   }
-  #app .sse .top-nav ul ul {
+  #app.sse .top-nav ul ul {
     background-color: #ed2124;
   }
-  #app .cvd .top-nav ul ul {
+  #app.cvd .top-nav ul ul {
     background-color: #5b5b5b;
   }
 
@@ -8352,17 +8352,17 @@ form .form-errors {
 #app footer .logo img {
   height: 55px;
 }
-#app .sse footer {
+#app.sse footer {
   text-align: center;
   margin-bottom: 60px;
   margin-top: 20px;
   display: flow-root;
 }
-#app .hse footer {
+#app.hse footer {
   text-align: center;
   margin-bottom: 60px;
 }
-#app .cvd footer {
+#app.cvd footer {
   text-align: center;
   margin-bottom: 60px;
 }
@@ -8373,35 +8373,35 @@ form .form-errors {
 #app footer .forum-logo {
   height: 36px;
 }
-#app .sse footer .forum-logo,
-#app .sse footer .logo {
+#app.sse footer .forum-logo,
+#app.sse footer .logo {
   width: 222px;
 }
-#app .sse footer .logo {
+#app.sse footer .logo {
   float: left;
   max-width: 375px;
 }
-#app .sse footer .logo-wrapper {
+#app.sse footer .logo-wrapper {
   display: flow-root;
   margin: 20px auto;
   max-width: 590px;
 }
 
-#app .hse footer .logo,
-#app .cvd footer .logo {
+#app.hse footer .logo,
+#app.cvd footer .logo {
   height: 42px;
   border-right: 1px solid #999;
   padding-right: 8px;
   margin-right: 8px;
 }
 
-#app .hse footer .logo-wrapper,
-#app .cvd footer .logo-wrapper {
+#app.hse footer .logo-wrapper,
+#app.cvd footer .logo-wrapper {
   display: block;
   margin: 20px auto;
 }
 
-#app .sse footer .forum-logo {
+#app.sse footer .forum-logo {
   float: right;
   max-width: 375px;
 }
@@ -8420,12 +8420,12 @@ form .form-errors {
   clear: both;
 }
 
-#app .sse footer a {
+#app.sse footer a {
   color: #007096;
   text-decoration: underline;
 }
 
-#app .hse footer a {
+#app.hse footer a {
   color: #cc4921;
   text-decoration: underline;
 }
@@ -8584,13 +8584,13 @@ form .form-errors {
     margin-top: 108px;
   }
 }
-.home-page .search-box .layer-toggle-filter-groups {
+.home-page .layer-toggle-filter-groups {
   display: none;
 }
-.home-page .search-box .layer-toggle-help {
+.home-page .search-tips .layer-toggle-help {
   color: #fff;
 }
-.home-page .search-box .layer-toggle-help:before {
+.layer-toggle-help:before {
   background: url(./images/tip_w_icon.svg);
 }
 @media (min-width: 1024px) {
@@ -9802,13 +9802,13 @@ form .form-errors {
     margin-top: -1px;
   }
 }
-.search-box .layer-toggles {
+.search-tips .layer-toggles {
   overflow: auto;
   margin-top: 16px;
   padding-bottom: 8px;
   overflow: visible;
 }
-.search-box .layer-toggle-help {
+.search-tips .layer-toggle-help {
   background: 0 0;
   color: #178eee;
   padding-left: 0;
@@ -9816,7 +9816,7 @@ form .form-errors {
   vertical-align: middle;
   line-height: 32px;
 }
-.search-box .layer-toggle-help:before {
+.search-tips .layer-toggle-help:before {
   content: '';
   margin-right: 4px;
   height: 16px;
@@ -9825,18 +9825,18 @@ form .form-errors {
   display: inline-block;
   vertical-align: inherit;
 }
-.search-box .result-list {
+.result-list {
   margin: 32px 0;
 }
 @media (min-width: 1024px) {
-  .search-box .result-list {
+  .result-list {
     margin-top: 36px;
   }
 }
-.search-box .advanced-search-wrapper {
+.search-tips .advanced-search-wrapper {
   display: none;
 }
-.search-box .layer-toggle-filter-groups {
+.search-tips .layer-toggle-filter-groups {
   background-color: #d3d3d3;
   padding: 8px 16px;
   border: none;
@@ -9851,22 +9851,29 @@ form .form-errors {
   position: relative;
   overflow: visible;
 }
-.search-box .layer-toggle-filter-groups span {
+.sse .search-tips .layer-toggle-filter-groups {
+  background-color: #ed2124;
+}
+.sse .filter-count {
+  background-color: #007096;
+}
+
+.search-tips .layer-toggle-filter-groups span {
   vertical-align: top;
 }
-.search-box .layer-toggle-filter-groups:hover {
+.search-tips .layer-toggle-filter-groups:hover {
   text-decoration: none;
 }
-.search-box .layer-toggle-filter-groups .hotspot {
+.search-tips .layer-toggle-filter-groups .hotspot {
   left: -11px;
   top: -4px;
 }
 @media (min-width: 1024px) {
-  .search-box .layer-toggle-filter-groups {
+  .search-tips .layer-toggle-filter-groups {
     display: none;
   }
 }
-.search-box .filter-count {
+.search-tips .filter-count {
   position: absolute;
   width: 20px;
   height: 20px;
@@ -9876,33 +9883,33 @@ form .form-errors {
   border-radius: 3px;
   text-align: center;
 }
-.search-box .result-count {
+.search-tips .result-count {
   display: none;
 }
-.search-box .saved-search-buttons {
+.search-tips .saved-search-buttons {
   display: none;
   float: right;
   margin-top: 8px;
 }
 @media (min-width: 1024px) {
-  .search-box .saved-search-buttons {
+  .search-tips .saved-search-buttons {
     display: block;
   }
 }
-.search-box .related-article {
+.search-tips .related-article {
   font-style: italic;
   color: #a6a6a6;
 }
-.search-box .related-article > a:first-of-type {
+.search-tips .related-article > a:first-of-type {
   color: #a6a6a6;
   margin-left: 4px;
   text-decoration: underline;
 }
-.search-box .related-article > a:first-of-type:after,
-.search-box .related-article > a:first-of-type:before {
+.search-tips .related-article > a:first-of-type:after,
+.search-tips .related-article > a:first-of-type:before {
   content: '"';
 }
-.search-box .related-article .btn-clear {
+.search-tips .related-article .btn-clear {
   margin-left: 8px;
   font-style: normal;
 }
