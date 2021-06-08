@@ -51,8 +51,9 @@ const GuidedQuestions = ({ site, language, isCollapsed = false }) => {
 
   const selectAnswer = (e, i) => {
     e.preventDefault();
+    const answer = question.answers[i];
     let params = new URLSearchParams(location.search);
-    const filter = question.answers[i].filterGroup.id;
+    const filter = answer.filters.join(',') || answer.filterGroup.id;
 
     let applied_filters = params.get('applied_filters');
     applied_filters =
@@ -161,7 +162,7 @@ const GuidedQuestions = ({ site, language, isCollapsed = false }) => {
               <li key={i} className="answer-item">
                 <a
                   href="#"
-                  onClick={() => selectAnswer(i)}
+                  onClick={(e) => selectAnswer(e, i)}
                   className="layer-toggle layer-toggle-filters"
                 >
                   <span>{answer.title}</span>

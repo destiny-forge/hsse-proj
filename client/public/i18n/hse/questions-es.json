@@ -5,22 +5,22 @@
          {
             "title":"Cómo se toman las decisiones (acerca de la atención)",
             "description":"Los acuerdos de gobernanza",
-            "filters":"governance_arrangements"
+            "filters": ["2_1001"]
          },
          {
             "title":"Cómo se paga la atención",
             "description":"Acuerdos financieros",
-            "filters":"financial_arrangements"
+            "filters": ["2_1002"]
          },
          {
             "title":"Cómo se organiza la atención",
             "description":"Planificación de las prestaciones",
-            "filters":"delivery_arrangements"
+            "filters": ["2_1003"]
          },
          {
             "title":"Cómo se pueden implementar los cambios",
             "description":"Estrategias de implementación",
-            "filters":"implementation_strategies"
+            "filters": ["2_1004"]
          }
       ]
    },
@@ -30,32 +30,32 @@
          {
             "title":"¿Qué enfoques se han evaluado respecto de sus ventajas y desventajas? (o ¿qué enfoque funciona?)",
             "description":"revisiones sistemáticas de efectos y descripciones generales de revisiones",
-            "filters":"?"
+            "filters": ["10_2", "10_3"]
          },
          {
             "title":"¿Qué enfoques se han evaluado respecto de su rentabilidad? (o sea una rentable enfoque?)",
             "description":"evaluaciones económicas y estudios de costos",
-            "filters":"?"
+            "filters": ["10_7"]
          },
          {
             "title":"¿Qué más sabemos acerca de un enfoque o del problema que este aborda?",
             "description":"revisiones sistemáticas que incluyen otras preguntas",
-            "filters":"?"
+            "filters": ["10_4"]
          },
          {
             "title":"¿Qué se ha probado en otros lugares y cuáles son las justificaciones documentadas? (y con qué impactos)?",
             "description":"descripciones de la reforma de salud",
-            "filters":"?"
+            "filters": ["10_8"]
          },
          {
             "title":"¿Qué se sabe acerca de un problema, las opciones y las consideraciones de implementación en un sistema de salud determinado?",
             "description":"resúmenes de evidencia de la política",
-            "filters":"?"
+            "filters": ["10_1"]
          },
          {
             "title":"¿Cómo funciona un sistema de salud determinado?",
             "description":"descripción del sistema de salud",
-            "filters":"?"
+            "filters": ["10_9"]
          }
       ]
    },
@@ -65,22 +65,22 @@
          {
             "title":"Enfermedades (infecciosas, no transmisibles u otras)",
             "description":"Enfermedades",
-            "filters":"conditions"
+            "filters": ["2_1"]
          },
          {
             "title":"Tecnologías (diagnóstico, vacunas, medicamentos, dispositivos, cirugías)",
             "description":"Tecnologías",
-            "filters":"conditionTechnologies"
+            "filters": ["2_2"]
          },
          {
             "title":"Sectores (atención domiciliaria, atención primaria, atención hospitalaria, rehabilitación, atención a largo plazo y salud pública)",
             "description":"Sectores",
-            "filters":"conditionSectors"
+            "filters": ["2_3"]
          },
          {
             "title":"Proveedores (médicos de cabecera, médicos especialistas, enfermeros, farmacéuticos, etc.)",
             "description":"Proveedores",
-            "filters":"conditionProviders"
+            "filters": ["2_4"]
          }
       ]
    }
