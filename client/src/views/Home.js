@@ -4,11 +4,22 @@ import GuidedQuestions from '../components/GuidedQuestions';
 import Footer from '../components/Footer';
 import Context from '../components/Context';
 import { Fragment, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const Home = ({ t, setPage }) => {
+  let history = useHistory();
+
   useEffect(() => {
     setPage('home');
   });
+
+  const search = (query) => {
+    history.push({
+      pathname: '/search',
+      search: `?q=${query}`,
+    });
+  };
+
   return (
     <Fragment>
       <Header />
@@ -18,7 +29,7 @@ const Home = ({ t, setPage }) => {
             <h1>{t('site_name')}</h1>
             <p className="intro">{t('home_page.intro')}</p>
             <p className="intro2">{t('home_page.intro2')}</p>
-            <SearchBar onSearch={(result) => console.log(result)} />
+            <SearchBar onSearch={search} />
           </div>
           <GuidedQuestions />
         </div>
