@@ -13,8 +13,15 @@ const SearchService = () => {
     return result.data;
   };
 
-  const suggestions = async (query, lang) => {
-    const url = `${baseURL}/search/suggestions/q=${query}&lang=${lang}`;
+  const suggestions = async (query, type, lang) => {
+    const url = `${baseURL}/search/suggestions?q=${query}&type=${type}&lang=${lang}`;
+    const response = await fetch(url);
+    const result = await response.json();
+    return result.data;
+  };
+
+  const search = async ({ query, filters, sort, page, site, language }) => {
+    const url = `${baseURL}/search?q=${query}&applied_filters=${filters}&sort_by=${sort}&page=${page}&site=${site}&lang=${language}`;
     const response = await fetch(url);
     const result = await response.json();
     return result.data;
@@ -22,6 +29,7 @@ const SearchService = () => {
 
   return {
     latest,
+    search,
     suggestions,
   };
 };

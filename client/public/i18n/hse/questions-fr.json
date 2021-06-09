@@ -5,22 +5,22 @@
          {
             "title":"Comment les décisions (sur les soins) sont-elles prises",
             "description":"Arrangements de gouvernance",
-            "filters":"governance_arrangements"
+            "filters": ["2_1001"]
          },
          {
             "title":"Comment les soins sont-ils payés",
             "description":"Arrangements financiers",
-            "filters":"financial_arrangements"
+            "filters": ["2_1002"]
          },
          {
             "title":"Comment les soins sont-ils organisés",
             "description":"Arrangements relatifs à la prestation de services",
-            "filters":"delivery_arrangements"
+            "filters": ["2_1003"]
          },
          {
             "title":"Comment favoriser le changement",
             "description":"Stratégies de mise en œuvre",
-            "filters":"implementation_strategies"
+            "filters": ["2_1004"]
          }
       ]
    },
@@ -30,32 +30,32 @@
          {
             "title":"Quelles approches ont été évaluées pour leurs avantages et leurs inconvénients? (ou quelle approche fonctionne?)",
             "description":"revues systématiques sur les effets et revues des revues systématiques",
-            "filters":"?"
+            "filters": ["10_2", "10_3"]
          },
          {
             "title":"Quelles approches ont été évaluées pour leur rapport coût-efficacité? (ou est une approche rentable?)",
             "description":"évaluations économiques et études des prix de revient",
-            "filters":"?"
+            "filters": ["10_7"]
          },
          {
             "title":"Que savons-nous d'autre sur une approche ou un problème qu'il vise à résoudre?",
             "description":"revues systématiques sur d'autres questions",
-            "filters":"?"
+            "filters": ["10_4"]
          },
          {
             "title":"Qu'est-ce qui a été essayé ailleurs et quelle est la justification? (et avec quels impacts)?",
             "description":"descriptions de réformes de la santé",
-            "filters":"?"
+            "filters": ["10_8"]
          },
          {
             "title":"Que savons-nous d'un problème, des options et des implications de mise en œuvre dans un système de santé particulier?",
             "description":"synthèses de données probantes pour éclairer les politiques",
-            "filters":"?"
+            "filters": ["10_1"]
          },
          {
             "title":"Comment fonctionne un système de santé en particulier?",
             "description":"descriptions des systèmes de santé",
-            "filters":"?"
+            "filters": ["10_9"]
          }
       ]
    },
@@ -65,22 +65,22 @@
          {
             "title":"Maladies (maladies infectieuses, maladies non transmissibles ou autres conditions)",
             "description":"Maladies",
-            "filters":"conditions"
+            "filters": ["2_1"]
          },
          {
             "title":"Technologies (diagnostics, vaccins, médicaments, dispositifs, chirurgies)",
             "description":"Technologies",
-            "filters":"conditionTechnologies"
+            "filters": ["2_2"]
          },
          {
             "title":"Secteurs (soins à domicile, soins primaires, soins hospitaliers, réadaptation, soins de longue durée et santé publique)",
             "description":"Secteurs",
-            "filters":"conditionSectors"
+            "filters": ["2_3"]
          },
          {
             "title":"Fournisseurs (médecins généralistes, médecins spécialistes, infirmières, pharmaciens, etc.)",
             "description":"Fournisseurs",
-            "filters":"conditionProviders"
+            "filters": ["2_4"]
          }
       ]
    }

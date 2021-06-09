@@ -10,11 +10,11 @@ Health Systems Evidence puede ahorrar una buena cantidad de tiempo a formuladore
 
 Health Systems Evidence ha recibido el respaldo de diversos tipos de organizaciones interesadas en la toma de decisiones informadas en la evidencia. Por ejemplo:
 
-* La Red de Políticas Informadas por Evidencia (EVIPNet) de la Organización Mundial de la Salud (OMS) incorporó a HSE a la [Biblioteca Virtual en Salud de EVIPNet](https://www.healthsystemsevidence.org/r.aspx?x=Ly2jSomWIBnaokThqtiuPAji8ZJSa1Zs62-q5cvh9ttCuwGLpfPWPCzjHLzORoc-Vn9TTCx8LoC0SoMWrplK_DkjTW7wtoSZXDJ2VGgUCGI|).
-* El Grupo de Asesoramiento sobre Síntesis de Investigaciones sobre Sistemas de Salud de la Organización Mundial de la Salud (OMS) distinguió a HSE como recurso clave para una amplia variedad de evidencia de investigación sobre sistemas de salud.
-* Vox (una empresa de medios de comunicación que opera en Internet y dedicada a interpretar las noticias en lugar de simplemente informarlas) publicitó a HSE como una de las seis mejores bases de datos de evidencia, y como la única centrada en sistemas de salud.
-* El Centro para la Salud del Conocimiento a la Política (Centro K2P) de la American University of Beirut (Universidad Americana de Beirut) y su Centro de Revisiones Sistemáticas de Investigaciones sobre Políticas y Sistemas de Salud (SPARK) usan y fomentan el uso de HSE.
-* El Ministerio de Salud y Atención a Largo Plazo de Ontario identifica a HSE como una de las pocas bases de datos (y la única centrada en sistemas de salud) que debe utilizarse para presentar informes del ministerio y del gabinete en relación con cuestiones de salud.
+- La Red de Políticas Informadas por Evidencia (EVIPNet) de la Organización Mundial de la Salud (OMS) [distinguió a HSE como recurso clave](https://www.who.int/evidence/resources/en/) para quienes respaldan el uso de la evidencia en la toma de decisiones sobre políticas.
+- El Grupo de Asesoramiento sobre Síntesis de Investigaciones sobre Sistemas de Salud de la Organización Mundial de la Salud (OMS) distinguió a HSE como recurso clave para una amplia variedad de evidencia de investigación sobre sistemas de salud.
+- Vox (una empresa de medios de comunicación que opera en Internet y dedicada a interpretar las noticias en lugar de simplemente informarlas) publicitó a HSE como una de las seis mejores bases de datos de evidencia, y como la única centrada en sistemas de salud.
+- El Centro para la Salud del Conocimiento a la Política (Centro K2P) de la American University of Beirut (Universidad Americana de Beirut) y su Centro de Revisiones Sistemáticas de Investigaciones sobre Políticas y Sistemas de Salud (SPARK) usan y fomentan el uso de HSE.
+- El Ministerio de Salud y Atención a Largo Plazo de Ontario identifica a HSE como una de las pocas bases de datos (y la única centrada en sistemas de salud) que debe utilizarse para presentar informes del ministerio y del gabinete en relación con cuestiones de salud.
 
 <footer>
   <p class="text-center">**Health Systems Evidence es una iniciativa de McMaster Health Forum.**</p>

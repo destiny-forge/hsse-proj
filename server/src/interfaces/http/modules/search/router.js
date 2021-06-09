@@ -9,7 +9,6 @@ module.exports = ({
   response: { Success, Fail },
 }) => {
   const router = Router();
-  router.use(auth.authenticate());
 
   /**
    * @swagger
@@ -74,8 +73,10 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.get("/suggestions", (req, res) => {
+    const { q, type, lang } = req.query;
+    console.log(req.query);
     suggestUseCase
-      .suggest(req.query)
+      .suggest(q, type, lang)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

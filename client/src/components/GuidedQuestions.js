@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Context from './Context';
 import { GuidedSearchConsumer } from './GuidedSearchContext';
+import { useHistory, useLocation } from 'react-router-dom';
 
-const GuidedQuestions = ({ site, language }) => {
+const GuidedQuestions = ({ site, language, isCollapsed = false }) => {
   const [index, setIndex] = useState(0);
   const [questions, setQuestions] = useState([]);
   const [question, setQuestion] = useState(null);
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(isCollapsed);
+  let history = useHistory();
+  let location = useLocation();
 
   useEffect(() => {
     let url = `/i18n/${site}/questions-${language}.json`;
@@ -48,14 +51,21 @@ const GuidedQuestions = ({ site, language }) => {
 
   const selectAnswer = (e, i) => {
     e.preventDefault();
-    console.log(question.answers[i]);
-    // we'll want to load the search
-    // page and populate the menu based
-    // on the passed in filters
+    const answer = question.answers[i];
+    let params = new URLSearchParams(location.search);
+    const filter =
+      (answer.filters && answer.filters.join(',')) || answer.filterGroup.id;
 
-    // Note: our system treats all child
-    // elements of a parent as selected if
-    // it itself is selected
+    let applied_filters = params.get('applied_filters');
+    applied_filters =
+      applied_filters === null ? filter : `${applied_filters},${filter}`;
+
+    history.push({
+      pathname: '/search',
+      search: `?applied_filters=${applied_filters}`,
+    });
+
+    setCollapsed(true);
   };
 
   const Dots = () => {
@@ -153,7 +163,7 @@ const GuidedQuestions = ({ site, language }) => {
               <li key={i} className="answer-item">
                 <a
                   href="#"
-                  onClick={() => selectAnswer(i)}
+                  onClick={(e) => selectAnswer(e, i)}
                   className="layer-toggle layer-toggle-filters"
                 >
                   <span>{answer.title}</span>

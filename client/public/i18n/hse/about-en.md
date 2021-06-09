@@ -8,11 +8,11 @@ Health Systems Evidence can save health system policymakers and stakeholders a g
 
 Health Systems Evidence has been endorsed by a diverse range of organizations interested in evidence-informed decision-making. For example:
 
-* WHO’s Evidence Informed Policy Networks (EVIPNet) integrated HSE into the [EVIPNet Virtual Health Library](https://www.healthsystemsevidence.org/r.aspx?x=Ly2jSomWIBnaokThqtiuPAji8ZJSa1Zs62-q5cvh9ttCuwGLpfPWPCzjHLzORoc-Vn9TTCx8LoC0SoMWrplK_DkjTW7wtoSZXDJ2VGgUCGI|).
-* The World Health Organization’s (WHO) Advisory Group on Health Systems Research Synthesis singled out HSE as the key resource for a broad array of research evidence about health systems.
-* Vox (a web-based media company focused on interpreting, rather than just reporting on, the news) promoted HSE as one of six ‘best evidence’ databases, and the only one focused on health systems.
-* The American University of Beirut’s Knowledge to Policy Center for Health (K2P Center) and its Center for Systematic Reviews on Health Policy and Systems Research (SPARK) use and promote the use of HSE.
-* The Ontario Ministry of Health and Long-Term Care identifies HSE as one of the few databases (and the only one focused on health systems) that should be searched to inform ministerial and cabinet submissions if they address health system issues.
+- WHO’s Evidence Informed Policy Networks (EVIPNet) have [endorsed HSE as a key resource](https://www.who.int/evidence/resources/en/) for those supporting the use of evidence in policy decisions.
+- The World Health Organization’s (WHO) Advisory Group on Health Systems Research Synthesis singled out HSE as the key resource for a broad array of research evidence about health systems.
+- Vox (a web-based media company focused on interpreting, rather than just reporting on, the news) promoted HSE as one of six ‘best evidence’ databases, and the only one focused on health systems.
+- The American University of Beirut’s Knowledge to Policy Center for Health (K2P Center) and its Center for Systematic Reviews on Health Policy and Systems Research (SPARK) use and promote the use of HSE.
+- The Ontario Ministry of Health and Long-Term Care identifies HSE as one of the few databases (and the only one focused on health systems) that should be searched to inform ministerial and cabinet submissions if they address health system issues.
 
 <footer>
   <p class="text-center">**Health Systems Evidence is an initiative of the McMaster Health Forum.**</p>

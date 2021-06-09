@@ -1,27 +1,33 @@
-import Header from '../components/Header';
-import Search from '../components/Search';
+import SearchBar from '../components/SearchBar';
 import GuidedQuestions from '../components/GuidedQuestions';
-import Footer from '../components/Footer';
 import Context from '../components/Context';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
-const Home = ({ site, t }) => {
-  const className = `${site} home layered-navigation`;
+const Home = ({ t, setPage }) => {
+  let history = useHistory();
+
+  useEffect(() => {
+    setPage('home');
+  });
+
+  const search = (query) => {
+    history.push({
+      pathname: '/search',
+      search: `?q=${query}`,
+    });
+  };
+
   return (
-    <div className={className}>
-      <div className="layered-navigation-content">
-        <Header />
-        <div id="page-content">
-          <div className="home-page">
-            <div className="home-page-header">
-              <h1>{t('site_name')}</h1>
-              <p className="intro">{t('home_page.intro')}</p>
-              <p className="intro2">{t('home_page.intro2')}</p>
-              <Search onSearch={(result) => console.log(result)} />
-            </div>
-            <GuidedQuestions />
-          </div>
+    <div id="page-content">
+      <div className="home-page">
+        <div className="home-page-header">
+          <h1>{t('site_name')}</h1>
+          <p className="intro">{t('home_page.intro')}</p>
+          <p className="intro2">{t('home_page.intro2')}</p>
+          <SearchBar onSearch={search} />
         </div>
-        <Footer />
+        <GuidedQuestions />
       </div>
     </div>
   );

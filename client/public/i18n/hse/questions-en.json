@@ -4,22 +4,22 @@
       {
          "title":"How decisions about care are made",
          "description":"governance arrangements",
-         "filters":"governance_arrangements"
+         "filters": ["2_1001"]
       },
       {
          "title":"How care is paid for",
          "description":"financial arrangements",
-         "filters":"financial_arrangements"
+         "filters": ["2_1002"]
       },
       {
          "title":"How care is organized",
          "description":"delivery arrangements",
-         "filters":"delivery_arrangements"
+         "filters": ["2_1003"]
       },
       {
          "title":"How change can be brought about",
          "description":"implementation strategies",
-         "filters":"implementation_strategies"
+         "filters": ["2_1004"]
       }
    ]
 },
@@ -29,32 +29,32 @@
       {
          "title":"What approaches have been evaluated for their benefits and harms? (or what approach works?",
          "description":"systematic reviews of effects and overviews of reviews",
-         "filters":"?"
+         "filters": ["10_2", "10_3"]
       },
       {
          "title":"What approaches have been evaluated for their cost-effectiveness? (or is an approach cost-effective?)",
          "description":"economic evaluations and costing studies",
-         "filters":"?"
+         "filters": ["10_7"]
       },
       {
          "title":"What else do we know about an approach or the problem it addresses?",
          "description":"systematic reviews addressing other questions",
-         "filters":"?"
+         "filters": ["10_4"]
       },
       {
          "title":"What’s been tried elsewhere and the rationale documented? (and with what impacts)?",
          "description":"health reform descriptions",
-         "filters":"?"
+         "filters": ["10_8"]
       },
       {
          "title":"What do we know about a problem, options and implementation considerations in a particular health system?",
          "description":"evidence briefs for policy",
-         "filters":"?"
+         "filters": ["10_1"]
       },
       {
          "title":"How does a particular health system work?",
          "description":"health system description",
-         "filters":"?"
+         "filters": ["10_9"]
       }
    ]
 },
@@ -64,22 +64,22 @@
       {
          "title":"Diseases (infectious diseases, non-communicable diseases or other conditions)",
          "description":"diseases",
-         "filters":"conditions"
+         "filters": ["2_1"]
       },
       {
          "title":"Technologies (vaccines, diagnostics, drugs, devices, surgeries)",
          "description":"technologies",
-         "filters":"conditionTechnologies"
+         "filters": ["2_2"]
       },
       {
          "title":"Sectors (home care, primary care, hospital care, rehabilitation, long-term care and public health)",
          "description":"sectors",
-         "filters":"conditionSectors"
+         "filters": ["2_3"]
       },
       {
          "title":"Providers (generalist physicians, specialist physicians, nurses, pharmacists, etc.)",
          "description":"providers",
-         "filters":"conditionProviders"
+         "filters": ["2_4"]
       }
    ]
 }

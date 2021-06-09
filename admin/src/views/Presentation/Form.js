@@ -168,7 +168,8 @@ class PresentationForm extends React.Component {
       ...this.state.article,
       status: value,
     };
-    if (value === 'live') {
+
+    if (!article.live && value === 'live') {
       article.live = true;
       article.liveDate = new Date();
       article.status = 'Completed';
