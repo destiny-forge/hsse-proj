@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { debounce, delay } from 'underscore';
-import Context from './Context';
 import Autosuggest from 'react-autosuggest';
+import Context from './Context';
 
 import SearchService from '../services/SearchService';
 import Button from './Button';
@@ -11,6 +11,15 @@ const SearchBar = ({ onSearch, site, language, t }) => {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const params = new URLSearchParams(document.location.search);
+    const q = params.get('q');
+    if (q) {
+      setQuery(q);
+      onSearch(q);
+    }
+  });
 
   const fetchSuggestions = ({ value }) => {
     Search.suggestions(value, site, language)
@@ -62,7 +71,7 @@ const SearchBar = ({ onSearch, site, language, t }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch({ query });
+    onSearch(query);
   };
 
   const dismissKeyboard = () => document.activeElement.blur();
@@ -83,7 +92,7 @@ const SearchBar = ({ onSearch, site, language, t }) => {
       <form action="#" onSubmit={handleSubmit} className="search-bar">
         <div className="react-autosuggest">
           <Autosuggest
-            key={'autosuggest-#{count}'}
+            key={`autosuggest-${count}`}
             suggestions={suggestions}
             onSuggestionsFetchRequested={debounce(fetchSuggestions, 200)}
             onSuggestionsClearRequested={clearInput}

@@ -1,7 +1,7 @@
 import { result } from 'underscore';
 import Context from './Context';
 
-const SearchResults = ({ t, results = [] }) => {
+const SearchResults = ({ t, results = [], onSort, onPage }) => {
   return (
     <div className="result-box">
       <div className="result-box-header">
@@ -9,7 +9,10 @@ const SearchResults = ({ t, results = [] }) => {
           <span className="sort-order-label">
             {t('search_page.sort_order.sorted_by')}&nbsp;
           </span>
-          <select className="sort-order-control">
+          <select
+            className="sort-order-control"
+            onChange={(select) => onSort(select.target.value)}
+          >
             <option value="relevance">
               {t('search_page.sort_order.relevance')}
             </option>

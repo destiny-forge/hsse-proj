@@ -20,8 +20,16 @@ const SearchService = () => {
     return result.data;
   };
 
+  const search = async ({ query, filters, sort, page, site, language }) => {
+    const url = `${baseURL}/search?q=${query}&applied_filters=${filters}&sort_by=${sort}&page=${page}&site=${site}&lang=${language}`;
+    const response = await fetch(url);
+    const result = await response.json();
+    return result.data;
+  };
+
   return {
     latest,
+    search,
     suggestions,
   };
 };

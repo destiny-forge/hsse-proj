@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
@@ -11,22 +11,31 @@ import SearchResults from '../components/SearchResults';
 import SearchService from '../services/SearchService';
 
 const Search = ({ site, language, setPage, toggleLayer }) => {
-  setPage('search');
   let { applied_filters } = useParams();
   const initial_filters = (applied_filters && applied_filters.split(',')) || [];
   const Search = SearchService();
   const [results, setResults] = useState([]);
   const [filters, setFilters] = useState(initial_filters);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [sort, setSort] = useState('relevance');
 
-  const suggest = (result) => {
-    console.log(result);
-    // may need to process filters list here
-    setFilters(result);
-    search(result);
-  };
+  useEffect(() => {
+    setPage('search');
 
-  const search = (filters) => {
-    Search.search(filters, site, language)
+    // we may want to perform a search on initial load
+    // so it's important that we can grab the values from
+    // the querystring if they are passed from the home page
+  });
+
+  const search = (q) => {
+    Search.search({
+      query: q,
+      filters,
+      sort,
+      page: pageNumber,
+      site,
+      language,
+    })
       .then((res) => {
         console.log(res);
         if (res.success) {
@@ -43,11 +52,19 @@ const Search = ({ site, language, setPage, toggleLayer }) => {
       <Header />
       <div id="page-content">
         <div className="search-page">
-          <SearchBar onSearch={suggest} />
+          <SearchBar onSearch={search} />
           <SearchTips filters={filters} onShowMenu={toggleLayer} />
           <GuidedQuestions isCollapsed={true} />
-          <FilterMenu filters={filters} results={results} search={search} />
-          <SearchResults results={results} />
+          <FilterMenu
+            filters={filters}
+            results={results}
+            onFilterChange={setFilters}
+          />
+          <SearchResults
+            results={results}
+            onSort={setSort}
+            onPage={setPageNumber}
+          />
         </div>
       </div>
       <Footer />
