@@ -28,14 +28,14 @@ const LayerProvider = ({ site, page, children }) => {
   };
 
   const findLayerGroup = () => {
-    return _.find(children, (child) => child.type.name === 'LayerGroup');
+    return _.find(children, (child) => child.type.displayName === 'LayerGroup');
   };
 
   const findLayer = (name) => {
     let group = findLayerGroup();
 
     let layer = _.find(group.props.children, (layer) => {
-      return layer.type.name === 'Layer' && layer.props.name === name;
+      return layer.type.displayName === 'Layer' && layer.props.name === name;
     });
 
     if (!layer) {
