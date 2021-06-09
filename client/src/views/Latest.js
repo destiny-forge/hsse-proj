@@ -3,10 +3,13 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import LatestArticles from '../components/LatestArticles';
 import { Helmet } from 'react-helmet';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 
 const Latest = ({ t, setPage }) => {
-  setPage('latest_content');
+  useEffect(() => {
+    setPage('latest_content');
+  });
+
   return (
     <Fragment>
       <Helmet>

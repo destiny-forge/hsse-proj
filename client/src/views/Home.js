@@ -3,10 +3,12 @@ import SearchBar from '../components/SearchBar';
 import GuidedQuestions from '../components/GuidedQuestions';
 import Footer from '../components/Footer';
 import Context from '../components/Context';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 
 const Home = ({ t, setPage }) => {
-  setPage('home');
+  useEffect(() => {
+    setPage('home');
+  });
   return (
     <Fragment>
       <Header />

@@ -1,17 +1,13 @@
-import { useState } from 'react';
 import Context from './Context';
 import LayerToggle from './LayerToggle';
 
 const SearchTips = ({ filters, t, onShowMenu, overlayContent }) => {
-  const [visible, setVisible] = useState(false);
-
   const renderFilterCount = () => {
     const count = filters.length || 0;
     return count > 0 ? <span className="filter-count">{count}</span> : null;
   };
   const handleClickFiltersButton = (args) => {
     onShowMenu.apply(...args);
-    setVisible(true);
   };
 
   return (

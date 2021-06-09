@@ -53,7 +53,8 @@ const GuidedQuestions = ({ site, language, isCollapsed = false }) => {
     e.preventDefault();
     const answer = question.answers[i];
     let params = new URLSearchParams(location.search);
-    const filter = answer.filters.join(',') || answer.filterGroup.id;
+    const filter =
+      (answer.filters && answer.filters.join(',')) || answer.filterGroup.id;
 
     let applied_filters = params.get('applied_filters');
     applied_filters =

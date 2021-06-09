@@ -68,4 +68,4 @@ const Layer = ({ language, title, level, name, children, onClose }) => {
   );
 };
 
-export default Context(Layer);
+export default Layer;

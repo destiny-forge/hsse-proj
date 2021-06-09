@@ -3,10 +3,13 @@ import Markdown from '../components/Markdown';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 
-const About = ({ site, t, setPage }) => {
-  setPage('about');
+const About = ({ t, setPage }) => {
+  useEffect(() => {
+    setPage('about');
+  });
+
   return (
     <Fragment>
       <Helmet>

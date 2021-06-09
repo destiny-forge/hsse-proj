@@ -10,7 +10,7 @@ import FilterMenu from '../components/FilterMenu';
 import SearchResults from '../components/SearchResults';
 import SearchService from '../services/SearchService';
 
-const Search = ({ site, language, setPage }) => {
+const Search = ({ site, language, setPage, toggleLayer }) => {
   setPage('search');
   let { applied_filters } = useParams();
   const initial_filters = (applied_filters && applied_filters.split(',')) || [];
@@ -44,10 +44,7 @@ const Search = ({ site, language, setPage }) => {
       <div id="page-content">
         <div className="search-page">
           <SearchBar onSearch={suggest} />
-          <SearchTips
-            filters={filters}
-            onShowMenu={(args) => console.log(...args)}
-          />
+          <SearchTips filters={filters} onShowMenu={toggleLayer} />
           <GuidedQuestions isCollapsed={true} />
           <FilterMenu filters={filters} results={results} search={search} />
           <SearchResults results={results} />

@@ -1,4 +1,4 @@
-import { useRef, React } from 'react';
+import React from 'react';
 import { Switch } from 'react-router';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
@@ -25,24 +25,13 @@ import {
   LanguageConsumer,
 } from './components/LanguageContext';
 import { GuidedSearchProvider } from './components/GuidedSearchContext';
-import LayeredNavigation from './components/LayeredNavigation';
+import { LayerProvider } from './components/LayerContext';
 import { Helmet } from 'react-helmet';
 import Layer from './components/Layer';
 import LayerGroup from './components/LayerGroup';
 import HelpMenu from './components/HelpMenu';
 
-const Layers = ({ t }) => {
-  return (
-    <LayerGroup>
-      <Layer name="help" title={t('menus.help.title')}>
-        <HelpMenu />
-      </Layer>
-    </LayerGroup>
-  );
-};
-
 const App = () => {
-  const layeredNavigation = useRef(null);
   return (
     <SiteProvider>
       <SiteConsumer>
@@ -51,20 +40,21 @@ const App = () => {
             <LanguageConsumer>
               {({ t }) => (
                 <PageProvider>
+                  <Helmet>
+                    <title>{t('site_name')}</title>
+                  </Helmet>
                   <PageConsumer>
                     {({ page }) => (
                       <GuidedSearchProvider>
-                        <LayeredNavigation
-                          ref={layeredNavigation}
-                          className=""
-                          id="app"
-                          page={page}
-                          site={site}
-                        >
-                          <Layers t={t} />
-                          <Helmet>
-                            <title>{t('site_name')}</title>
-                          </Helmet>
+                        <LayerProvider page={page} site={site}>
+                          <LayerGroup>
+                            <Layer name="help" title={t('menus.help.title')}>
+                              <HelpMenu />
+                            </Layer>
+                            <Layer name="test" title={t('menus.help.test')}>
+                              <HelpMenu />
+                            </Layer>
+                          </LayerGroup>
                           <Router>
                             <ScrollToTop />
                             <Switch>
@@ -101,7 +91,7 @@ const App = () => {
                               />
                             </Switch>
                           </Router>
-                        </LayeredNavigation>
+                        </LayerProvider>
                       </GuidedSearchProvider>
                     )}
                   </PageConsumer>
