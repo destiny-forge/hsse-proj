@@ -19,10 +19,6 @@ const Search = ({ site, language, setPage, toggleLayer }) => {
 
   useEffect(() => {
     setPage('search');
-
-    // we may want to perform a search on initial load
-    // so it's important that we can grab the values from
-    // the querystring if they are passed from the home page
   });
 
   const search = (q) => {
