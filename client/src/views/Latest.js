@@ -1,9 +1,7 @@
 import Context from '../components/Context';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import LatestArticles from '../components/LatestArticles';
 import { Helmet } from 'react-helmet';
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 
 const Latest = ({ t, setPage }) => {
   useEffect(() => {
@@ -11,18 +9,14 @@ const Latest = ({ t, setPage }) => {
   });
 
   return (
-    <Fragment>
+    <div id="page-content">
+      <LatestArticles />
       <Helmet>
         <title>
           {t('latest_content_page.title')} | {t('site_name')}
         </title>
       </Helmet>
-      <Header />
-      <div id="page-content">
-        <LatestArticles />
-      </div>
-      <Footer />
-    </Fragment>
+    </div>
   );
 };
 

@@ -31,6 +31,9 @@ import Layer from './components/Layer';
 import LayerGroup from './components/LayerGroup';
 import HelpMenu from './components/HelpMenu';
 
+import Header from './components/Header';
+import Footer from './components/Footer';
+
 const App = () => {
   return (
     <SiteProvider>
@@ -56,6 +59,7 @@ const App = () => {
                             </Layer>
                           </LayerGroup>
                           <Router>
+                            <Header />
                             <ScrollToTop />
                             <Switch>
                               <Route exact path="/" component={Home} />
@@ -90,6 +94,7 @@ const App = () => {
                                 component={Article}
                               />
                             </Switch>
+                            <Footer />
                           </Router>
                         </LayerProvider>
                       </GuidedSearchProvider>

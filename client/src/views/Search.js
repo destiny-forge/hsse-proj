@@ -1,10 +1,8 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import SearchTips from '../components/SearchTips';
 import GuidedQuestions from '../components/GuidedQuestions';
-import Footer from '../components/Footer';
 import Context from '../components/Context';
 import FilterMenu from '../components/FilterMenu';
 import SearchResults from '../components/SearchResults';
@@ -48,27 +46,23 @@ const Search = ({ site, language, setPage, toggleLayer }) => {
   };
 
   return (
-    <Fragment>
-      <Header />
-      <div id="page-content">
-        <div className="search-page">
-          <SearchBar onSearch={search} />
-          <SearchTips filters={filters} onShowMenu={toggleLayer} />
-          <GuidedQuestions isCollapsed={true} />
-          <FilterMenu
-            filters={filters}
-            results={results}
-            onFilterChange={setFilters}
-          />
-          <SearchResults
-            results={results}
-            onSort={setSort}
-            onPage={setPageNumber}
-          />
-        </div>
+    <div id="page-content">
+      <div className="search-page">
+        <SearchBar onSearch={search} />
+        <SearchTips filters={filters} onShowMenu={toggleLayer} />
+        <GuidedQuestions isCollapsed={true} />
+        <FilterMenu
+          filters={filters}
+          results={results}
+          onFilterChange={setFilters}
+        />
+        <SearchResults
+          results={results}
+          onSort={setSort}
+          onPage={setPageNumber}
+        />
       </div>
-      <Footer />
-    </Fragment>
+    </div>
   );
 };
 
