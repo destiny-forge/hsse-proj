@@ -25,7 +25,7 @@ import {
   LanguageConsumer,
 } from './components/LanguageContext';
 import { GuidedSearchProvider } from './components/GuidedSearchContext';
-import { LayerProvider } from './components/LayerContext';
+import { LayerProvider, LayerConsumer } from './components/LayerContext';
 import { Helmet } from 'react-helmet';
 import Layer from './components/Layer';
 import LayerGroup from './components/LayerGroup';
@@ -54,12 +54,16 @@ const App = () => {
                             <Layer name="help" title={t('menus.help.title')}>
                               <HelpMenu />
                             </Layer>
-                            <Layer name="test" title={t('menus.help.test')}>
+                            <Layer name="main" title={t('menus.main.title')}>
                               <HelpMenu />
                             </Layer>
                           </LayerGroup>
                           <Router>
-                            <Header />
+                            <LayerConsumer>
+                              {({ toggleLayer }) => (
+                                <Header onShowMenu={toggleLayer} />
+                              )}
+                            </LayerConsumer>
                             <ScrollToTop />
                             <Switch>
                               <Route exact path="/" component={Home} />
