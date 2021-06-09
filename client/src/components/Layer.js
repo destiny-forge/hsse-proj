@@ -68,4 +68,6 @@ const Layer = ({ language, title, level, name, children, onClose }) => {
   );
 };
 
+Layer.displayName = 'Layer';
+
 export default Layer;
