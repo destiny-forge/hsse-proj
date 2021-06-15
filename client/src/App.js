@@ -31,6 +31,7 @@ import Layer from './components/Layer';
 import LayerGroup from './components/LayerGroup';
 import HelpMenu from './components/HelpMenu';
 
+import MainMenu from './components/MainMenu';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -49,19 +50,22 @@ const App = () => {
                   <PageConsumer>
                     {({ page }) => (
                       <GuidedSearchProvider>
-                        <LayerProvider page={page} site={site}>
-                          <LayerGroup>
-                            <Layer name="help" title={t('menus.help.title')}>
-                              <HelpMenu />
-                            </Layer>
-                            <Layer name="main" title={t('menus.main.title')}>
-                              <HelpMenu />
-                            </Layer>
-                          </LayerGroup>
-                          <Router>
+                        <Router>
+                          <LayerProvider page={page} site={site}>
+                            <LayerGroup>
+                              <Layer name="help" title={t('menus.help.title')}>
+                                <HelpMenu />
+                              </Layer>
+                              <Layer name="main" title={t('menus.main.title')}>
+                                <MainMenu />
+                              </Layer>
+                            </LayerGroup>
                             <LayerConsumer>
-                              {({ toggleLayer }) => (
-                                <Header onShowMenu={toggleLayer} />
+                              {({ toggleLayer, dismissLayer }) => (
+                                <Header
+                                  onShowMenu={toggleLayer}
+                                  onDismissMenu={dismissLayer}
+                                />
                               )}
                             </LayerConsumer>
                             <ScrollToTop />
@@ -99,8 +103,8 @@ const App = () => {
                               />
                             </Switch>
                             <Footer />
-                          </Router>
-                        </LayerProvider>
+                          </LayerProvider>
+                        </Router>
                       </GuidedSearchProvider>
                     )}
                   </PageConsumer>

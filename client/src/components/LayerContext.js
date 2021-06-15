@@ -95,7 +95,7 @@ const LayerProvider = ({ site, page, children }) => {
   else document.body.classList.remove('filter-scroll');
 
   return (
-    <LayerContext.Provider value={{ toggleLayer }}>
+    <LayerContext.Provider value={{ toggleLayer, dismissLayer }}>
       <div id="app" className={className}>
         <div transitionName="layer" component="div">
           {renderLayers()}
