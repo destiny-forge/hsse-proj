@@ -80,47 +80,60 @@ const LanguageProvider = ({ site, children }) => {
   );
 };
 
-const LanguageChooser = () => {
-  const [visible, setVisible] = useState(false);
+const LanguageChooser = ({ isVisible = false, onDismissMenu = () => {} }) => {
+  const [visible, setVisible] = useState(isVisible);
 
-  const toggle = () => {
+  const toggle = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
     setVisible(!visible);
+  };
+
+  const selectLanguage = () => {
+    toggle();
+    onDismissMenu();
   };
 
   return (
     <LanguageConsumer>
       {({ language, t, site, updateLanguage }) => (
         <div>
-          <label
+          <a
+            rel="alternate"
+            hrefLang={language}
             className="desktop-menu-link menu-item-text"
-            onMouseOver={toggle}
-            onMouseOut={toggle}
+            href="#"
+            onClick={toggle}
           >
             {t('main_menu.select_language')}
-            <ul
-              className="languages-menu menu-list"
-              style={{
-                display: visible ? 'block' : 'none',
-                visibility: visible ? 'visible' : 'hidden',
-              }}
-            >
-              {LANGUAGES[site].map((l) => {
-                let is_active = l.value === language;
-                return (
-                  <li key={l.value} className="menu-item">
-                    <a
-                      className="menu-item-text"
-                      href="#"
-                      onClick={(e) => updateLanguage(e, l.value)}
-                    >
-                      {l.label}
-                    </a>
-                    {is_active && <i className="checkmark" />}
-                  </li>
-                );
-              })}
-            </ul>
-          </label>
+          </a>
+          <ul
+            className="languages-menu menu-list"
+            style={{
+              display: visible ? 'block' : 'none',
+              visibility: visible ? 'visible' : 'hidden',
+            }}
+          >
+            {LANGUAGES[site].map((l) => {
+              let is_active = l.value === language;
+              return (
+                <li key={l.value} className="menu-item">
+                  <a
+                    className="menu-item-text"
+                    href="#"
+                    onClick={(e) => {
+                      updateLanguage(e, l.value);
+                      selectLanguage();
+                    }}
+                  >
+                    {l.label}
+                  </a>
+                  {is_active && <i className="checkmark" />}
+                </li>
+              );
+            })}
+          </ul>
         </div>
       )}
     </LanguageConsumer>

@@ -3,6 +3,7 @@ import { SiteConsumer } from './SiteContext';
 import { LanguageConsumer } from './LanguageContext';
 import { PageConsumer } from './PageContext';
 import { LayerConsumer } from './LayerContext';
+import { UserConsumer } from './UserContext';
 
 const Context = (BaseComponent) => (props) =>
   (
@@ -10,22 +11,28 @@ const Context = (BaseComponent) => (props) =>
       {({ site }) => (
         <LanguageConsumer>
           {({ t, language }) => (
-            <PageConsumer>
-              {({ sPage }) => (
-                <LayerConsumer>
-                  {({ toggleLayer }) => (
-                    <BaseComponent
-                      {...props}
-                      t={t}
-                      setPage={sPage}
-                      site={site}
-                      language={language}
-                      toggleLayer={toggleLayer}
-                    />
+            <UserConsumer>
+              {({ user, setUser }) => (
+                <PageConsumer>
+                  {({ sPage }) => (
+                    <LayerConsumer>
+                      {({ toggleLayer }) => (
+                        <BaseComponent
+                          {...props}
+                          t={t}
+                          user={user}
+                          setUser={setUser}
+                          setPage={sPage}
+                          site={site}
+                          language={language}
+                          toggleLayer={toggleLayer}
+                        />
+                      )}
+                    </LayerConsumer>
                   )}
-                </LayerConsumer>
+                </PageConsumer>
               )}
-            </PageConsumer>
+            </UserConsumer>
           )}
         </LanguageConsumer>
       )}

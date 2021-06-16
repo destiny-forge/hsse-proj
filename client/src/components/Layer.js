@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
-import Context from './Context';
 
-const Layer = ({ language, title, level, name, children, onClose }) => {
+const Layer = ({
+  language,
+  title = 'Menu',
+  level,
+  name,
+  children,
+  onClose,
+}) => {
   const [style, setStyle] = useState();
   const [titleWidth, setTitleWidth] = useState(0);
 
@@ -49,7 +55,7 @@ const Layer = ({ language, title, level, name, children, onClose }) => {
           className="layer-header-title"
           style={{ width: `${titleWidth}px` }}
         >
-          {title || 'Menu'}
+          {title}
         </span>
         <a
           rel="alternate"

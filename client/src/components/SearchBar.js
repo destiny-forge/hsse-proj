@@ -25,7 +25,7 @@ const SearchBar = ({ onSearch, site, language, t }) => {
     Search.suggestions(value, site, language)
       .then((res) => {
         console.log(res);
-        if (res.success) {
+        if (res && res.success) {
           setSuggestions(res.data);
         }
       })
@@ -84,7 +84,7 @@ const SearchBar = ({ onSearch, site, language, t }) => {
     setQuery('');
     setSuggestions([]);
     dismissKeyboard();
-    onSearch('');
+    //onSearch('');
   };
 
   return (
