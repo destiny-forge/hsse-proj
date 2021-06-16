@@ -3,8 +3,9 @@ import Context from './Context';
 import { LanguageChooser } from './LanguageContext';
 import GuidedSearchToggle from './GuidedSearchToggle';
 import { LayerConsumer } from './LayerContext';
+import LayerToggle from './LayerToggle';
 
-const MainMenu = ({ t, site }) => {
+const MainMenu = ({ t, toggleLayer, site }) => {
   return (
     <LayerConsumer>
       {({ dismissLayer }) => (
@@ -23,6 +24,13 @@ const MainMenu = ({ t, site }) => {
           </li>
           <li className="menu-item menu-item-language">
             <span className="menu-item-icon"></span>
+            <LayerToggle
+              className="menu-item-text"
+              menu="languages"
+              onToggle={toggleLayer}
+            >
+              {t('main_menu.select_language')}
+            </LayerToggle>
             <LanguageChooser site={site} />
           </li>
           <li className="menu-item menu-item-guided-search">

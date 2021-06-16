@@ -27,6 +27,10 @@ const LayerProvider = ({ site, page, children }) => {
     setLayers(cloned);
   };
 
+  const dismissAll = () => {
+    setLayers([]);
+  };
+
   const findLayerGroup = () => {
     return _.find(children, (child) => child.type.displayName === 'LayerGroup');
   };
@@ -77,7 +81,7 @@ const LayerProvider = ({ site, page, children }) => {
     return layers.map((layer) => {
       level += 1;
       let [content, _title] = findLayer(layer.name);
-      let title = layer.title;
+      let title = layer.title || _title;
       let props = _.clone(content.props);
       props.context = layer.context;
 
@@ -95,7 +99,7 @@ const LayerProvider = ({ site, page, children }) => {
   else document.body.classList.remove('filter-scroll');
 
   return (
-    <LayerContext.Provider value={{ toggleLayer, dismissLayer }}>
+    <LayerContext.Provider value={{ toggleLayer, dismissLayer, dismissAll }}>
       <div id="app" className={className}>
         <div transitionName="layer" component="div">
           {renderLayers()}

@@ -9178,9 +9178,11 @@ form .form-errors {
     top: 2px;
   }
 }
-.main-menu .desktop-menu-link {
+.main-menu .desktop-menu-link,
+.layer-content .desktop-menu-link {
   display: none;
 }
+
 .main-menu .menu-item-guided-search {
   padding-right: 36px;
 }

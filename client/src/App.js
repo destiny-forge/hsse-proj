@@ -34,6 +34,7 @@ import HelpMenu from './components/HelpMenu';
 import MainMenu from './components/MainMenu';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import { LanguageChooser } from './components/LanguageContext';
 
 const App = () => {
   return (
@@ -59,13 +60,24 @@ const App = () => {
                               <Layer name="main" title={t('menus.main.title')}>
                                 <MainMenu />
                               </Layer>
+                              <Layer
+                                name="languages"
+                                title={t('menus.languages.title')}
+                              >
+                                <LayerConsumer>
+                                  {({ dismissAll }) => (
+                                    <LanguageChooser
+                                      site={site}
+                                      isVisible={true}
+                                      onDismissMenu={dismissAll}
+                                    />
+                                  )}
+                                </LayerConsumer>
+                              </Layer>
                             </LayerGroup>
                             <LayerConsumer>
-                              {({ toggleLayer, dismissLayer }) => (
-                                <Header
-                                  onShowMenu={toggleLayer}
-                                  onDismissMenu={dismissLayer}
-                                />
+                              {({ toggleLayer }) => (
+                                <Header onShowMenu={toggleLayer} />
                               )}
                             </LayerConsumer>
                             <ScrollToTop />

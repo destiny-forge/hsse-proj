@@ -2,7 +2,7 @@ import Context from './Context';
 import LayerToggle from '../components/LayerToggle';
 import MainMenu from './MainMenu';
 
-const Header = ({ t, onShowMenu, onDismissMenu }) => {
+const Header = ({ t, onShowMenu }) => {
   return (
     <nav className="top-nav">
       <h1>
@@ -14,7 +14,7 @@ const Header = ({ t, onShowMenu, onDismissMenu }) => {
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
       </LayerToggle>
-      <MainMenu />
+      <MainMenu toggleLayer={onShowMenu} />
     </nav>
   );
 };
