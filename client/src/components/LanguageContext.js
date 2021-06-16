@@ -83,7 +83,10 @@ const LanguageProvider = ({ site, children }) => {
 const LanguageChooser = ({ isVisible = false, onDismissMenu = () => {} }) => {
   const [visible, setVisible] = useState(isVisible);
 
-  const toggle = () => {
+  const toggle = (e) => {
+    if (e) {
+      e.preventDefault();
+    }
     setVisible(!visible);
   };
 

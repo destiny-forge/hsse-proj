@@ -52,10 +52,13 @@ const MainMenu = ({ t, toggleLayer, site }) => {
           </li>
           <li className="menu-item menu-item-sign-up">
             <span className="menu-item-icon"></span>
-            <a href="#" className="layer-toggle menu-item-text">
-              <span className="sr-only">{t('toggle_navigation')}</span>
-              <span>{t('main_menu.create_account')}</span>
-            </a>
+            <LayerToggle
+              className="menu-item-text"
+              menu="signup"
+              onToggle={toggleLayer}
+            >
+              {t('main_menu.create_account')}
+            </LayerToggle>
           </li>
           <li className="menu-item menu-item-login">
             <span className="menu-item-icon"></span>

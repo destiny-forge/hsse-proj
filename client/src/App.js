@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch } from 'react-router';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 import ScrollToTop from './components/ScrollToTop';
 import {
   Login,
@@ -35,6 +36,7 @@ import MainMenu from './components/MainMenu';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { LanguageChooser } from './components/LanguageContext';
+import SignupMenu from './components/SignupMenu';
 
 const App = () => {
   return (
@@ -73,6 +75,12 @@ const App = () => {
                                     />
                                   )}
                                 </LayerConsumer>
+                              </Layer>
+                              <Layer
+                                name="signup"
+                                title={t('menus.signup.title')}
+                              >
+                                <SignupMenu />
                               </Layer>
                             </LayerGroup>
                             <LayerConsumer>
