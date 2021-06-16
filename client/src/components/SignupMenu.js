@@ -74,7 +74,7 @@ const SignupMenu = ({ t, language }) => {
     <form className="signup-menu" onSubmit={handleSubmit}>
       <div className="form-group has-feedback has-success">
         <input
-          label={t('menus.signup.email')}
+          placeholder={t('menus.signup.email')}
           className="form-control"
           name="email"
           type="email"
@@ -83,7 +83,7 @@ const SignupMenu = ({ t, language }) => {
       </div>
       <div className="form-group">
         <input
-          label={t('menus.signup.password')}
+          placeholder={t('menus.signup.password')}
           className="form-control"
           name="password"
           type="password"
@@ -92,7 +92,7 @@ const SignupMenu = ({ t, language }) => {
       </div>
       <div className="form-group">
         <input
-          label={t('menus.signup.confirm_password')}
+          placeholder={t('menus.signup.confirm_password')}
           className="form-control"
           name="confirm_password"
           type="password"
@@ -103,7 +103,7 @@ const SignupMenu = ({ t, language }) => {
         <div className="checkbox">
           <label>
             <input
-              label={t('menus.signup.i_accept')}
+              placeholder={t('menus.signup.i_accept')}
               type="checkbox"
               name="accept_terms"
               onChange={(e) => setTerms(e.target.checked)}

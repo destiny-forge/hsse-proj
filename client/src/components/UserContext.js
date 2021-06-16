@@ -5,27 +5,15 @@ const UserContext = React.createContext();
 const UserConsumer = UserContext.Consumer;
 
 const UserProvider = ({ children }) => {
-  const initial = {
-    id: null,
-    email: null,
-    token: null,
-    loggedIn: false,
-  };
-  let [user, setUser] = useState(initial);
-
-  const editUser = (field, value) => {
-    setUser({
-      ...user,
-      [field]: value,
-    });
-  };
+  let [user, setUser] = useState(null);
+  let [token, setToken] = useState(null);
 
   const logout = () => {
-    setUser(initial);
+    setToken(null);
   };
 
   return (
-    <UserContext.Provider value={{ user, editUser, logout }}>
+    <UserContext.Provider value={{ user, setUser, token, setToken, logout }}>
       {children}
     </UserContext.Provider>
   );

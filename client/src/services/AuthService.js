@@ -23,7 +23,12 @@ class AuthService {
         password,
       }),
     }).then((res) => {
-      this.setToken(res.data.token); // Setting the token in localStorage
+      if (!res.data.error) {
+        const token = res.data.token;
+        const user = decode(token);
+        this.setToken(token);
+        res.data.user = user;
+      }
       return Promise.resolve(res);
     });
   }
@@ -112,8 +117,9 @@ class AuthService {
   }
 
   getProfile() {
-    // Using jwt-decode npm package to decode the token
-    return decode(this.getToken());
+    // This function should hit the endpoint based on the
+    // decoded token and return the user's extended profile
+    // details.
   }
 
   getQueryString(params) {
