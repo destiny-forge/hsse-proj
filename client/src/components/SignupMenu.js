@@ -11,7 +11,8 @@ const SignupMenu = ({ t, language }) => {
   const [errors, setErrors] = useState({});
   const [token, setToken] = useState();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     let errors = {};
 
     // refactor into user validation utility function

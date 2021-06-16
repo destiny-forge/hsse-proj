@@ -37,6 +37,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import { LanguageChooser } from './components/LanguageContext';
 import SignupMenu from './components/SignupMenu';
+import LoginMenu from './components/LoginMenu';
 
 const App = () => {
   return (
@@ -81,6 +82,12 @@ const App = () => {
                                 title={t('menus.signup.title')}
                               >
                                 <SignupMenu />
+                              </Layer>
+                              <Layer
+                                name="login"
+                                title={t('menus.login.title')}
+                              >
+                                <LoginMenu />
                               </Layer>
                             </LayerGroup>
                             <LayerConsumer>
