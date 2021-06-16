@@ -12,26 +12,22 @@ const LoginMenu = ({ t, site, setUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('here');
-    let errors = {};
+    setErrors({});
+    let err = {};
     if (_.isEmpty(email)) {
-      errors.confirm_password = t('errors.cant_be_blank');
+      err.email = t('errors.cant_be_blank');
     }
 
     if (_.isEmpty(password)) {
-      errors.password = t('errors.cant_be_blank');
+      err.password = t('errors.cant_be_blank');
     }
 
-    console.log(errors);
-    if (errors !== {}) {
+    if (_.isEmpty(err)) {
       Auth.login(site, email, password)
         .then((res) => {
-          console.log(res.data);
           if (res.data.error) {
-            setErrors({
-              ...errors,
-              login: res.data.error,
-            });
+            err.login = res.data.error;
+            setErrors(err);
           } else {
             setUser(res.data.user);
           }
@@ -39,16 +35,37 @@ const LoginMenu = ({ t, site, setUser }) => {
         .catch((err) => {
           alert(err);
         });
-      //error(responseText: JSON.stringify(user))
     } else {
-      // Call Account.create api service
-      //UserActions.createUser(user).then(success).catch(error)
+      setErrors(err);
     }
+  };
+
+  const FormErrors = () => {
+    let message = '';
+    if (_.has(errors, 'login')) {
+      message = t('errors.invalid_login');
+    }
+    console.log(errors);
+    return <div className="form-errors">{message}</div>;
+  };
+
+  const FieldError = ({ field }) => {
+    let error = null;
+    if (errors[field]) {
+      error = errors[field];
+    }
+    return (
+      <>
+        <span className="glyphicon form-control-feedback glyphicon-remove"></span>
+        <span className="help-block">{error}</span>
+      </>
+    );
   };
 
   return (
     <form className="signup-menu" onSubmit={handleSubmit}>
-      <div className="form-group has-feedback has-success">
+      <FormErrors />
+      <div className="form-group">
         <input
           className="form-control"
           placeholder={t('menus.login.email')}
@@ -56,6 +73,7 @@ const LoginMenu = ({ t, site, setUser }) => {
           type="email"
           onChange={(e) => setEmail(e.target.value)}
         />
+        <FieldError field="email" />
       </div>
       <div className="form-group">
         <input
@@ -65,6 +83,7 @@ const LoginMenu = ({ t, site, setUser }) => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
+        <FieldError field="password" />
       </div>
       <button type="submit" className="btn-primary">
         {t('menus.login.login_button')}
