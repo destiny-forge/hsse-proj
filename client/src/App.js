@@ -21,6 +21,8 @@ import Search from './views/Search';
 
 import { SiteProvider, SiteConsumer } from './components/SiteContext';
 import { PageProvider, PageConsumer } from './components/PageContext';
+import { UserProvider } from './components/UserContext';
+
 import {
   LanguageProvider,
   LanguageConsumer,
@@ -48,93 +50,109 @@ const App = () => {
             <LanguageConsumer>
               {({ t }) => (
                 <PageProvider>
-                  <Helmet>
-                    <title>{t('site_name')}</title>
-                  </Helmet>
-                  <PageConsumer>
-                    {({ page }) => (
-                      <GuidedSearchProvider>
-                        <Router>
-                          <LayerProvider page={page} site={site}>
-                            <LayerGroup>
-                              <Layer name="help" title={t('menus.help.title')}>
-                                <HelpMenu />
-                              </Layer>
-                              <Layer name="main" title={t('menus.main.title')}>
-                                <MainMenu />
-                              </Layer>
-                              <Layer
-                                name="languages"
-                                title={t('menus.languages.title')}
-                              >
-                                <LayerConsumer>
-                                  {({ dismissAll }) => (
-                                    <LanguageChooser
-                                      site={site}
-                                      isVisible={true}
-                                      onDismissMenu={dismissAll}
-                                    />
-                                  )}
-                                </LayerConsumer>
-                              </Layer>
-                              <Layer
-                                name="signup"
-                                title={t('menus.signup.title')}
-                              >
-                                <SignupMenu />
-                              </Layer>
-                              <Layer
-                                name="login"
-                                title={t('menus.login.title')}
-                              >
-                                <LoginMenu />
-                              </Layer>
-                            </LayerGroup>
-                            <LayerConsumer>
-                              {({ toggleLayer }) => (
-                                <Header onShowMenu={toggleLayer} />
-                              )}
-                            </LayerConsumer>
-                            <ScrollToTop />
-                            <Switch>
-                              <Route exact path="/" component={Home} />
-                              <Route exact path="/search" component={Search} />
-                              <Route exact path="/about" component={About} />
-                              <Route exact path="/terms" component={Terms} />
-                              <Route exact path="/signup" component={Signup} />
-                              <Route
-                                exact
-                                path="/signup-success"
-                                component={SignupSuccess}
-                              />
-                              <Route
-                                exact
-                                path="/signup-confirm"
-                                component={ConfirmEmail}
-                              />
-                              <Route exact path="/login" component={Login} />
-                              <Route
-                                exact
-                                path="/forgot-password"
-                                component={ForgotPassword}
-                              />
-                              <Route
-                                exact
-                                path="/latest-content"
-                                component={Latest}
-                              />
-                              <Route
-                                exact
-                                path="/articles/:id-:ignore"
-                                component={Article}
-                              />
-                            </Switch>
-                            <Footer />
-                          </LayerProvider>
-                        </Router>
-                      </GuidedSearchProvider>
-                    )}
-                  </PageConsumer>
+                  <UserProvider>
+                    <Helmet>
+                      <title>{t('site_name')}</title>
+                    </Helmet>
+                    <PageConsumer>
+                      {({ page }) => (
+                        <GuidedSearchProvider>
+                          <Router>
+                            <LayerProvider page={page} site={site}>
+                              <LayerGroup>
+                                <Layer
+                                  name="help"
+                                  title={t('menus.help.title')}
+                                >
+                                  <HelpMenu />
+                                </Layer>
+                                <Layer
+                                  name="main"
+                                  title={t('menus.main.title')}
+                                >
+                                  <MainMenu />
+                                </Layer>
+                                <Layer
+                                  name="languages"
+                                  title={t('menus.languages.title')}
+                                >
+                                  <LayerConsumer>
+                                    {({ dismissAll }) => (
+                                      <LanguageChooser
+                                        site={site}
+                                        isVisible={true}
+                                        onDismissMenu={dismissAll}
+                                      />
+                                    )}
+                                  </LayerConsumer>
+                                </Layer>
+                                <Layer
+                                  name="signup"
+                                  title={t('menus.signup.title')}
+                                >
+                                  <SignupMenu />
+                                </Layer>
+                                <Layer
+                                  name="login"
+                                  title={t('menus.login.title')}
+                                >
+                                  <LoginMenu />
+                                </Layer>
+                              </LayerGroup>
+                              <LayerConsumer>
+                                {({ toggleLayer }) => (
+                                  <Header onShowMenu={toggleLayer} />
+                                )}
+                              </LayerConsumer>
+                              <ScrollToTop />
+                              <Switch>
+                                <Route exact path="/" component={Home} />
+                                <Route
+                                  exact
+                                  path="/search"
+                                  component={Search}
+                                />
+                                <Route exact path="/about" component={About} />
+                                <Route exact path="/terms" component={Terms} />
+                                <Route
+                                  exact
+                                  path="/signup"
+                                  component={Signup}
+                                />
+                                <Route
+                                  exact
+                                  path="/signup-success"
+                                  component={SignupSuccess}
+                                />
+                                <Route
+                                  exact
+                                  path="/signup-confirm"
+                                  component={ConfirmEmail}
+                                />
+                                <Route exact path="/login" component={Login} />
+                                <Route
+                                  exact
+                                  path="/forgot-password"
+                                  component={ForgotPassword}
+                                />
+                                <Route
+                                  exact
+                                  path="/latest-content"
+                                  component={Latest}
+                                />
+                                <Route
+                                  exact
+                                  path="/articles/:id-:ignore"
+                                  component={Article}
+                                />
+                              </Switch>
+                              <Footer />
+                            </LayerProvider>
+                          </Router>
+                        </GuidedSearchProvider>
+                      )}
+                    </PageConsumer>
+                  </UserProvider>
                 </PageProvider>
               )}
             </LanguageConsumer>
