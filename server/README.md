@@ -256,3 +256,7 @@ node --max-old-space-size=8192 search_index.js
 # running the legacy import
 
 node --max-old-space-size=8192 migrate_legacy.js
+
+# generating secrets
+
+$ openssl rand -base64 32

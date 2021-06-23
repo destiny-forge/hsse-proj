@@ -70,6 +70,20 @@ module.exports = ({ database }) => {
     }
   };
 
+  const updateWithPassword = async (id, fields) => {
+    fields.password = encryptPassword(fields.password);
+    try {
+      const cmdResult = await database
+        .get()
+        .collection("users")
+        .updateOne({ _id: { $eq: ObjectID(id) } }, { $set: fields });
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const createIndexes = () => {
     database.get().collection("users").createIndex("email");
   };
@@ -77,6 +91,7 @@ module.exports = ({ database }) => {
   return {
     create,
     update,
+    updateWithPassword,
     search,
     findById,
     findByEmail,

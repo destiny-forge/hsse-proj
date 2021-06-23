@@ -4,6 +4,7 @@ const app = require("./app");
 const server = require("./interfaces/http/server");
 const router = require("./interfaces/http/router");
 const auth = require("./interfaces/http/auth");
+const client_auth = require("./interfaces/http/client_auth");
 const config = require("../config");
 const logger = require("./infra/logging/logger");
 const database = require("./infra/database");
@@ -25,6 +26,7 @@ container.register({
   logger: asFunction(logger).singleton(),
   database: asFunction(database).singleton(),
   auth: asFunction(auth).singleton(),
+  client_auth: asFunction(client_auth).singleton(),
   jwt: asFunction(jwt).singleton(),
   response: asFunction(response).singleton(),
   date: asFunction(date).singleton(),

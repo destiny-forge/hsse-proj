@@ -18,6 +18,7 @@ import Terms from './views/Terms';
 import Latest from './views/Latest';
 import Article from './views/Article';
 import Search from './views/Search';
+import Profile from './views/Profile';
 
 import { SiteProvider, SiteConsumer } from './components/SiteContext';
 import { PageProvider, PageConsumer } from './components/PageContext';
@@ -144,6 +145,11 @@ const App = () => {
                                   exact
                                   path="/articles/:id-:ignore"
                                   component={Article}
+                                />
+                                <Route
+                                  exact
+                                  path="/profile"
+                                  component={Profile}
                                 />
                               </Switch>
                               <Footer />
