@@ -3,16 +3,13 @@ const { compose, trim, replace, partialRight } = require("ramda");
 
 module.exports = ({ config }) => ({
   sign: (options) => (payload) => {
-    console.log(config);
     return jwt.sign(payload, config.authSecret, options || {});
   },
   signin: (options) => (payload) => {
-    console.log(config);
     const opt = Object.assign({}, options, { expiresIn: "1h" });
     return jwt.sign(payload, config.authSecret, opt);
   },
   verify: (options) => (token) => {
-    console.log(config);
     const opt = Object.assign({}, options);
     return jwt.verify(token, config.authSecret, opt);
   },
