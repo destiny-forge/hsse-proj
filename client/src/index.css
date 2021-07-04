@@ -7390,6 +7390,17 @@ button {
   font-weight: 400;
   font-size: 13px;
 }
+
+.sse button {
+  background-color: #ed2124;
+}
+.hse button {
+  background-color: #d3d3d3;
+}
+.cvd button {
+  background-color: #5b5b5b;
+}
+
 button span {
   vertical-align: top;
 }

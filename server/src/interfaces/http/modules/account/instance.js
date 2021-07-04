@@ -4,40 +4,40 @@ const { register, reset, confirm, initEvents } = require("src/app/account");
 module.exports = () => {
   const {
     repository: { userRepository },
-    jwt,
+    client_jwt,
     events,
     mailer,
-    config
+    config,
   } = container.cradle;
 
   const registerUseCase = register({
     userRepository,
-    events
+    events,
   });
 
   const resetUseCase = reset({
     config,
     userRepository,
     mailer,
-    webToken: jwt,
-    events
+    webToken: client_jwt,
+    events,
   });
 
   const confirmUseCase = confirm({
     userRepository,
-    webToken: jwt
+    webToken: client_jwt,
   });
 
   initEvents({
     config,
     events,
-    webToken: jwt,
-    mailer
+    webToken: client_jwt,
+    mailer,
   });
 
   return {
     registerUseCase,
     resetUseCase,
-    confirmUseCase
+    confirmUseCase,
   };
 };

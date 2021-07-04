@@ -15,7 +15,7 @@ class AuthService {
 
   login(type, email, password) {
     // Get a token from api server using the fetch api
-    return this.fetch(`/auth/authenticate`, {
+    return this.fetch(`/auth/admin`, {
       method: 'POST',
       body: JSON.stringify({
         type,
@@ -24,30 +24,6 @@ class AuthService {
       }),
     }).then((res) => {
       this.setToken(res.data.token); // Setting the token in localStorage
-      return Promise.resolve(res);
-    });
-  }
-
-  register(type, email, password) {
-    return this.fetch(`/account/register`, {
-      method: 'POST',
-      body: JSON.stringify({
-        type,
-        email,
-        password,
-      }),
-    }).then((res) => {
-      return Promise.resolve(res);
-    });
-  }
-
-  confirmEmail(token) {
-    return this.fetch(`/account/confirm/${token}`, {
-      method: 'POST',
-      body: JSON.stringify({
-        token,
-      }),
-    }).then((res) => {
       return Promise.resolve(res);
     });
   }

@@ -1,5 +1,7 @@
-const authenticate = require('./authenticate');
+const admin = require("./admin");
+const client = require("./client");
 
 module.exports = {
-  authenticate
+  admin,
+  client,
 };

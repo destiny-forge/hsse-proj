@@ -4,7 +4,6 @@ const { edit, get } = require("src/app/profile");
 module.exports = () => {
   const {
     repository: { userRepository, subscriptionRepository },
-    jwt,
   } = container.cradle;
 
   const getUseCase = edit({
