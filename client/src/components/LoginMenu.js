@@ -49,6 +49,14 @@ const LoginMenu = ({ t, site, setUser }) => {
     return <div className="form-errors">{message}</div>;
   };
 
+  const FieldCSS = (css, field) => {
+    let error = null;
+    if (errors[field]) {
+      error = errors[field];
+    }
+    return error ? `${css} has-feedback has-error` : `${css}`;
+  };
+
   const FieldError = ({ field }) => {
     let error = null;
     if (errors[field]) {
@@ -65,7 +73,7 @@ const LoginMenu = ({ t, site, setUser }) => {
   return (
     <form className="signup-menu" onSubmit={handleSubmit}>
       <FormErrors />
-      <div className="form-group">
+      <div className={FieldCSS('form-group', 'email')}>
         <input
           className="form-control"
           placeholder={t('menus.login.email')}
@@ -75,7 +83,7 @@ const LoginMenu = ({ t, site, setUser }) => {
         />
         <FieldError field="email" />
       </div>
-      <div className="form-group">
+      <div className={FieldCSS('form-group', 'password')}>
         <input
           className="form-control"
           placeholder={t('menus.login.password')}

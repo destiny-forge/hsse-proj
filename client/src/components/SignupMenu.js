@@ -2,8 +2,9 @@ import { useState } from 'react';
 import Context from './Context';
 import _ from 'underscore';
 import Recaptcha from './Recaptcha';
+import AuthService from '../services/AuthService';
 
-const SignupMenu = ({ t, language }) => {
+const SignupMenu = ({ t, site, language }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirm, setConfirm] = useState();
@@ -11,41 +12,82 @@ const SignupMenu = ({ t, language }) => {
   const [errors, setErrors] = useState({});
   const [token, setToken] = useState();
 
+  const Auth = new AuthService();
+
+  const FormErrors = () => {
+    let message = '';
+    if (_.has(errors, 'login')) {
+      message = t('errors.invalid_login');
+    }
+    console.log(errors);
+    return <div className="form-errors">{message}</div>;
+  };
+
+  const FieldError = ({ field }) => {
+    let error = null;
+    if (errors[field]) {
+      error = errors[field];
+    }
+    return (
+      <>
+        {/*<span className="glyphicon form-control-feedback glyphicon-remove"></span>*/}
+        <span className="help-block">{error}</span>
+      </>
+    );
+  };
+
+  const FieldCSS = (css, field) => {
+    let error = null;
+    if (errors[field]) {
+      error = errors[field];
+    }
+    return error ? `${css} has-feedback has-error` : `${css}`;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    let errors = {};
-
-    // refactor into user validation utility function
-    if (password !== confirm) {
-      errors.confirm_password = t('/errors.passwords_must_match');
-    }
+    let err = {};
 
     if (_.isEmpty(email)) {
-      errors.confirm_password = t('/errors.cant_be_blank');
-    }
-
-    if (_.isEmpty(confirm)) {
-      errors.confirm_password = t('/errors.cant_be_blank');
+      err.email = t('errors.cant_be_blank');
     }
 
     if (_.isEmpty(password)) {
-      errors.password = t('/errors.cant_be_blank');
+      err.password = t('errors.cant_be_blank');
+    }
+
+    if (_.isEmpty(confirm)) {
+      err.confirm_password = t('errors.cant_be_blank');
     }
 
     if (!terms) {
-      errors.terms = t('/errors.cant_be_blank');
+      err.terms = t('errors.must_accept_terms');
     }
 
-    if (_.isEmpty(token)) {
-      errors.captcha = t('/errors.cant_be_blank');
+    if (password !== confirm) {
+      err.confirm_password = t('errors.passwords_must_match');
     }
 
-    if (errors) {
-      //error(responseText: JSON.stringify(user))
-    } else {
-      // Call Account.create api service
-      //UserActions.createUser(user).then(success).catch(error)
+    // if (_.isEmpty(token)) {
+    //   err.captcha = t('errors.cant_be_blank');
+    // }
+
+    if (_.isEmpty(err)) {
+      Auth.register(site, email, password)
+        .then((res) => {
+          if (res.data.error) {
+            err.signup = res.data.error;
+          } else {
+            // redirect to message
+            // check email for password confirm
+          }
+        })
+        .catch((err) => {
+          err.signup = err;
+        });
     }
+
+    setErrors(err);
   };
 
   const renderRecaptcha = () => {
@@ -54,14 +96,15 @@ const SignupMenu = ({ t, language }) => {
 
     return (
       <div className={className}>
+        &nbsp;
         {/*
           <Recaptcha
           action="account-create"
           onToken={(token) => setToken(token)}
           key="6LdfQDoUAAAAALtMpuMsyq18nsBd0OkNCj84iwwY"
         />
-        */}
         <span className="help-block">{errors.captcha || ''}</span>
+        */}
       </div>
     );
   };
@@ -72,7 +115,8 @@ const SignupMenu = ({ t, language }) => {
 
   return (
     <form className="signup-menu" onSubmit={handleSubmit}>
-      <div className="form-group has-feedback has-success">
+      <FormErrors />
+      <div className={FieldCSS('form-group', 'email')}>
         <input
           placeholder={t('menus.signup.email')}
           className="form-control"
@@ -80,8 +124,9 @@ const SignupMenu = ({ t, language }) => {
           type="email"
           onChange={(e) => setEmail(e.target.value)}
         />
+        <FieldError field="email" />
       </div>
-      <div className="form-group">
+      <div className={FieldCSS('form-group', 'password')}>
         <input
           placeholder={t('menus.signup.password')}
           className="form-control"
@@ -89,8 +134,9 @@ const SignupMenu = ({ t, language }) => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
+        <FieldError field="password" />
       </div>
-      <div className="form-group">
+      <div className={FieldCSS('form-group', 'confirm_password')}>
         <input
           placeholder={t('menus.signup.confirm_password')}
           className="form-control"
@@ -98,8 +144,9 @@ const SignupMenu = ({ t, language }) => {
           type="password"
           onChange={(e) => setConfirm(e.target.value)}
         />
+        <FieldError field="confirm_password" />
       </div>
-      <div className="form-group">
+      <div className={FieldCSS('form-group', 'terms')}>
         <div className="checkbox">
           <label>
             <input
@@ -110,19 +157,24 @@ const SignupMenu = ({ t, language }) => {
             />
             <span>{t('menus.signup.i_accept')}</span>
           </label>
+          <a
+            rel="alternate"
+            hrefLang={language}
+            href={`/terms&lang=${language}`}
+            className="btn-terms"
+            target="_blank"
+          >
+            {t('menus.signup.terms')}
+          </a>
+          <FieldError field="terms" />
         </div>
       </div>
-      <a
-        rel="alternate"
-        hrefLang={language}
-        href={`/terms&lang=${language}`}
-        className="btn-terms"
-        target="_blank"
-      >
-        {t('menus.signup.terms')}
-      </a>
+
       {renderRecaptcha()}
-      <button className="btn-primary">{t('menus.signup.signup_button')}</button>
+
+      <button type="submit" className="btn-primary">
+        {t('menus.signup.signup_button')}
+      </button>
     </form>
   );
 };

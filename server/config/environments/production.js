@@ -8,6 +8,7 @@ module.exports = {
     colorize: false,
   },
   authSecret: process.env.SECRET,
+  authClientSecret: process.env.CLIENT_SECRET,
   authSession: {
     session: false,
   },

@@ -38,6 +38,15 @@ module.exports = ({ model }) => {
     }
   };
 
+  const updateWithPassword = async (...args) => {
+    try {
+      return model.updateWithPassword(...args);
+    } catch (err) {
+      console.log(err);
+      throw new Error(err);
+    }
+  };
+
   const findById = async (...args) => {
     try {
       const user = await model.findById(...args);
@@ -63,6 +72,7 @@ module.exports = ({ model }) => {
     create,
     search,
     update,
+    updateWithPassword,
     findById,
     findByEmail,
     validatePassword,
