@@ -31,7 +31,6 @@ const LoginMenu = ({ t, site, setUser }) => {
             err.login = res.data.error;
             setErrors(err);
           } else {
-            console.log(res.data.user);
             setUser(res.data.user);
             dismissAll();
           }
