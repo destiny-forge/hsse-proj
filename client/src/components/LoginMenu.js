@@ -3,6 +3,7 @@ import _ from 'underscore';
 import Context from './Context';
 import AuthService from '../services/AuthService';
 import { LayerConsumer } from './LayerContext';
+import { Link } from 'react-router-dom';
 
 const LoginMenu = ({ t, site, setUser }) => {
   const [email, setEmail] = useState();
@@ -11,7 +12,7 @@ const LoginMenu = ({ t, site, setUser }) => {
 
   const Auth = new AuthService();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, dismissAll) => {
     e.preventDefault();
     setErrors({});
     let err = {};
@@ -30,7 +31,9 @@ const LoginMenu = ({ t, site, setUser }) => {
             err.login = res.data.error;
             setErrors(err);
           } else {
+            console.log(res.data.user);
             setUser(res.data.user);
+            dismissAll();
           }
         })
         .catch((err) => {
@@ -74,10 +77,9 @@ const LoginMenu = ({ t, site, setUser }) => {
     <LayerConsumer>
       {({ dismissAll }) => (
         <form
-          className="signup-menu"
+          className="login-menu"
           onSubmit={(e) => {
-            handleSubmit(e);
-            dismissAll();
+            handleSubmit(e, dismissAll);
           }}
         >
           <FormErrors />
@@ -104,6 +106,13 @@ const LoginMenu = ({ t, site, setUser }) => {
           <button type="submit" className="btn-primary">
             {t('menus.login.login_button')}
           </button>
+          <Link
+            to="/forgot-password"
+            className="btn-forgot-password"
+            onClick={(e) => dismissAll()}
+          >
+            {t('menus.login.forgot_password')}
+          </Link>
         </form>
       )}
     </LayerConsumer>

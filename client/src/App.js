@@ -19,6 +19,8 @@ import Latest from './views/Latest';
 import Article from './views/Article';
 import Search from './views/Search';
 import Profile from './views/Profile';
+import UserArticleView from './views/User/Articles';
+import UserSearchView from './views/User/Searches';
 
 import { SiteProvider, SiteConsumer } from './components/SiteContext';
 import { PageProvider, PageConsumer } from './components/PageContext';
@@ -34,6 +36,7 @@ import { Helmet } from 'react-helmet';
 import Layer from './components/Layer';
 import LayerGroup from './components/LayerGroup';
 import HelpMenu from './components/HelpMenu';
+import AccountMenu from './components/AccountMenu';
 
 import MainMenu from './components/MainMenu';
 import Header from './components/Header';
@@ -99,6 +102,12 @@ const App = () => {
                                 >
                                   <LoginMenu />
                                 </Layer>
+                                <Layer
+                                  name="account"
+                                  title={t('menus.login.profile')}
+                                >
+                                  <AccountMenu />
+                                </Layer>
                               </LayerGroup>
                               <LayerConsumer>
                                 {({ toggleLayer }) => (
@@ -150,6 +159,17 @@ const App = () => {
                                   exact
                                   path="/profile"
                                   component={Profile}
+                                />
+
+                                <Route
+                                  exact
+                                  path="/user/articles"
+                                  component={UserArticleView}
+                                />
+                                <Route
+                                  exact
+                                  path="/user/searches"
+                                  component={UserSearchView}
                                 />
                               </Switch>
                               <Footer />

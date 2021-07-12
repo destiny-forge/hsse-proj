@@ -33,11 +33,12 @@ class AuthService {
     });
   }
 
-  register(type, email, password) {
+  register(type, language, email, password) {
     return this.fetch(`/account/register`, {
       method: 'POST',
       body: JSON.stringify({
         type,
+        language,
         email,
         password,
       }),

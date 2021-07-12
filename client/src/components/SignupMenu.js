@@ -11,16 +11,13 @@ const SignupMenu = ({ t, site, language }) => {
   const [confirm, setConfirm] = useState();
   const [terms, setTerms] = useState(false);
   const [errors, setErrors] = useState({});
-  const [token, setToken] = useState();
-
   const Auth = new AuthService();
 
   const FormErrors = () => {
     let message = '';
-    if (_.has(errors, 'login')) {
-      message = t('errors.invalid_login');
+    if (_.has(errors, 'signup')) {
+      message = t(`errors.${errors.signup}`);
     }
-    console.log(errors);
     return <div className="form-errors">{message}</div>;
   };
 
@@ -45,7 +42,7 @@ const SignupMenu = ({ t, site, language }) => {
     return error ? `${css} has-feedback has-error` : `${css}`;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, dismissAll) => {
     e.preventDefault();
     let err = {};
 
@@ -74,21 +71,22 @@ const SignupMenu = ({ t, site, language }) => {
     // }
 
     if (_.isEmpty(err)) {
-      Auth.register(site, email, password)
+      Auth.register(site, language, email, password)
         .then((res) => {
           if (res.data.error) {
             err.signup = res.data.error;
+            setErrors(err);
           } else {
-            // redirect to message
-            // check email for password confirm
+            console.log(res);
+            setErrors(err);
+            dismissAll();
           }
         })
         .catch((err) => {
           err.signup = err;
+          setErrors(err);
         });
     }
-
-    setErrors(err);
   };
 
   const renderRecaptcha = () => {
@@ -120,8 +118,7 @@ const SignupMenu = ({ t, site, language }) => {
         <form
           className="signup-menu"
           onSubmit={(e) => {
-            handleSubmit(e);
-            dismissAll();
+            handleSubmit(e, dismissAll);
           }}
         >
           <FormErrors />

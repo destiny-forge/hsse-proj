@@ -15,6 +15,7 @@ const User = t.struct(
     language: t.maybe(t.String),
     type: t.String,
     roles: t.Array,
+    client_roles: t.Array,
     limit_search: t.Boolean,
     limit_search_expires: t.String,
     createdAt: t.maybe(t.Date),
@@ -23,11 +24,12 @@ const User = t.struct(
   {
     defaultProps: {
       roles: ["user"],
+      client_roles: [],
       limit_search: false,
       limit_search_expires: "",
       firstName: "",
       lastName: "",
-      language: "EN",
+      language: "en",
     },
   }
 );

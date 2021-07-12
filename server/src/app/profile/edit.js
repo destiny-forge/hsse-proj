@@ -2,13 +2,14 @@
  * Edit user profile fields
  */
 module.exports = ({ userRepository }) => {
-  const edit = async (id, user) => {
-    if (!user) {
-      return {
-        error: "A valid user is required",
-      };
-    }
-
+  const edit = async ({
+    id,
+    firstName,
+    lastName,
+    language,
+    country,
+    roles,
+  }) => {
     try {
       const dbUser = await userRepository.findById(id);
       if (!dbUser) {
@@ -26,20 +27,23 @@ module.exports = ({ userRepository }) => {
         "other",
       ];
 
-      user.roles = user.roles.filter((role) => validRoles.includes(role));
+      roles = roles.filter((role) => validRoles.includes(role));
 
       const fields = {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        country: user.country,
-        language: user.language,
-        roles: user.roles,
+        firstName,
+        lastName,
+        country,
+        language,
+        client_roles: roles,
         updatedAt: new Date(),
       };
 
       await userRepository.update(id, fields);
 
-      return user;
+      return {
+        id,
+        ...fields,
+      };
     } catch (error) {
       throw new Error(error);
     }
