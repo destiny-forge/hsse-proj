@@ -1,27 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { get } from 'underscore';
+import LANGUAGES from '../data/languages';
 
 const LanguageContext = React.createContext();
 const LanguageConsumer = LanguageContext.Consumer;
-
-const LANGUAGES = {
-  hse: [
-    { value: 'cn', label: '中文' },
-    { value: 'en', label: 'English' },
-    { value: 'es', label: 'Español' },
-    { value: 'fr', label: 'Français' },
-    { value: 'pt', label: 'Português' },
-    //{ value: 'ar', label: 'Arabic' },
-  ],
-  sse: [
-    { value: 'en', label: 'English' },
-    { value: 'fr', label: 'Français' },
-  ],
-  cvd: [
-    { value: 'en', label: 'English' },
-    { value: 'fr', label: 'Français' },
-  ],
-};
 
 const LanguageProvider = ({ site, children }) => {
   const [language, setLanguage] = useState('en');

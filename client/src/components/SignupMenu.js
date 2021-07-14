@@ -3,6 +3,7 @@ import Context from './Context';
 import _ from 'underscore';
 import Recaptcha from './Recaptcha';
 import AuthService from '../services/AuthService';
+import { LayerConsumer } from './LayerContext';
 
 const SignupMenu = ({ t, site, language }) => {
   const [email, setEmail] = useState();
@@ -10,16 +11,13 @@ const SignupMenu = ({ t, site, language }) => {
   const [confirm, setConfirm] = useState();
   const [terms, setTerms] = useState(false);
   const [errors, setErrors] = useState({});
-  const [token, setToken] = useState();
-
   const Auth = new AuthService();
 
   const FormErrors = () => {
     let message = '';
-    if (_.has(errors, 'login')) {
-      message = t('errors.invalid_login');
+    if (_.has(errors, 'signup')) {
+      message = t(`errors.${errors.signup}`);
     }
-    console.log(errors);
     return <div className="form-errors">{message}</div>;
   };
 
@@ -44,7 +42,7 @@ const SignupMenu = ({ t, site, language }) => {
     return error ? `${css} has-feedback has-error` : `${css}`;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, dismissAll) => {
     e.preventDefault();
     let err = {};
 
@@ -73,21 +71,21 @@ const SignupMenu = ({ t, site, language }) => {
     // }
 
     if (_.isEmpty(err)) {
-      Auth.register(site, email, password)
+      Auth.register(site, language, email, password)
         .then((res) => {
           if (res.data.error) {
             err.signup = res.data.error;
+            setErrors(err);
           } else {
-            // redirect to message
-            // check email for password confirm
+            setErrors(err);
+            dismissAll();
           }
         })
         .catch((err) => {
           err.signup = err;
+          setErrors(err);
         });
     }
-
-    setErrors(err);
   };
 
   const renderRecaptcha = () => {
@@ -114,68 +112,77 @@ const SignupMenu = ({ t, site, language }) => {
   };
 
   return (
-    <form className="signup-menu" onSubmit={handleSubmit}>
-      <FormErrors />
-      <div className={FieldCSS('form-group', 'email')}>
-        <input
-          placeholder={t('menus.signup.email')}
-          className="form-control"
-          name="email"
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <FieldError field="email" />
-      </div>
-      <div className={FieldCSS('form-group', 'password')}>
-        <input
-          placeholder={t('menus.signup.password')}
-          className="form-control"
-          name="password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <FieldError field="password" />
-      </div>
-      <div className={FieldCSS('form-group', 'confirm_password')}>
-        <input
-          placeholder={t('menus.signup.confirm_password')}
-          className="form-control"
-          name="confirm_password"
-          type="password"
-          onChange={(e) => setConfirm(e.target.value)}
-        />
-        <FieldError field="confirm_password" />
-      </div>
-      <div className={FieldCSS('form-group', 'terms')}>
-        <div className="checkbox">
-          <label>
+    <LayerConsumer>
+      {({ dismissAll }) => (
+        <form
+          className="signup-menu"
+          onSubmit={(e) => {
+            handleSubmit(e, dismissAll);
+          }}
+        >
+          <FormErrors />
+          <div className={FieldCSS('form-group', 'email')}>
             <input
-              placeholder={t('menus.signup.i_accept')}
-              type="checkbox"
-              name="accept_terms"
-              onChange={(e) => setTerms(e.target.checked)}
+              placeholder={t('menus.signup.email')}
+              className="form-control"
+              name="email"
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
             />
-            <span>{t('menus.signup.i_accept')}</span>
-          </label>
-          <a
-            rel="alternate"
-            hrefLang={language}
-            href={`/terms&lang=${language}`}
-            className="btn-terms"
-            target="_blank"
-          >
-            {t('menus.signup.terms')}
-          </a>
-          <FieldError field="terms" />
-        </div>
-      </div>
+            <FieldError field="email" />
+          </div>
+          <div className={FieldCSS('form-group', 'password')}>
+            <input
+              placeholder={t('menus.signup.password')}
+              className="form-control"
+              name="password"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <FieldError field="password" />
+          </div>
+          <div className={FieldCSS('form-group', 'confirm_password')}>
+            <input
+              placeholder={t('menus.signup.confirm_password')}
+              className="form-control"
+              name="confirm_password"
+              type="password"
+              onChange={(e) => setConfirm(e.target.value)}
+            />
+            <FieldError field="confirm_password" />
+          </div>
+          <div className={FieldCSS('form-group', 'terms')}>
+            <div className="checkbox">
+              <label>
+                <input
+                  placeholder={t('menus.signup.i_accept')}
+                  type="checkbox"
+                  name="accept_terms"
+                  onChange={(e) => setTerms(e.target.checked)}
+                />
+                <span>{t('menus.signup.i_accept')}</span>
+              </label>
+              <a
+                rel="alternate"
+                hrefLang={language}
+                href={`/terms&lang=${language}`}
+                className="btn-terms"
+                target="_blank"
+              >
+                {t('menus.signup.terms')}
+              </a>
+              <FieldError field="terms" />
+            </div>
+          </div>
 
-      {renderRecaptcha()}
+          {renderRecaptcha()}
 
-      <button type="submit" className="btn-primary">
-        {t('menus.signup.signup_button')}
-      </button>
-    </form>
+          <button type="submit" className="btn-primary">
+            {t('menus.signup.signup_button')}
+          </button>
+        </form>
+      )}
+    </LayerConsumer>
   );
 };
 

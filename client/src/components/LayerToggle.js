@@ -32,7 +32,7 @@ const LayerToggle = ({
     <a
       rel="alternate"
       hrefLang={language}
-      href="#"
+      href="/"
       onClick={handleClick}
       style={style}
       className={`layer-toggle layer-toggle-${menu} ${className || ''}`}

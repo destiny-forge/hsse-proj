@@ -1,6 +1,8 @@
 import React from 'react';
 import { Switch } from 'react-router';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import ScrollToTop from './components/ScrollToTop';
 import {
@@ -19,6 +21,8 @@ import Latest from './views/Latest';
 import Article from './views/Article';
 import Search from './views/Search';
 import Profile from './views/Profile';
+import UserArticleView from './views/User/Articles';
+import UserSearchView from './views/User/Searches';
 
 import { SiteProvider, SiteConsumer } from './components/SiteContext';
 import { PageProvider, PageConsumer } from './components/PageContext';
@@ -34,6 +38,7 @@ import { Helmet } from 'react-helmet';
 import Layer from './components/Layer';
 import LayerGroup from './components/LayerGroup';
 import HelpMenu from './components/HelpMenu';
+import AccountMenu from './components/AccountMenu';
 
 import MainMenu from './components/MainMenu';
 import Header from './components/Header';
@@ -99,10 +104,19 @@ const App = () => {
                                 >
                                   <LoginMenu />
                                 </Layer>
+                                <Layer
+                                  name="account"
+                                  title={t('menus.login.profile')}
+                                >
+                                  <AccountMenu />
+                                </Layer>
                               </LayerGroup>
                               <LayerConsumer>
                                 {({ toggleLayer }) => (
-                                  <Header onShowMenu={toggleLayer} />
+                                  <>
+                                    <Header onShowMenu={toggleLayer} />
+                                    <ToastContainer position="top-center" />
+                                  </>
                                 )}
                               </LayerConsumer>
                               <ScrollToTop />
@@ -150,6 +164,17 @@ const App = () => {
                                   exact
                                   path="/profile"
                                   component={Profile}
+                                />
+
+                                <Route
+                                  exact
+                                  path="/user/articles"
+                                  component={UserArticleView}
+                                />
+                                <Route
+                                  exact
+                                  path="/user/searches"
+                                  component={UserSearchView}
                                 />
                               </Switch>
                               <Footer />

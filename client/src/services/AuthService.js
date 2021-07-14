@@ -15,7 +15,7 @@ class AuthService {
 
   login(type, email, password) {
     // Get a token from api server using the fetch api
-    return this.fetch(`/auth/authenticate`, {
+    return this.fetch(`/auth/client`, {
       method: 'POST',
       body: JSON.stringify({
         type,
@@ -33,11 +33,12 @@ class AuthService {
     });
   }
 
-  register(type, email, password) {
+  register(type, language, email, password) {
     return this.fetch(`/account/register`, {
       method: 'POST',
       body: JSON.stringify({
         type,
+        language,
         email,
         password,
       }),

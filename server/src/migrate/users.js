@@ -46,6 +46,8 @@ const transform = (users) => {
         break;
     }
 
+    user.language = user.language.toLowerCase();
+
     user.roles = [role];
     return user;
   });

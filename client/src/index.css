@@ -7390,6 +7390,37 @@ button {
   font-weight: 400;
   font-size: 13px;
 }
+
+.Toastify__toast-container {
+  width: 320px;
+}
+.Toastify__toast--default {
+  background: #fff;
+  color: #aaa;
+}
+.Toastify__toast--info {
+  background: #3498db;
+}
+.Toastify__toast--success {
+  background: #07bc0c;
+}
+.Toastify__toast--warning {
+  background: #f1c40f;
+}
+.Toastify__toast--error {
+  background: #e74c3c;
+}
+
+/* .sse button {
+  background-color: #ed2124;
+} */
+.hse button {
+  background-color: #d3d3d3;
+}
+.cvd button {
+  background-color: #5b5b5b;
+}
+
 button span {
   vertical-align: top;
 }

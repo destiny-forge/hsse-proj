@@ -8,7 +8,7 @@ const client_auth = require("./interfaces/http/client_auth");
 const config = require("../config");
 const logger = require("./infra/logging/logger");
 const database = require("./infra/database");
-const jwt = require("./infra/jwt");
+const { client, admin } = require("./infra/jwt");
 const response = require("./infra/support/response");
 const date = require("./infra/support/date");
 const repository = require("./infra/repositories");
@@ -27,7 +27,8 @@ container.register({
   database: asFunction(database).singleton(),
   auth: asFunction(auth).singleton(),
   client_auth: asFunction(client_auth).singleton(),
-  jwt: asFunction(jwt).singleton(),
+  client_jwt: asFunction(client).singleton(),
+  admin_jwt: asFunction(admin).singleton(),
   response: asFunction(response).singleton(),
   date: asFunction(date).singleton(),
   config: asValue(config),

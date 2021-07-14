@@ -1,0 +1,23 @@
+
+COVID-END Notes
+----------------
+
+2 databases
+
+- All articles (master db) - all COVID articles are in the first spreadsheet indicated by RefId
+
+- Only the ones in "inventory" (Inventory means the ones selected for best synthesis) are used for best synthesis - it's a column
+  - Built on the decisions of the taxonomy
+
+- Each article will have many best synthesis for each taxonomy item potentially!
+  - This is the part you need to understand better and I believe we'll need another
+    collection to track this information (i.e. best_synthesis) that relates the refId
+    with the taxonomy as well as any other fields that are relevant
+
+  - When searching we'll need another index to store best_synthesis articles
+    and we'll also need to denote the main article with best Boolean indicating whether
+    or not it has best synthesis.
+
+2 import process
+
+

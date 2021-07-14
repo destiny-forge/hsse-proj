@@ -54,14 +54,17 @@ module.exports = ({ config, logger }) => {
 
   apiRouter.use("/", controller("index"));
   apiRouter.use("/auth", controller("auth").router);
-  apiRouter.use("/account", controller("account").router);
   apiRouter.use("/users", controller("user").router);
 
   /* client API routes */
+  apiRouter.use("/account", controller("account").router);
+  apiRouter.use("/account-edit", controller("account").auth_router);
   apiRouter.use("/subscriptions", controller("subscription").router);
   apiRouter.use("/search", controller("search").router);
   apiRouter.use("/latest_content", controller("latest_content").router);
   apiRouter.use("/articles", controller("article").router);
+  apiRouter.use("/profile", controller("profile").router);
+  //apiRouter.use("/synthesis", controller("synthesis").router);
 
   /* admin API routes */
   apiRouter.use("/admin-articles", controller("article").admin_router);
@@ -73,6 +76,7 @@ module.exports = ({ config, logger }) => {
   apiRouter.use("/presentation", controller("presentation").router);
   apiRouter.use("/translating", controller("translating").router);
   apiRouter.use("/prioritizing", controller("prioritizing").router);
+  //apiRouter.use("/admin-synthesis", controller("synthesis").admin_router);
 
   router.use("", apiRouter);
 

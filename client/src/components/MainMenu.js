@@ -4,11 +4,26 @@ import { LanguageChooser } from './LanguageContext';
 import GuidedSearchToggle from './GuidedSearchToggle';
 import { LayerConsumer } from './LayerContext';
 import LayerToggle from './LayerToggle';
+import AuthService from '../services/AuthService';
+import AccountMenu from './AccountMenu';
 
-const MainMenu = ({ t, toggleLayer, site }) => {
+const MainMenu = ({ t, user, toggleLayer, site }) => {
+  const Auth = new AuthService();
+
+  const logout = (e, dismissAll) => {
+    e.preventDefault();
+    Auth.logout();
+    dismissAll();
+  };
+
+  const getProfileName = () => {
+    const fullname = `${user.firstName} ${user.lastName}`;
+    return fullname === ' ' ? user.email : fullname;
+  };
+
   return (
     <LayerConsumer>
-      {({ dismissLayer }) => (
+      {({ dismissLayer, dismissAll }) => (
         <ul className="main-menu menu-list">
           <li className="menu-item menu-item-home">
             <span className="menu-item-icon"></span>
@@ -50,26 +65,59 @@ const MainMenu = ({ t, toggleLayer, site }) => {
               {t('main_menu.latest_content')}
             </Link>
           </li>
-          <li className="menu-item menu-item-sign-up">
-            <span className="menu-item-icon"></span>
-            <LayerToggle
-              className="menu-item-text"
-              menu="signup"
-              onToggle={toggleLayer}
-            >
-              {t('main_menu.create_account')}
-            </LayerToggle>
-          </li>
-          <li className="menu-item menu-item-login">
-            <span className="menu-item-icon"></span>
-            <LayerToggle
-              className="menu-item-text"
-              menu="login"
-              onToggle={toggleLayer}
-            >
-              {t('main_menu.login')}
-            </LayerToggle>
-          </li>
+          {Auth.loggedIn() ? (
+            <li className="menu-item menu-item-account">
+              <span className="menu-item-icon"></span>
+              <LayerToggle
+                className="menu-item-text"
+                menu="account"
+                onToggle={toggleLayer}
+              >
+                {getProfileName()}
+              </LayerToggle>
+              <button class="desktop-menu-link menu-item-text">
+                {getProfileName()}
+              </button>
+              <AccountMenu />
+            </li>
+          ) : (
+            <li className="menu-item menu-item-sign-up">
+              <span className="menu-item-icon"></span>
+              <LayerToggle
+                className="menu-item-text"
+                menu="signup"
+                onToggle={toggleLayer}
+              >
+                {t('main_menu.create_account')}
+              </LayerToggle>
+            </li>
+          )}
+
+          {Auth.loggedIn() ? (
+            <li className="menu-item menu-item-logout">
+              <span className="menu-item-icon"></span>
+              <a
+                rel="alternate"
+                hreflang="en"
+                className="menu-item-text"
+                href="/logout"
+                onClick={(e) => logout(e, dismissAll)}
+              >
+                {t('main_menu.logout')}
+              </a>
+            </li>
+          ) : (
+            <li className="menu-item menu-item-login">
+              <span className="menu-item-icon"></span>
+              <LayerToggle
+                className="menu-item-text"
+                menu="login"
+                onToggle={toggleLayer}
+              >
+                {t('main_menu.login')}
+              </LayerToggle>
+            </li>
+          )}
         </ul>
       )}
     </LayerConsumer>

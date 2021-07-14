@@ -2,15 +2,17 @@ import { useState } from 'react';
 import _ from 'underscore';
 import Context from './Context';
 import AuthService from '../services/AuthService';
+import { LayerConsumer } from './LayerContext';
+import { Link } from 'react-router-dom';
 
-const LoginMenu = ({ t, site, setUser }) => {
+const LoginMenu = ({ t, site, getProfile }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [errors, setErrors] = useState({});
 
   const Auth = new AuthService();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, dismissAll) => {
     e.preventDefault();
     setErrors({});
     let err = {};
@@ -29,7 +31,8 @@ const LoginMenu = ({ t, site, setUser }) => {
             err.login = res.data.error;
             setErrors(err);
           } else {
-            setUser(res.data.user);
+            getProfile();
+            dismissAll();
           }
         })
         .catch((err) => {
@@ -45,7 +48,6 @@ const LoginMenu = ({ t, site, setUser }) => {
     if (_.has(errors, 'login')) {
       message = t('errors.invalid_login');
     }
-    console.log(errors);
     return <div className="form-errors">{message}</div>;
   };
 
@@ -71,32 +73,48 @@ const LoginMenu = ({ t, site, setUser }) => {
   };
 
   return (
-    <form className="signup-menu" onSubmit={handleSubmit}>
-      <FormErrors />
-      <div className={FieldCSS('form-group', 'email')}>
-        <input
-          className="form-control"
-          placeholder={t('menus.login.email')}
-          name="email"
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <FieldError field="email" />
-      </div>
-      <div className={FieldCSS('form-group', 'password')}>
-        <input
-          className="form-control"
-          placeholder={t('menus.login.password')}
-          name="password"
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <FieldError field="password" />
-      </div>
-      <button type="submit" className="btn-primary">
-        {t('menus.login.login_button')}
-      </button>
-    </form>
+    <LayerConsumer>
+      {({ dismissAll }) => (
+        <form
+          className="login-menu"
+          onSubmit={(e) => {
+            handleSubmit(e, dismissAll);
+          }}
+        >
+          <FormErrors />
+          <div className={FieldCSS('form-group', 'email')}>
+            <input
+              className="form-control"
+              placeholder={t('menus.login.email')}
+              name="email"
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <FieldError field="email" />
+          </div>
+          <div className={FieldCSS('form-group', 'password')}>
+            <input
+              className="form-control"
+              placeholder={t('menus.login.password')}
+              name="password"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <FieldError field="password" />
+          </div>
+          <button type="submit" className="btn-primary">
+            {t('menus.login.login_button')}
+          </button>
+          <Link
+            to="/forgot-password"
+            className="btn-forgot-password"
+            onClick={(e) => dismissAll()}
+          >
+            {t('menus.login.forgot_password')}
+          </Link>
+        </form>
+      )}
+    </LayerConsumer>
   );
 };
 

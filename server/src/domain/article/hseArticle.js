@@ -11,5 +11,4 @@ const HSEArticle = Article.extend(
   }
 );
 
-//module.exports = HSEArticle;
 module.exports = compose(cleanData, HSEArticle, cleanMongoId);

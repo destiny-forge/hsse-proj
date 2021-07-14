@@ -1,7 +1,7 @@
 const Auth = require("src/domain/auth");
 
 /**
- * Authenticate user
+ * Authenticate admin user
  */
 module.exports = ({ userRepository, webToken }) => {
   const authenticate = async (type, email, password) => {

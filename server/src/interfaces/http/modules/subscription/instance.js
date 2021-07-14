@@ -5,16 +5,24 @@ const {
   unsubscribe,
   test,
   send,
+  initEvents,
 } = require("src/app/subscription");
 
 module.exports = () => {
   const {
-    repository: { articleRepository, subscriptionRepository },
+    repository: { articleRepository, subscriptionRepository, userRepository },
     search,
     mailer,
+    events,
   } = container.cradle;
 
+  initEvents({
+    subscriptionRepository,
+    events,
+  });
+
   const getUseCase = get({
+    userRepository,
     subscriptionRepository,
   });
 
