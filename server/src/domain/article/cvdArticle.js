@@ -2,13 +2,13 @@ const Article = require("./article");
 const { compose } = require("ramda");
 const { cleanData, cleanMongoId } = require("../helper");
 
-const HSEArticle = Article.extend(
+const CVDArticle = Article.extend(
   {},
   {
     defaultProps: {
-      type: "hse",
+      type: "cvd",
     },
   }
 );
 
-module.exports = compose(cleanData, HSEArticle, cleanMongoId);
+module.exports = compose(cleanData, CVDArticle, cleanMongoId);

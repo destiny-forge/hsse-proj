@@ -1,5 +1,3 @@
-const { confirm } = require("./email");
-
 /**
  * Subscription related event handlers
  */
