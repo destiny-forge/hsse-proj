@@ -1,8 +1,10 @@
 /**
  * Edit user account fields
  */
-module.exports = ({ userRepository }) => {
+module.exports = ({ userRepository, events }) => {
   const edit = async (id, email, password, confirm) => {
+    let emailChanged = false;
+
     if (!id) {
       return {
         error: "A valid user is required",
@@ -37,19 +39,39 @@ module.exports = ({ userRepository }) => {
       const dbUser = await userRepository.findById(id);
       if (!dbUser) {
         return {
-          error: "User profile does not exist",
+          error: "Account does not exist",
         };
       }
 
+      // if the email address has changed, then
+      // we need to update it along with the subscriptions
+
       const fields = {
-        email: user.email,
-        password: user.password,
+        email,
+        password,
         updatedAt: new Date(),
       };
 
-      await userRepository.updateWithPassword(id, fields);
+      if (dbUser.email === email) {
+        delete fields.email;
+      } else {
+        emailChanged = true;
+      }
 
-      return user;
+      await userRepository.updateWithPassword(dbUser._id, fields);
+
+      if (emailChanged) {
+        events.emit("email.changed", {
+          type: dbUser.type,
+          old_email: dbUser.email,
+          new_email: email,
+        });
+      }
+
+      return {
+        id,
+        email,
+      };
     } catch (error) {
       throw new Error(error);
     }

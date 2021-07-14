@@ -71,6 +71,22 @@ module.exports = ({ database }) => {
     }
   };
 
+  const changeEmail = async (type, old_email, new_email) => {
+    try {
+      const cmdResult = await database
+        .get()
+        .collection(COLLECTION)
+        .updateOne(
+          { email: { $eq: old_email }, type: { $eq: type } },
+          { $set: { email: new_email } }
+        );
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const createIndexes = () => {
     const collection = database.get().collection(COLLECTION);
     collection.createIndex("email");
@@ -82,6 +98,7 @@ module.exports = ({ database }) => {
     findOne,
     update,
     getSubscribers,
+    changeEmail,
     createIndexes,
   };
 };

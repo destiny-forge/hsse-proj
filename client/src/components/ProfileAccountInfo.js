@@ -1,11 +1,16 @@
+import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import Context from './Context';
-import { useState, useEffect, useCallback } from 'react';
+import AccountService from '../services/AccountService';
 
-const ProfileAccountInfo = ({ t, user }) => {
+const ProfileAccountInfo = ({ t, user, getProfile }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirm, setConfirm] = useState('');
   const [editing, setEditing] = useState(false);
+  const [error, setError] = useState(null);
+
+  const Account = AccountService();
 
   useEffect(() => {
     if (user !== null) {
@@ -15,12 +20,30 @@ const ProfileAccountInfo = ({ t, user }) => {
 
   const save = (e) => {
     e.preventDefault();
+    setError(null);
+
+    if (password !== confirm) {
+      setError('Passwords must match');
+      return;
+    }
+
     const info = {
+      id: user._id,
       email,
       password,
       confirm,
     };
-    // ProfileService.edit(info)
+
+    Account.edit(info)
+      .then((res) => {
+        if (res) {
+          toast.success(t('profile_page.successfully_updated'));
+          getProfile();
+        }
+      })
+      .catch((err) => {
+        setError(err.message);
+      });
   };
 
   const toggle = (e) => {
@@ -68,6 +91,7 @@ const ProfileAccountInfo = ({ t, user }) => {
             <span className="glyphicon form-control-feedback"></span>
           </div>
           <button onClick={save}>{t('update_information')}</button>
+          {error && <div className="">{error}</div>}
         </>
       ) : (
         <div>

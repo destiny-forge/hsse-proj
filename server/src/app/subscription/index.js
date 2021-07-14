@@ -3,6 +3,7 @@ const subscribe = require("./subscribe");
 const unsubscribe = require("./unsubscribe");
 const test = require("./test");
 const send = require("./send");
+const initEvents = require("./events");
 
 module.exports = {
   get,
@@ -10,4 +11,5 @@ module.exports = {
   unsubscribe,
   test,
   send,
+  initEvents,
 };

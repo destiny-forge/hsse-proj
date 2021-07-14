@@ -51,6 +51,14 @@ module.exports = ({ model }) => {
     }
   };
 
+  const changeEmail = async (...args) => {
+    try {
+      return model.changeEmail(...args);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const findOne = async (...args) => {
     try {
       const filter = await model.findOne(...args);
@@ -67,5 +75,6 @@ module.exports = ({ model }) => {
     update,
     findOne,
     find,
+    changeEmail,
   };
 };

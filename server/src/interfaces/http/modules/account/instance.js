@@ -1,5 +1,11 @@
 const container = require("src/container");
-const { register, reset, confirm, initEvents } = require("src/app/account");
+const {
+  edit,
+  register,
+  reset,
+  confirm,
+  initEvents,
+} = require("src/app/account");
 
 module.exports = () => {
   const {
@@ -9,6 +15,11 @@ module.exports = () => {
     mailer,
     config,
   } = container.cradle;
+
+  const editUseCase = edit({
+    userRepository,
+    events,
+  });
 
   const registerUseCase = register({
     userRepository,
@@ -36,6 +47,7 @@ module.exports = () => {
   });
 
   return {
+    editUseCase,
     registerUseCase,
     resetUseCase,
     confirmUseCase,
