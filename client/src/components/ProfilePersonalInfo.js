@@ -195,7 +195,7 @@ const ProfilePersonalInfo = ({ t, site, user, getProfile }) => {
           </div>
           <div className="readonly-field readonly-field-role">
             <div className="readonly-field-label">{t('profile_page.role')}</div>
-            <div className="readonly-field-value">{roles}</div>
+            <div className="readonly-field-value">{roles.join(', ')}</div>
           </div>
         </div>
       )}

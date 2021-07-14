@@ -18,7 +18,7 @@ const MainMenu = ({ t, user, toggleLayer, site }) => {
 
   const getProfileName = () => {
     const fullname = `${user.firstName} ${user.lastName}`;
-    return fullname === '' ? user.email : fullname;
+    return fullname === ' ' ? user.email : fullname;
   };
 
   return (
