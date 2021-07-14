@@ -24,12 +24,7 @@ module.exports = ({ userRepository, webToken }) => {
         token: signIn({
           id: user._id,
           type: user.type,
-          firstName: user.firstName,
-          lastName: user.lastName,
           language: user.language,
-          country: user.country,
-          email: user.email,
-          roles: user.client_roles,
         }),
       };
     } catch (error) {
