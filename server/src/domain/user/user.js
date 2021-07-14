@@ -13,6 +13,7 @@ const User = t.struct(
     firstName: t.maybe(t.String),
     lastName: t.maybe(t.String),
     language: t.maybe(t.String),
+    country: t.maybe(t.String),
     type: t.String,
     roles: t.Array,
     client_roles: t.Array,

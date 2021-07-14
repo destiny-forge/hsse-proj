@@ -1,6 +1,8 @@
 import React from 'react';
 import { Switch } from 'react-router';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import ScrollToTop from './components/ScrollToTop';
 import {
@@ -111,7 +113,10 @@ const App = () => {
                               </LayerGroup>
                               <LayerConsumer>
                                 {({ toggleLayer }) => (
-                                  <Header onShowMenu={toggleLayer} />
+                                  <>
+                                    <Header onShowMenu={toggleLayer} />
+                                    <ToastContainer position="top-center" />
+                                  </>
                                 )}
                               </LayerConsumer>
                               <ScrollToTop />
