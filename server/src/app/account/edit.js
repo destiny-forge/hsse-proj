@@ -11,7 +11,7 @@ module.exports = ({ userRepository, events }) => {
       };
     }
 
-    if (!email) {
+    if (!email || email === "") {
       return {
         error: "A valid email is required",
       };
@@ -51,6 +51,10 @@ module.exports = ({ userRepository, events }) => {
         password,
         updatedAt: new Date(),
       };
+
+      if (password === "" && confirm === "") {
+        delete fields.password;
+      }
 
       if (dbUser.email === email) {
         delete fields.email;

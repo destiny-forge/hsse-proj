@@ -71,7 +71,10 @@ module.exports = ({ database }) => {
   };
 
   const updateWithPassword = async (id, fields) => {
-    fields.password = encryptPassword(fields.password);
+    if (fields.password !== undefined) {
+      fields.password = encryptPassword(fields.password);
+    }
+
     try {
       const cmdResult = await database
         .get()
