@@ -6,7 +6,7 @@ module.exports = () => {
     repository: { userRepository, subscriptionRepository },
   } = container.cradle;
 
-  const getUseCase = edit({
+  const getUseCase = get({
     userRepository,
     subscriptionRepository,
   });

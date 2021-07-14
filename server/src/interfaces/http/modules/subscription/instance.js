@@ -9,12 +9,13 @@ const {
 
 module.exports = () => {
   const {
-    repository: { articleRepository, subscriptionRepository },
+    repository: { articleRepository, subscriptionRepository, userRepository },
     search,
     mailer,
   } = container.cradle;
 
   const getUseCase = get({
+    userRepository,
     subscriptionRepository,
   });
 

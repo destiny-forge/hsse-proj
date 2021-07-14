@@ -2,7 +2,16 @@ import Context from './Context';
 import { useState, useEffect } from 'react';
 import ProfileService from '../services/ProfileService';
 
-const ProfilePersonalInfo = ({ t, user, setUser }) => {
+let CLIENT_ROLES = [
+  'Student',
+  'Researcher',
+  'Professional',
+  'Manager',
+  'Policymaker',
+  'Other',
+];
+
+const ProfilePersonalInfo = ({ t, user, getProfile }) => {
   const Profile = ProfileService();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -11,19 +20,19 @@ const ProfilePersonalInfo = ({ t, user, setUser }) => {
   const [roles, setRoles] = useState([]);
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState(null);
-
-  console.log(user);
+  const [clientRoles, setClientRoles] = useState(CLIENT_ROLES);
 
   const toggleRole = (e) => {
-    const role = e.target.value.toLowerCase();
+    const role = e.target.value;
     let new_roles = roles;
     let index = new_roles.indexOf(role);
     if (e.target.checked && index === -1) {
       new_roles.push(role);
     } else if (!e.target.checked) {
-      new_roles.splice(index);
+      new_roles.splice(index, 1);
     }
     setRoles(new_roles);
+    setClientRoles([...CLIENT_ROLES]);
   };
 
   useEffect(() => {
@@ -32,7 +41,7 @@ const ProfilePersonalInfo = ({ t, user, setUser }) => {
       setLastName(user.lastName || '');
       setCountry(user.country || '');
       setLanguage(user.language || 'en');
-      setRoles(user.roles || []);
+      setRoles(user.client_roles || []);
     }
   }, [user]);
 
@@ -41,7 +50,7 @@ const ProfilePersonalInfo = ({ t, user, setUser }) => {
     setError(null);
 
     const info = {
-      id: user.id,
+      id: user._id,
       firstName,
       lastName,
       language,
@@ -50,11 +59,8 @@ const ProfilePersonalInfo = ({ t, user, setUser }) => {
     };
     Profile.edit(info)
       .then((res) => {
-        if (res && res.success) {
-          setUser({
-            ...user,
-            ...info,
-          });
+        if (res) {
+          getProfile();
         }
       })
       .catch((err) => {
@@ -315,66 +321,21 @@ const ProfilePersonalInfo = ({ t, user, setUser }) => {
           </select>
           <div className="form-group update-role">
             <span>{t('profile_page.role_update_profile')}</span>
-            <label className="role">
-              <input
-                type="checkbox"
-                className="selectRole"
-                value="Student"
-                name="role"
-                onChange={toggleRole}
-              />
-              <span>Student</span>
-            </label>
-            <label className="role">
-              <input
-                type="checkbox"
-                className="selectRole"
-                value="Researcher"
-                name="role"
-                onChange={toggleRole}
-              />
-              <span>Researcher</span>
-            </label>
-            <label className="role">
-              <input
-                type="checkbox"
-                className="selectRole"
-                value="Professional"
-                name="role"
-                onChange={toggleRole}
-              />
-              <span>Professional</span>
-            </label>
-            <label className="role">
-              <input
-                type="checkbox"
-                className="selectRole"
-                value="Manager"
-                name="role"
-                onChange={toggleRole}
-              />
-              <span>Manager</span>
-            </label>
-            <label className="role">
-              <input
-                type="checkbox"
-                className="selectRole"
-                value="Policymaker"
-                name="role"
-                onChange={toggleRole}
-              />
-              <span>Policymaker</span>
-            </label>
-            <label className="role">
-              <input
-                type="checkbox"
-                className="selectRole"
-                value="Other"
-                name="role"
-                onChange={toggleRole}
-              />
-              <span>Other</span>
-            </label>
+            {clientRoles.map((role, i) => {
+              return (
+                <label key={i} className="role">
+                  <input
+                    type="checkbox"
+                    className="selectRole"
+                    value={role.toLowerCase()}
+                    name="role"
+                    checked={roles.includes(role.toLowerCase())}
+                    onChange={toggleRole}
+                  />
+                  <span>{role}</span>
+                </label>
+              );
+            })}
           </div>
           <button onClick={save}>{t('update_information')}</button>
 

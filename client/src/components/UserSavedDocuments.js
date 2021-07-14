@@ -9,7 +9,6 @@ const UserSavedDocuments = ({ t, lang, user }) => {
   const [selected, setSelected] = useState([]);
 
   useEffect(() => {
-    // get list of articles from api
     setArticles([]);
   }, []);
 
@@ -29,7 +28,6 @@ const UserSavedDocuments = ({ t, lang, user }) => {
 
   const remove = (e) => {
     e.preventDefault();
-    // call endpoint to remove selected docs
   };
 
   const select = (e, id) => {

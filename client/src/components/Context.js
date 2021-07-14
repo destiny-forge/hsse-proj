@@ -12,7 +12,7 @@ const Context = (BaseComponent) => (props) =>
         <LanguageConsumer>
           {({ t, language }) => (
             <UserConsumer>
-              {({ user, setUser }) => (
+              {({ user, getProfile }) => (
                 <PageConsumer>
                   {({ sPage }) => (
                     <LayerConsumer>
@@ -21,7 +21,7 @@ const Context = (BaseComponent) => (props) =>
                           {...props}
                           t={t}
                           user={user}
-                          setUser={setUser}
+                          getProfile={getProfile}
                           setPage={sPage}
                           site={site}
                           language={language}

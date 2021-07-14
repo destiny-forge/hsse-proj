@@ -1,3 +1,4 @@
+const _ = require("underscore");
 /**
  * Get user profile
  */
@@ -18,7 +19,16 @@ module.exports = ({ userRepository }) => {
         };
       }
 
-      return user;
+      return _.pick(
+        user,
+        "_id",
+        "firstName",
+        "lastName",
+        "email",
+        "country",
+        "language",
+        "client_roles"
+      );
     } catch (error) {
       throw new Error(error);
     }

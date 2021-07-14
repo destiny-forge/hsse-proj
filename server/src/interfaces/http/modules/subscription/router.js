@@ -40,9 +40,12 @@ module.exports = ({
    *         $ref: '#/responses/BadRequest'
    */
   router.get("/", (req, res) => {
-    const { type, email } = req.body;
+    if (!req.user) {
+      res.status(Status.BAD_REQUEST).json(Fail("must be logged in"));
+      return;
+    }
     getUseCase
-      .get(type, email)
+      .get(req.user._id)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

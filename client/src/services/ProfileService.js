@@ -5,13 +5,7 @@ import API from './API';
 
 const ProfileService = () => {
   const get = async () => {
-    const id = localStorage.getItem('client_token');
-    if (!id) {
-      return null;
-    }
-    const response = await API.call(`/profile/${id}`);
-    const result = await response.json();
-    return result.data;
+    return await API.call(`/profile`);
   };
 
   const edit = async ({

@@ -1,15 +1,25 @@
 import _ from 'underscore';
 import Context from './Context';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import SubscriptionService from '../services/SubscriptionService';
 
-const UserSavedSearches = ({ t, lang, user, only_subscribed }) => {
+const UserSavedSearches = ({ t, only_subscribed }) => {
   const [subs, setSubs] = useState([]);
   const [selected, setSelected] = useState([]);
   const [all, setAll] = useState(false);
 
+  const Subs = SubscriptionService();
+
   useEffect(() => {
-    // get the user subs
+    Subs.get()
+      .then((res) => {
+        if (res && res.success) {
+          setSubs(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }, []);
 
   const select = (e, index) => {
@@ -50,7 +60,12 @@ const UserSavedSearches = ({ t, lang, user, only_subscribed }) => {
       </div>
       <ol className="selectable-list saved-search-list-content list">
         {subs
-          .filter((sub) => (only_subscribed === true && sub.subscribed) || true)
+          .filter((sub) => {
+            return (
+              (only_subscribed === true && sub.subscribed) ||
+              only_subscribed === false
+            );
+          })
           .map((sub) => {
             return (
               <li className="selectable-item saved-search-item list-item">
@@ -73,7 +88,7 @@ const UserSavedSearches = ({ t, lang, user, only_subscribed }) => {
                 </div>
                 <div className="saved-search-keywords">
                   <span className="saved-search-keywords-label">
-                    {t('saved_search_page.keywords')}:
+                    {t('saved_search_page.keywords')}
                   </span>
                   <span className="saved-search-keywords-value">
                     {sub.query}
@@ -82,7 +97,11 @@ const UserSavedSearches = ({ t, lang, user, only_subscribed }) => {
                 <label className="saved-search-control">
                   <span>{t('saved_search_page.subscribe')}</span>
                   <div
-                    className={`react-toggle${sub.subscribed} ? ' react-toggle-checked':''`}
+                    className={`react-toggle${
+                      sub.subscribed
+                        ? ' react-toggle--checked'
+                        : ' react-toggle-checked'
+                    }`}
                   >
                     <div className="react-toggle-track">
                       <div className="react-toggle-track-check">

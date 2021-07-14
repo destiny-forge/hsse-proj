@@ -1,33 +1,32 @@
 /**
  * Get email subscription
  */
-module.exports = ({ subscriptionRepository }) => {
-  const get = async (email, type) => {
-    if (!email) {
+module.exports = ({ userRepository, subscriptionRepository }) => {
+  const get = async (_id) => {
+    if (!_id) {
       return {
-        error: "A valid email is required",
+        error: "A valid id is required",
       };
     }
 
-    if (!type) {
+    const user = await userRepository.findById(_id);
+    if (user === null) {
       return {
-        error: "A valid type is required",
+        error: "User not found",
       };
     }
 
     try {
-      const subscriber = await subscriptionRepository.findOne({
-        email: { $eq: email },
-        type: { $eq: type },
-      });
+      const subscriber = await subscriptionRepository.findOne(
+        user.email,
+        user.type
+      );
 
       if (!subscriber) {
-        return {
-          error: "No subscription currently exists for email and type",
-        };
+        return [];
       }
 
-      return subscriber;
+      return subscriber.subscriptions;
     } catch (error) {
       throw new Error(error);
     }

@@ -93,9 +93,13 @@ module.exports = ({
    *       400:
    *         $ref: '#/responses/BadRequest'
    */
-  router.get("/:id", (req, res) => {
+  router.get("/", (req, res) => {
+    if (!req.user) {
+      logger.error("getting profile failed - no user"); // we still need to log every error for debugging
+      return res.status(Status.BAD_REQUEST).json(Fail("not logged in"));
+    }
     getUseCase
-      .get({ id: req.params.id })
+      .get(req.user._id)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

@@ -5,7 +5,7 @@ import AuthService from '../services/AuthService';
 import { LayerConsumer } from './LayerContext';
 import { Link } from 'react-router-dom';
 
-const LoginMenu = ({ t, site, setUser }) => {
+const LoginMenu = ({ t, site, getProfile }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [errors, setErrors] = useState({});
@@ -31,7 +31,7 @@ const LoginMenu = ({ t, site, setUser }) => {
             err.login = res.data.error;
             setErrors(err);
           } else {
-            setUser(res.data.user);
+            getProfile();
             dismissAll();
           }
         })

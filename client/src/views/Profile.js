@@ -1,4 +1,3 @@
-import { useParams } from 'react-router-dom';
 import Context from '../components/Context';
 import { Helmet } from 'react-helmet';
 import ProfileAccountInfo from '../components/ProfileAccountInfo';
@@ -16,7 +15,6 @@ const Profile = ({ t, setPage, user }) => {
     }
   });
 
-  const { id } = useParams();
   return (
     <div id="page-content">
       <Helmet>
