@@ -21,7 +21,6 @@ const UserProvider = ({ children }) => {
   const getProfile = () => {
     Profile.get()
       .then((res) => {
-        console.log(res);
         if (res && res.success) {
           setUser(res.data);
         }

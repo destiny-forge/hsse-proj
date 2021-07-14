@@ -77,7 +77,6 @@ const SignupMenu = ({ t, site, language }) => {
             err.signup = res.data.error;
             setErrors(err);
           } else {
-            console.log(res);
             setErrors(err);
             dismissAll();
           }
