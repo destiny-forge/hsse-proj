@@ -58,6 +58,19 @@ module.exports = ({ userRepository, events }) => {
         emailChanged = true;
       }
 
+      if (emailChanged) {
+        const userWithOldEmail = await userRepository.findByEmail(
+          dbUser.type,
+          email
+        );
+        if (userWithOldEmail !== null) {
+          return {
+            error:
+              "Cannot change email, account with email address already exists",
+          };
+        }
+      }
+
       await userRepository.updateWithPassword(dbUser._id, fields);
 
       if (emailChanged) {
