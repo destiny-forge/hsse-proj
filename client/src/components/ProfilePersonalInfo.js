@@ -125,10 +125,11 @@ const ProfilePersonalInfo = ({ t, site, user, getProfile }) => {
             type="select"
             className="form-control form-group"
             onChange={(e) => setCountry(e.target.value)}
+            defaultValue={country}
           >
             {COUNTRIES.map((c) => {
               return (
-                <option key={c.id} value={c.id} selected={c.id === country}>
+                <option key={c.id} value={c.id}>
                   {c.name}
                 </option>
               );
@@ -140,10 +141,15 @@ const ProfilePersonalInfo = ({ t, site, user, getProfile }) => {
             type="select"
             className="form-control form-group"
             onChange={(e) => setLanguage(e.target.value)}
-            value={language}
+            defaultValue={language}
           >
-            <option value="en">English</option>
-            <option value="fr">Français</option>
+            {LANGUAGES[site].map((l, i) => {
+              return (
+                <option key={i} value={l.value}>
+                  {l.label}
+                </option>
+              );
+            })}
           </select>
           <div className="form-group update-role">
             <span>{t('profile_page.role_update_profile')}</span>
