@@ -198,6 +198,8 @@ module.exports = ({
   router.post("/", (req, res) => {
     const { id, email, password, confirm } = req.body;
 
+    console.log(req.user);
+
     if (!req.user || req.user._id !== id) {
       logger.error("turn your hacks down"); // we still need to log every error for debugging
       return res.status(Status.BAD_REQUEST).json(Fail("turn your hacks down"));

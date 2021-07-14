@@ -54,10 +54,11 @@ module.exports = ({ config, logger }) => {
 
   apiRouter.use("/", controller("index"));
   apiRouter.use("/auth", controller("auth").router);
-  apiRouter.use("/account", controller("account").router);
   apiRouter.use("/users", controller("user").router);
 
   /* client API routes */
+  apiRouter.use("/account", controller("account").router);
+  apiRouter.use("/account-edit", controller("account").auth_router);
   apiRouter.use("/subscriptions", controller("subscription").router);
   apiRouter.use("/search", controller("search").router);
   apiRouter.use("/latest_content", controller("latest_content").router);
