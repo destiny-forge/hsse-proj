@@ -44,7 +44,14 @@ const UserSavedSearches = ({ t, only_subscribed }) => {
   };
 
   const setAllSubs = (clear) => {
-    const indexes = subs.map((_sub, index) => index);
+    const indexes = subs
+      .filter((sub) => {
+        return (
+          (only_subscribed === true && sub.subscribed) ||
+          only_subscribed === false
+        );
+      })
+      .map((_sub, index) => index);
     setSelected(clear ? [] : indexes);
   };
 
