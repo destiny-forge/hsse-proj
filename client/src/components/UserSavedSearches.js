@@ -24,20 +24,34 @@ const UserSavedSearches = ({ t, only_subscribed }) => {
 
   const select = (e, index) => {
     e.preventDefault();
-    let items = selected;
-    if (e.target.checked) {
-      items = items.filter((item) => item !== index);
-    } else {
+    let items = [...selected];
+    let found = selected.includes(index);
+
+    if (!found) {
       items = [...selected, index];
+    } else {
+      items = items.filter((item) => item !== index);
     }
+
+    if (items.length === subs.length) {
+      setAll(true);
+      setAllSubs(false);
+    } else {
+      setAll(false);
+    }
+
     setSelected(items);
+  };
+
+  const setAllSubs = (clear) => {
+    const indexes = subs.map((_sub, index) => index);
+    setSelected(clear ? [] : indexes);
   };
 
   const selectAllToggle = (e) => {
     e.preventDefault();
-    const indexes = subs.map((_sub, index) => index);
     setAll(!all);
-    setSelected(indexes);
+    setAllSubs(all);
   };
 
   return (
@@ -66,9 +80,12 @@ const UserSavedSearches = ({ t, only_subscribed }) => {
               only_subscribed === false
             );
           })
-          .map((sub) => {
+          .map((sub, i) => {
             return (
-              <li className="selectable-item saved-search-item list-item">
+              <li
+                key={i}
+                className="selectable-item saved-search-item list-item"
+              >
                 <div className="saved-search-item-header clearfix">
                   <h2>
                     <a
@@ -81,8 +98,12 @@ const UserSavedSearches = ({ t, only_subscribed }) => {
                   </h2>
                   <label className="saved-search-select action">
                     <span>{t('select')}</span>
-                    <div class="checkbox">
-                      <input type="checkbox" />
+                    <div
+                      className={`checkbox${
+                        selected.includes(i) ? ' checkbox-checked' : ''
+                      }`}
+                    >
+                      <input type="checkbox" onClick={(e) => select(e, i)} />
                     </div>
                   </label>
                 </div>

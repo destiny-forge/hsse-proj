@@ -11,7 +11,7 @@ const UserCuratedSearches = ({ t, lang, user, only_subscribed }) => {
   return (
     <div className="saved-search-list">
       <ol class="selectable-list saved-search-list-content list">
-        <li class="selectable-item saved-search-item list-item">
+        {/* <li class="selectable-item saved-search-item list-item">
           <div class="saved-search-item-header clearfix">
             <h2>
               <a
@@ -61,7 +61,7 @@ const UserCuratedSearches = ({ t, lang, user, only_subscribed }) => {
               <input class="react-toggle-screenreader-only" type="checkbox" />
             </div>
           </label>
-        </li>
+        </li> */}
       </ol>
     </div>
   );
