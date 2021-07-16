@@ -51,6 +51,14 @@ module.exports = ({ model }) => {
     }
   };
 
+  const toggle = async (...args) => {
+    try {
+      return model.toggle(...args);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   const changeEmail = async (...args) => {
     try {
       return model.changeEmail(...args);
@@ -73,6 +81,7 @@ module.exports = ({ model }) => {
     getSubscribers,
     create,
     update,
+    toggle,
     findOne,
     find,
     changeEmail,

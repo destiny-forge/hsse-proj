@@ -2,6 +2,7 @@ const container = require("src/container");
 const {
   get,
   edit,
+  toggle,
   subscribe,
   unsubscribe,
   test,
@@ -32,6 +33,11 @@ module.exports = () => {
     subscriptionRepository,
   });
 
+  const toggleUseCase = toggle({
+    userRepository,
+    subscriptionRepository,
+  });
+
   const subscribeUseCase = subscribe({
     subscriptionRepository,
   });
@@ -57,6 +63,7 @@ module.exports = () => {
   return {
     getUseCase,
     editUseCase,
+    toggleUseCase,
     subscribeUseCase,
     unsubscribeUseCase,
     sendUseCase,

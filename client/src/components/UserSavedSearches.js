@@ -1,4 +1,3 @@
-import _ from 'underscore';
 import Context from './Context';
 import { useEffect, useState } from 'react';
 import SubscriptionService from '../services/SubscriptionService';
@@ -61,13 +60,28 @@ const UserSavedSearches = ({ t, only_subscribed }) => {
     setAllSubs(all);
   };
 
-  const toggleSubscribe = (e) => {
+  const toggleSubscribed = (e, sub, index) => {
     e.preventDefault();
+    Subs.toggle(sub.query, !sub.subscribed)
+      .then((res) => {
+        if (res.ok) {
+          let newSubs = [...subs].map((s, i) => {
+            s.subscribed =
+              i === index && s.query === sub.query
+                ? !s.subscribed
+                : s.subscribed;
+            return s;
+          });
+          setSubs(newSubs);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   const remove = (e) => {
     e.preventDefault();
-    // send subs with indexes removed
     const newSubs = subs.filter((_s, i) => !selected.includes(i));
     Subs.edit(newSubs)
       .then((res) => {
@@ -159,6 +173,7 @@ const UserSavedSearches = ({ t, only_subscribed }) => {
                         ? ' react-toggle--checked'
                         : ' react-toggle-checked'
                     }`}
+                    onClick={(e) => toggleSubscribed(e, sub, i)}
                   >
                     <div className="react-toggle-track">
                       <div className="react-toggle-track-check">

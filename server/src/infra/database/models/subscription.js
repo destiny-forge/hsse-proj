@@ -74,6 +74,26 @@ module.exports = ({ database }) => {
     }
   };
 
+  const toggle = async (email, type, query, subscribed) => {
+    try {
+      const cmdResult = await database
+        .get()
+        .collection(COLLECTION)
+        .updateOne(
+          {
+            email: { $eq: email },
+            type: { $eq: type },
+            "subscriptions.query": query,
+          },
+          { $set: { "subscriptions.$.subscribed": subscribed } }
+        );
+      const { result } = cmdResult.toJSON();
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const changeEmail = async (type, old_email, new_email) => {
     try {
       const cmdResult = await database
@@ -100,6 +120,7 @@ module.exports = ({ database }) => {
     getAll,
     findOne,
     update,
+    toggle,
     getSubscribers,
     changeEmail,
     createIndexes,

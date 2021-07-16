@@ -28,6 +28,23 @@ const SubscriptionService = () => {
     }
   };
 
+  const toggle = async (query, subscribed) => {
+    const opts = {
+      method: 'POST',
+      body: JSON.stringify({
+        query,
+        subscribed,
+      }),
+    };
+
+    try {
+      const response = await API.call('/subscriptions/toggle', opts);
+      return response.data;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const subscribe = async (type, { query, filters }) => {
     const opts = {
       method: 'POST',
@@ -66,6 +83,7 @@ const SubscriptionService = () => {
   return {
     get,
     edit,
+    toggle,
     subscribe,
     unsubscribe,
   };
