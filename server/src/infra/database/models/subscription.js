@@ -58,12 +58,15 @@ module.exports = ({ database }) => {
     }
   };
 
-  const update = async (email, fields) => {
+  const update = async (email, type, fields) => {
     try {
       const cmdResult = await database
         .get()
         .collection(COLLECTION)
-        .updateOne({ email: { $eq: email } }, { $set: fields });
+        .updateOne(
+          { email: { $eq: email }, type: { $eq: type } },
+          { $set: fields }
+        );
       const { result } = cmdResult.toJSON();
       return result;
     } catch (e) {

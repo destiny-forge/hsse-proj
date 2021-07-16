@@ -3,6 +3,7 @@ const { Router } = require("express");
 
 module.exports = ({
   getUseCase,
+  editUseCase,
   subscribeUseCase,
   unsubscribeUseCase,
   testUseCase,
@@ -46,6 +47,50 @@ module.exports = ({
     }
     getUseCase
       .get(req.user._id)
+      .then((data) => {
+        res.status(Status.OK).json(Success(data));
+      })
+      .catch((error) => {
+        logger.error(error); // we still need to log every error for debugging
+        res.status(Status.BAD_REQUEST).json(Fail(error.message));
+      });
+  });
+
+  /**
+   * @swagger
+   * /:
+   *   post:
+   *     tags:
+   *       - Subscription
+   *     description: Get my subscription settings
+   *     consumes:
+   *       - application/json
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: body
+   *         description: Email
+   *         in: body
+   *         required: true
+   *         type: string
+   *         schema:
+   *           $ref: '#/definitions/email'
+   *     responses:
+   *       200:
+   *         description: Successfully created
+   *       400:
+   *         $ref: '#/responses/BadRequest'
+   */
+  router.post("/", (req, res) => {
+    if (!req.user) {
+      res.status(Status.BAD_REQUEST).json(Fail("must be logged in"));
+      return;
+    }
+    let { _id } = req.user;
+    let { subscriptions } = req.body;
+
+    editUseCase
+      .edit(_id, subscriptions)
       .then((data) => {
         res.status(Status.OK).json(Success(data));
       })

@@ -1,6 +1,7 @@
 const container = require("src/container");
 const {
   get,
+  edit,
   subscribe,
   unsubscribe,
   test,
@@ -22,6 +23,11 @@ module.exports = () => {
   });
 
   const getUseCase = get({
+    userRepository,
+    subscriptionRepository,
+  });
+
+  const editUseCase = edit({
     userRepository,
     subscriptionRepository,
   });
@@ -50,6 +56,7 @@ module.exports = () => {
 
   return {
     getUseCase,
+    editUseCase,
     subscribeUseCase,
     unsubscribeUseCase,
     sendUseCase,

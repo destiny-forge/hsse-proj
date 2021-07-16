@@ -12,7 +12,7 @@ const SubscriptionService = () => {
     return await API.call(`/subscriptions`);
   };
 
-  const edit = async ({ subscriptions }) => {
+  const edit = async (subscriptions) => {
     const opts = {
       method: 'POST',
       body: JSON.stringify({

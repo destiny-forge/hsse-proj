@@ -61,10 +61,39 @@ const UserSavedSearches = ({ t, only_subscribed }) => {
     setAllSubs(all);
   };
 
+  const toggleSubscribe = (e) => {
+    e.preventDefault();
+  };
+
+  const remove = (e) => {
+    e.preventDefault();
+    // send subs with indexes removed
+    const newSubs = subs.filter((_s, i) => !selected.includes(i));
+    Subs.edit(newSubs)
+      .then((res) => {
+        setSubs(res);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
   return (
     <div className="saved-search-list">
       <div className="saved-search-list-header">
         <ul className="saved-search-list-actions list-actions list-inline">
+          {selected.length > 0 && (
+            <li className="action remove-selected">
+              <a
+                hreflang="en"
+                href="/remove"
+                className="button"
+                onClick={remove}
+              >
+                {t('remove_selected')}
+              </a>
+            </li>
+          )}
           <li className="action">
             <label>
               <span>{t('select_all')}</span>
